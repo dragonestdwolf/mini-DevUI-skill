@@ -1,0 +1,49 @@
+<div class="da-list-container">
+    <div class="da-list-header">
+        <d-search [iconPosition]="'left'" [noBorder]="false" (searchFn)="onSearch($event)"></d-search>
+        <div class="da-header-right">
+             <d-button>New Item</d-button>
+        </div>
+    </div>
+    <div class="da-list-content">
+        <d-data-table #datatable [dataSource]="basicDataSource" [scrollable]="true" [tableWidthConfig]="tableWidthConfig">
+            <d-column field="id" header="ID"></d-column>
+            <d-column field="title" header="Title"></d-column>
+            <d-column field="priority" header="Priority">
+                <d-cell>
+                    <ng-template let-cellItem="cellItem">
+                        <span [style.color]="cellItem === 'High' ? 'red' : 'green'">{{ cellItem }}</span>
+                    </ng-template>
+                </d-cell>
+            </d-column>
+            <d-column field="status" header="Status">
+                 <d-cell>
+                    <ng-template let-cellItem="cellItem">
+                        <d-tag [tag]="cellItem" [labelStyle]="cellItem === 'Done' ? 'green-w98' : 'blue-w98'"></d-tag>
+                    </ng-template>
+                </d-cell>
+            </d-column>
+             <d-column field="assignee" header="Assignee"></d-column>
+             <d-column field="actions" header="Actions">
+                <d-cell>
+                  <ng-template>
+                    <d-button icon="icon-edit" bsStyle="text-dark" title="Edit" shape="circle"></d-button>
+                    <d-button icon="icon-delete" bsStyle="text-dark" title="Delete" shape="circle"></d-button>
+                  </ng-template>
+                </d-cell>
+             </d-column>
+        </d-data-table>
+    </div>
+    <div class="da-list-footer">
+        <d-pagination
+            [size]="'sm'"
+            [total]="pager.total"
+            [(pageSize)]="pager.pageSize"
+            [(pageIndex)]="pager.pageIndex"
+            [canViewTotal]="true"
+            [canChangePageSize]="true"
+            [canJumpPage]="true"
+            (pageIndexChange)="onPageChange($event)">
+        </d-pagination>
+    </div>
+</div>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Page Render v2</title>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            /* Brand Colors */
+            --devui-brand: #5E7CE0;
+            --devui-brand-foil: #859BFF;
+            --devui-brand-hover: #7693F5;
+            --devui-brand-active: #526ECC;
+            --devui-brand-active-focus: #344899;
+
+            /* Background Colors */
+            --devui-global-bg: #F5F5F5;
+            --devui-base-bg: #FFFFFF;
+            --devui-block: #FFFFFF;
+            --devui-area: #F8F8F8;
+            --devui-gray-form-control-bg: #F5F5F5;
+            --devui-list-item-hover-bg: #F2F5FC;
+            --devui-list-item-strip-bg: #F2F5FC;
+            --devui-label-bg: #EEF0F5;
+
+            /* Text Colors */
+            --devui-text: #252B3A;
+            --devui-text-weak: #575D6C;
+            --devui-aide-text: #8A8E99;
+            --devui-placeholder: #8A8E99;
+            --devui-light-text: #FFFFFF;
+            --devui-link: #526ECC;
+
+            /* Border/Line Colors */
+            --devui-line: #ADB0B8;
+            --devui-dividing-line: #DFE1E6;
+            --devui-form-control-line: #ADB0B8;
+            --devui-form-control-line-hover: #575D6C;
+            --devui-form-control-line-active: #5E7CE0;
+
+            /* Shadows */
+            --devui-shadow: rgba(0, 0, 0, 0.1);
+            --devui-hover-shadow: rgba(0, 0, 0, 0.2);
+
+            /* Font & Radius */
+            --devui-font-size: 12px;
+            --devui-font-size-card-title: 16px;
+            --devui-radius: 4px;
+            --devui-radius-card: 4px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: var(--devui-font-size);
+            color: var(--devui-text);
+            background-color: var(--devui-global-bg);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Layout Structure */
+        .layout-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .layout-header {
+            height: 40px;
+            width: 100%;
+            background-color: var(--devui-base-bg);
+            border-bottom: 1px solid var(--devui-dividing-line);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+
+        .layout-body {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
+
+        .layout-sidebar {
+            width: 280px;
+            height: 100%;
+            background-color: var(--devui-base-bg);
+            border-right: 1px solid var(--devui-dividing-line);
+            flex-shrink: 0;
+        }
+
+        .layout-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: var(--devui-global-bg);
+        }
+
+        .layout-subheader {
+            height: 80px;
+            width: 100%;
+            background-color: var(--devui-base-bg);
+            border-bottom: 1px solid var(--devui-dividing-line);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+
+        .layout-content {
+            flex: 1;
+            padding: 20px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Center form */
+        }
+
+        /* Form Styles */
+        .form-card {
+            background-color: var(--devui-block);
+            border-radius: var(--devui-radius-card);
+            box-shadow: 0 1px 4px var(--devui-shadow);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            box-sizing: border-box;
+        }
+
+        .form-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            color: var(--devui-text);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-label.required::after {
+            content: "*";
+            color: #f66f6a;
+            margin-left: 4px;
+        }
+
+        .form-control {
+            height: 32px;
+            padding: 0 12px;
+            border: 1px solid var(--devui-form-control-line);
+            background-color: var(--devui-base-bg);
+            border-radius: var(--devui-radius);
+            color: var(--devui-text);
+            outline: none;
+            transition: all 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 12px;
+        }
+
+        .form-control:hover {
+            border-color: var(--devui-form-control-line-hover);
+        }
+
+        .form-control:focus {
+            border-color: var(--devui-form-control-line-active);
+            box-shadow: 0 0 0 2px var(--devui-brand-foil);
+        }
+
+        textarea.form-control {
+            height: auto;
+            min-height: 80px;
+            padding: 8px 12px;
+            resize: vertical;
+        }
+
+        /* Radio Group */
+        .radio-group {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            height: 32px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 8px;
+        }
+
+        .radio-circle {
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--devui-form-control-line);
+            border-radius: 50%;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .radio-item:hover .radio-circle {
+            border-color: var(--devui-brand);
+        }
+
+        .radio-item.active .radio-circle {
+            border-color: var(--devui-brand);
+            border-width: 5px;
+        }
+
+        .radio-label {
+            color: var(--devui-text);
+        }
+
+        /* Buttons */
+        .btn {
+            height: 32px;
+            padding: 0 20px;
+            border-radius: var(--devui-radius);
+            border: 1px solid transparent;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--devui-font-size);
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background-color: var(--devui-brand);
+            color: var(--devui-light-text);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--devui-brand-hover);
+        }
+
+        .btn-common {
+            background-color: var(--devui-base-bg);
+            border-color: var(--devui-line);
+            color: var(--devui-text);
+        }
+
+        .btn-common:hover {
+            color: var(--devui-brand);
+            border-color: var(--devui-brand);
+        }
+
+        /* Placeholders */
+        .logo-placeholder {
+            width: 100px;
+            height: 24px;
+            background: var(--devui-dividing-line);
+            border-radius: 4px;
+        }
+
+        .menu-item {
+            padding: 12px 24px;
+            color: var(--devui-text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-item:hover {
+            background-color: var(--devui-list-item-hover-bg);
+            color: var(--devui-brand);
+        }
+
+        .menu-item.active {
+            background-color: var(--devui-list-item-strip-bg);
+            color: var(--devui-brand);
+            border-right: 3px solid var(--devui-brand);
+        }
+
+        /* Utility */
+        .flex {
+            display: flex;
+        }
+
+        .gap-sm {
+            gap: 8px;
+        }
+
+        .gap-md {
+            gap: 16px;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const Header = () => (
+            <header className="layout-header justify-between">
+                <div className="flex items-center gap-md">
+                    <div className="logo-placeholder"></div>
+                    <span style={{ color: 'var(--devui-text)', fontWeight: 'bold' }}>DevUI Center</span>
+                </div>
+                <div className="flex items-center gap-md">
+                    <span style={{ color: 'var(--devui-text-weak)' }}>User</span>
+                </div>
+            </header>
+        );
+
+        const Sidebar = () => (
+            <aside className="layout-sidebar">
+                <div style={{ padding: '16px 24px', color: 'var(--devui-aide-text)', fontSize: '14px' }}>MENU</div>
+                <div className="menu-item">Dashboard</div>
+                <div className="menu-item active">Create Task</div>
+                <div className="menu-item">Task List</div>
+                <div className="menu-item">Settings</div>
+            </aside>
+        );
+
+        const SubHeader = () => (
+            <div className="layout-subheader justify-between">
+                <div style={{ fontSize: 'var(--devui-font-size-card-title)', fontWeight: 'bold', color: 'var(--devui-text)' }}>
+                    Create New Task
+                </div>
+                <div className="flex gap-sm">
+                    <button className="btn btn-common">Cancel</button>
+                    <button className="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        );
+
+        const FormContent = () => {
+            const [priority, setPriority] = useState('Medium');
+
+            return (
+                <div className="form-card">
+                    <div className="form-item">
+                        <label className="form-label required">Task Name</label>
+                        <input type="text" className="form-control" placeholder="Enter task name" />
+                    </div>
+
+                    <div className="form-item">
+                        <label className="form-label required">Executor</label>
+                        <select className="form-control">
+                            <option>Please select executor</option>
+                            <option>User A</option>
+                            <option>User B</option>
+                        </select>
+                    </div>
+
+                    <div className="form-item">
+                        <label className="form-label">Priority</label>
+                        <div className="radio-group">
+                            {['High', 'Medium', 'Low'].map(p => (
+                                <div
+                                    key={p}
+                                    className={`radio-item ${priority === p ? 'active' : ''}`}
+                                    onClick={() => setPriority(p)}
+                                >
+                                    <div className="radio-circle"></div>
+                                    <span className="radio-label">{p}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="form-item">
+                        <label className="form-label">Description</label>
+                        <textarea className="form-control" placeholder="Enter task description..."></textarea>
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            return (
+                <div className="layout-container">
+                    <Header />
+                    <div className="layout-body">
+                        <Sidebar />
+                        <main className="layout-main">
+                            <SubHeader />
+                            <div className="layout-content">
+                                <FormContent />
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

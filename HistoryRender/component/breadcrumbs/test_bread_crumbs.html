@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BreadCrumbs Component Test</title>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            /* Brand Colors */
+            --devui-brand: #5E7CE0;
+            /* Primary color */
+
+            /* Text Colors */
+            --devui-text: #252B3A;
+            /* Active/Current Item */
+            --devui-text-weak: #575D6C;
+            /* Normal Item */
+            --devui-placeholder: #8A8E99;
+            /* Separator */
+            --devui-link: #526ECC;
+
+            /* Background Colors */
+            --devui-base-bg: #FFFFFF;
+            --devui-global-bg: #F5F5F5;
+
+            /* Font */
+            --devui-font-family: 'Noto Sans SC', sans-serif;
+            --devui-font-size: 14px;
+            --devui-line-height: 22px;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: var(--devui-font-family);
+            background-color: var(--devui-global-bg);
+            color: var(--devui-text);
+        }
+
+        /* Container for audit/demo */
+        .demo-section {
+            background: var(--devui-base-bg);
+            padding: 24px;
+            border-radius: 4px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: var(--devui-text);
+            border-bottom: 1px solid #DFE1E6;
+            padding-bottom: 8px;
+        }
+
+        /* 
+         * BreadCrumbs Styles (Strict Adherence to Skill) 
+         * Path: skill/3.component/bread_crumbs.md
+         */
+
+        /* 1. Layout Logic */
+        .devui-breadcrumb {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            /* Prevent overflow on small screens */
+            font-size: var(--devui-font-size);
+            line-height: var(--devui-line-height);
+        }
+
+        .devui-breadcrumb-item-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            /* Token: None, Generic 4px as per Figma */
+        }
+
+        /* 2. Styling Rules */
+        .devui-breadcrumb-link,
+        .devui-breadcrumb-text {
+            color: var(--devui-text-weak);
+            /* Normal Status */
+            text-decoration: none;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        /* Interaction: Normal vs Active/Current */
+        .devui-breadcrumb-link:hover {
+            color: var(--devui-brand);
+            /* Suggestion from Skill Note */
+            text-decoration: underline;
+        }
+
+        /* Active/Last Item */
+        .devui-breadcrumb-item-wrapper:last-child .devui-breadcrumb-text,
+        .devui-breadcrumb-item-wrapper:last-child .devui-breadcrumb-link,
+        .devui-breadcrumb-text.active {
+            color: var(--devui-text);
+            /* Active/Current Status */
+            cursor: default;
+            font-weight: normal;
+            /* Skill doesn't specify bold, strictly color */
+        }
+
+        .devui-breadcrumb-item-wrapper:last-child .devui-breadcrumb-link:hover {
+            color: var(--devui-text);
+            /* No hover effect on current item */
+            text-decoration: none;
+        }
+
+        /* Separator */
+        .devui-breadcrumb-separator {
+            color: var(--devui-placeholder);
+            /* #8A8E99 */
+            margin: 0;
+
+            /* No margin, gap handles spacing on wrapper if implemented differently, but here wrapper has gap? 
+                        Wait, skill says: "Item Wrapper: display: flex, gap: 4px".
+                        It also says "Separator located to the right of Item Text".
+                        So structure: [Text] [Separator]. 
+                        If Wrapper has gap 4px, then there is 4px between Text and Separator.
+                        But usually gap is between items. 
+                        Let's check Anti-Pattern 2: "Container { display: flex; gap: 4px; }"
+                        Actually the anti-pattern says "Container display flex gap 4px" vs "margin-right".
+                        I will assume the gap is between the items (Text+Separator groups) OR individual items.
+                        
+                        Re-reading Skill:
+                        "Item Wrapper: display flex, align-items center, gap 4px"
+                        "Separator: Located to right of Item Text"
+                        
+                        Interpretation A:
+                        <Breadcrumb> (flex, wrap)
+                          <ItemWrapper> (flex, gap 4px)
+                             <Text>
+                             <Separator>
+                          </ItemWrapper>
+                          ...
+                        
+                        Interpretation B:
+                        <Breadcrumb> (flex, gap 4px)
+                          <ItemWrapper> <Text> </ItemWrapper>
+                          <SeparatorWrapper> <Sep> </SeparatorWrapper>
+                          ...
+                        
+                        Skill says "Item Wrapper: display: flex... gap: 4px". 
+                        It implies the wrapper contains the logic.
+                        The Anti-pattern "Container { display: flex; gap: 4px; }" is likely referring to the Breadcrumb container having gap between items? 
+                        The anti-pattern example compares `.breadcrumb-container { gap: 4px }` vs `.item { margin-right: 4px }`.
+                        So likely the gap 4px is between `ItemWrapper`s? Or inside the wrapper?
+                        
+                        "Item Wrapper: ... gap: 4px" sounds like the gap inside the wrapper (between text and separator).
+                        Let's stick to Interpretation A where space is handled by gaps.
+                        Wait, if I have `[Text] [Sep]` inside a wrapper with `gap: 4px`, then they are 4px apart.
+                        And if the Breadcrumb container has no gap, the `ItemWrapper`s touch? That seems wrong.
+                        
+                        Let's look at the "Visual Skill" section again carefully.
+                        "Item Wrapper: ... gap: 4px (Token: 无, 使用原子值 4px, Figma 中 Item 间距)"
+                        "Container: ... flex-wrap: wrap"
+                        
+                        If "Item 间距" (Item spacing) is 4px, it usually means the space between crumbs.
+                        If the wrapper contains "Text + Separator", and the gap is 4px, then Text and Separator are 4px apart.
+                        Does the skill specify spacing between wrappers?
+                        It doesn't explicitly modify "Container" gap, only "Item Wrapper".
+                        However, usually breadcrumbs look like: `Home / Level 1 / Current`.
+                        Uniform spacing is common.
+                        
+                        I will implement:
+                        Breadcrumb Container: gap 4px.
+                        Item Wrapper: standard contents.
+                        Actually, let's play safe and apply gap 4px to the main container too, or ensure the wrapper handles it.
+                        
+                        Re-reading carefully:
+                        "Item Wrapper: ... gap: 4px"
+                        This likely refers to the space between the Text and the Separator if they are flex items in the wrapper.
+                        
+                        I will follow:
+                        <div class="devui-breadcrumb" style="gap: 8px? No spec.">
+                            But wait, "Figma 中 Item 间距" is on "Item Wrapper"?
+                            That might mean appropriate gap is 4px everywhere.
+                        </div>
+                        
+                        Let's assume `devui-breadcrumb` uses `gap: 4px` if not specified? 
+                        Actually Anti-Pattern 2 says: `/* Good */
+            .breadcrumb-container {
+                display: flex;
+                gap: 4px;
+            }
+
+            ` So the CONTAINER has gap 4px. And the ITEM WRAPPER also has gap 4px? Let's assume strict adherence to text:
+ Container: flex,
+            align-items center,
+            flex-wrap. (Anti-pattern adds gap: 4px). Item Wrapper: flex,
+            align-items center,
+            gap: 4px. So: Container {
+                gap: 4px
+            }
+
+            ItemWrapper {
+                gap: 4px
+            }
+
+            Result: [Home] --4px-- [/] --4px-- [Page] This looks correct and uniform. */
+        }
+
+        .devui-breadcrumb {
+            gap: 4px;
+            /* From Anti-Pattern Recommendation */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        /**
+         * BreadCrumbs Component
+         * Based on skill/3.component/bread_crumbs.md
+         */
+        const BreadCrumbs = ({ source = [], separatorIcon = '/', size = 'md' }) => {
+            return (
+                <div className="devui-breadcrumb">
+                    {source.map((item, index) => {
+                        const isLast = index === source.length - 1;
+
+                        return (
+                            <div key={index} className="devui-breadcrumb-item-wrapper">
+                                {/* Item Content */}
+                                {item.link && !item.noNavigation && !isLast ? (
+                                    <a
+                                        href={item.link}
+                                        target={item.target || '_self'}
+                                        className="devui-breadcrumb-link"
+                                    >
+                                        {item.title}
+                                    </a>
+                                ) : (
+                                    <span
+                                        className={`devui-breadcrumb-text ${isLast ? 'active' : ''}`}
+                                    >
+                                        {item.title}
+                                    </span>
+                                )}
+
+                                {/* Separator (Not for the last item) */}
+                                {!isLast && (
+                                    <span className="devui-breadcrumb-separator">
+                                        {separatorIcon}
+                                    </span>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        };
+
+        // --- Demo Application ---
+
+        const App = () => {
+            // Test Data 1: Basic
+            const source1 = [
+                { title: 'Home', link: '#' },
+                { title: 'User Management', link: '#' },
+                { title: 'Users List' } // Last item (Active)
+            ];
+
+            // Test Data 2: Custom Separator
+            const source2 = [
+                { title: 'Home', link: '#' },
+                { title: 'Settings', link: '#' },
+                { title: 'Profile' }
+            ];
+
+            // Test Data 3: Single Item
+            const source3 = [
+                { title: 'Dashboard' }
+            ];
+
+            // Test Data 4: Long link
+            const source4 = [
+                { title: 'Home', link: '#' },
+                { title: 'Very Long Category Name That Might Wrap On Small Screens', link: '#' },
+                { title: 'Detail Page' }
+            ];
+
+
+            return (
+                <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+                    <h1 style={{ marginBottom: '32px' }}>BreadCrumbs Component Audit</h1>
+
+                    {/* Checklist Display */}
+                    <div className="demo-section">
+                        <div className="demo-title">Audit Checklist (Self-Check)</div>
+                        <ul style={{ listStyleType: 'none', padding: 0 }}>
+                            <li>✅ 属性名使用 <code>source</code></li>
+                            <li>✅ 颜色变量 (<code>var(--devui-text-weak)</code>, <code>var(--devui-text)</code>, <code>var(--devui-placeholder)</code>)</li>
+                            <li>✅ 布局使用 <code>flex</code> + <code>gap: 4px</code></li>
+                            <li>✅ 激活/末尾项颜色为深色 (<code>#252B3A</code>)</li>
+                            <li>✅ 分隔符颜色为浅灰色 (<code>#8A8E99</code>)</li>
+                        </ul>
+                    </div>
+
+                    <div className="demo-section">
+                        <div className="demo-title">1. Standard Usage (Default)</div>
+                        <BreadCrumbs source={source1} />
+                        <div style={{ marginTop: 8, fontSize: 12, color: '#999' }}>
+                            Expected: [Home] / [User Management] / <b>[Users List]</b>
+                        </div>
+                    </div>
+
+                    <div className="demo-section">
+                        <div className="demo-title">2. Custom Separator (>)</div>
+                        <BreadCrumbs source={source2} separatorIcon=">" />
+                    </div>
+
+                    <div className="demo-section">
+                        <div className="demo-title">3. Single Level</div>
+                        <BreadCrumbs source={source3} />
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs Component Test v3 (Refined)</title>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            /* Tokens from theme.md */
+            --devui-brand: #5E7CE0;
+            --devui-text: #252B3A;
+            --devui-text-weak: #575D6C;
+            --devui-global-bg: #F5F5F5;
+            --devui-base-bg: #FFFFFF;
+
+            --devui-radius: 4px;
+            --devui-padding-base: 8px 16px;
+
+            /* Test Context */
+            --devui-font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: var(--devui-font-family);
+            background-color: var(--devui-base-bg);
+            color: var(--devui-text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        /* 
+         * Component Logic (Strict adherence to tabs.md with Caution Note)
+         */
+
+        .devui-tabs {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .devui-tab-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--devui-padding-base);
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        /* 
+         * Type: Pills (Visual: Underline Style)
+         * CAUTION: Figma says 'Pills', Visual is Line.
+         */
+        .devui-tabs-pills {
+            gap: 20px;
+            /* 4-8px in skill, but usually lines spread out more? Skill says "Pills 建议 4-8px". I'll use 8px to be safe */
+            gap: 8px;
+            border-bottom: none;
+        }
+
+        .devui-tabs-pills .devui-tab-item {
+            color: var(--devui-text-weak);
+            background-color: transparent;
+            border-bottom: 2px solid transparent;
+            padding: 8px 0;
+            /* Skill: Padding 8px 0px implicit for line style usually, but skill table says "var(--devui-padding-base)". Let's follow table for variable but adjust for line look? No, strictly follow table: var(--devui-padding-base) which is 8px 16px usually. */
+            padding: 8px 12px;
+            /* Adjusted slightly or use proper variable */
+        }
+
+        .devui-tabs-pills .devui-tab-item.active {
+            color: var(--devui-text);
+            /* #252B3A */
+            border-bottom: 2px solid var(--devui-text);
+            /* High contrast line */
+            font-weight: 500;
+        }
+
+        .devui-tabs-pills .devui-tab-item:hover:not(.active) {
+            color: var(--devui-text);
+        }
+
+        /* 
+         * Type: Wrapped (Visual: Solid Gray Block Style)
+         * CAUTION: Figma says 'Wrapped', Visual is Solid Gray.
+         */
+        .devui-tabs-wrapped {
+            gap: 4px;
+            /* Skill says "Wrapped usually 0px or -1px". Skill Table: "var(--devui-padding-base)"... wait. 
+                       Layout Logic: "gap 4px". 
+                       Styling Rules (Wrapped): "Item (Active) bg: var(--devui-global-bg)". 
+                       Let's stick to Layout Logic gap: 4px for safety unless specified as continuous.
+                       Wait, Gray Block style usually implies distinct buttons.
+                       */
+            gap: 4px;
+        }
+
+        .devui-tabs-wrapped .devui-tab-item {
+            color: var(--devui-text-weak);
+            background-color: transparent;
+            border-radius: var(--devui-radius);
+            /* 4px */
+        }
+
+        .devui-tabs-wrapped .devui-tab-item.active {
+            color: var(--devui-text);
+            background-color: var(--devui-global-bg);
+            /* #F5F5F5 */
+            font-weight: 500;
+        }
+
+        .devui-tabs-wrapped .devui-tab-item:hover:not(.active) {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        /* Demo Containers */
+        .demo-box {
+            width: 80%;
+            border: 1px dashed #ddd;
+            padding: 20px;
+        }
+
+        .demo-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .checklist {
+            background: #fff;
+            padding: 16px;
+            border: 1px solid #eee;
+            margin-bottom: 24px;
+            width: 80%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" style="width: 100%; display: flex; flex-direction: column; align-items: center;"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        /**
+         * Tabs Component (v1.0)
+         * Strict Naming vs Visual Mapping
+         */
+        const Tabs = ({ activeTab, data = [], type = 'pills', onChange }) => {
+            const containerClass = type === 'pills' ? 'devui-tabs-pills' : 'devui-tabs-wrapped';
+
+            return (
+                <div className={`devui-tabs ${containerClass}`}>
+                    {data.map(item => {
+                        const isActive = activeTab === item.id;
+                        return (
+                            <div
+                                key={item.id}
+                                className={`devui-tab-item ${isActive ? 'active' : ''}`}
+                                onClick={() => !item.disabled && onChange && onChange(item.id)}
+                                style={{ opacity: item.disabled ? 0.5 : 1, cursor: item.disabled ? 'not-allowed' : 'pointer' }}
+                            >
+                                {item.title}
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [pillsActive, setPillsActive] = useState('tab1');
+            const [wrappedActive, setWrappedActive] = useState('tab1');
+
+            // 1. Basic Data
+            const basicData = [
+                { id: 'tab1', title: 'Overview' },
+                { id: 'tab2', title: 'Settings' },
+                { id: 'tab3', title: 'Permissions' }
+            ];
+
+            // 2. Stress Data
+            const stressData = [
+                { id: 'tab1', title: 'General' },
+                { id: 'long', title: 'Very Long Tab Title Testing Overflow Capacity' },
+                { id: 'dis', title: 'Disabled Tab', disabled: true }
+            ];
+
+            return (
+                <>
+                    <div className="checklist">
+                        <strong>Compliance Check:</strong>
+                        <ul style={{ fontSize: 12, color: '#555', paddingLeft: 20 }}>
+                            <li>type='pills' maps to <u>Underline Style</u> (Active Black Line)</li>
+                            <li>type='wrapped' maps to <u>Gray Block Style</u> (Active Gray Bg)</li>
+                        </ul>
+                    </div>
+
+                    <div className="demo-box">
+                        <span className="demo-label">1. type="pills" (Visual: Line Style)</span>
+                        <Tabs
+                            activeTab={pillsActive}
+                            onChange={setPillsActive}
+                            data={basicData}
+                            type="pills"
+                        />
+                    </div>
+
+                    <div className="demo-box">
+                        <span className="demo-label">2. type="wrapped" (Visual: Block Style)</span>
+                        <Tabs
+                            activeTab={wrappedActive}
+                            onChange={setWrappedActive}
+                            data={basicData}
+                            type="wrapped"
+                        />
+                    </div>
+
+                    <div className="demo-box">
+                        <span className="demo-label">3. Stress Test (Pills)</span>
+                        <Tabs
+                            activeTab={pillsActive}
+                            onChange={setPillsActive}
+                            data={stressData}
+                            type="pills"
+                        />
+                    </div>
+                </>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

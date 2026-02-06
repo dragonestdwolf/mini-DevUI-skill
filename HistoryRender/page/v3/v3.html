@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Page Render v3</title>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            /* Brand Colors */
+            --devui-brand: #5E7CE0;
+            --devui-brand-foil: #859BFF;
+            --devui-brand-hover: #7693F5;
+            --devui-brand-active: #526ECC;
+            --devui-brand-active-focus: #344899;
+
+            /* Background Colors */
+            --devui-global-bg: #F5F5F5;
+            --devui-base-bg: #FFFFFF;
+            --devui-block: #FFFFFF;
+            --devui-area: #F8F8F8;
+            --devui-gray-form-control-bg: #F5F5F5;
+            --devui-list-item-hover-bg: #F2F5FC;
+            --devui-list-item-strip-bg: #F2F5FC;
+            --devui-label-bg: #EEF0F5;
+
+            /* Text Colors */
+            --devui-text: #252B3A;
+            --devui-text-weak: #575D6C;
+            --devui-aide-text: #8A8E99;
+            --devui-placeholder: #8A8E99;
+            --devui-light-text: #FFFFFF;
+            --devui-link: #526ECC;
+
+            /* Border/Line Colors */
+            --devui-line: #ADB0B8;
+            --devui-dividing-line: #DFE1E6;
+            --devui-form-control-line: #ADB0B8;
+            --devui-form-control-line-hover: #575D6C;
+            --devui-form-control-line-active: #5E7CE0;
+
+            /* Shadows */
+            --devui-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+            --devui-hover-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
+
+            /* Font & Radius */
+            --devui-font-size: 12px;
+            --devui-font-size-card-title: 16px;
+            --devui-radius: 4px;
+            --devui-radius-card: 4px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: var(--devui-font-size);
+            color: var(--devui-text);
+            background-color: var(--devui-global-bg);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Layout Structure */
+        .layout-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .layout-header {
+            height: 40px;
+            width: 100%;
+            background-color: var(--devui-base-bg);
+            border-bottom: 1px solid var(--devui-dividing-line);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+
+        .layout-body {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
+
+        .layout-sidebar {
+            width: 280px;
+            height: 100%;
+            background-color: var(--devui-base-bg);
+            border-right: 1px solid var(--devui-dividing-line);
+            flex-shrink: 0;
+        }
+
+        .layout-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: var(--devui-global-bg);
+        }
+
+        .layout-subheader {
+            height: 80px;
+            width: 100%;
+            background-color: var(--devui-base-bg);
+            border-bottom: 1px solid var(--devui-dividing-line);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+
+        .layout-content {
+            flex: 1;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Card Component */
+        .card {
+            background-color: var(--devui-block);
+            border-radius: var(--devui-radius-card);
+            box-shadow: var(--devui-shadow);
+            padding: 20px;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .card:hover {
+            box-shadow: var(--devui-hover-shadow);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--devui-brand-foil);
+            /* Fallback/Placeholder color */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .card-title {
+            font-size: var(--devui-font-size-card-title);
+            font-weight: 600;
+            color: var(--devui-text);
+        }
+
+        .card-desc {
+            color: var(--devui-text-weak);
+            line-height: 1.5;
+            margin-bottom: 20px;
+            height: 40px;
+            /* Limit height for uniform look */
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--devui-dividing-line);
+            padding-top: 16px;
+        }
+
+        .action-link {
+            color: var(--devui-link);
+            text-decoration: none;
+            margin-right: 16px;
+        }
+
+        .action-link:hover {
+            color: var(--devui-link-active);
+        }
+
+        /* Form Inputs (Reused) */
+        .form-control {
+            height: 32px;
+            padding: 0 12px;
+            border: 1px solid var(--devui-form-control-line);
+            background-color: var(--devui-gray-form-control-bg);
+            border-radius: var(--devui-radius);
+            color: var(--devui-text);
+            outline: none;
+            width: 240px;
+        }
+
+        /* Placeholders */
+        .logo-placeholder {
+            width: 100px;
+            height: 24px;
+            background: var(--devui-dividing-line);
+            border-radius: 4px;
+        }
+
+        .menu-item {
+            padding: 12px 24px;
+            color: var(--devui-text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-item:hover {
+            background-color: var(--devui-list-item-hover-bg);
+            color: var(--devui-brand);
+        }
+
+        .menu-item.active {
+            background-color: var(--devui-list-item-strip-bg);
+            color: var(--devui-brand);
+            border-right: 3px solid var(--devui-brand);
+        }
+
+        /* Utility */
+        .flex {
+            display: flex;
+        }
+
+        .gap-sm {
+            gap: 8px;
+        }
+
+        .gap-md {
+            gap: 16px;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Components
+        const Header = () => (
+            <header className="layout-header justify-between">
+                <div className="flex items-center gap-md">
+                    <div className="logo-placeholder"></div>
+                    <span style={{ color: 'var(--devui-text)', fontWeight: 'bold' }}>DevUI Center</span>
+                </div>
+                <div className="flex items-center gap-md">
+                    <span style={{ color: 'var(--devui-text-weak)' }}>User</span>
+                </div>
+            </header>
+        );
+
+        const Sidebar = () => (
+            <aside className="layout-sidebar">
+                <div style={{ padding: '16px 24px', color: 'var(--devui-aide-text)', fontSize: '14px' }}>MENU</div>
+                <div className="menu-item">Dashboard</div>
+                <div className="menu-item">Create Task</div>
+                <div className="menu-item active">Card List</div>
+                <div className="menu-item">Settings</div>
+            </aside>
+        );
+
+        const SubHeader = () => (
+            <div className="layout-subheader justify-between">
+                <div style={{ fontSize: 'var(--devui-font-size-card-title)', fontWeight: 'bold', color: 'var(--devui-text)' }}>
+                    My Projects
+                </div>
+                <div className="flex gap-sm">
+                    <input className="form-control" placeholder="Search cards..." />
+                    <button className="btn" style={{ height: '32px', padding: '0 16px', background: 'var(--devui-brand)', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Search</button>
+                </div>
+            </div>
+        );
+
+        const Card = ({ title, desc, tag }) => (
+            <div className="card">
+                <div className="card-header">
+                    <div className="card-icon" style={{ backgroundColor: tag === 'A' ? '#5E7CE0' : tag === 'B' ? '#50D4AB' : '#FAC20A' }}>
+                        {tag}
+                    </div>
+                    <div className="card-title">{title}</div>
+                </div>
+                <div className="card-desc">
+                    {desc}
+                </div>
+                <div className="card-actions">
+                    <div>
+                        <span style={{ fontSize: '12px', color: 'var(--devui-aide-text)' }}>Last updated 2h ago</span>
+                    </div>
+                    <div>
+                        <a href="#" className="action-link">Settings</a>
+                        <a href="#" className="action-link">More</a>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const CardContent = () => {
+            const cards = [
+                { id: 1, title: 'Analysis System', desc: 'Real-time data analysis and visualization dashboard for enterprise users.', tag: 'A' },
+                { id: 2, title: 'DevOps Platform', desc: 'Continuous integration and deployment pipeline management.', tag: 'D' },
+                { id: 3, title: 'Monitor Center', desc: 'Server health monitoring and alerting system.', tag: 'M' },
+                { id: 4, title: 'User Management', desc: 'Centralized user authentication and authorization service.', tag: 'U' },
+                { id: 5, title: 'Payment Gateway', desc: 'Secure payment processing integration.', tag: 'P' },
+                { id: 6, title: 'Notification Svc', desc: 'Email, SMS, and Push notification delivery service.', tag: 'N' },
+            ];
+
+            return (
+                <div className="card-grid">
+                    {cards.map(card => (
+                        <Card key={card.id} {...card} />
+                    ))}
+                    {/* Add more mock cards to fill grid */}
+                    {cards.map(card => (
+                        <Card key={`copy-${card.id}`} {...card} title={`${card.title} (Copy)`} />
+                    ))}
+                </div>
+            );
+        };
+
+        const App = () => {
+            return (
+                <div className="layout-container">
+                    <Header />
+                    <div className="layout-body">
+                        <Sidebar />
+                        <main className="layout-main">
+                            <SubHeader />
+                            <div className="layout-content">
+                                <CardContent />
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

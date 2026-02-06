@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BreadCrumbs Component Test v2</title>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            /* Theme Tokens from theme.md */
+            --devui-brand: #5E7CE0;
+            --devui-text: #252B3A;
+            --devui-text-weak: #575D6C;
+            --devui-placeholder: #8A8E99;
+            --devui-link: #526ECC;
+            --devui-base-bg: #FFFFFF;
+            --devui-global-bg: #F5F5F5;
+            --devui-primary: #5E7CE0;
+
+            /* Font */
+            --devui-font-family: 'Noto Sans SC', sans-serif;
+            --devui-font-size: 14px;
+            --devui-line-height: 22px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--devui-font-family);
+            background-color: var(--devui-base-bg);
+            /* Center canvas requires simple bg */
+            color: var(--devui-text);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 
+         * Component Logic Implementation 
+         * Path: skill/3.component/bread_crumbs.md
+         */
+
+        /* 1. Root Container */
+        .devui-breadcrumb {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0px;
+            /* Strict Skill Rule */
+
+            font-size: var(--devui-font-size);
+            line-height: var(--devui-line-height);
+        }
+
+        /* 2. Item Wrapper */
+        .devui-breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 0px;
+            /* Strict Skill Rule */
+        }
+
+        /* 3. Content Group (Text + Optional Icon) */
+        .item-content {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            /* Strict Skill Rule: Atomic spacing */
+        }
+
+        /* 4. Separator */
+        .separator {
+            width: 16px;
+            /* Strict Skill Rule: Fixed width */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--devui-placeholder);
+            /* Token Map */
+            margin: 0;
+            /* Anti-Pattern Check */
+        }
+
+        /* Styles */
+        .breadcrumb-link {
+            color: var(--devui-text-weak);
+            text-decoration: none;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .breadcrumb-link:hover {
+            color: var(--devui-primary);
+            /* Interaction Note */
+            text-decoration: underline;
+        }
+
+        .breadcrumb-text {
+            color: var(--devui-text-weak);
+            cursor: default;
+        }
+
+        /* Active State */
+        .breadcrumb-text.active {
+            color: var(--devui-text);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        /**
+         * BreadCrumbs Component
+         * Version: v1.1
+         */
+        const BreadCrumbs = ({ source = [], separatorIcon = '/', size = 'md' }) => {
+            return (
+                <div className="devui-breadcrumb">
+                    {source.map((item, index) => {
+                        const isLast = index === source.length - 1;
+
+                        return (
+                            <div key={index} className="devui-breadcrumb-item">
+                                {/* Content Group */}
+                                <div className="item-content">
+                                    {item.link && !item.noNavigation && !isLast ? (
+                                        <a
+                                            href={item.link}
+                                            target={item.target || '_self'}
+                                            className="breadcrumb-link"
+                                        >
+                                            {item.title}
+                                        </a>
+                                    ) : (
+                                        <span
+                                            className={`breadcrumb-text ${isLast ? 'active' : ''}`}
+                                        >
+                                            {item.title}
+                                        </span>
+                                    )}
+                                </div>
+
+                                {/* Separator */}
+                                {!isLast && (
+                                    <div className="separator">
+                                        {separatorIcon}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        };
+
+        const App = () => {
+            // Stress Test Data
+            const stressData = [
+                { title: 'Project Root', link: '#' },
+                { title: 'System Settings', link: '#' },
+                { title: 'The Longest Breadcrumb Name In The History Of Breadcrumbs Since 1999 To Test Overflow', link: '#' },
+                { title: 'Current Page' }
+            ];
+
+            const basicData = [
+                { title: 'Home', link: '#' },
+                { title: 'Data', link: '#' },
+                { title: 'Analysis' }
+            ];
+
+            return (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', maxWidth: '800px' }}>
+
+                    {/* Scenario 1: Basic Usage */}
+                    <div>
+                        <h3 style={{ marginBottom: 10, color: '#999', fontSize: 12 }}>1. Basic Usage</h3>
+                        <BreadCrumbs source={basicData} />
+                    </div>
+
+                    {/* Scenario 2: Stress Test (Long Text) */}
+                    <div>
+                        <h3 style={{ marginBottom: 10, color: '#999', fontSize: 12 }}>2. Text Overflow Stress Test</h3>
+                        <BreadCrumbs source={stressData} />
+                    </div>
+
+                    {/* Scenario 3: Custom Separator */}
+                    <div>
+                        <h3 style={{ marginBottom: 10, color: '#999', fontSize: 12 }}>3. Custom Separator (>)</h3>
+                        <BreadCrumbs source={basicData} separatorIcon=">" />
+                    </div>
+
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

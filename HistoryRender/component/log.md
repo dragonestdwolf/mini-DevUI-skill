@@ -1,0 +1,1 @@
+(no：v3(Correction) 时间：02-05 16:55 框架与库：Angular / DevUI 读取 Skill：tabs.md 生成描述：紧急修正！发现 Skill 中存在【Naming vs Visual】的严重警告。根据修正后的 Skill：type='pills' 映射为下划线样式 (Line Style)，type='wrapped' 映射为灰块样式 (Solid Block)。本次生成已严格遵循该视觉映射，覆盖了文字颜色、背景色及 Active 状态的特殊处理。 输出位置：/HistoryRender/component/v3/ )

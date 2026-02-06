@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breadcrumbs Page Render v4</title>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            /* Brand Colors */
+            --devui-brand: #5E7CE0;
+
+            /* Background Colors */
+            --devui-global-bg: #F5F5F5;
+            --devui-base-bg: #FFFFFF;
+            --devui-list-item-hover-bg: #F2F5FC;
+            --devui-list-item-strip-bg: #F2F5FC;
+
+            /* Text Colors */
+            --devui-text: #252B3A;
+            --devui-text-weak: #575D6C;
+            --devui-aide-text: #8A8E99;
+            --devui-placeholder: #8A8E99;
+            --devui-link: #526ECC;
+            --devui-primary: #5E7CE0;
+
+            /* Border/Line Colors */
+            --devui-dividing-line: #DFE1E6;
+
+            /* Font */
+            --devui-font-size: 14px;
+            /* Breadcrumb uses 14px */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 12px;
+            color: var(--devui-text);
+            background-color: var(--devui-global-bg);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Layout Structure */
+        .layout-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .layout-header {
+            height: 40px;
+            width: 100%;
+            background-color: var(--devui-base-bg);
+            border-bottom: 1px solid var(--devui-dividing-line);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+
+        .layout-body {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
+
+        .layout-sidebar {
+            width: 280px;
+            height: 100%;
+            background-color: var(--devui-base-bg);
+            border-right: 1px solid var(--devui-dividing-line);
+            flex-shrink: 0;
+        }
+
+        .layout-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: var(--devui-global-bg);
+        }
+
+        .layout-subheader {
+            height: 80px;
+            width: 100%;
+            background-color: var(--devui-base-bg);
+            border-bottom: 1px solid var(--devui-dividing-line);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+
+        .layout-content {
+            flex: 1;
+            padding: 24px;
+            /* Adjusted padding */
+            overflow: auto;
+        }
+
+        /* Breadcrumbs Component Styles */
+        .d-breadcrumb {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 14px;
+            line-height: 22px;
+        }
+
+        .d-breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            /* Skill Requirement: 4px gap */
+            color: var(--devui-text-weak);
+        }
+
+        .d-breadcrumb-item a {
+            color: var(--devui-text-weak);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .d-breadcrumb-item a:hover {
+            color: var(--devui-primary);
+            /* Skill Recommendation: Hover Color */
+        }
+
+        .d-breadcrumb-item.active {
+            color: var(--devui-text);
+            /* Skill Requirement: Active Color */
+            font-weight: normal;
+        }
+
+        .d-breadcrumb-separator {
+            color: var(--devui-placeholder);
+            /* Skill Requirement: Separator Color */
+            margin: 0 8px;
+            /* Visual spacing around separator in addition to gap, adjusting to match visual rhythm if needed, 
+                              but strict skill says 'gap: 4px' on item wrapper. 
+                              Let's stick to the skill: item wrapper has gap:4px. 
+                              The structure: Item + Separator. layout logic says Container flex align-center.
+                              Item Wrapper: display flex align-center gap 4px.
+                           */
+            margin: 0 4px;
+            /* Using margin to space separator from NEXT item if flat structure, but let's use the DOM structure below */
+        }
+
+        /* Re-implementing strict skill structure */
+        .breadcrumb-container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            /* Visually adjusting gap between items including separator */
+        }
+
+        .breadcrumb-item-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            /* Gap between Text and Separator */
+        }
+
+        .breadcrumb-link {
+            color: var(--devui-text-weak);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .breadcrumb-link:hover {
+            color: var(--devui-primary);
+        }
+
+        .breadcrumb-text-active {
+            color: var(--devui-text);
+        }
+
+        .breadcrumb-separator {
+            color: var(--devui-placeholder);
+        }
+
+
+        /* Placeholders */
+        .logo-placeholder {
+            width: 100px;
+            height: 24px;
+            background: var(--devui-dividing-line);
+            border-radius: 4px;
+        }
+
+        .menu-item {
+            padding: 12px 24px;
+            color: var(--devui-text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-item:hover {
+            background-color: var(--devui-list-item-hover-bg);
+            color: var(--devui-brand);
+        }
+
+        .menu-item.active {
+            background-color: var(--devui-list-item-strip-bg);
+            color: var(--devui-brand);
+            border-right: 3px solid var(--devui-brand);
+        }
+
+        /* Utility */
+        .flex {
+            display: flex;
+        }
+
+        .gap-md {
+            gap: 16px;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Components
+        const Header = () => (
+            <header className="layout-header justify-between">
+                <div className="flex items-center gap-md">
+                    <div className="logo-placeholder"></div>
+                    <span style={{ color: 'var(--devui-text)', fontWeight: 'bold' }}>DevUI Center</span>
+                </div>
+            </header>
+        );
+
+        const Sidebar = () => (
+            <aside className="layout-sidebar">
+                <div style={{ padding: '16px 24px', color: 'var(--devui-aide-text)', fontSize: '14px' }}>MENU</div>
+                <div className="menu-item">Dashboard</div>
+                <div className="menu-item active">Work Items</div>
+                <div className="menu-item">Settings</div>
+            </aside>
+        );
+
+        const SubHeader = () => (
+            <div className="layout-subheader justify-between">
+                <div style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--devui-text)' }}>
+                    Work Items
+                </div>
+            </div>
+        );
+
+        const Breadcrumbs = ({ source }) => {
+            return (
+                <div className="breadcrumb-container" style={{ fontSize: '14px' }}>
+                    {source.map((item, index) => {
+                        const isLast = index === source.length - 1;
+                        return (
+                            <div key={index} className="breadcrumb-item-wrapper">
+                                {isLast ? (
+                                    <span className="breadcrumb-text-active">{item.title}</span>
+                                ) : (
+                                    <a href={item.link} className="breadcrumb-link">{item.title}</a>
+                                )}
+                                {!isLast && (
+                                    <span className="breadcrumb-separator">/</span>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        };
+
+        const App = () => {
+            const breadcrumbData = [
+                { title: '首页', link: '#' },
+                { title: 'DevOps全流程示例项目', link: '#' },
+                { title: '工作项', link: '#' } // Active
+            ];
+
+            return (
+                <div className="layout-container">
+                    <Header />
+                    <div className="layout-body">
+                        <Sidebar />
+                        <main className="layout-main">
+                            <SubHeader />
+                            <div className="layout-content">
+                                <div style={{ marginBottom: '20px' }}>
+                                    {/* Breadcrumbs placed here */}
+                                    <Breadcrumbs source={breadcrumbData} />
+                                </div>
+                                <div style={{ height: '200px', background: 'white', borderRadius: '4px', padding: '20px', border: '1px dashed #ddd', color: '#999' }}>
+                                    Page Content Area
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

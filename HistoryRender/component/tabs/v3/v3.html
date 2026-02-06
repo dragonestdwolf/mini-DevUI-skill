@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs Component Test v3</title>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            /* Tokens from theme.md */
+            --devui-brand: #5E7CE0;
+            --devui-text: #252B3A;
+            --devui-light-text: #FFFFFF;
+            --devui-area: #F8F8F8;
+            --devui-global-bg: #F5F5F5;
+            --devui-base-bg: #FFFFFF;
+            --devui-dividing-line: #DFE1E6;
+
+            --devui-radius: 4px;
+            --devui-padding-base: 8px 16px;
+
+            /* Test Context */
+            --devui-font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: var(--devui-font-family);
+            background-color: var(--devui-base-bg);
+            color: var(--devui-text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        /* 
+         * Component Logic (Strict adherence to tabs.md)
+         */
+
+        .devui-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            /* Safety for overflow */
+        }
+
+        .devui-tab-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--devui-padding-base);
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        /* 
+         * Type: Pills Styles 
+         */
+        .devui-tabs-pills {
+            gap: 4px;
+            /* Token recommendation */
+            background-color: var(--devui-area);
+            padding: 4px;
+            border-radius: var(--devui-radius);
+            width: fit-content;
+            /* Ensure container wraps content */
+        }
+
+        .devui-tabs-pills .devui-tab-item {
+            color: var(--devui-text);
+            background-color: transparent;
+            border-radius: var(--devui-radius);
+        }
+
+        .devui-tabs-pills .devui-tab-item.active {
+            color: var(--devui-light-text);
+            background-color: var(--devui-brand);
+        }
+
+        /* 
+         * Type: Wrapped Styles 
+         */
+        .devui-tabs-wrapped {
+            gap: 0;
+            /* Continuous look */
+            border-bottom: 1px solid var(--devui-dividing-line);
+            width: 100%;
+            /* Spans full width */
+            padding-left: 20px;
+            /* Optional offset */
+        }
+
+        .devui-tabs-wrapped .devui-tab-item {
+            background-color: var(--devui-global-bg);
+            border: 1px solid transparent;
+            border-bottom: none;
+            /* Initial state */
+            border-radius: var(--devui-radius) var(--devui-radius) 0 0;
+            color: var(--devui-text);
+            margin-bottom: -1px;
+            /* Overlap bottom border */
+        }
+
+        .devui-tabs-wrapped .devui-tab-item.active {
+            background-color: var(--devui-base-bg);
+            border-top: 1px solid var(--devui-dividing-line);
+            border-left: 1px solid var(--devui-dividing-line);
+            border-right: 1px solid var(--devui-dividing-line);
+            border-bottom: 1px solid var(--devui-base-bg);
+            /* Mask main border */
+            color: var(--devui-brand);
+            font-weight: bold;
+            /* Optional visual enhancement */
+        }
+
+        /* Demo Containers */
+        .demo-box {
+            width: 80%;
+            border: 1px dashed #ddd;
+            padding: 20px;
+        }
+
+        .demo-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" style="width: 100%; display: flex; flex-direction: column; align-items: center;"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        /**
+         * Tabs Component (v1.0)
+         * Props: activeTab, data, type, onChange
+         */
+        const Tabs = ({ activeTab, data = [], type = 'pills', onChange }) => {
+            const containerClass = type === 'pills' ? 'devui-tabs-pills' : 'devui-tabs-wrapped';
+
+            return (
+                <div className={`devui-tabs ${containerClass}`}>
+                    {data.map(item => {
+                        const isActive = activeTab === item.id;
+                        return (
+                            <div
+                                key={item.id}
+                                className={`devui-tab-item ${isActive ? 'active' : ''}`}
+                                onClick={() => !item.disabled && onChange && onChange(item.id)}
+                                style={{ opacity: item.disabled ? 0.5 : 1, cursor: item.disabled ? 'not-allowed' : 'pointer' }}
+                            >
+                                {item.title}
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [pillsActive, setPillsActive] = useState('tab1');
+            const [wrappedActive, setWrappedActive] = useState('tab1');
+
+            // 1. Basic Data
+            const basicData = [
+                { id: 'tab1', title: 'Option 1' },
+                { id: 'tab2', title: 'Option 2' },
+                { id: 'tab3', title: 'Option 3' }
+            ];
+
+            // 2. Stress Test Data (Long text, Special chars)
+            const stressData = [
+                { id: 'tab1', title: 'General Info' },
+                { id: 'long', title: 'An Extremely Long Tab Title To Test Overflow Behavior In The Container' },
+                { id: 'special', title: '!@#$%^&*()_+' },
+                { id: 'disabled', title: 'Disabled Item', disabled: true }
+            ];
+
+            return (
+                <>
+                    <div className="demo-box">
+                        <span className="demo-label">1. Type: Pills (Default)</span>
+                        <Tabs
+                            activeTab={pillsActive}
+                            onChange={setPillsActive}
+                            data={basicData}
+                            type="pills"
+                        />
+                    </div>
+
+                    <div className="demo-box">
+                        <span className="demo-label">2. Type: Wrapped</span>
+                        <Tabs
+                            activeTab={wrappedActive}
+                            onChange={setWrappedActive}
+                            data={basicData}
+                            type="wrapped"
+                        />
+                        <div style={{ padding: '20px', border: '1px solid #DFE1E6', borderTop: 'none' }}>
+                            Content Area (To show connectivity)
+                        </div>
+                    </div>
+
+                    <div className="demo-box">
+                        <span className="demo-label">3. Stress Test (Pills) - Long Text & Disabled</span>
+                        <Tabs
+                            activeTab={pillsActive}
+                            onChange={setPillsActive}
+                            data={stressData}
+                            type="pills"
+                        />
+                    </div>
+                </>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
