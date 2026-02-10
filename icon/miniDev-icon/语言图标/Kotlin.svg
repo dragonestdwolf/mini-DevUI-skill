@@ -1,0 +1,36 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48.000000" height="48.000000" fill="none">
+	<defs>
+		<linearGradient id="paint_linear_83" x1="16.2589912" x2="30.928772" y1="35.0468254" y2="31.3548775" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(0,149,213)" offset="0.0967700034" stop-opacity="1" />
+			<stop stop-color="rgb(35,138,217)" offset="0.300700009" stop-opacity="1" />
+			<stop stop-color="rgb(85,123,222)" offset="0.621100008" stop-opacity="1" />
+			<stop stop-color="rgb(116,114,226)" offset="0.864300013" stop-opacity="1" />
+			<stop stop-color="rgb(128,110,227)" offset="1" stop-opacity="1" />
+		</linearGradient>
+		<linearGradient id="paint_linear_84" x1="10.9762373" x2="18.2845497" y1="14.2405844" y2="7.99999714" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(0,149,213)" offset="0.118299998" stop-opacity="1" />
+			<stop stop-color="rgb(60,131,220)" offset="0.417800009" stop-opacity="1" />
+			<stop stop-color="rgb(109,116,225)" offset="0.696200013" stop-opacity="1" />
+			<stop stop-color="rgb(128,110,227)" offset="0.833299994" stop-opacity="1" />
+		</linearGradient>
+		<linearGradient id="paint_linear_85" x1="8.00000572" x2="31.6660538" y1="36.5472641" y2="8.00000191" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(199,87,188)" offset="0.107500002" stop-opacity="1" />
+			<stop stop-color="rgb(208,96,154)" offset="0.213799998" stop-opacity="1" />
+			<stop stop-color="rgb(225,114,92)" offset="0.425399989" stop-opacity="1" />
+			<stop stop-color="rgb(238,126,47)" offset="0.604799986" stop-opacity="1" />
+			<stop stop-color="rgb(245,134,19)" offset="0.742999971" stop-opacity="1" />
+			<stop stop-color="rgb(248,137,9)" offset="0.823199987" stop-opacity="1" />
+		</linearGradient>
+	</defs>
+	<rect id="语言图标/Kotlin" width="48.000000" height="48.000000" x="0.000000" y="0.000000" />
+	<g id="模型/Kotlin">
+		<g id="Kotlin_Icon">
+			<path id="XMLID_2_" d="M8 39.0499L23.5767 23.4731L39.05 39.0499L8 39.0499Z" fill="url(#paint_linear_83)" fill-rule="nonzero" />
+			<path id="XMLID_2_" d="M23.5767 23.4731L39.05 39.0499L8 39.0499L23.5767 23.4731Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+			<path id="路径" d="M8 8L23.5767 8L8 24.8188L8 8Z" fill="url(#paint_linear_84)" fill-rule="nonzero" />
+			<path id="路径" d="M23.5767 8L8 24.8188L8 8L23.5767 8Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+			<path id="路径" d="M23.5767 8L8 24.4048L8 39.05L23.5767 23.4733L39.05 8L23.5767 8Z" fill="url(#paint_linear_85)" fill-rule="nonzero" />
+			<path id="路径" d="M8 24.4048L8 39.05L23.5767 23.4733L39.05 8L23.5767 8L8 24.4048Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+		</g>
+	</g>
+</svg>

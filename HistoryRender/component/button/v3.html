@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Component Test v3</title>
+    <style>
+        /* 
+           ------------------------------------------------
+           Design Tokens (Simulated from Button Skill)
+           ------------------------------------------------
+        */
+        :root {
+            /* Palette */
+            --devui-primary: #5E7CE0;
+            --devui-primary-hover: #7693F5;
+            --devui-primary-active: #344899;
+            --devui-primary-disabled: #BECCFA;
+
+            --devui-text: #252B3A;
+            --devui-light-text: #FFFFFF;
+
+            --devui-base-bg: #FFFFFF;
+            --devui-global-bg: #F5F5F5;
+
+            /* Lines */
+            --devui-line: #D7D8DA;
+            --devui-form-control-line: #ADB0B8;
+            --devui-form-control-line-hover: #575D6C;
+            --devui-form-control-line-active: #5E7CE0;
+
+            --devui-disabled-line: #DFE1E6;
+            --devui-disabled-text: #ADB0B8;
+            /* or #BABBC0 */
+            --devui-btn-common-bg-disabled: #F5F5F5;
+
+            /* Common */
+            --devui-radius: 4px;
+            --devui-font-size: 14px;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            background-color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            gap: 32px;
+        }
+
+        h2 {
+            margin: 0 0 16px 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .test-section {
+            border: 1px dashed #E0E0E0;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* 
+           ------------------------------------------------
+           Component Implementation: Button
+           ------------------------------------------------
+        */
+
+        .devui-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            gap: 4px;
+            /* Content & Icon gap */
+
+            border-radius: var(--devui-radius);
+            font-size: var(--devui-font-size);
+            font-weight: 400;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-sizing: border-box;
+            text-decoration: none;
+            outline: none;
+        }
+
+        /* --- SIZES --- */
+
+        /* sm: Height 28px, Padding 0 12px */
+        .devui-btn.size-sm {
+            height: 28px;
+            padding: 0 12px;
+            font-size: 12px;
+        }
+
+        /* md: Height 32px, Padding 0 16px */
+        .devui-btn.size-md {
+            height: 32px;
+            padding: 0 16px;
+        }
+
+        /* lg: Height 40px, Padding 0 20px */
+        .devui-btn.size-lg {
+            height: 40px;
+            padding: 0 20px;
+            font-size: 16px;
+        }
+
+        /* --- VARIANTS --- */
+
+        /* 1. Primary */
+        .devui-btn.variant-primary {
+            background-color: var(--devui-primary);
+            color: var(--devui-light-text);
+            border: 1px solid transparent;
+        }
+
+        .devui-btn.variant-primary:hover:not(.disabled) {
+            background-color: var(--devui-primary-hover);
+        }
+
+        .devui-btn.variant-primary:active:not(.disabled) {
+            background-color: var(--devui-primary-active);
+        }
+
+        .devui-btn.variant-primary.disabled {
+            background-color: var(--devui-primary-disabled);
+            color: var(--devui-light-text);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* 2. Secondary */
+        .devui-btn.variant-secondary {
+            background-color: var(--devui-base-bg);
+            color: var(--devui-text);
+            border: 1px solid var(--devui-form-control-line);
+        }
+
+        .devui-btn.variant-secondary:hover:not(.disabled) {
+            color: var(--devui-primary);
+            border-color: var(--devui-form-control-line-hover);
+            /* Note: Skill says hover color is primary, consistent with typical outline buttons */
+        }
+
+        .devui-btn.variant-secondary:active:not(.disabled) {
+            color: var(--devui-primary-active);
+            border-color: var(--devui-form-control-line-active);
+        }
+
+        .devui-btn.variant-secondary.disabled {
+            background-color: var(--devui-btn-common-bg-disabled);
+            border-color: var(--devui-disabled-line);
+            color: var(--devui-disabled-text);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* 3. Text */
+        .devui-btn.variant-text {
+            background-color: transparent;
+            color: var(--devui-text);
+            border: 1px solid transparent;
+            padding: 0 8px;
+            /* Special padding for text variant */
+        }
+
+        .devui-btn.variant-text:hover:not(.disabled) {
+            color: var(--devui-primary);
+            background-color: rgba(94, 124, 224, 0.1);
+            /* Optional hover bg for better UX */
+        }
+
+        .devui-btn.variant-text:active:not(.disabled) {
+            color: var(--devui-primary-active);
+        }
+
+        .devui-btn.variant-text.disabled {
+            background-color: transparent;
+            color: var(--devui-disabled-text);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Icon Helper */
+        .icon-mock {
+            width: 16px;
+            height: 16px;
+            background-color: currentColor;
+            opacity: 0.8;
+            mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 0a8 8 0 100 16A8 8 0 008 0zm3.5 11.5L8 8l-3.5 3.5L3 10l3.5-3.5L3 3l1.5-1.5L8 5l3.5-3.5L13 3 9.5 6.5l3.5 3.5-1.5 1.5z' fill-rule='evenodd'/%3E%3C/svg%3E");
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 0a8 8 0 100 16A8 8 0 008 0zm3.5 11.5L8 8l-3.5 3.5L3 10l3.5-3.5L3 3l1.5-1.5L8 5l3.5-3.5L13 3 9.5 6.5l3.5 3.5-1.5 1.5z' fill-rule='evenodd'/%3E%3C/svg%3E");
+            mask-size: contain;
+            -webkit-mask-size: contain;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Button Component Validation (v3)</h2>
+
+        <!-- 1. Standard Variants & Sizes -->
+        <div class="test-section">
+            <span class="section-title">1. Standard Variants & Sizes</span>
+
+            <div style="display:flex; flex-direction:column; gap:16px;">
+                <!-- Primary -->
+                <div class="row">
+                    <button class="devui-btn variant-primary size-sm">Primary Small</button>
+                    <button class="devui-btn variant-primary size-md">Primary Medium</button>
+                    <button class="devui-btn variant-primary size-lg">Primary Large</button>
+                    <button class="devui-btn variant-primary size-md disabled">Disabled</button>
+                </div>
+
+                <!-- Secondary -->
+                <div class="row">
+                    <button class="devui-btn variant-secondary size-sm">Common Small</button>
+                    <button class="devui-btn variant-secondary size-md">Common Medium</button>
+                    <button class="devui-btn variant-secondary size-lg">Common Large</button>
+                    <button class="devui-btn variant-secondary size-md disabled">Disabled</button>
+                </div>
+
+                <!-- Text -->
+                <div class="row">
+                    <button class="devui-btn variant-text size-sm">Text Small</button>
+                    <button class="devui-btn variant-text size-md">Text Medium</button>
+                    <button class="devui-btn variant-text size-lg">Text Large</button>
+                    <button class="devui-btn variant-text size-md disabled">Disabled</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Robustness: Content Stress Test -->
+        <div class="test-section">
+            <span class="section-title">2. Robustness: Content Stress Test</span>
+            <div class="row">
+                <!-- Long Text -->
+                <button class="devui-btn variant-secondary size-md">
+                    Extremely Long Button Text To Test Flex Shrink or Overflow Behavior Which Should Not Wrap
+                </button>
+
+                <!-- Symbol/Emoji -->
+                <button class="devui-btn variant-primary size-md">
+                    Action ❤️ ⭐ 🚀
+                </button>
+
+                <!-- Mixed Language -->
+                <button class="devui-btn variant-secondary size-md">
+                    提交 | Submit | 確定
+                </button>
+
+                <!-- Empty (Edge Case) -->
+                <button class="devui-btn variant-secondary size-md">
+                    <!-- Empty Content -->
+                </button>
+                <span style="font-size:10px; color:#999;">(Empty Button)</span>
+            </div>
+        </div>
+
+        <!-- 3. Icon Integration -->
+        <div class="test-section">
+            <span class="section-title">3. Icon Integration (Simulated)</span>
+            <div class="row">
+                <!-- Icon + Text -->
+                <button class="devui-btn variant-primary size-md">
+                    <span class="icon-mock"></span>
+                    <span>Create New</span>
+                </button>
+
+                <!-- Text + Icon -->
+                <button class="devui-btn variant-secondary size-md">
+                    <span>Next Step</span>
+                    <span class="icon-mock"></span>
+                </button>
+
+                <!-- Icon Only -->
+                <button class="devui-btn variant-text size-md">
+                    <span class="icon-mock"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 4. Token Check (Audit) -->
+        <div class="test-section" style="background: #f9f9f9;">
+            <span class="section-title">4. Token Audit (Visual Check)</span>
+            <div style="font-size: 13px; color: #555; line-height: 1.6;">
+                <ul>
+                    <li><strong>Primary Bg:</strong> <code>var(--devui-primary)</code> (#5E7CE0)</li>
+                    <li><strong>Secondary Border:</strong> <code>var(--devui-form-control-line)</code> (#ADB0B8)</li>
+                    <li><strong>Radius:</strong> <code>var(--devui-radius)</code> (4px)</li>
+                    <li><strong>Gap:</strong> 4px</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

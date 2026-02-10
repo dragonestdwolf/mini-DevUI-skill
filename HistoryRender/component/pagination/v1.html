@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagination Component Test v1</title>
+    <style>
+        /* Global & Token Simulation */
+        :root {
+            --devui-brand: #5E7CE0;
+            --devui-text: #252B3A;
+            --devui-text-weak: #575D6C;
+            --devui-placeholder: #8A8E99;
+            --devui-base-bg: #FFFFFF;
+            --devui-line: #D7D8DA;
+            --devui-list-item-hover-bg: #F2F5FC;
+            --devui-disabled-text: #ADB0B8;
+            --devui-disabled-bg: #F5F5F6;
+            --devui-form-control-line: #D7D8DA;
+            --devui-form-control-line-hover: #575D6C;
+            --devui-form-control-line-active: #5E7CE0;
+            --devui-radius: 4px;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            gap: 48px;
+        }
+
+        .test-case {
+            width: 800px;
+            padding: 20px;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .case-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        /* 
+           ------------------------------------------------
+           Component Styles: Pagination
+           ------------------------------------------------
+        */
+        .devui-pagination {
+            display: flex;
+            align-items: center;
+            user-select: none;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--devui-text);
+        }
+
+        /* Page Item (Button) */
+        .devui-pagination-link {
+            width: 28px;
+            height: 28px;
+            border-radius: var(--devui-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all .2s;
+            color: var(--devui-text);
+            background-color: transparent;
+            text-decoration: none;
+            border: none;
+            outline: none;
+        }
+
+        .devui-pagination-link:hover:not(.disabled):not(.active) {
+            background-color: var(--devui-list-item-hover-bg);
+            color: var(--devui-brand);
+        }
+
+        .devui-pagination-link.active {
+            background-color: var(--devui-list-item-hover-bg);
+            color: var(--devui-brand);
+            font-weight: bold;
+            cursor: default;
+        }
+
+        .devui-pagination-link.disabled {
+            color: var(--devui-disabled-text);
+            cursor: not-allowed;
+        }
+
+        /* Icons */
+        .devui-pagination-icon {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+
+        /* Size Changer Simulator (d-select) */
+        .devui-select-simulator {
+            height: 28px;
+            padding: 0 8px;
+            border: 1px solid var(--devui-form-control-line);
+            border-radius: var(--devui-radius);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--devui-text);
+        }
+
+        .devui-select-simulator:hover {
+            border-color: var(--devui-form-control-line-hover);
+        }
+
+        /* Jump To Simulator */
+        .devui-pagination-jump {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--devui-text);
+        }
+
+        .devui-input-sm {
+            width: 48px;
+            height: 28px;
+            border: 1px solid var(--devui-form-control-line);
+            border-radius: var(--devui-radius);
+            padding: 0 4px;
+            text-align: center;
+            outline: none;
+            color: var(--devui-text);
+        }
+
+        .devui-input-sm:focus {
+            border-color: var(--devui-form-control-line-active);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Case 1: Basic Pagination (Page 1 Active) -->
+    <div class="test-case">
+        <span class="case-title">Test Case 1: Basic Pagination (Page 1 Active)</span>
+        <div class="devui-pagination">
+            <!-- Prev (Disabled) -->
+            <button class="devui-pagination-link disabled">
+                <img src="../../../icon/miniDev-icon/操作图标/向左(chevron-left).svg" class="devui-pagination-icon"
+                    alt="Prev" />
+            </button>
+
+            <button class="devui-pagination-link active">1</button>
+            <button class="devui-pagination-link">2</button>
+            <button class="devui-pagination-link">3</button>
+            <button class="devui-pagination-link">4</button>
+            <button class="devui-pagination-link">5</button>
+            <div class="devui-pagination-link" style="cursor: default;">...</div>
+            <button class="devui-pagination-link">10</button>
+
+            <!-- Next -->
+            <button class="devui-pagination-link">
+                <img src="../../../icon/miniDev-icon/操作图标/向右(chevron-right).svg" class="devui-pagination-icon"
+                    alt="Next" />
+            </button>
+        </div>
+    </div>
+
+    <!-- Case 2: Full Features (Total, Size Changer, Jump) -->
+    <div class="test-case">
+        <span class="case-title">Test Case 2: Full Features (Total, Size Changer, Jump)</span>
+        <div class="devui-pagination">
+            <!-- Total -->
+            <span style="margin-right: 8px;">Total 120 items</span>
+
+            <!-- Size Changer -->
+            <div class="devui-select-simulator">
+                <span>10 / Page</span>
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 11L3 6h10l-5 5z" />
+                </svg>
+            </div>
+
+            <!-- Pages -->
+            <!-- Prev -->
+            <button class="devui-pagination-link">
+                <img src="../../../icon/miniDev-icon/操作图标/向左(chevron-left).svg" class="devui-pagination-icon"
+                    alt="Prev" />
+            </button>
+
+            <button class="devui-pagination-link">1</button>
+            <div class="devui-pagination-link" style="cursor: default;">...</div>
+            <button class="devui-pagination-link">4</button>
+            <button class="devui-pagination-link active">5</button>
+            <button class="devui-pagination-link">6</button>
+            <div class="devui-pagination-link" style="cursor: default;">...</div>
+            <button class="devui-pagination-link">12</button>
+
+            <!-- Next -->
+            <button class="devui-pagination-link">
+                <img src="../../../icon/miniDev-icon/操作图标/向右(chevron-right).svg" class="devui-pagination-icon"
+                    alt="Next" />
+            </button>
+
+            <!-- Jump -->
+            <div class="devui-pagination-jump" style="margin-left: 8px;">
+                <span>Go to</span>
+                <input type="text" class="devui-input-sm" value="5">
+                <span>Page</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audit Info -->
+    <div class="test-case">
+        <span class="case-title">Audit: Component Status</span>
+        <div style="font-size: 12px; color: #666; font-family: monospace;">
+            Size: 28x28px (Verified)<br>
+            Radius: 4px (Verified)<br>
+            Icons: icon/miniDev-icon/操作图标/向左(chevron-left).svg (Verified path)
+        </div>
+    </div>
+
+</body>
+
+</html>

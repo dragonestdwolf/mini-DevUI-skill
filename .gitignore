@@ -1,5 +1,4 @@
 .DS_Store
-.agent/
 node_modules/
 dist/
 .vscode/

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox Component Test v1</title>
+    <style>
+        /* Global & Token Simulation */
+        :root {
+            --devui-brand: #5E7CE0;
+            --devui-primary-hover: #7693F5;
+            --devui-base-bg: #FFFFFF;
+            --devui-global-bg: #F5F5F5;
+            --devui-text: #252B3A;
+            --devui-light-text: #FFFFFF;
+            --devui-line: #D7D8DA;
+            --devui-form-control-line: #ADB0B8;
+            --devui-form-control-line-rippling: rgba(94, 124, 224, 0.08);
+            /* Focus ring */
+            --devui-disabled-bg: #F3F3F3;
+            --devui-disabled-line: #DFE1E6;
+            --devui-disabled-bg-active: #BECCFA;
+            --devui-disabled-text: #ADB0B8;
+            --devui-radius: 2px;
+            --devui-font-size: 14px;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            gap: 48px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .test-case {
+            width: 800px;
+            padding: 20px;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+        }
+
+        .case-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .checkbox-row {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* 
+           ------------------------------------------------
+           Component Styles: Checkbox 
+           ------------------------------------------------
+        */
+
+        .devui-checkbox-wrapper {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 8px;
+            /* Requirement: Gap 8px */
+            user-select: none;
+        }
+
+        .devui-checkbox-wrapper.disabled {
+            cursor: not-allowed;
+        }
+
+        .devui-checkbox {
+            width: 16px;
+            /* Requirement: 16px */
+            height: 16px;
+            /* Requirement: 16px */
+            border-radius: var(--devui-radius);
+            /* Requirement: 2px */
+            background-color: var(--devui-base-bg);
+            border: 1px solid var(--devui-form-control-line);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* Input (Hidden) */
+        .devui-checkbox-input {
+            width: 0;
+            height: 0;
+            opacity: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        /* Label Style */
+        .devui-checkbox-label {
+            font-size: var(--devui-font-size);
+            color: var(--devui-text);
+            line-height: 1.5;
+        }
+
+        .devui-checkbox-wrapper.disabled .devui-checkbox-label {
+            color: var(--devui-disabled-text);
+        }
+
+        /* Hover (Unchecked) */
+        .devui-checkbox-wrapper:not(.disabled):hover .devui-checkbox {
+            border-color: var(--devui-brand);
+        }
+
+        /* Focus Ring (Simulated on wrapper focus-within or active for demo) */
+        /* Note: In real implementation, focus-visible on input would trigger this on the sibling box */
+        /* For this static demo, we will use a specific class .simulate-focus */
+        .devui-checkbox.simulate-focus {
+            box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling);
+            border-color: var(--devui-brand);
+        }
+
+        /* Checked State */
+        .devui-checkbox.checked {
+            background-color: var(--devui-brand);
+            border-color: var(--devui-brand);
+        }
+
+        /* Half-Checked State */
+        .devui-checkbox.half-checked {
+            background-color: var(--devui-brand);
+            border-color: var(--devui-brand);
+        }
+
+        /* Icons */
+        .devui-icon-check,
+        .devui-icon-half {
+            display: none;
+            fill: var(--devui-light-text);
+        }
+
+        .devui-checkbox.checked .devui-icon-check {
+            display: block;
+        }
+
+        .devui-checkbox.half-checked .devui-icon-half {
+            display: block;
+        }
+
+        /* Disabled Unchecked */
+        .devui-checkbox-wrapper.disabled .devui-checkbox {
+            background-color: var(--devui-disabled-bg);
+            border-color: var(--devui-disabled-line);
+        }
+
+        /* Disabled Checked */
+        .devui-checkbox-wrapper.disabled .devui-checkbox.checked,
+        .devui-checkbox-wrapper.disabled .devui-checkbox.half-checked {
+            background-color: var(--devui-disabled-bg-active);
+            border-color: var(--devui-disabled-bg-active);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Case 1: Base States -->
+    <div class="test-case">
+        <span class="case-title">Test Case 1: Base States (Checked, Unchecked, Half-Checked)</span>
+        <div class="checkbox-row">
+            <!-- Unchecked -->
+            <label class="devui-checkbox-wrapper">
+                <input type="checkbox" class="devui-checkbox-input">
+                <div class="devui-checkbox"></div>
+                <span class="devui-checkbox-label">Unchecked</span>
+            </label>
+
+            <!-- Unchecked Hover (Simulated class) -->
+            <label class="devui-checkbox-wrapper">
+                <input type="checkbox" class="devui-checkbox-input">
+                <div class="devui-checkbox" style="border-color: var(--devui-brand);"></div>
+                <span class="devui-checkbox-label">Unchecked Hover</span>
+            </label>
+
+            <!-- Checked -->
+            <label class="devui-checkbox-wrapper">
+                <input type="checkbox" class="devui-checkbox-input" checked>
+                <div class="devui-checkbox checked">
+                    <!-- SVG Check Icon -->
+                    <svg class="devui-icon-check" width="10" height="8" viewBox="0 0 10 8" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <span class="devui-checkbox-label">Checked</span>
+            </label>
+
+            <!-- Half-Checked -->
+            <label class="devui-checkbox-wrapper">
+                <input type="checkbox" class="devui-checkbox-input">
+                <div class="devui-checkbox half-checked">
+                    <!-- Rect Icon 6x6 -->
+                    <div class="devui-icon-half"
+                        style="width: 6px; height: 6px; background-color: white; border-radius: 1px;"></div>
+                </div>
+                <span class="devui-checkbox-label">Half-Checked</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Case 2: Disabled States -->
+    <div class="test-case">
+        <span class="case-title">Test Case 2: Disabled States</span>
+        <div class="checkbox-row">
+            <!-- Disabled Unchecked -->
+            <label class="devui-checkbox-wrapper disabled">
+                <input type="checkbox" class="devui-checkbox-input" disabled>
+                <div class="devui-checkbox"></div>
+                <span class="devui-checkbox-label">Disabled Unchecked</span>
+            </label>
+
+            <!-- Disabled Checked -->
+            <label class="devui-checkbox-wrapper disabled">
+                <input type="checkbox" class="devui-checkbox-input" checked disabled>
+                <div class="devui-checkbox checked">
+                    <svg class="devui-icon-check" width="10" height="8" viewBox="0 0 10 8" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <span class="devui-checkbox-label">Disabled Checked</span>
+            </label>
+
+            <!-- Disabled Half-Checked -->
+            <label class="devui-checkbox-wrapper disabled">
+                <input type="checkbox" class="devui-checkbox-input" disabled>
+                <div class="devui-checkbox half-checked">
+                    <div class="devui-icon-half"
+                        style="width: 6px; height: 6px; background-color: white; border-radius: 1px;"></div>
+                </div>
+                <span class="devui-checkbox-label">Disabled Half</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Case 3: Stress Test -->
+    <div class="test-case">
+        <span class="case-title">Test Case 3: Stress Test (Content Overflow)</span>
+        <div class="checkbox-row">
+            <label class="devui-checkbox-wrapper">
+                <input type="checkbox" class="devui-checkbox-input">
+                <div class="devui-checkbox"></div>
+                <span class="devui-checkbox-label">Extremely Long Label Text Testing Overflow Behavior When The Text Is
+                    Too Long For One Line Or Container Limit 1234567890</span>
+            </label>
+
+            <label class="devui-checkbox-wrapper">
+                <input type="checkbox" class="devui-checkbox-input">
+                <div class="devui-checkbox"></div>
+                <span class="devui-checkbox-label">{{TEST_INTERPOLATION_VALUE}}</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Audit Info -->
+    <div class="test-case">
+        <span class="case-title">Audit: Component Status</span>
+        <div style="font-size: 12px; color: #666; font-family: monospace;">
+            Checked: #5E7CE0 (Brand)<br>
+            Disabled Checked: #BECCFA<br>
+            Size: 16px x 16px, Border-Radius: 2px<br>
+            HalfChecked: Rect shape, Size 6px<br>
+            Notes: Implemented SVG for Checkmark, Div for HalfCheck rect.
+        </div>
+    </div>
+
+</body>
+
+</html>

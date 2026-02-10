@@ -1,0 +1,13 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48.000000" height="48.000000" fill="none">
+	<rect id="制品类型图标/angular48" width="48.000000" height="48.000000" x="0.000000" y="0.000000" />
+	<g id="模型/angular48">
+		<g id="编组">
+			<path id="路径" d="M24.5 6L8 11.976L10.5166 34.134L24.5 42L38.4834 34.134L41 11.976L24.5 6Z" fill="rgb(221,0,49)" fill-rule="nonzero" />
+			<path id="路径" d="M8 11.976L10.5166 34.134L24.5 42L38.4834 34.134L41 11.976L24.5 6L8 11.976Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+			<path id="路径" d="M24.5 6L24.5 9.996L24.5 28.212L24.5 42L38.4834 34.134L41 11.976L24.5 6Z" fill="rgb(195,0,47)" fill-rule="nonzero" />
+			<path id="路径" d="M24.5 9.996L24.5 28.212L24.5 42L38.4834 34.134L41 11.976L24.5 6L24.5 9.996Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+			<path id="形状" d="M24.5108 9.72925L14.4102 33.7292L18.1762 33.7292L20.2068 28.3591L28.7802 28.3591L30.8108 33.7292L34.5768 33.7292L24.5108 9.72925ZM27.4612 25.0488L21.5605 25.0488L24.5108 17.5269L27.4612 25.0488Z" fill="rgb(255,255,255)" fill-rule="nonzero" />
+			<path id="形状" d="M14.4102 33.7292L18.1762 33.7292L20.2068 28.3591L28.7802 28.3591L30.8108 33.7292L34.5768 33.7292L24.5108 9.72925L14.4102 33.7292ZM21.5605 25.0488L24.5108 17.5269L27.4612 25.0488L21.5605 25.0488Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+		</g>
+	</g>
+</svg>

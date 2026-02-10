@@ -1,0 +1,29 @@
+<svg viewBox="0 0 20.7998 20.8" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20.799805" height="20.800049" fill="none" customFrame="#000000">
+	<defs>
+		<radialGradient id="paint_radial_5" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-6.99992,5.91398,-10.911,-12.9145,7.39981,19.563)">
+			<stop stop-color="rgb(214.018,155.787,7.78246)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(251.585,201.245,73.1883)" offset="1" stop-opacity="1" />
+		</radialGradient>
+		<linearGradient id="paint_linear_6" x1="10.4031038" x2="10.4031038" y1="6.2310791" y2="10.397727" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(0,0,0)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(0,0,0)" offset="1" stop-opacity="0" />
+		</linearGradient>
+	</defs>
+	<rect id="制品仓库" width="19.999882" height="20.000002" x="0.399902" y="0.400024" fill="rgb(255,255,255)" fill-opacity="0" />
+	<rect id="制品仓库" width="19.999882" height="20.000002" x="0.399902" y="0.400024" fill="rgb(0,0,0)" fill-opacity="0" />
+	<rect id="制品仓库" width="19.999882" height="20.000002" x="0.399902" y="0.400024" stroke="rgb(206.049,205.843,205.843)" stroke-opacity="0" stroke-width="0.799995422" />
+	<path id="矢量 403" d="M2.48645 6.23108L10.5916 6.23108L18.318 6.23108C18.5481 6.23108 18.7346 6.41763 18.7346 6.64767L18.7346 17.0646C18.7346 18.4452 17.6154 19.5644 16.2349 19.5644L4.56956 19.5644C3.18899 19.5644 2.06982 18.4452 2.06982 17.0646L2.06982 6.64767C2.06982 6.41763 2.25635 6.23108 2.48645 6.23108Z" fill="url(#paint_radial_5)" fill-rule="evenodd" />
+	<path id="矩形 1731" d="M2.06982 6.23108L18.7364 6.23108L18.7364 10.3977L2.06982 10.3977L2.06982 6.23108Z" opacity="0.209999993" fill="url(#paint_linear_6)" fill-rule="evenodd" />
+	<g id="组合 2991" />
+	<g id="组合 2993">
+		<rect id="矩形 1172" width="4.999935" height="3.499954" x="4.899902" y="14.274048" rx="0.757498" fill="rgb(0,0,0)" fill-opacity="0.200000003" />
+		<rect id="矩形 1173" width="4.999935" height="3.499954" x="10.899658" y="14.274048" rx="0.757498" fill="rgb(0,0,0)" fill-opacity="0.200000003" />
+		<rect id="矩形 1171" width="4.999935" height="3.499954" x="6.899902" y="9.774048" rx="0.757498" fill="rgb(0,0,0)" fill-opacity="0.200000003" />
+	</g>
+	<g id="组合 2993">
+		<rect id="矩形 1172" width="4.999935" height="3.499954" x="4.899902" y="13.274048" rx="0.757498" fill="rgb(252,240,194)" />
+		<rect id="矩形 1173" width="4.999935" height="3.499954" x="10.899658" y="13.274048" rx="0.757498" fill="rgb(252,240,194)" />
+		<rect id="矩形 1171" width="4.999935" height="3.499954" x="6.899902" y="8.774048" rx="0.757498" fill="rgb(252,240,194)" />
+	</g>
+	<path id="多边形 2" d="M9.10627 1.18368L0.845507 6.18853C0.484917 6.40698 0.639785 6.96147 1.06139 6.96147L19.7442 6.96147C20.1659 6.96147 20.3207 6.40693 19.96 6.18848L11.6966 1.18351C10.9004 0.701303 9.9023 0.701368 9.10627 1.18368Z" fill="rgb(166,119,17)" fill-rule="evenodd" />
+</svg>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Component Test v1</title>
+    <style>
+        /* Global & Token Simulation */
+        :root {
+            --devui-brand: #5E7CE0;
+            --devui-text: #252B3A;
+            --devui-base-bg: #FFFFFF;
+            --devui-line: #D7D8DA;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            gap: 48px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .test-case {
+            width: 800px;
+            padding: 20px;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+        }
+
+        .case-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .icon-row {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-label {
+            font-size: 10px;
+            color: #999;
+        }
+
+        /* 
+           ------------------------------------------------
+           Component Styles: Icon Usage
+           ------------------------------------------------
+        */
+
+        /* Rule: width/height must be explicit */
+
+        /* Size: 16px */
+        .devui-icon-16 {
+            width: 16px;
+            height: 16px;
+            display: block;
+        }
+
+        /* Size: 24px */
+        .devui-icon-24 {
+            width: 24px;
+            height: 24px;
+            display: block;
+        }
+
+        /* Size: 40px (Large demo) */
+        .devui-icon-40 {
+            width: 40px;
+            height: 40px;
+            display: block;
+        }
+
+        /* Background Image Usage */
+        .devui-icon-bg-search {
+            width: 16px;
+            height: 16px;
+            background-image: url('../../../icon/miniDev-icon/操作图标/搜索.svg');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            display: inline-block;
+        }
+
+        .input-simulator {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid var(--devui-line);
+            padding: 4px 8px;
+            border-radius: 4px;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--devui-text);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Case 1: Img Tag Usage (16px) -->
+    <div class="test-case">
+        <span class="case-title">Test Case 1: Img Tag (Small 16px)</span>
+        <div class="icon-row">
+            <div class="icon-item">
+                <img src="../../../icon/miniDev-icon/操作图标/搜索.svg" class="devui-icon-16" alt="搜索" />
+                <span class="icon-label">Search (搜索.svg)</span>
+            </div>
+            <div class="icon-item">
+                <img src="../../../icon/miniDev-icon/操作图标/设置.svg" class="devui-icon-16" alt="设置" />
+                <span class="icon-label">Settings (设置.svg)</span>
+            </div>
+            <div class="icon-item">
+                <img src="../../../icon/miniDev-icon/操作图标/refresh.svg" class="devui-icon-16" alt="刷新"
+                    onerror="this.src='../../../icon/miniDev-icon/操作图标/刷新.svg'" />
+                <span class="icon-label">Refresh (刷新.svg)</span>
+            </div>
+            <div class="icon-item">
+                <img src="../../../icon/miniDev-icon/操作图标/close.svg" class="devui-icon-16" alt="close" />
+                <span class="icon-label">Close (close.svg)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Case 2: Img Tag Usage (24px & 40px) -->
+    <div class="test-case">
+        <span class="case-title">Test Case 2: Different Sizes (24px / 40px)</span>
+        <div class="icon-row">
+            <div class="icon-item">
+                <img src="../../../icon/miniDev-icon/操作图标/删除.svg" class="devui-icon-24" alt="删除" />
+                <span class="icon-label">Delete 24px (删除.svg)</span>
+            </div>
+            <div class="icon-item">
+                <img src="../../../icon/miniDev-icon/操作图标/文件.svg" class="devui-icon-40" alt="文件" />
+                <span class="icon-label">File 40px (文件.svg)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Case 3: Background Image Usage -->
+    <div class="test-case">
+        <span class="case-title">Test Case 3: CSS Background Image</span>
+        <div class="icon-row">
+            <div class="input-simulator">
+                <span class="devui-icon-bg-search"></span>
+                <span>Search Input...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audit Info -->
+    <div class="test-case">
+        <span class="case-title">Audit: Component Status</span>
+        <div style="font-size: 12px; color: #666; font-family: monospace;">
+            Source: icon/miniDev-icon/操作图标/<br>
+            Sizing: Explicit px values used (16px, 24px, 40px).<br>
+            Note: Paths use relative up-navigation `../../../` to reach icon root from `HistoryRender/component/icon/`.
+        </div>
+    </div>
+
+</body>
+
+</html>

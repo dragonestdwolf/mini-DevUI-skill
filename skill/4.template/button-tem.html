@@ -1,0 +1,140 @@
+<!-- 
+  Button Component Template
+  Strictly implements rules from skill/3.component/button.md
+  
+  Variables:
+  - {{variant}}: 'primary' | 'secondary' | 'text' (default: 'secondary')
+  - {{size}}: 'sm' | 'md' | 'lg' (default: 'md')
+  - {{text}}: Button label text
+  - {{icon}}: Optional icon SVG or img tag (16x16)
+  - {{disabled}}: 'disabled' attribute or empty
+  - {{class}}: Additional classes
+  - {{onclick}}: Click handler
+-->
+
+<style>
+    /* Base Button Style */
+    .devui-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        gap: 4px;
+        border-radius: var(--devui-radius, 4px);
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        font-family: inherit;
+        box-sizing: border-box;
+        text-decoration: none;
+        user-select: none;
+    }
+
+    /* Sizes */
+    .devui-btn-sm {
+        height: 28px;
+        padding: 0 12px;
+        font-size: 12px;
+    }
+
+    .devui-btn-md {
+        height: 32px;
+        padding: 0 16px;
+        font-size: 14px;
+    }
+
+    .devui-btn.devui-btn-lg {
+        /* Specificity boost */
+        height: 40px;
+        padding: 0 20px;
+        font-size: 16px;
+    }
+
+    /* Variant: Primary */
+    .devui-btn-primary {
+        background-color: var(--devui-primary, #5E7CE0);
+        border: 1px solid transparent;
+        color: var(--devui-light-text, #FFFFFF);
+    }
+
+    .devui-btn-primary:hover:not(:disabled) {
+        background-color: var(--devui-primary-hover, #7693F5);
+    }
+
+    .devui-btn-primary:active:not(:disabled) {
+        background-color: var(--devui-primary-active, #344899);
+    }
+
+    .devui-btn-primary:disabled {
+        background-color: var(--devui-primary-disabled, #BECCFA);
+        color: var(--devui-light-text, #FFFFFF);
+        cursor: not-allowed;
+        border-color: transparent;
+    }
+
+    /* Variant: Secondary (Default) */
+    .devui-btn-secondary {
+        background-color: var(--devui-base-bg, #FFFFFF);
+        border: 1px solid var(--devui-form-control-line, #ADB0B8);
+        color: var(--devui-text, #252B3A);
+    }
+
+    .devui-btn-secondary:hover:not(:disabled) {
+        border-color: var(--devui-from-control-line-hover, #575D6C);
+    }
+
+    .devui-btn-secondary:active:not(:disabled) {
+        border-color: var(--devui-form-control-line-active, #5E7CE0);
+    }
+
+    .devui-btn-secondary:disabled {
+        background-color: var(--devui-btn-common-bg-disabled, #F5F5F5);
+        border-color: var(--devui-disabled-line, #DFE1E6);
+        color: var(--devui-disabled-text, #ADB0B8);
+        cursor: not-allowed;
+    }
+
+    /* Variant: Text */
+    .devui-btn-text {
+        background-color: transparent;
+        border: 1px solid transparent;
+        /* Ensure layout stability */
+        color: var(--devui-text, #252B3A);
+        padding: 0 8px;
+        /* Special padding rule */
+    }
+
+    .devui-btn-text:hover:not(:disabled) {
+        color: var(--devui-primary, #5E7CE0);
+        background-color: rgba(94, 124, 224, 0.05);
+        /* Subtle interaction feedback */
+    }
+
+    .devui-btn-text:active:not(:disabled) {
+        color: var(--devui-primary-active, #344899);
+    }
+
+    .devui-btn-text:disabled {
+        color: var(--devui-disabled-text, #ADB0B8);
+        cursor: not-allowed;
+        background-color: transparent;
+    }
+
+    /* Icon Support */
+    .devui-btn .devui-icon {
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        fill: currentColor;
+    }
+</style>
+
+<!-- Usage Example: Replace variables in {{}} -->
+<button type="button" class="devui-btn devui-btn-{{variant}} devui-btn-{{size}} {{class}}" {{disabled}}
+    onclick="{{onclick}}">
+    <!-- Icon Slot (Optional) -->
+    {{icon}}
+    <!-- Text Slot -->
+    <span>{{text}}</span>
+</button>

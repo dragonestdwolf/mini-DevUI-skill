@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevUI Table Page v5</title>
+    <style>
+        /* 
+           ------------------------------------------------
+           Design Tokens (Simulated from theme.md)
+           ------------------------------------------------
+        */
+        :root {
+            /* Brand */
+            --devui-brand: #5E7CE0;
+            --devui-brand-hover: #7693F5;
+            --devui-brand-active: #526ECC;
+
+            /* Backgrounds */
+            --devui-base-bg: #FFFFFF;
+            --devui-global-bg: #F5F5F5;
+            --devui-list-item-hover-bg: #F2F5FC;
+            --devui-list-item-active-bg: #5E7CE0;
+
+            /* Text */
+            --devui-text: #252B3A;
+            --devui-text-weak: #575D6C;
+            --devui-placeholder: #8A8E99;
+            --devui-light-text: #FFFFFF;
+            --devui-disabled-text: #ADB0B8;
+
+            /* Lines & Borders */
+            --devui-line: #ADB0B8;
+            --devui-dividing-line: #DFE1E6;
+            --devui-form-control-line: #ADB0B8;
+            --devui-form-control-line-hover: #575D6C;
+            --devui-form-control-line-active: #5E7CE0;
+
+            /* Shadows */
+            --devui-form-control-line-rippling: rgba(94, 124, 224, 0.08);
+
+            /* Status */
+            --devui-success: #50D4AB;
+            --devui-success-bg: #EDFFF9;
+            --devui-warning: #FAC20A;
+            --devui-warning-bg: #FFF8EA;
+            --devui-danger: #F66F6A;
+            --devui-danger-bg: #FFEDEB;
+
+            /* Dims */
+            --devui-radius: 4px;
+            --devui-font-size: 14px;
+            --devui-sidebar-width: 280px;
+            --devui-header-height: 40px;
+        }
+
+        /* 
+           ------------------------------------------------
+           Layout (layout.md)
+           ------------------------------------------------
+        */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--devui-global-bg);
+            color: var(--devui-text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .app-header {
+            height: var(--devui-header-height);
+            background-color: #252B3A;
+            /* Dark header typical for enterprise */
+            color: var(--devui-light-text);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Main Container */
+        .app-main {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .app-sidebar {
+            width: var(--devui-sidebar-width);
+            background-color: var(--devui-base-bg);
+            border-right: 1px solid var(--devui-dividing-line);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .sidebar-menu-item {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            color: var(--devui-text);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .sidebar-menu-item:hover {
+            background-color: var(--devui-list-item-hover-bg);
+        }
+
+        .sidebar-menu-item.active {
+            background-color: var(--devui-list-item-active-bg);
+            color: var(--devui-light-text);
+        }
+
+        /* Right Content Area */
+        .app-content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: var(--devui-global-bg);
+        }
+
+        /* SubHeader / Breadcrumbs Area */
+        .app-subheader {
+            padding: 16px 24px;
+            background-color: transparent;
+            flex-shrink: 0;
+        }
+
+        /* Main Scrollable Content */
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 24px 24px 24px;
+        }
+
+        /* Card Container for Table */
+        .content-card {
+            background: var(--devui-base-bg);
+            border-radius: var(--devui-radius);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            padding: 24px;
+        }
+
+        /* 
+           ------------------------------------------------
+           Components
+           ------------------------------------------------
+        */
+
+        /* Breadcrumbs (bread_crumbs.md) */
+        .devui-breadcrumb {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0;
+        }
+
+        .devui-breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .item-content {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--devui-text-weak);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .separator {
+            width: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--devui-placeholder);
+        }
+
+        .item-content.active {
+            color: var(--devui-text);
+            cursor: default;
+        }
+
+        /* Tabs (tabs.md - Pills) */
+        .devui-tabs {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--devui-dividing-line);
+        }
+
+        .devui-tab-item {
+            padding: 12px 0;
+            cursor: pointer;
+            color: var(--devui-text-weak);
+            font-size: 14px;
+            position: relative;
+        }
+
+        .devui-tab-item.active {
+            color: var(--devui-text);
+            font-weight: 700;
+        }
+
+        .devui-tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            /* Overlap border */
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--devui-brand);
+        }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .toolbar-left {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .toolbar-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        /* Search (search.md) */
+        .devui-search {
+            display: flex;
+            align-items: center;
+            width: 240px;
+            height: 32px;
+            padding: 0 8px;
+            background-color: var(--devui-base-bg);
+            border: 1px solid var(--devui-form-control-line);
+            border-radius: var(--devui-radius);
+            transition: all 0.3s;
+        }
+
+        .devui-search:hover {
+            border-color: var(--devui-brand);
+        }
+
+        .devui-search input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 0;
+            font-size: 14px;
+            color: var(--devui-text);
+        }
+
+        .devui-search-icon {
+            width: 16px;
+            height: 16px;
+            margin-left: 4px;
+            fill: var(--devui-placeholder);
+            cursor: pointer;
+        }
+
+        /* Button (button.md) */
+        .devui-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            gap: 4px;
+            border-radius: var(--devui-radius);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            box-sizing: border-box;
+        }
+
+        .devui-btn.variant-primary {
+            background-color: var(--devui-brand);
+            color: var(--devui-light-text);
+            border: none;
+            height: 32px;
+            padding: 0 16px;
+        }
+
+        .devui-btn.variant-primary:hover {
+            background-color: var(--devui-brand-hover);
+        }
+
+        .devui-btn.variant-secondary {
+            background-color: var(--devui-base-bg);
+            color: var(--devui-text);
+            border: 1px solid var(--devui-form-control-line);
+            height: 32px;
+            padding: 0 16px;
+        }
+
+        .devui-btn.variant-secondary:hover {
+            border-color: var(--devui-brand);
+            color: var(--devui-brand);
+        }
+
+        .devui-btn.variant-text {
+            background-color: transparent;
+            border: none;
+            color: var(--devui-brand);
+            padding: 0 8px;
+        }
+
+        .devui-btn.variant-text:hover {
+            color: var(--devui-brand-hover);
+        }
+
+        .devui-btn.variant-text.danger {
+            color: var(--devui-danger);
+        }
+
+        .devui-btn.variant-text.danger:hover {
+            color: #d15652;
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 12px 16px;
+            background-color: var(--devui-list-item-hover-bg);
+            /* F2F5FC */
+            color: var(--devui-text-weak);
+            font-weight: 600;
+            border-bottom: 1px solid var(--devui-dividing-line);
+        }
+
+        .data-table td {
+            text-align: left;
+            padding: 12px 16px;
+            color: var(--devui-text);
+            border-bottom: 1px solid var(--devui-dividing-line);
+            vertical-align: middle;
+        }
+
+        .data-table tr:hover {
+            background-color: var(--devui-list-item-hover-bg);
+        }
+
+        /* Checkbox (checkbox.md) */
+        .devui-checkbox-wrapper {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 8px;
+            position: relative;
+        }
+
+        .devui-checkbox-input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .devui-checkbox {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+            background-color: var(--devui-base-bg);
+            border: 1px solid var(--devui-form-control-line);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .devui-checkbox-wrapper:hover .devui-checkbox {
+            border-color: var(--devui-brand);
+        }
+
+        .devui-checkbox-input:checked+.devui-checkbox {
+            background-color: var(--devui-brand);
+            border-color: var(--devui-brand);
+        }
+
+        .devui-checkbox-input:checked+.devui-checkbox::after {
+            content: '';
+            width: 5px;
+            height: 9px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            margin-top: -2px;
+        }
+
+        /* Tag (tag.md) */
+        .devui-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            padding: 0 8px;
+            font-size: 12px;
+            height: 20px;
+            white-space: nowrap;
+        }
+
+        /* Auxiliary Type */
+        .devui-tag.success {
+            background-color: var(--devui-success-bg);
+            color: var(--devui-success);
+        }
+
+        .devui-tag.warning {
+            background-color: var(--devui-warning-bg);
+            color: var(--devui-warning);
+        }
+
+        .devui-tag.danger {
+            background-color: var(--devui-danger-bg);
+            color: var(--devui-danger);
+        }
+
+        /* Pagination Footer */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px;
+        }
+
+        .pagination-info {
+            font-size: 12px;
+            color: var(--devui-text-weak);
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .page-btn {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--devui-dividing-line);
+            border-radius: var(--devui-radius);
+            cursor: pointer;
+            background: #fff;
+            font-size: 12px;
+            color: var(--devui-text);
+        }
+
+        .page-btn.active {
+            background-color: var(--devui-brand);
+            color: #fff;
+            border-color: var(--devui-brand);
+        }
+
+        .page-btn.disabled {
+            color: var(--devui-disabled-text);
+            cursor: not-allowed;
+            background: var(--devui-global-bg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="logo">
+            <div style="width:24px; height:24px; background:var(--devui-brand); border-radius:4px;"></div>
+            MiniDevUI
+        </div>
+    </header>
+
+    <!-- Main -->
+    <div class="app-main">
+        <!-- Sidebar -->
+        <aside class="app-sidebar">
+            <div class="sidebar-menu-item">Dashboard</div>
+            <div class="sidebar-menu-item active">Project Management</div>
+            <div class="sidebar-menu-item">Team Collaboration</div>
+            <div class="sidebar-menu-item">Settings</div>
+        </aside>
+
+        <!-- Content Content -->
+        <div class="app-content-wrapper">
+            <!-- SubHeader / Breadcrumbs -->
+            <div class="app-subheader">
+                <div class="devui-breadcrumb">
+                    <div class="devui-breadcrumb-item">
+                        <a href="#" class="item-content">Home</a>
+                        <div class="separator">/</div>
+                    </div>
+                    <div class="devui-breadcrumb-item">
+                        <a href="#" class="item-content">Projects</a>
+                        <div class="separator">/</div>
+                    </div>
+                    <div class="devui-breadcrumb-item">
+                        <span class="item-content active">Task List</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scrollable Content -->
+            <div class="app-content">
+                <div class="content-card">
+
+                    <!-- Tabs -->
+                    <div class="devui-tabs">
+                        <div class="devui-tab-item active">All Tasks (120)</div>
+                        <div class="devui-tab-item">Pending Review</div>
+                        <div class="devui-tab-item">In Progress</div>
+                        <div class="devui-tab-item">Completed</div>
+                    </div>
+
+                    <!-- Toolbar -->
+                    <div class="toolbar">
+                        <div class="toolbar-left">
+                            <button class="devui-btn variant-primary">
+                                <span>+ New Task</span>
+                            </button>
+                            <button class="devui-btn variant-secondary">
+                                <span>Batch Operation</span>
+                            </button>
+                        </div>
+                        <div class="toolbar-right">
+                            <div class="devui-search">
+                                <input type="text" placeholder="Search by keywords...">
+                                <!-- Search SVG -->
+                                <svg class="devui-search-icon" viewBox="0 0 1024 1024">
+                                    <path
+                                        d="M939.6 863.4L784.8 708.6c43.6-59.6 69.8-132.8 69.8-212.4 0-198.8-161.2-360-360-360s-360 161.2-360 360 161.2 360 360 360c79.6 0 152.8-26.2 212.4-69.8l154.8 154.8c10.4 10.4 24.2 15.6 37.8 15.6s27.4-5.2 37.8-15.6c21-20.8 21-54.8 2.2-73.6z m-445-56c-154.6 0-280-125.4-280-280s125.4-280 280-280 280 125.4 280 280-125.4 280-280 280z" />
+                                </svg>
+                            </div>
+                            <button class="devui-btn variant-secondary" style="padding:0; width:32px;">
+                                <!-- Refresh Icon -->
+                                <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                                    <path
+                                        d="M13.6 2.4l-1 1C11.6 2.3 10.4 1.6 9.1 1.2c-1.3-.4-2.7-.4-4 0C3.8 1.6 2.5 2.3 1.5 3.3S-.1 5.7-.3 7h1.4c.2-1 .7-2 1.4-2.8s1.6-1.4 2.6-1.7c1-.3 2.1-.3 3.1 0 1 .3 2 1 2.8 1.7L9.6 2.4h4v4h-4l1.4-1.4C10.2 4.2 9.1 3.6 8 3.2c-1.1-.4-2.3-.4-3.5 0-1.1.4-2.1 1.1-3 2 .8-1.5 2-2.7 3.5-3.5 1.5-.8 3.2-1.1 4.9-.6 1.7.5 3.2 1.5 4.3 3L13.6 2.4zM2.4 13.6l1-1c1 1.1 2.2 1.8 3.5 2.2 1.3.4 2.7.4 4 0 1.3-.4 2.6-1.1 3.6-2.1s1.6-2.4 1.8-3.7h-1.4c-.2 1-.7 2-1.4 2.8s-1.6 1.4-2.6 1.7c-1 .3-2.1.3-3.1 0-1-.3-2-1-2.8-1.7l1.4-1.8h-4v4l1.4-1.4c.8.8 1.9 1.4 3 1.8 1.1.4 2.3.4 3.5 0 1.1-.4 2.1-1.1 3-2.2-.8 1.5-2 2.7-3.5 3.5-1.5.8-3.2 1.1-4.9.6-1.7-.5-3.2-1.5-4.3-3L2.4 13.6z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Data Table -->
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 48px;">
+                                    <label class="devui-checkbox-wrapper">
+                                        <input type="checkbox" class="devui-checkbox-input">
+                                        <div class="devui-checkbox"></div>
+                                    </label>
+                                </th>
+                                <th>Task ID</th>
+                                <th>Title</th>
+                                <th>Assignee</th>
+                                <th>Status</th>
+                                <th>Due Date</th>
+                                <th style="text-align: right;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Row 1 -->
+                            <tr>
+                                <td>
+                                    <label class="devui-checkbox-wrapper">
+                                        <input type="checkbox" class="devui-checkbox-input">
+                                        <div class="devui-checkbox"></div>
+                                    </label>
+                                </td>
+                                <td>TASK-2023001</td>
+                                <td>Refactor Authentication Module</td>
+                                <td>Alex Johnson</td>
+                                <td><span class="devui-tag warning">In Progress</span></td>
+                                <td>2023-10-25</td>
+                                <td style="text-align: right;">
+                                    <button class="devui-btn variant-text">Edit</button>
+                                    <button class="devui-btn variant-text danger">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- Row 2 -->
+                            <tr>
+                                <td>
+                                    <label class="devui-checkbox-wrapper">
+                                        <input type="checkbox" class="devui-checkbox-input" checked>
+                                        <div class="devui-checkbox"></div>
+                                    </label>
+                                </td>
+                                <td>TASK-2023002</td>
+                                <td>Update Homepage Banner</td>
+                                <td>Sarah Lee</td>
+                                <td><span class="devui-tag success">Completed</span></td>
+                                <td>2023-10-20</td>
+                                <td style="text-align: right;">
+                                    <button class="devui-btn variant-text">Edit</button>
+                                    <button class="devui-btn variant-text danger">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- Row 3 -->
+                            <tr>
+                                <td>
+                                    <label class="devui-checkbox-wrapper">
+                                        <input type="checkbox" class="devui-checkbox-input">
+                                        <div class="devui-checkbox"></div>
+                                    </label>
+                                </td>
+                                <td>TASK-2023003</td>
+                                <td>Fix Navbar Responsive Issue</td>
+                                <td>Mike Chen</td>
+                                <td><span class="devui-tag danger">Blocked</span></td>
+                                <td>2023-10-22</td>
+                                <td style="text-align: right;">
+                                    <button class="devui-btn variant-text">Edit</button>
+                                    <button class="devui-btn variant-text danger">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- Row 4 -->
+                            <tr>
+                                <td>
+                                    <label class="devui-checkbox-wrapper">
+                                        <input type="checkbox" class="devui-checkbox-input">
+                                        <div class="devui-checkbox"></div>
+                                    </label>
+                                </td>
+                                <td>TASK-2023004</td>
+                                <td>Database Migration</td>
+                                <td>David Wang</td>
+                                <td><span class="devui-tag warning">In Progress</span></td>
+                                <td>2023-11-01</td>
+                                <td style="text-align: right;">
+                                    <button class="devui-btn variant-text">Edit</button>
+                                    <button class="devui-btn variant-text danger">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- Row 5 -->
+                            <tr>
+                                <td>
+                                    <label class="devui-checkbox-wrapper">
+                                        <input type="checkbox" class="devui-checkbox-input">
+                                        <div class="devui-checkbox"></div>
+                                    </label>
+                                </td>
+                                <td>TASK-2023005</td>
+                                <td>Client Feedback Meeting</td>
+                                <td>Emily White</td>
+                                <td><span class="devui-tag success">Completed</span></td>
+                                <td>2023-10-18</td>
+                                <td style="text-align: right;">
+                                    <button class="devui-btn variant-text">Edit</button>
+                                    <button class="devui-btn variant-text danger">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <div class="pagination-info">Total 120 items, 10 per page</div>
+                        <div class="pagination-controls">
+                            <div class="page-btn disabled">&lt;</div>
+                            <div class="page-btn active">1</div>
+                            <div class="page-btn">2</div>
+                            <div class="page-btn">3</div>
+                            <div class="page-btn">...</div>
+                            <div class="page-btn">12</div>
+                            <div class="page-btn">&gt;</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

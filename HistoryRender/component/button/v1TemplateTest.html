@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Template Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            padding: 40px;
+            background-color: #f3f6f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .test-section {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .test-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #252B3A;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .label {
+            width: 80px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* --- TEMPLATE STYLES IMPORTED HERE FOR TEST --- */
+        /* Base Button Style */
+        .devui-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            gap: 4px;
+            border-radius: var(--devui-radius, 4px);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            box-sizing: border-box;
+            text-decoration: none;
+            user-select: none;
+        }
+
+        /* Sizes */
+        .devui-btn-sm {
+            height: 28px;
+            padding: 0 12px;
+            font-size: 12px;
+        }
+
+        .devui-btn-md {
+            height: 32px;
+            padding: 0 16px;
+            font-size: 14px;
+        }
+
+        .devui-btn.devui-btn-lg {
+            height: 40px;
+            padding: 0 20px;
+            font-size: 16px;
+        }
+
+        /* Variant: Primary */
+        .devui-btn-primary {
+            background-color: var(--devui-primary, #5E7CE0);
+            border: 1px solid transparent;
+            color: var(--devui-light-text, #FFFFFF);
+        }
+
+        .devui-btn-primary:hover:not(:disabled) {
+            background-color: var(--devui-primary-hover, #7693F5);
+        }
+
+        .devui-btn-primary:active:not(:disabled) {
+            background-color: var(--devui-primary-active, #344899);
+        }
+
+        .devui-btn-primary:disabled {
+            background-color: var(--devui-primary-disabled, #BECCFA);
+            color: var(--devui-light-text, #FFFFFF);
+            cursor: not-allowed;
+            border-color: transparent;
+        }
+
+        /* Variant: Secondary (Default) */
+        .devui-btn-secondary {
+            background-color: var(--devui-base-bg, #FFFFFF);
+            border: 1px solid var(--devui-form-control-line, #ADB0B8);
+            color: var(--devui-text, #252B3A);
+        }
+
+        .devui-btn-secondary:hover:not(:disabled) {
+            border-color: var(--devui-from-control-line-hover, #575D6C);
+        }
+
+        .devui-btn-secondary:active:not(:disabled) {
+            border-color: var(--devui-form-control-line-active, #5E7CE0);
+        }
+
+        .devui-btn-secondary:disabled {
+            background-color: var(--devui-btn-common-bg-disabled, #F5F5F5);
+            border-color: var(--devui-disabled-line, #DFE1E6);
+            color: var(--devui-disabled-text, #ADB0B8);
+            cursor: not-allowed;
+        }
+
+        /* Variant: Text */
+        .devui-btn-text {
+            background-color: transparent;
+            border: 1px solid transparent;
+            color: var(--devui-text, #252B3A);
+            padding: 0 8px;
+        }
+
+        .devui-btn-text:hover:not(:disabled) {
+            color: var(--devui-primary, #5E7CE0);
+            background-color: rgba(94, 124, 224, 0.05);
+        }
+
+        .devui-btn-text:active:not(:disabled) {
+            color: var(--devui-primary-active, #344899);
+        }
+
+        .devui-btn-text:disabled {
+            color: var(--devui-disabled-text, #ADB0B8);
+            cursor: not-allowed;
+            background-color: transparent;
+        }
+
+        /* Icon Support */
+        .devui-btn .devui-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            fill: currentColor;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="test-section">
+        <div class="test-title">Primary Button (Size & State)</div>
+        <div class="button-row">
+            <span class="label">Sizes</span>
+            <!-- Template Instance: Primary SM -->
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-sm"
+                onclick=""><span>Small</span></button>
+            <!-- Template Instance: Primary MD -->
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md"
+                onclick=""><span>Medium</span></button>
+            <!-- Template Instance: Primary LG -->
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-lg"
+                onclick=""><span>Large</span></button>
+        </div>
+        <div class="button-row">
+            <span class="label">States</span>
+            <!-- Template Instance: Primary Normal -->
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md"
+                onclick=""><span>Normal</span></button>
+            <!-- Template Instance: Primary Disabled -->
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md" disabled
+                onclick=""><span>Disabled</span></button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Secondary Button (Size & State)</div>
+        <div class="button-row">
+            <span class="label">Sizes</span>
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-sm"
+                onclick=""><span>Small</span></button>
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-md"
+                onclick=""><span>Medium</span></button>
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-lg"
+                onclick=""><span>Large</span></button>
+        </div>
+        <div class="button-row">
+            <span class="label">States</span>
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-md"
+                onclick=""><span>Normal</span></button>
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-md" disabled
+                onclick=""><span>Disabled</span></button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Text Button (Size & State)</div>
+        <div class="button-row">
+            <span class="label">Sizes</span>
+            <button type="button" class="devui-btn devui-btn-text devui-btn-sm" onclick=""><span>Small</span></button>
+            <button type="button" class="devui-btn devui-btn-text devui-btn-md" onclick=""><span>Medium</span></button>
+            <button type="button" class="devui-btn devui-btn-text devui-btn-lg" onclick=""><span>Large</span></button>
+        </div>
+        <div class="button-row">
+            <span class="label">States</span>
+            <button type="button" class="devui-btn devui-btn-text devui-btn-md" onclick=""><span>Normal</span></button>
+            <button type="button" class="devui-btn devui-btn-text devui-btn-md" disabled
+                onclick=""><span>Disabled</span></button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Icon Button</div>
+        <div class="button-row">
+            <span class="label">With Text</span>
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md" onclick="">
+                <!-- Icon Slot: Search -->
+                <svg class="devui-icon" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12.636 11.222a6.974 6.974 0 1 0-1.414 1.414l3.07 3.071a1 1 0 0 0 1.415-1.415l-3.07-3.07ZM7 12A5 5 0 1 1 7 2a5 5 0 0 1 0 10Z"
+                        fill="currentColor" />
+                </svg>
+                <span>Search</span>
+            </button>
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-md" onclick="">
+                <!-- Icon Slot: Filter -->
+                <svg class="devui-icon" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M2.5 4.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5Zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5Zm2 4a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H7a.5.5 0 0 1-.5-.5Z"
+                        fill="currentColor" />
+                </svg>
+                <span>Filter</span>
+            </button>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tag Component Test v1</title>
+    <style>
+        /* Global & Token Simulation */
+        :root {
+            --devui-brand: #5E7CE0;
+            --devui-text: #252B3A;
+            --devui-light-text: #FFFFFF;
+            --devui-base-bg: #FFFFFF;
+
+            /* General */
+            --devui-list-item-hover-bg: #F2F5FC;
+
+            /* States (Auxiliary & Solid & Outline) */
+            /* Success */
+            --devui-success: #50D4AB;
+            --devui-success-bg: #EDFFF9;
+            /* Warning */
+            --devui-warning: #FAC20A;
+            --devui-warning-bg: #FFF8EA;
+            /* Danger */
+            --devui-danger: #F66F6A;
+            --devui-danger-bg: #FFEDEB;
+            /* Info */
+            --devui-info: #5E7CE0;
+            /* Usually brand color */
+            --devui-info-bg: #F2F5FC;
+
+            --devui-font-size-md: 12px;
+            --devui-font-size-lg: 14px;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            gap: 48px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .test-case {
+            width: 800px;
+            padding: 20px;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+        }
+
+        .case-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* 
+           ------------------------------------------------
+           Component Styles: Tag 
+           ------------------------------------------------
+        */
+
+        .devui-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            /* Unified */
+            white-space: nowrap;
+            gap: 4px;
+            /* Icon gap */
+            padding: 0 8px;
+            /* Unified */
+            cursor: default;
+            box-sizing: border-box;
+            transition: all 0.2s;
+        }
+
+        /* Sizes */
+        .devui-tag.size-md {
+            height: 20px;
+            font-size: var(--devui-font-size-md);
+            line-height: 20px;
+        }
+
+        .devui-tag.size-lg {
+            height: 24px;
+            font-size: var(--devui-font-size-lg);
+            line-height: 22px;
+        }
+
+        /* Type: General (Default) */
+        .devui-tag.type-general {
+            background-color: var(--devui-list-item-hover-bg);
+            color: var(--devui-text);
+            border: none;
+            font-weight: 400;
+        }
+
+        /* Type: Auxiliary */
+        /* Note: Using simplified state classes for demo. Real implementation might map specific color props. */
+        .devui-tag.type-auxiliary.state-success {
+            background-color: var(--devui-success-bg);
+            color: var(--devui-success);
+        }
+
+        .devui-tag.type-auxiliary.state-warning {
+            background-color: var(--devui-warning-bg);
+            color: var(--devui-warning);
+        }
+
+        .devui-tag.type-auxiliary.state-danger {
+            background-color: var(--devui-danger-bg);
+            color: var(--devui-danger);
+        }
+
+        /* Type: Solid */
+        .devui-tag.type-solid {
+            color: var(--devui-light-text);
+            font-weight: 500;
+            /* Requirement: Medium */
+            border: none;
+        }
+
+        .devui-tag.type-solid.state-success {
+            background-color: var(--devui-success);
+        }
+
+        .devui-tag.type-solid.state-warning {
+            background-color: var(--devui-warning);
+        }
+
+        .devui-tag.type-solid.state-danger {
+            background-color: var(--devui-danger);
+        }
+
+        .devui-tag.type-solid.state-info {
+            background-color: var(--devui-info);
+        }
+
+        /* Type: Outline */
+        .devui-tag.type-outline {
+            background-color: var(--devui-base-bg);
+            border-style: solid;
+            border-width: 1px;
+            font-weight: 400;
+            line-height: calc(100% - 2px);
+            /* Adjust for border if needed, though flex centering handles mostly */
+        }
+
+        .devui-tag.type-outline.state-success {
+            border-color: var(--devui-success);
+            color: var(--devui-success);
+        }
+
+        .devui-tag.type-outline.state-warning {
+            border-color: var(--devui-warning);
+            color: var(--devui-warning);
+        }
+
+        .devui-tag.type-outline.state-danger {
+            border-color: var(--devui-danger);
+            color: var(--devui-danger);
+        }
+
+        /* Deletable Icon */
+        .devui-tag-close-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0.6;
+        }
+
+        .devui-tag-close-icon:hover {
+            opacity: 1;
+        }
+
+        .devui-tag-close-icon svg {
+            fill: currentColor;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Case 1: General Tags (Size Comparison) -->
+    <div class="test-case">
+        <span class="case-title">Test Case 1: General Type (Sizes)</span>
+        <div class="tag-row">
+            <span class="devui-tag type-general size-md">General MD (20px)</span>
+            <span class="devui-tag type-general size-lg">General LG (24px)</span>
+        </div>
+    </div>
+
+    <!-- Case 2: Auxiliary Tags -->
+    <div class="test-case">
+        <span class="case-title">Test Case 2: Auxiliary Type (Semantics)</span>
+        <div class="tag-row">
+            <span class="devui-tag type-auxiliary state-success size-md">Success</span>
+            <span class="devui-tag type-auxiliary state-warning size-md">Warning</span>
+            <span class="devui-tag type-auxiliary state-danger size-md">Danger</span>
+        </div>
+    </div>
+
+    <!-- Case 3: Solid Tags (Font Weight Check) -->
+    <div class="test-case">
+        <span class="case-title">Test Case 3: Solid Type (Medium Weight, White Text)</span>
+        <div class="tag-row">
+            <span class="devui-tag type-solid state-success size-md">Success Solid</span>
+            <span class="devui-tag type-solid state-warning size-md">Warning Solid</span>
+            <span class="devui-tag type-solid state-danger size-md">Danger Solid</span>
+            <span class="devui-tag type-solid state-info size-md">Info Solid</span>
+        </div>
+    </div>
+
+    <!-- Case 4: Outline Tags -->
+    <div class="test-case">
+        <span class="case-title">Test Case 4: Outline Type (1px Border)</span>
+        <div class="tag-row">
+            <span class="devui-tag type-outline state-success size-md">Success Outline</span>
+            <span class="devui-tag type-outline state-warning size-md">Warning Outline</span>
+            <span class="devui-tag type-outline state-danger size-lg">Danger Outline LG</span>
+        </div>
+    </div>
+
+    <!-- Case 5: Deletable Tags -->
+    <div class="test-case">
+        <span class="case-title">Test Case 5: Deletable Interaction</span>
+        <div class="tag-row">
+            <span class="devui-tag type-general size-md">
+                Deletable Tag
+                <span class="devui-tag-close-icon">
+                    <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M6 5.143L9.429 1.714a.606.606 0 1 1 .857.857L6.857 6l3.429 3.429a.606.606 0 1 1-.857.857L6 6.857 2.571 10.286a.606.606 0 1 1-.857-.857L5.143 6 1.714 2.571a.606.606 0 1 1 .857-.857L6 5.143z" />
+                    </svg>
+                </span>
+            </span>
+
+            <span class="devui-tag type-solid state-danger size-md">
+                Remove Error
+                <span class="devui-tag-close-icon">
+                    <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M6 5.143L9.429 1.714a.606.606 0 1 1 .857.857L6.857 6l3.429 3.429a.606.606 0 1 1-.857.857L6 6.857 2.571 10.286a.606.606 0 1 1-.857-.857L5.143 6 1.714 2.571a.606.606 0 1 1 .857-.857L6 5.143z" />
+                    </svg>
+                </span>
+            </span>
+        </div>
+    </div>
+
+    <!-- Case 6: Stress Test -->
+    <div class="test-case">
+        <span class="case-title">Test Case 6: Stress Test</span>
+        <div class="tag-row">
+            <span class="devui-tag type-general size-md"
+                style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; display: inline-block;">
+                Extremely Long Tag Content Should Truncate or Maintain Layout {{TEST_LONG_VALUE}}
+            </span>
+        </div>
+    </div>
+
+    <!-- Audit Info -->
+    <div class="test-case">
+        <span class="case-title">Audit: Component Status</span>
+        <div style="font-size: 12px; color: #666; font-family: monospace;">
+            Size MD: 20px height, 12px font.<br>
+            Size LG: 24px height, 14px font.<br>
+            Solid Font-Weight: 500 verified.<br>
+            General BG: #F2F5FC.<br>
+            Radius: 4px.<br>
+        </div>
+    </div>
+
+</body>
+
+</html>

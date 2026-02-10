@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs Component Validator v4</title>
+    <style>
+        /* Global & Token Simulation */
+        :root {
+            --devui-brand: #5E7CE0;
+            --devui-brand-foil: #859BFF;
+            --devui-text: #252B3A;
+            --devui-text-weak: #575D6C;
+            --devui-placeholder: #8A8E99;
+            --devui-base-bg: #FFFFFF;
+            --devui-global-bg: #F5F5F5;
+            --devui-line: #D7D8DA;
+            --devui-list-item-hover-bg: #F2F5FC;
+            --devui-disabled-text: #ADB0B8;
+            --devui-font-size: 14px;
+            --devui-padding-base: 8px 16px;
+            /* Approx for tabs */
+            --devui-radius: 4px;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            gap: 48px;
+        }
+
+        .test-case {
+            width: 800px;
+            padding: 20px;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .case-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        /* 
+           ------------------------------------------------
+           Component Styles: Tabs
+           ------------------------------------------------
+        */
+        .devui-tabs {
+            display: flex;
+            align-items: center;
+            /* Gap handled by specific types if needed, or margin on items */
+        }
+
+        .devui-tab-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 16px;
+            /* Adjusted for visual balance */
+            cursor: pointer;
+            font-size: 14px;
+            position: relative;
+            /* For underline positioning */
+            user-select: none;
+            transition: all .2s;
+        }
+
+        /* 
+           Type: Pills (Design: Underline, Logic: "Pills" naming) 
+           Rule: Gap 24px approx, No border on container.
+        */
+        .devui-tabs.pills {
+            gap: 24px;
+            border-bottom: none;
+        }
+
+        .devui-tabs.pills .devui-tab-item {
+            color: var(--devui-text-weak);
+            padding: 8px 0;
+            /* Minimal padding, mostly text */
+        }
+
+        .devui-tabs.pills .devui-tab-item:hover {
+            color: var(--devui-brand);
+        }
+
+        .devui-tabs.pills .devui-tab-item.active {
+            color: var(--devui-text);
+            font-weight: bold;
+            border-bottom: 2px solid var(--devui-text);
+            /* High contrast underline */
+        }
+
+        /* 
+           Type: Tabs (Standard)
+           Rule: Like Pills but with gray bottom border on container.
+        */
+        .devui-tabs.tabs {
+            gap: 24px;
+            border-bottom: 1px solid var(--devui-line);
+        }
+
+        .devui-tabs.tabs .devui-tab-item {
+            color: var(--devui-text-weak);
+            padding: 8px 0;
+            margin-bottom: -1px;
+            /* Align active border with container border */
+        }
+
+        .devui-tabs.tabs .devui-tab-item:hover {
+            color: var(--devui-brand);
+        }
+
+        .devui-tabs.tabs .devui-tab-item.active {
+            color: var(--devui-text);
+            font-weight: bold;
+            border-bottom: 2px solid var(--devui-text);
+        }
+
+        /* 
+           Type: Wrapped (Solid Block)
+           Rule: Gray background for active, Radius top.
+        */
+        .devui-tabs.wrapped {
+            gap: 4px;
+            border-bottom: 1px solid var(--devui-line);
+            /* Optional visual separator */
+        }
+
+        .devui-tabs.wrapped .devui-tab-item {
+            color: var(--devui-text-weak);
+            background: transparent;
+            border-radius: var(--devui-radius) var(--devui-radius) 0 0;
+            padding: 8px 16px;
+        }
+
+        .devui-tabs.wrapped .devui-tab-item:hover {
+            background-color: var(--devui-list-item-hover-bg);
+        }
+
+        .devui-tabs.wrapped .devui-tab-item.active {
+            color: var(--devui-text);
+            background-color: var(--devui-global-bg);
+            /* Gray background */
+            font-weight: bold;
+        }
+
+        /* Disabled State */
+        .devui-tab-item.disabled {
+            color: var(--devui-disabled-text) !important;
+            cursor: not-allowed;
+            border-bottom-color: transparent !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Case 1: Type="pills" (Visual: Underline) -->
+    <div class="test-case">
+        <span class="case-title">Test Case 1: Type="pills" (Visual: Underline) - Default</span>
+        <div class="devui-tabs pills" id="tabs-pills">
+            <div class="devui-tab-item active" onclick="selectTab('tabs-pills', this)">Overview</div>
+            <div class="devui-tab-item" onclick="selectTab('tabs-pills', this)">Config</div>
+            <div class="devui-tab-item" onclick="selectTab('tabs-pills', this)">Permissions</div>
+            <div class="devui-tab-item disabled">Disabled</div>
+        </div>
+    </div>
+
+    <!-- Case 2: Type="tabs" (Standard) -->
+    <div class="test-case">
+        <span class="case-title">Test Case 2: Type="tabs" (Standard with Line)</span>
+        <div class="devui-tabs tabs" id="tabs-standard">
+            <div class="devui-tab-item" onclick="selectTab('tabs-standard', this)">Basic Info</div>
+            <div class="devui-tab-item active" onclick="selectTab('tabs-standard', this)">Advanced Settings</div>
+            <div class="devui-tab-item" onclick="selectTab('tabs-standard', this)">Logs</div>
+        </div>
+    </div>
+
+    <!-- Case 3: Type="wrapped" (Visual: Solid Block) -->
+    <div class="test-case">
+        <span class="case-title">Test Case 3: Type="wrapped" (Visual: Solid Block)</span>
+        <div class="devui-tabs wrapped" id="tabs-wrapped">
+            <div class="devui-tab-item" onclick="selectTab('tabs-wrapped', this)">Source Code</div>
+            <div class="devui-tab-item" onclick="selectTab('tabs-wrapped', this)">Preview</div>
+            <div class="devui-tab-item active" onclick="selectTab('tabs-wrapped', this)">History</div>
+        </div>
+    </div>
+
+    <!-- Audit Info -->
+    <div class="test-case">
+        <span class="case-title">Audit: Component Status</span>
+        <div style="font-size: 12px; color: #666; font-family: monospace;">
+            Pills: Underline style, No bottom border (Verified).<br>
+            Tabs: Underline style, Gray bottom border (Verified).<br>
+            Wrapped: Solid gray background, Top radius (Verified).<br>
+            Interaction: JS-enabled switching.
+        </div>
+    </div>
+
+    <script>
+        function selectTab(containerId, clickedItem) {
+            if (clickedItem.classList.contains('disabled')) return;
+
+            const container = document.getElementById(containerId);
+            const items = container.querySelectorAll('.devui-tab-item');
+
+            items.forEach(item => item.classList.remove('active'));
+            clickedItem.classList.add('active');
+        }
+    </script>
+
+</body>
+
+</html>

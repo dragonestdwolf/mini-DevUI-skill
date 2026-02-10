@@ -1,0 +1,38 @@
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32.000000" height="32.000000" fill="none" customFrame="#000000">
+	<defs>
+		<filter id="pixso_custom_mask_type_outline">
+			<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
+		</filter>
+		<linearGradient id="paint_linear_58" x1="14.3386002" x2="14.3386002" y1="0" y2="11.6952343" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(246,247,253)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(233,237,250)" offset="1" stop-opacity="1" />
+		</linearGradient>
+		<linearGradient id="paint_linear_59" x1="16" x2="16" y1="3" y2="17" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(246,247,253)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(233,237,250)" offset="1" stop-opacity="1" />
+		</linearGradient>
+	</defs>
+	<mask id="mask_9" width="28.000000" height="22.000000" x="2.000000" y="5.000000" maskUnits="userSpaceOnUse">
+		<g filter="url(#pixso_custom_mask_type_outline)">
+			<rect id="蒙版" width="28.000000" height="22.000000" x="2.000000" y="5.000000" rx="4.000000" fill="rgb(255,255,255)" />
+			<rect id="蒙版" width="27.000000" height="21.000000" x="2.500000" y="5.500000" rx="3.500000" stroke="rgb(223,225,230)" stroke-opacity="0" stroke-width="1" />
+		</g>
+	</mask>
+	<rect id="雪碧图/32px/email-file" width="32.000000" height="32.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<g id="组合 3865">
+		<rect id="矩形" width="32.000000" height="32.000000" x="0.000000" y="0.000000" rx="4.000000" fill="rgb(238,240,245)" fill-opacity="0" />
+		<rect id="矩形" width="31.000000" height="31.000000" x="0.500000" y="0.500000" rx="3.500000" stroke="rgb(151,151,151)" stroke-opacity="0" stroke-width="1" />
+		<g id="矩形" showMaskRef="url(#show_mask_3)" mask="url(#mask_9)">
+			<g id="show_mask_3">
+				<rect id="蒙版" width="28.000000" height="22.000000" x="2.000000" y="5.000000" rx="4.000000" fill="rgb(255,136,0)" />
+				<rect id="蒙版" width="27.000000" height="21.000000" x="2.500000" y="5.500000" rx="3.500000" stroke="rgb(223,225,230)" stroke-opacity="0" stroke-width="1" />
+			</g>
+			<path id="形状" d="M0.341509 1.75258L11.7045 11.6952L1.00001 0C0.711651 0 0.437325 0.12448 0.247437 0.341495C-0.116245 0.757132 -0.0741275 1.38889 0.341509 1.75258ZM27.6772 0C28.2295 0 28.6772 0.447715 28.6772 1C28.6772 1.28836 28.5527 1.56269 28.3357 1.75258L16.9727 11.6952L27.6772 0Z" opacity="0" fill="url(#paint_linear_58)" fill-opacity="0" fill-rule="evenodd" transform="matrix(1,0,0,-1,1.66016,27.4996)" />
+			<path id="形状" d="M0.341509 1.75258L11.7045 11.6952L1.00001 0C0.711651 0 0.437325 0.12448 0.247437 0.341495C-0.116245 0.757132 -0.0741275 1.38889 0.341509 1.75258ZM27.6772 0C28.2295 0 28.6772 0.447715 28.6772 1C28.6772 1.28836 28.5527 1.56269 28.3357 1.75258L16.9727 11.6952L27.6772 0Z" opacity="0" fill-rule="evenodd" stroke="rgb(255,255,255)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" transform="matrix(1,0,0,-1,1.66016,27.4996)" />
+			<path id="矩形" d="M2.66145 3L29.3386 3C30.2619 3 30.692 4.14454 29.9971 4.75258L18.634 14.6952C17.1259 16.0148 14.8741 16.0148 13.366 14.6952L2.00294 4.75258C1.30804 4.14454 1.73808 3 2.66145 3Z" fill="url(#paint_linear_59)" fill-opacity="0" fill-rule="evenodd" />
+			<path id="矩形" d="M29.3386 3C30.2619 3 30.692 4.14454 29.9971 4.75258L18.634 14.6952C17.1259 16.0148 14.8741 16.0148 13.366 14.6952L2.00294 4.75258C1.30804 4.14454 1.73808 3 2.66145 3L29.3386 3Z" fill-rule="evenodd" stroke="rgb(255,255,255)" stroke-width="1.5" />
+			<path id="矢量 789" d="M0 0L15.5563 0" stroke="rgb(255,255,255)" stroke-width="1.5" transform="matrix(0.707107,-0.707107,0.707107,0.707107,3,26)" />
+			<path id="矢量 789" d="M0 0L15.5563 0" stroke="rgb(255,255,255)" stroke-width="1.5" transform="matrix(-0.707107,-0.707107,-0.707107,0.707107,29,26)" />
+		</g>
+	</g>
+</svg>

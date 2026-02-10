@@ -1,0 +1,23 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48.000000" height="48.000000" fill="none" customFrame="#000000">
+	<defs>
+		<linearGradient id="paint_linear_67" x1="1.70281613" x2="1.70281613" y1="0" y2="28.5495872" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(2,89,255)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(63,194,255)" offset="0.99749887" stop-opacity="1" />
+		</linearGradient>
+		<linearGradient id="paint_linear_68" x1="1.70281637" x2="1.70281637" y1="0" y2="28.5495834" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(2,89,255)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(63,194,255)" offset="0.99749887" stop-opacity="1" />
+		</linearGradient>
+		<linearGradient id="paint_linear_69" x1="13.4195194" x2="36.681221" y1="37.7997971" y2="17.6669331" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(5,94,255)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(89.25,209.276,255)" offset="0.996014416" stop-opacity="1" />
+		</linearGradient>
+	</defs>
+	<rect id="语言图标/ArkTS" width="48.000000" height="48.000000" x="0.000000" y="0.000000" />
+	<rect id="矩形 214" width="48.000000" height="48.000000" x="0.000000" y="0.000000" rx="12.000000" opacity="0" fill="rgb(247,247,247)" />
+	<g id="组合 770">
+		<rect id="矩形 213" width="3.405632" height="28.549587" x="0.000000" y="0.000000" rx="1.702816" fill="url(#paint_linear_67)" transform="matrix(-0.920612,0.390478,-0.391143,-0.92033,36.1421,36.4751)" />
+		<rect id="矩形 212" width="3.405633" height="28.549583" x="0.000000" y="0.000000" rx="1.702816" fill="url(#paint_linear_68)" transform="matrix(-0.920612,-0.390478,-0.391142,0.92033,26.3022,11.5298)" />
+		<path id="矢量 14" d="M36.3163 17.3834C32.2478 14.6423 20.484 25.2598 16.5417 29.9543C15.5009 31.0888 13.124 33.6696 12.7571 34.5861C12.2838 35.768 12.7396 36.7241 13.4194 37.0436C15.0278 37.7998 15.8794 36.7601 15.8794 36.7601C15.8794 36.7601 19.3557 31.5954 24.0163 26.8354C28.6536 22.0991 33.9165 18.6509 34.6132 19.4628C35.1809 20.1245 33.0363 21.7628 31.7747 22.6765C35.9378 21.5424 37.4517 18.3286 36.3163 17.3834Z" fill="url(#paint_linear_69)" fill-rule="evenodd" />
+	</g>
+</svg>

@@ -1,0 +1,17 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48.000000" height="48.000000" fill="none">
+	<rect id="语言图标/HTML48" width="48.000000" height="48.000000" x="0.000000" y="0.000000" />
+	<g id="模型/HTML48">
+		<g id="编组-2">
+			<rect id="矩形" width="40.000000" height="40.000000" x="4.000000" y="4.000000" opacity="0" fill="rgb(216,216,216)" />
+			<rect id="矩形" width="40.000000" height="40.000000" x="4.000000" y="4.000000" opacity="0" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+			<g id="编组">
+				<path id="路径" d="M11.4167 38.3571L9 8L38 8L35.5833 38.3571L23.5 42L11.4167 38.3571Z" fill="rgb(228,77,38)" fill-rule="nonzero" />
+				<path id="路径" d="M9 8L38 8L35.5833 38.3571L23.5 42L11.4167 38.3571L9 8Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<path id="路径" d="M35.5833 10.4285L23.5 10.4285L23.5 40.1785L33.1667 37.1428L35.5833 10.4285Z" fill="rgb(241,101,41)" fill-rule="nonzero" />
+				<path id="路径" d="M23.5 10.4285L23.5 40.1785L33.1667 37.1428L35.5833 10.4285L23.5 10.4285Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<path id="路径" d="M15.6458 25.6072L14.4375 14.0715L33.1667 14.0715L32.5625 17.7144L18.0625 17.7144L18.6667 21.9644L31.9583 21.9644L30.75 33.5001L23.5 35.9287L16.25 33.5001L15.6458 27.4287L19.2708 27.4287L19.875 30.4644L23.5 31.6787L27.125 30.4644L27.7292 25.6072L15.6458 25.6072Z" fill="rgb(255,255,255)" fill-rule="nonzero" />
+				<path id="路径" d="M14.4375 14.0715L33.1667 14.0715L32.5625 17.7144L18.0625 17.7144L18.6667 21.9644L31.9583 21.9644L30.75 33.5001L23.5 35.9287L16.25 33.5001L15.6458 27.4287L19.2708 27.4287L19.875 30.4644L23.5 31.6787L27.125 30.4644L27.7292 25.6072L15.6458 25.6072L14.4375 14.0715Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+			</g>
+		</g>
+	</g>
+</svg>

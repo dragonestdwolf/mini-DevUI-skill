@@ -26,7 +26,7 @@
 - **Prop**:
     - **Primary/Secondary**: 使用 `icon` 属性传递 Icon 组件。
     - **Text**: 可直接作为 `children` 的一部分，或使用 `icon` 属性。
-- **Size**: 按钮内图标默认尺寸为 `16px x 16px`。
+- **Size**: 按钮内图标默认尺寸为 `16px x 16px`。图标与文字的间距为4px
 - **Color**:
     - Icon 颜色应继承父级文字颜色 (`currentColor`) 或显式跟随 Variant 规则。
     - **Primary**: `var(--devui-light-text)` (White).
@@ -73,10 +73,8 @@
 | **Container** | `background-color` | `var(--devui-base-bg)` | `#FFFFFF` |
 | **Container** | `border` | `1px solid var(--devui-form-control-line)` (或 `devui-line`) | `#ADB0B8` |
 | **Text** | `color` | `var(--devui-text)` | `#252B3A` |
-| **Hover** | `border-color` | `var(--devui-primary)` | `##252B3A` |
-| **Hover** | `color` | `var(--devui-primary)` | `##252B3A` |
+| **Hover** | `border-color` | `var(--devui-from-control-line-hover)` | `#575D6C` |
 | **Active** | `border-color` | `var(--devui-form-control-line-active)` (Figma: #5E7CE0) | `#5E7CE0` |
-| **Active** | `color` | `var(--devui-primary-active)` (Figma: #344899 - Optional, design shows blue border) | `#5E7CE0` |
 | **Disabled** | `background-color` | `var(--devui-btn-common-bg-disabled)` (Figma: #F5F5F5) | `#F5F5F5` |
 | **Disabled** | `border-color` | `var(--devui-disabled-line)` (Figma: #DFE1E6) | `#DFE1E6` |
 | **Disabled** | `color` | `var(--devui-disabled-text)` (Figma: #ADB0B8) | `#ADB0B8` |
@@ -92,7 +90,6 @@
 | **Padding** | `padding` | `0 8px` (比实体按钮小) | - |
 | **Hover** | `color` | `var(--devui-primary)` | `#5E7CE0` |
 | **Active** | `color` | `var(--devui-primary-active)` (Figma: #5E7CE0) | `#344899` |
-| **Active** | `background-color` | `var(--devui-list-item-active-bg)` (Optional) | - |
 | **Disabled** | `color` | `var(--devui-disabled-text)` (Figma: #BABBC0/ADB0B8) | `#ADB0B8` |
 | **Disabled** | `background-color` | `transparent` | - |
 
