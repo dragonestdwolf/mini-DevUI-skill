@@ -28,32 +28,22 @@
     }
 
     .devui-filter-icon {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
         flex-shrink: 0;
-        /* Using Content approach for SVGs */
-        content: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/dropdown.svg');
+        background-color: currentColor;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9.93138 5.9608L7.34165 9.19796C7.19071 9.38664 6.91539 9.41723 6.72672 9.26629C6.70149 9.24611 6.67857 9.22319 6.65839 9.19796L4.06866 5.9608C3.91772 5.77213 3.94831 5.49681 4.13699 5.34587C4.21456 5.28381 4.31095 5.25 4.41029 5.25H9.58975C9.83137 5.25 10.0272 5.44588 10.0272 5.6875C10.0272 5.78684 9.99344 5.88323 9.93138 5.9608Z' fill='currentColor'/%3E%3C/svg%3E") no-repeat center;
+        mask: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9.93138 5.9608L7.34165 9.19796C7.19071 9.38664 6.91539 9.41723 6.72672 9.26629C6.70149 9.24611 6.67857 9.22319 6.65839 9.19796L4.06866 5.9608C3.91772 5.77213 3.94831 5.49681 4.13699 5.34587C4.21456 5.28381 4.31095 5.25 4.41029 5.25H9.58975C9.83137 5.25 10.0272 5.44588 10.0272 5.6875C10.0272 5.78684 9.99344 5.88323 9.93138 5.9608Z' fill='currentColor'/%3E%3C/svg%3E") no-repeat center;
         transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s;
-        fill: currentColor;
-        /* If SVG allows */
     }
 
     /* --- Interactive States --- */
 
     /* Hover */
     .devui-filter:hover .devui-filter-text {
-        color: var(--devui-link, #526ecc);
+        color: var(--devui-primary, #5e7ce0);
         /* Or Primary #5e7ce0 */
     }
-
-    /* SVG Link doesn't support 'fill' via CSS content, so we might need filter or background-image. 
-       However, for simplicity in template, we rely on opacity or assume SVG is black and we want blue?
-       Actually, `content: url` cannot be colored by CSS `color`. 
-       Better approach for recoloring is mask or background-color + mask, OR inline SVG.
-       For this template, consistent with others using `content: url`, we accept default color 
-       or use specific colored SVGs if available.
-       A common workaround for 'content' icons is opacity or filter.
-    */
 
     /* Active (Open) */
     .devui-filter.active .devui-filter-text {
@@ -64,6 +54,7 @@
 
     .devui-filter.active .devui-filter-icon {
         transform: rotate(180deg);
+        /* Icon will inherit active color from text due to currentColor */
     }
 
     /* Disabled */
@@ -76,11 +67,13 @@
     }
 
     .devui-filter.disabled .devui-filter-icon {
-        opacity: 0.4;
+        opacity: 1;
+        /* Reset opacity as we control color directly */
+        background-color: var(--devui-disabled-text, #adb0b8);
     }
 </style>
 
 <div class="devui-filter {{class}}" onclick="this.classList.toggle('active')">
     <span class="devui-filter-text">{{text}}</span>
-    <img class="devui-filter-icon" alt="filter" />
+    <span class="devui-filter-icon"></span>
 </div>

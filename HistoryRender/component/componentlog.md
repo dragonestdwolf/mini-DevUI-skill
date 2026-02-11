@@ -148,3 +148,81 @@ CategorySearch v1
 读取文件：categorySearch-tem.html
 生成描述：生成 CategorySearch v1 测试 HTML，验证 852px 宽搜索栏，包含 Tags 区域、右侧操作区 (Clear/Save/Folder) 以及 Dropdown 面板的交互视觉。
 输出位置：/HistoryRender/component/categorySearch/v1.html
+Filter v1
+时间：02-11 16:21
+框架与库：DevUI
+数据来源：Spec + Template
+读取文件：filter-tem.html, filter.md
+生成描述：生成 Filter v1 测试 HTML，验证 Normal/Active/Disabled 状态及 Content(SVG) Icon 旋转动画。
+输出位置：/HistoryRender/component/filter/v1.html
+
+Filter v1
+时间：02-11 16:23
+框架与库：DevUI
+数据来源：Spec (filter.md) + Template
+读取文件：filter-tem.html, filter.md
+生成描述：生成 Filter v1 测试 HTML，验证基础状态（Normal, Hover, Active, Disabled）。
+输出位置：/HistoryRender/component/filter/v1.html
+
+
+Filter v2
+时间：02-11 16:30
+框架与库：DevUI
+数据来源：Spec + Template
+读取文件：filter-tem.html, filter.md
+生成描述：生成 Filter v2 测试 HTML，修复图标路径错误，从 '操作图标' 更新为 'action/dropdown.svg'，确保图标正确加载。
+输出位置：/HistoryRender/component/filter/v2.html
+
+Filter v3
+时间：02-11 16:34
+框架与库：DevUI
+数据来源：Spec + Template
+读取文件：filter-tem.html, filter.md
+生成描述：生成 Filter v3 测试 HTML，改用 CSS Mask + Inline SVG Data URI 绘制图标，彻底解决外部图标资源调用失败问题，支持 currentColor 自动变色。
+输出位置：/HistoryRender/component/filter/v3.html
+
+Filter v4
+时间：02-11 16:36
+框架与库：DevUI
+数据来源：Spec + Template
+读取文件：filter-tem.html, filter.md
+生成描述：生成 Filter v4 测试 HTML，响应用户需求，改用 'select-arrow.svg' (实心倒三角) 的 SVG 内容作为 CSS Mask。尺寸调整为 14x14px。
+输出位置：/HistoryRender/component/filter/v4.html
+
+Table v14
+时间：02-11 16:38
+框架与库：DevUI
+数据来源：Image Design (User Provided)
+读取文件：table.md, table-tem.html
+生成描述：生成 Table v14 HTML，还原设计稿。
+- **列**: Checkbox, 编号(Sort), 标题(Tag+Text+Sort), 结束时间(Sort), 状态(Text+Filter/Sort), 处理人(Text+Filter/Sort), 预计开始(Sort), 预计结束(Date+Tag+Sort), 优先级(Flag+Text+Filter/Sort), 操作(Edit/Star/More).
+- **资源**: 
+    - Edit Icon: status/编辑.svg
+    - Tags: Solid (Bug/Story), Outline (Overdue).
+    - Sort/Filter Icons: action/sort.svg, action/filter.svg.
+输出位置：/HistoryRender/component/table/v14.html
+结论：图标未正确调用，
+
+Table v15
+时间：02-11 17:05
+框架与库：DevUI
+数据来源：Spec + Template
+读取文件：table-tem.html, table.md
+生成描述：生成 Table v15 HTML，验证默认 Sort/Filter 图标配置。
+- **配置**: Sort (), Filter (), Size 16px, Gap 8px.
+- **实现**: 使用 CSS Mask 引用本地 SVG 路径。
+输出位置：/HistoryRender/component/table/v15.html
+
+Table v16
+时间：02-11 17:15
+框架与库：DevUI
+数据来源：Design Image
+读取文件：table.md, table-tem.html
+生成描述：生成 Table v16 HTML，高度还原设计稿。
+- **列与功能**: 
+    - 编号 (Sort), 标题 (Icon+Text+Sort), 结束时间 (Sort), 状态 (Filter+Sort), 处理人 (Filter+Sort), 预计开始 (Sort), 预计结束 (Sort), 优先级 (Filter+Sort), 操作 (Icon+Text).
+- **视觉细节**: 
+    - Tag: Solid (Bug/Story/Warning), Outline (Overdue).
+    - Icons: Flag (Priority), Edit/Star/More (Operation), Sort/Filter (Default).
+- **Header Icons**: 尝试匹配 'list-view.svg' 作为标题和操作列的标识图标（近似还原）。
+输出位置：/HistoryRender/component/table/v16.html

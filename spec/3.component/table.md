@@ -10,15 +10,36 @@
 
 ### 1.1 Header Cell (表头)
 -   **Standard**: `<span>{{label}}</span>` (Bold, 12px)
--   **Sortable**:
+-   **Sortable** (Default when no description):
     ```html
     <div class="devui-table-header-cell">
         <span>{{label}}</span>
-        <span class="devui-table-sort-icon">
-            <!-- Icon SVG -->
-        </span>
+        <span class="devui-table-sort-icon"></span>
+        <!-- Icon: icon/miniDev-icon/action/sort-icon.svg -->
     </div>
     ```
+-   **Filterable** (Default when no description):
+    ```html
+    <div class="devui-table-header-cell">
+        <span>{{label}}</span>
+        <span class="devui-table-filter-icon"></span>
+        <!-- Icon: icon/miniDev-icon/action/filter.svg -->
+    </div>
+    ```
+-   **Sort & Filter**:
+    ```html
+    <div class="devui-table-header-cell">
+        <span>{{label}}</span>
+        <div class="devui-header-icons">
+             <span class="devui-table-sort-icon"></span>
+             <span class="devui-table-filter-icon"></span>
+        </div>
+    </div>
+    ```
+-   **Style**:
+    -   Icon Size: 16x16px.
+    -   Gap (Text to Icon): 8px.
+    -   Gap (Icon to Icon): 4px.
 -   **Checkbox**: `<input type="checkbox" />` (Centered)
 
 ### 1.2 Body Cell Types (单元格类型)
@@ -57,7 +78,7 @@
 #### D. Tree Structure
   - Standard Height: 42px.
   - Composition:
-    - **Icon**: `icon/miniDev-icon/操作图标/collapse.svg` (16x16px).
+    - **Icon**: `icon/miniDev-icon/action/collapse.svg` (16x16px).
       - Default: Points Right (Collapsed).
       - Click Interaction: Rotates 90deg Down (Expanded).
     - **Gap**: 8px.
@@ -80,7 +101,7 @@
 
 #### G. Status with Name (StatusWithName)
 -   **Structure**: Icon (16px) + Gap (8px) + Text (14px Regular).
--   **Icon**: `icon/miniDev-icon/状态图标/成功.svg`.
+-   **Icon**: `icon/miniDev-icon/action/success.svg`.
 -   **Snippet**:
     ```html
     <div class="devui-status-with-name">

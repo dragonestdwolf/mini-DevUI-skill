@@ -63,7 +63,7 @@
 | **Disabled** | `cursor` | `not-allowed` | - |
 
 #### Prev/Next Button (翻页按钮)
-- **Icon**: Chevron Left / Chevron Right (`icon/miniDev-icon/操作图标/向左(chevron-left).svg`, `icon/miniDev-icon/操作图标/向右(chevron-right).svg`).
+- **Icon**: Chevron Left / Chevron Right (`icon/miniDev-icon/action/向左(chevron-left).svg`, `icon/miniDev-icon/action/向右(chevron-right).svg`).
 - **Style**: Same hover/active rules as Page Number.
 - **Disabled**: Opacity 0.5 or specific disabled token if at start/end.
 

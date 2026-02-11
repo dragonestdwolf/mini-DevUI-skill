@@ -67,7 +67,7 @@
 
     /* --- Variant: Checkbox Column --- */
     .devui-table .devui-table-col-checkbox {
-        width: 32px;
+        width: 48px;
         /* Figma 343:557 */
         padding: 0;
         text-align: center;
@@ -131,7 +131,7 @@
         background-size: contain;
         /* Default: Right Arrow (Collapsed) */
         /* Use collapse-left (Left <) and rotate 180deg to get Right > */
-        background-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/collapse.svg');
+        background-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/collapse.svg');
         transform: rotate(90deg);
         transition: transform 0.2s;
     }
@@ -200,13 +200,13 @@
         background-position: center;
         background-size: contain;
         /* Default: Collapsed -> Show Expand Icon */
-        background-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/selector-expand.svg');
+        background-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/selector-expand.svg');
         transition: transform 0.2s;
     }
 
     /* Expanded State -> Show Collapse Icon */
     .devui-cell-icon-label.expanded .devui-icon-toggle {
-        background-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/selector-collapse.svg');
+        background-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/selector-collapse.svg');
     }
 
     .devui-cell-icon-label-text {
@@ -256,12 +256,52 @@
     }
 
     /* Sort/Filter in Header */
-    .devui-header-icon {
+    /* Sort/Filter in Header */
+    .devui-table-header-cell {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        /* User specified 8px */
+        height: 100%;
+        cursor: pointer;
+    }
+
+    .devui-header-icons {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .devui-table-sort-icon,
+    .devui-table-filter-icon {
         width: 16px;
         height: 16px;
-        margin-left: 4px;
-        vertical-align: middle;
-        fill: #BABBC0;
+        flex-shrink: 0;
+        background-color: #BABBC0;
+        /* Default header icon color */
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        -webkit-mask-size: contain;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: contain;
+        transition: background-color 0.2s;
+    }
+
+    .devui-table-sort-icon {
+        -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/sort-icon.svg');
+        mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/sort-icon.svg');
+    }
+
+    .devui-table-filter-icon {
+        -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/filter.svg');
+        mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/filter.svg');
+    }
+
+    .devui-table-header-cell:hover .devui-table-sort-icon,
+    .devui-table-header-cell:hover .devui-table-filter-icon {
+        background-color: var(--devui-text, #252b3a);
+        /* Darken on hover */
     }
 
     /* --- New Tag Styles --- */
@@ -393,7 +433,7 @@
 <td>
     <div class="devui-status-with-name">
         <!-- Default Icon: Success -->
-        <img src="icon/miniDev-icon/状态图标/成功.svg" class="devui-status-icon-img" alt="Success">
+        <img src="icon/miniDev-icon/action/success.svg" class="devui-status-icon-img" alt="Success">
         <span class="devui-status-text">Successful</span>
     </div>
 </td>

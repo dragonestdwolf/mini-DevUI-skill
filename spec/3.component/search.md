@@ -16,7 +16,7 @@
 -   **Gap**: 4px (Icon to Text).
 
 ### 1.2 Icon & Text
--   **Icon**: `icon/miniDev-icon/操作图标/search.svg` (16x16px).
+-   **Icon**: `icon/miniDev-icon/action/search.svg` (16x16px).
 -   **Placeholder**: 14px Regular, Color `var(--devui-placeholder)`.
 -   **Text**: 14px Regular, Color `var(--devui-text)`.
 -   **Visual**:

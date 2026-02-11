@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Design Restoration v16</title>
+    <style>
+        body {
+            padding: 40px;
+            background: #f3f6f8;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .devui-table-container {
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .devui-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .devui-table th,
+        .devui-table td {
+            height: 42px;
+            padding: 0 16px;
+            border-bottom: 1px solid #dfe1e6;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .devui-table th {
+            font-size: 12px;
+            font-weight: 700;
+            color: #252b3a;
+        }
+
+        .devui-table tbody tr:hover td {
+            background-color: #f2f5fc;
+        }
+
+        /* Header Icons */
+        .devui-table-header-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .devui-header-icons {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .devui-table-sort-icon,
+        .devui-table-filter-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            background-color: #BABBC0;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            -webkit-mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+            transition: background-color 0.2s;
+        }
+
+        .devui-table-sort-icon {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/sort-icon.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/sort-icon.svg');
+        }
+
+        .devui-table-filter-icon {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/filter.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/filter.svg');
+        }
+
+        .devui-table-header-cell:hover .devui-table-sort-icon,
+        .devui-table-header-cell:hover .devui-table-filter-icon {
+            background-color: #252b3a;
+        }
+
+        /* Custom Header Icons (Title & Operation) */
+        .devui-header-custom-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+
+        /* Cell Types */
+        .devui-table-col-checkbox {
+            width: 48px;
+            text-align: center;
+            padding: 0;
+        }
+
+        .devui-checkbox-box {
+            width: 16px;
+            height: 16px;
+            border: 1px solid #adb0b8;
+            border-radius: 2px;
+            margin: 0 auto;
+        }
+
+        .devui-tag-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 20px;
+            padding: 0 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #fff;
+            margin-right: 8px;
+        }
+
+        .devui-tag-warning {
+            background-color: #FAC20A;
+        }
+
+        /* Bug */
+        .devui-tag-success {
+            background-color: #50D4AB;
+        }
+
+        /* Story */
+
+        .devui-tag-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 20px;
+            padding: 0 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 400;
+            border: 1px solid currentColor;
+            margin-left: 8px;
+        }
+
+        .devui-tag-outline.devui-tag-danger {
+            color: #F66F6A;
+            border-color: rgba(246, 111, 106, 0.5);
+            background: #FFEDEB;
+        }
+
+        /* Sub-task / Overdue style */
+
+        .devui-cell-priority {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .devui-priority-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .devui-cell-operation {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .devui-operation-icon {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        .devui-operation-icon:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="devui-table-container">
+        <table class="devui-table">
+            <thead>
+                <tr>
+                    <th class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></th>
+                    <th style="width: 100px;">
+                        <div class="devui-table-header-cell">
+                            <span>编号</span>
+                            <span class="devui-table-sort-icon"></span>
+                        </div>
+                    </th>
+                    <th style="width: 300px;">
+                        <div class="devui-table-header-cell">
+                            <!-- Icon for Title column -->
+                            <img src="../../../icon/miniDev-icon/action/list-view.svg" class="devui-header-custom-icon"
+                                alt="Title">
+                            <span>标题</span>
+                            <span class="devui-table-sort-icon"></span>
+                        </div>
+                    </th>
+                    <th style="width: 120px;">
+                        <div class="devui-table-header-cell">
+                            <span>结束时间</span>
+                            <span class="devui-table-sort-icon"></span>
+                        </div>
+                    </th>
+                    <th style="width: 100px;">
+                        <div class="devui-table-header-cell">
+                            <span>状态</span>
+                            <div class="devui-header-icons">
+                                <span class="devui-table-filter-icon"></span>
+                                <span class="devui-table-sort-icon"></span>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 120px;">
+                        <div class="devui-table-header-cell">
+                            <span>处理人</span>
+                            <div class="devui-header-icons">
+                                <span class="devui-table-filter-icon"></span>
+                                <span class="devui-table-sort-icon"></span>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 140px;">
+                        <div class="devui-table-header-cell">
+                            <span>预计开始时间</span>
+                            <span class="devui-table-sort-icon"></span>
+                        </div>
+                    </th>
+                    <th style="width: 140px;">
+                        <div class="devui-table-header-cell">
+                            <span>预计结束时间</span>
+                            <span class="devui-table-sort-icon"></span>
+                        </div>
+                    </th>
+                    <th style="width: 100px;">
+                        <div class="devui-table-header-cell">
+                            <span>优先级</span>
+                            <div class="devui-header-icons">
+                                <span class="devui-table-filter-icon"></span>
+                                <span class="devui-table-sort-icon"></span>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 120px;">
+                        <div class="devui-table-header-cell">
+                            <img src="../../../icon/miniDev-icon/action/list-view.svg" class="devui-header-custom-icon"
+                                alt="Operation">
+                            <span>操作</span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Row 1 -->
+                <tr>
+                    <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                    <td>12345678</td>
+                    <td><span class="devui-tag-solid devui-tag-warning">Bug</span><span>作为用户应该可以查看产品列表</span></td>
+                    <td>--</td>
+                    <td>新建</td>
+                    <td>hw12345678</td>
+                    <td>2025-03-09</td>
+                    <td>2026-02-09<span class="devui-tag-outline devui-tag-danger">超期9天</span></td>
+                    <td>
+                        <div class="devui-cell-priority"><img src="../../../icon/flag_middle.svg"
+                                class="devui-priority-icon"><span>中</span></div>
+                    </td>
+                    <td>
+                        <div class="devui-cell-operation">
+                            <img src="../../../icon/miniDev-icon/action/edit.svg" class="devui-operation-icon" title="Edit">
+                            <img src="../../../icon/miniDev-icon/action/star.svg" class="devui-operation-icon" title="Follow">
+                            <img src="../../../icon/miniDev-icon/action/more-vertical.svg" class="devui-operation-icon"
+                                title="More">
+                        </div>
+                    </td>
+                </tr>
+                <!-- Row 2 -->
+                <tr>
+                    <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                    <td>12345678</td>
+                    <td><span class="devui-tag-solid devui-tag-success">Story</span><span>作为用户应该可以查看产品列表</span></td>
+                    <td>--</td>
+                    <td>新建</td>
+                    <td>hw12345678</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>
+                        <div class="devui-cell-priority"><img src="../../../icon/flag_hight.svg"
+                                class="devui-priority-icon"><span>高</span></div>
+                    </td>
+                    <td>
+                        <div class="devui-cell-operation">
+                            <img src="../../../icon/miniDev-icon/action/edit.svg" class="devui-operation-icon" title="Edit">
+                            <img src="../../../icon/miniDev-icon/action/star.svg" class="devui-operation-icon" title="Follow">
+                            <img src="../../../icon/miniDev-icon/action/more-vertical.svg" class="devui-operation-icon"
+                                title="More">
+                        </div>
+                    </td>
+                </tr>
+                <!-- Row 3 -->
+                <tr>
+                    <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                    <td>12345678</td>
+                    <td><span class="devui-tag-solid devui-tag-warning">Bug</span><span>作为用户应该可以查看产品列表</span></td>
+                    <td>--</td>
+                    <td>进行中</td>
+                    <td>hw12345678</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>
+                        <div class="devui-cell-priority"><img src="../../../icon/flag_low.svg"
+                                class="devui-priority-icon"><span>低</span></div>
+                    </td>
+                    <td>
+                        <div class="devui-cell-operation">
+                            <img src="../../../icon/miniDev-icon/action/edit.svg" class="devui-operation-icon" title="Edit">
+                            <img src="../../../icon/miniDev-icon/action/star.svg" class="devui-operation-icon" title="Follow">
+                            <img src="../../../icon/miniDev-icon/action/more-vertical.svg" class="devui-operation-icon"
+                                title="More">
+                        </div>
+                    </td>
+                </tr>
+                <!-- Row 4 -->
+                <tr>
+                    <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                    <td>12345678</td>
+                    <td><span class="devui-tag-solid devui-tag-warning">Bug</span><span>作为用户应该可以查看产品列表</span></td>
+                    <td>--</td>
+                    <td>进行中</td>
+                    <td>hw12345678</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>
+                        <div class="devui-cell-priority"><img src="../../../icon/flag_low.svg"
+                                class="devui-priority-icon"><span>低</span></div>
+                    </td>
+                    <td>
+                        <div class="devui-cell-operation">
+                            <img src="../../../icon/miniDev-icon/action/edit.svg" class="devui-operation-icon" title="Edit">
+                            <img src="../../../icon/miniDev-icon/action/star.svg" class="devui-operation-icon" title="Follow">
+                            <img src="../../../icon/miniDev-icon/action/more-vertical.svg" class="devui-operation-icon"
+                                title="More">
+                        </div>
+                    </td>
+                </tr>
+                <!-- Row 5 -->
+                <tr>
+                    <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                    <td>12345678</td>
+                    <td><span class="devui-tag-solid devui-tag-warning">Bug</span><span>作为用户应该可以查看产品列表</span></td>
+                    <td>--</td>
+                    <td>新建</td>
+                    <td>hw12345678</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>
+                        <div class="devui-cell-priority"><img src="../../../icon/flag_low.svg"
+                                class="devui-priority-icon"><span>低</span></div>
+                    </td>
+                    <td>
+                        <div class="devui-cell-operation">
+                            <img src="../../../icon/miniDev-icon/action/edit.svg" class="devui-operation-icon" title="Edit">
+                            <img src="../../../icon/miniDev-icon/action/star.svg" class="devui-operation-icon" title="Follow">
+                            <img src="../../../icon/miniDev-icon/action/more-vertical.svg" class="devui-operation-icon"
+                                title="More">
+                        </div>
+                    </td>
+                </tr>
+                <!-- Row 6 -->
+                <tr>
+                    <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                    <td>12345678</td>
+                    <td><span class="devui-tag-solid devui-tag-warning">Bug</span><span>作为用户应该可以查看产品列表</span></td>
+                    <td>--</td>
+                    <td>新建</td>
+                    <td>hw12345678</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>
+                        <div class="devui-cell-priority"><img src="../../../icon/flag_low.svg"
+                                class="devui-priority-icon"><span>低</span></div>
+                    </td>
+                    <td>
+                        <div class="devui-cell-operation">
+                            <img src="../../../icon/miniDev-icon/action/edit.svg" class="devui-operation-icon" title="Edit">
+                            <img src="../../../icon/miniDev-icon/action/star.svg" class="devui-operation-icon" title="Follow">
+                            <img src="../../../icon/miniDev-icon/action/more-vertical.svg" class="devui-operation-icon"
+                                title="More">
+                        </div>
+                    </td>
+                </tr>
+                <!-- Row 7 -->
+                <tr>
+                    <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                    <td>12345678</td>
+                    <td><span class="devui-tag-solid devui-tag-warning">Bug</span><span>作为用户应该可以查看产品列表</span></td>
+                    <td>--</td>
+                    <td>新建</td>
+                    <td>hw12345678</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>
+                        <div class="devui-cell-priority"><img src="../../../icon/flag_low.svg"
+                                class="devui-priority-icon"><span>低</span></div>
+                    </td>
+                    <td>
+                        <div class="devui-cell-operation">
+                            <img src="../../../icon/miniDev-icon/action/edit.svg" class="devui-operation-icon" title="Edit">
+                            <img src="../../../icon/miniDev-icon/action/star.svg" class="devui-operation-icon" title="Follow">
+                            <img src="../../../icon/miniDev-icon/action/more-vertical.svg" class="devui-operation-icon"
+                                title="More">
+                        </div>
+                    </td>
+                </tr>
+                <!-- Row 8 -->
+                <tr>
+                    <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                    <td>12345678</td>
+                    <td><span class="devui-tag-solid devui-tag-warning">Bug</span><span>作为用户应该可以查看产品列表</span></td>
+                    <td>--</td>
+                    <td>新建</td>
+                    <td>hw12345678</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>
+                        <div class="devui-cell-priority"><img src="../../../icon/flag_low.svg"
+                                class="devui-priority-icon"><span>低</span></div>
+                    </td>
+                    <td>
+                        <div class="devui-cell-operation">
+                            <img src="../../../icon/miniDev-icon/action/edit.svg" class="devui-operation-icon" title="Edit">
+                            <img src="../../../icon/miniDev-icon/action/star.svg" class="devui-operation-icon" title="Follow">
+                            <img src="../../../icon/miniDev-icon/action/more-vertical.svg" class="devui-operation-icon"
+                                title="More">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

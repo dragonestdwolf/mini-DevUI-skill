@@ -18,9 +18,9 @@
     -   Font: 14px Regular.
     -   Color: `var(--devui-text, #252b3a)`.
 -   **Icon**:
-    -   Source: `icon/miniDev-icon/操作图标/dropdown.svg`.
-    -   Size: 16x16px.
-    -   Color: `var(--devui-text, #252b3a)`.
+    -   Source: `select-arrow.svg` (Inline Data URI).
+    -   Size: 14x14px.
+    -   Color: `currentColor` (Inherits from text).
     -   Transition: Rotate 180deg when active.
 
 ## 2. Visual Variants (视觉变体)

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Component Default Icons Test v15</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            padding: 40px;
+            background-color: #f3f6f8;
+        }
+
+        /* Scoped Table Styles */
+        .devui-table-container {
+            width: 100%;
+            overflow-x: auto;
+            background-color: var(--devui-base-bg, #ffffff);
+            border-radius: var(--devui-radius, 4px);
+            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+        }
+
+        .devui-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-family: inherit;
+            table-layout: fixed;
+        }
+
+        .devui-table th,
+        .devui-table td {
+            height: 42px;
+            padding: 0 16px;
+            box-sizing: border-box;
+            background-color: var(--devui-base-bg, #ffffff);
+            color: var(--devui-text, #252b3a);
+            border-bottom: 1px solid var(--devui-dividing-line, #dfe1e6);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 42px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .devui-table th {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--devui-text, #252b3a);
+        }
+
+        .devui-table tbody tr:hover td {
+            background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+        }
+
+        /* Updated Header Styles */
+        .devui-table-header-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            /* User specified 8px */
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .devui-header-icons {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .devui-table-sort-icon,
+        .devui-table-filter-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            background-color: #BABBC0;
+            /* Default header icon color */
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            -webkit-mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+            transition: background-color 0.2s;
+        }
+
+        .devui-table-sort-icon {
+            -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/sort-icon.svg');
+            mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/sort-icon.svg');
+        }
+
+        .devui-table-filter-icon {
+            -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/filter.svg');
+            mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/filter.svg');
+        }
+
+        .devui-table-header-cell:hover .devui-table-sort-icon,
+        .devui-table-header-cell:hover .devui-table-filter-icon {
+            background-color: var(--devui-text, #252b3a);
+            /* Darken on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="devui-table-container">
+        <table class="devui-table">
+            <thead>
+                <tr>
+                    <!-- Standard -->
+                    <th><span>ID</span></th>
+
+                    <!-- Default Sort -->
+                    <th>
+                        <div class="devui-table-header-cell">
+                            <span>Name (Sort)</span>
+                            <span class="devui-table-sort-icon"></span>
+                        </div>
+                    </th>
+
+                    <!-- Default Filter -->
+                    <th>
+                        <div class="devui-table-header-cell">
+                            <span>Status (Filter)</span>
+                            <span class="devui-table-filter-icon"></span>
+                        </div>
+                    </th>
+
+                    <!-- Both -->
+                    <th>
+                        <div class="devui-table-header-cell">
+                            <span>Complex (Both)</span>
+                            <div class="devui-header-icons">
+                                <span class="devui-table-sort-icon"></span>
+                                <span class="devui-table-filter-icon"></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Item A</td>
+                    <td>Active</td>
+                    <td>Details</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Item B</td>
+                    <td>Inactive</td>
+                    <td>More Info</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
