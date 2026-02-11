@@ -1,0 +1,86 @@
+<!-- 
+  Filter Component Template
+  Source: Figma Node 960:2744
+  
+  Variables:
+  - {{text}}: Filter label
+  - {{class}}: Custom classes
+-->
+
+<style>
+    /* Scoped Filter Styles */
+    .devui-filter {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        user-select: none;
+        transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .devui-filter-text {
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--devui-text, #252b3a);
+        line-height: 22px;
+        transition: color 0.2s;
+    }
+
+    .devui-filter-icon {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        /* Using Content approach for SVGs */
+        content: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/dropdown.svg');
+        transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s;
+        fill: currentColor;
+        /* If SVG allows */
+    }
+
+    /* --- Interactive States --- */
+
+    /* Hover */
+    .devui-filter:hover .devui-filter-text {
+        color: var(--devui-link, #526ecc);
+        /* Or Primary #5e7ce0 */
+    }
+
+    /* SVG Link doesn't support 'fill' via CSS content, so we might need filter or background-image. 
+       However, for simplicity in template, we rely on opacity or assume SVG is black and we want blue?
+       Actually, `content: url` cannot be colored by CSS `color`. 
+       Better approach for recoloring is mask or background-color + mask, OR inline SVG.
+       For this template, consistent with others using `content: url`, we accept default color 
+       or use specific colored SVGs if available.
+       A common workaround for 'content' icons is opacity or filter.
+    */
+
+    /* Active (Open) */
+    .devui-filter.active .devui-filter-text {
+        color: var(--devui-primary, #5e7ce0);
+        font-weight: 700;
+        /* Optional: Bold on active */
+    }
+
+    .devui-filter.active .devui-filter-icon {
+        transform: rotate(180deg);
+    }
+
+    /* Disabled */
+    .devui-filter.disabled {
+        cursor: not-allowed;
+    }
+
+    .devui-filter.disabled .devui-filter-text {
+        color: var(--devui-disabled-text, #adb0b8);
+    }
+
+    .devui-filter.disabled .devui-filter-icon {
+        opacity: 0.4;
+    }
+</style>
+
+<div class="devui-filter {{class}}" onclick="this.classList.toggle('active')">
+    <span class="devui-filter-text">{{text}}</span>
+    <img class="devui-filter-icon" alt="filter" />
+</div>
