@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Component v1</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f3f6f8;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        /* Scoped Table Styles */
+        .devui-table-container {
+            width: 100%;
+            max-width: 1000px;
+            /* Constrain width for centering */
+            overflow-x: auto;
+            background-color: var(--devui-base-bg, #ffffff);
+            border-radius: var(--devui-radius, 4px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            /* Add shadow for better visibility on canvas */
+        }
+
+        .devui-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-family: inherit;
+        }
+
+        /* Header Styles */
+        .devui-table thead th {
+            height: 42px;
+            padding: 11px 16px;
+            box-sizing: border-box;
+            background-color: var(--devui-global-bg, #f5f5f5);
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 20px;
+            color: var(--devui-text, #252b3a);
+            border-bottom: 1px solid var(--devui-dividing-line, #dfe1e6);
+            white-space: nowrap;
+        }
+
+        /* Body Styles */
+        .devui-table tbody td {
+            height: 42px;
+            padding: 11px 16px;
+            box-sizing: border-box;
+            background-color: var(--devui-base-bg, #ffffff);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 22px;
+            color: var(--devui-text, #252b3a);
+            border-bottom: 1px solid var(--devui-dividing-line, #dfe1e6);
+            transition: background-color 0.2s;
+        }
+
+        /* Hover Effect */
+        .devui-table tbody tr:hover td {
+            background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+        }
+
+        /* Specific Column Alignments/Types */
+        .devui-table-cell-center {
+            text-align: center;
+        }
+
+        .devui-table-cell-right {
+            text-align: right;
+        }
+
+        /* Checkbox Column */
+        .devui-table td.devui-table-checkbox-col,
+        .devui-table th.devui-table-checkbox-col {
+            width: 48px;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Sort Icon Styling */
+        .devui-table-sort-icon {
+            display: inline-block;
+            vertical-align: middle;
+            width: 16px;
+            height: 16px;
+            margin-left: 4px;
+            color: #babbc0;
+            /* Simple SVG placeholder for sort icon */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23babbc0' d='M8 3l4 5H4l4-5zm0 10l-4-5h8l-4 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        /* Link Style */
+        .devui-table a {
+            color: var(--devui-link, #526ecc);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .devui-table a:hover {
+            text-decoration: underline;
+        }
+
+        /* Status Tag Styles (Mockup for dependency) */
+        .devui-tag {
+            display: inline-block;
+            padding: 0 8px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 12px;
+            border-radius: 2px;
+            color: #252b3a;
+            background: #f5f5f5;
+            border: 1px solid #dfe1e6;
+        }
+
+        .devui-tag-success {
+            background: #e3f9e9;
+            color: #3dcc6b;
+            border-color: #e3f9e9;
+        }
+
+        .devui-tag-warning {
+            background: #fff3e0;
+            color: #ff9800;
+            border-color: #fff3e0;
+        }
+
+        .devui-tag-danger {
+            background: #ffebee;
+            color: #f44336;
+            border-color: #ffebee;
+        }
+
+        /* Button Styles (Mockup for dependency) */
+        .devui-btn-text {
+            border: none;
+            background: none;
+            color: #526ecc;
+            cursor: pointer;
+            padding: 4px 8px;
+            font-size: 14px;
+        }
+
+        .devui-btn-text:hover {
+            color: #344899;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="devui-table-container ">
+        <table class="devui-table">
+            <!-- Header Content Slot -->
+            <thead>
+                <tr>
+                    <!-- Checkbox -->
+                    <th class="devui-table-checkbox-col"><input type="checkbox" /></th>
+
+                    <!-- ID (Sortable) -->
+                    <th>ID <i class="devui-table-sort-icon"></i></th>
+
+                    <!-- Title (Text) -->
+                    <th>Task Title</th>
+
+                    <!-- Priority (Sortable) -->
+                    <th>Priority <i class="devui-table-sort-icon"></i></th>
+
+                    <!-- Status (Status) -->
+                    <th>Status</th>
+
+                    <!-- Description (Text, Overflow Test) -->
+                    <th>Description</th>
+
+                    <!-- Actions -->
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <!-- Body Content Slot -->
+            <tbody>
+                <!-- Row 1: Standard -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox" /></td>
+                    <td>1001</td>
+                    <td><a href="#">Implement Login</a></td>
+                    <td>High</td>
+                    <td><span class="devui-tag devui-tag-warning">In Progress</span></td>
+                    <td>Implement JWT authentication flow.</td>
+                    <td>
+                        <button class="devui-btn-text">Edit</button>
+                        <button class="devui-btn-text">Delete</button>
+                    </td>
+                </tr>
+
+                <!-- Row 2: Overflow Test -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox" /></td>
+                    <td>1002</td>
+                    <td><a href="#">Fix navigation bug in Safari on iOS 15 devices with notch</a></td>
+                    <td>Critical</td>
+                    <td><span class="devui-tag devui-tag-danger">Bug</span></td>
+                    <td>The navigation bar overlaps with the status bar on iPhone X and newer models when in landscape
+                        mode. This needs to be fixed urgently as it blocks user access to the menu.</td>
+                    <td>
+                        <button class="devui-btn-text">Edit</button>
+                        <button class="devui-btn-text">Delete</button>
+                    </td>
+                </tr>
+
+                <!-- Row 3: Completed -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox" checked /></td>
+                    <td>1003</td>
+                    <td><a href="#">Update Documentation</a></td>
+                    <td>Low</td>
+                    <td><span class="devui-tag devui-tag-success">Done</span></td>
+                    <td>Update the API documentation to reflect recent changes.</td>
+                    <td>
+                        <button class="devui-btn-text">Edit</button>
+                        <button class="devui-btn-text">Delete</button>
+                    </td>
+                </tr>
+
+                <!-- Row 4: Empty Values Test -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox" /></td>
+                    <td>1004</td>
+                    <td><a href="#">[TEST_EMPTY_DESC]</a></td>
+                    <td>Normal</td>
+                    <td><span class="devui-tag">Pending</span></td>
+                    <td>-</td>
+                    <td>
+                        <button class="devui-btn-text">Edit</button>
+                        <button class="devui-btn-text">Delete</button>
+                    </td>
+                </tr>
+
+                <!-- Row 5: Stress Test Strings -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox" /></td>
+                    <td>1005</td>
+                    <td><a href="#">VERY_LONG_STRING_WITHOUT_SPACES_TO_TEST_WRAP_BEHAVIOR_IN_TABLE_CELL_1234567890</a>
+                    </td>
+                    <td>Low</td>
+                    <td><span class="devui-tag">Unknown</span></td>
+                    <td>Testing long string behavior in table description column to see if it breaks layout.</td>
+                    <td>
+                        <button class="devui-btn-text">Edit</button>
+                        <button class="devui-btn-text">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

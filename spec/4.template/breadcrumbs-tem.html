@@ -1,0 +1,101 @@
+<!-- 
+  BreadCrumbs Template
+  Source: skill/3.component/bread_crumbs.md
+  Version: v1.1
+  
+  Variables:
+  - {{items}}: The inner HTML string containing all breadcrumb items.
+               Agents MUST construct each item using the "Item Structure" defined below.
+-->
+
+<style>
+    /* Root Container */
+    .devui-breadcrumb {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0px;
+        /* Strict: Gap provided by separator width */
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    /* Item Wrapper */
+    .devui-breadcrumb-item {
+        display: flex;
+        align-items: center;
+        gap: 0px;
+        /* No gap between content and separator */
+    }
+
+    /* Content Area (Text + Optional Icon) */
+    .devui-breadcrumb-item .item-content {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        /* Atomic Gap: Text <-> Icon */
+        cursor: pointer;
+        text-decoration: none;
+        /* No underline by default */
+        transition: all 0.2s;
+    }
+
+    /* Text Styling */
+    .devui-breadcrumb-item .item-text {
+        font-family: 'Noto Sans SC', sans-serif;
+        font-size: 14px;
+        line-height: 22px;
+        color: var(--devui-text-weak, #575D6C);
+        /* Default State */
+    }
+
+    /* Hover State */
+    .devui-breadcrumb-item .item-content:hover .item-text {
+        color: var(--devui-brand, #5E7CE0);
+        /* Interaction Highlight */
+    }
+
+    /* Active / Last Item State */
+    .devui-breadcrumb-item.active .item-content {
+        cursor: default;
+        pointer-events: none;
+        /* Disable interference */
+    }
+
+    .devui-breadcrumb-item.active .item-text {
+        color: var(--devui-text, #252B3A);
+        /* Current Page: Distinct Dark Color */
+        font-weight: 400;
+        /* Regular weight per design */
+    }
+
+    /* Separator styling */
+    .devui-breadcrumb-item .separator {
+        width: 16px;
+        /* Fixed Width for visual spacing */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--devui-placeholder, #8A8E99);
+        font-size: 12px;
+        margin: 0;
+        /* Strict zero margin */
+    }
+</style>
+
+<!-- 
+  [Reference] Single Item Structure (Agent to Generate):
+  
+  <div class="devui-breadcrumb-item {{isActive ? 'active' : ''}}">
+      <a class="item-content" href="{{link}}">
+          (!Optional Icon) <img src="..." />
+          <span class="item-text">{{title}}</span>
+      </a>
+      (!If not last) <span class="separator">/</span>
+  </div>
+-->
+
+<div class="devui-breadcrumb">
+    {{items}}
+</div>

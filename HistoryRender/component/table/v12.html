@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Component Test v12 - All Cell Types</title>
+    <style>
+        /* Global Variables */
+        :root {
+            --devui-global-bg: #f3f6f8;
+            --devui-base-bg: #ffffff;
+            --devui-text: #252b3a;
+            --devui-light-text: #ffffff;
+            --devui-dividing-line: #dfe1e6;
+            --devui-list-item-hover-bg: #f2f5fc;
+            --devui-link: #526ecc;
+            --devui-radius: 4px;
+            --devui-success: #50D4AB;
+            --devui-warning: #FAC20A;
+            --devui-danger: #F66F6A;
+            --devui-info: #5E7CE0;
+            --devui-primary: #5e7ce0;
+            --devui-form-control-line: #ADB0B8;
+        }
+
+        body {
+            background-color: var(--devui-global-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: var(--devui-text);
+        }
+
+        /* Helper for layout */
+        .wrapper {
+            width: 100%;
+            max-width: 1400px;
+            /* Wide enough for all columns */
+        }
+    </style>
+
+    <!-- INJECTED TEMPLATE STYLES -->
+    <style>
+        /* Scoped Table Styles */
+        .devui-table-container {
+            width: 100%;
+            overflow-x: auto;
+            background-color: var(--devui-base-bg, #ffffff);
+            border-radius: var(--devui-radius, 4px);
+            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+        }
+
+        .devui-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-family: inherit;
+            table-layout: fixed;
+        }
+
+        .devui-table th,
+        .devui-table td {
+            height: 42px;
+            padding: 0 16px;
+            box-sizing: border-box;
+            background-color: var(--devui-base-bg, #ffffff);
+            color: var(--devui-text, #252b3a);
+            border-bottom: 1px solid var(--devui-dividing-line, #dfe1e6);
+            font-size: 14px;
+            font-weight: 400;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 42px;
+        }
+
+        .devui-table th {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .devui-table tbody tr:hover td {
+            background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+        }
+
+        /* --- Variant: Checkbox Column --- */
+        .devui-table .devui-table-col-checkbox {
+            width: 32px;
+            padding: 0;
+            text-align: center;
+            overflow: visible;
+        }
+
+        .devui-checkbox-box {
+            width: 16px;
+            height: 16px;
+            margin: 0 auto;
+            border: 1px solid var(--devui-form-control-line);
+            border-radius: 2px;
+            display: block;
+            background-color: #fff;
+        }
+
+        .devui-checkbox-box.checked {
+            background-color: var(--devui-primary);
+            border-color: var(--devui-primary);
+            position: relative;
+        }
+
+        .devui-checkbox-box.checked::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 5px;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* --- Variant: Link Column --- */
+        .devui-table .devui-table-col-link a {
+            color: var(--devui-link, #526ecc);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .devui-table .devui-table-col-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Variant: Text with Subtext --- */
+        .devui-table-cell-text-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            line-height: 1.2;
+        }
+
+        .devui-text-primary {
+            font-size: 14px;
+            color: var(--devui-text);
+            margin-bottom: 2px;
+        }
+
+        .devui-text-secondary {
+            font-size: 12px;
+            color: #71757f;
+        }
+
+        /* --- Variant: Operation Column --- */
+        .devui-cell-operation {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 100%;
+        }
+
+        .devui-operation-icon {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        /* --- Variant: Tree Structure --- */
+        .devui-cell-tree {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 100%;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .devui-tree-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            /* Default: Right Arrow (Collapsed) -> 90deg per user request */
+            background-image: url('../../../icon/miniDev-icon/操作图标/collapse.svg');
+            transform: rotate(90deg);
+            transition: transform 0.2s;
+        }
+
+        /* Expanded State -> Rotate Down -> 180deg per user request */
+        .devui-cell-tree.expanded .devui-tree-icon {
+            transform: rotate(180deg);
+        }
+
+        .devui-tree-text {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--devui-text, #252b3a);
+        }
+
+        /* --- Variant: Status --- */
+        .devui-cell-status,
+        .devui-cell-priority {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 100%;
+        }
+
+        .devui-status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .devui-status-success {
+            background-color: var(--devui-success);
+        }
+
+        .devui-status-warning {
+            background-color: var(--devui-warning);
+        }
+
+        .devui-status-danger {
+            background-color: var(--devui-danger);
+        }
+
+        .devui-priority-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .devui-priority-text,
+        .devui-cell-status-text {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--devui-text, #252b3a);
+        }
+
+        /* --- Shared: Tag (Solid) --- */
+        .devui-tag-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 20px;
+            padding: 0 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            line-height: 20px;
+            font-weight: 500;
+            color: var(--devui-light-text, #FFFFFF);
+            white-space: nowrap;
+        }
+
+        .devui-tag-success {
+            background-color: var(--devui-success, #50D4AB);
+        }
+
+        .devui-tag-warning {
+            background-color: var(--devui-warning, #FAC20A);
+        }
+
+        .devui-tag-danger {
+            background-color: var(--devui-danger, #F66F6A);
+        }
+
+        .devui-tag-info {
+            background-color: var(--devui-info, #5E7CE0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <h1>Table Component Test v12 - All Cell Types</h1>
+
+        <div class="devui-table-container">
+            <table class="devui-table">
+                <thead>
+                    <tr>
+                        <th class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></th>
+                        <th style="width: 120px;">Simple Text</th>
+                        <th style="width: 150px;">Double Line</th>
+                        <th style="width: 100px;">Link</th>
+                        <th style="width: 100px;">Status</th>
+                        <th style="width: 80px;">Tag</th>
+                        <th style="width: 100px;">Priority</th>
+                        <th style="width: 200px;">Tree Structure</th>
+                        <th style="width: 120px;">Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Row 1 -->
+                    <tr>
+                        <td class="devui-table-col-checkbox"><span class="devui-checkbox-box checked"></span></td>
+                        <td>Short Text</td>
+                        <td>
+                            <div class="devui-table-cell-text-group">
+                                <div class="devui-text-primary">User Name</div>
+                                <div class="devui-text-secondary">user@example.com</div>
+                            </div>
+                        </td>
+                        <td class="devui-table-col-link"><a href="#">View Detail</a></td>
+                        <td>
+                            <div class="devui-cell-status">
+                                <span class="devui-status-dot devui-status-success"></span>
+                                <span class="devui-cell-status-text">Active</span>
+                            </div>
+                        </td>
+                        <td><span class="devui-tag-solid devui-tag-success">Done</span></td>
+                        <td>
+                            <div class="devui-cell-priority">
+                                <img src="../../../icon/flag_low.svg" class="devui-priority-icon" alt="Low" />
+                                <span class="devui-priority-text">Low</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="devui-cell-tree" onclick="this.classList.toggle('expanded')">
+                                <span class="devui-tree-icon"></span>
+                                <span class="devui-tree-text">Root Node</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="devui-cell-operation">
+                                <img src="../../../icon/miniDev-icon/操作图标/star.svg" class="devui-operation-icon"
+                                    title="Follow">
+                                <img src="../../../icon/miniDev-icon/操作图标/add-test-case.svg"
+                                    class="devui-operation-icon" title="Add">
+                                <img src="../../../icon/miniDev-icon/操作图标/more-vertical.svg"
+                                    class="devui-operation-icon" title="More">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Row 2 -->
+                    <tr>
+                        <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                        <td title="This works as a tooltip for truncated text">This is a very long text that should be
+                            truncated...</td>
+                        <td>
+                            <div class="devui-table-cell-text-group">
+                                <div class="devui-text-primary">Order #12345</div>
+                                <div class="devui-text-secondary">2026-02-11</div>
+                            </div>
+                        </td>
+                        <td class="devui-table-col-link"><a href="#">Edit</a></td>
+                        <td>
+                            <div class="devui-cell-status">
+                                <span class="devui-status-dot devui-status-warning"></span>
+                                <span class="devui-cell-status-text">Pending</span>
+                            </div>
+                        </td>
+                        <td><span class="devui-tag-solid devui-tag-warning">WIP</span></td>
+                        <td>
+                            <div class="devui-cell-priority">
+                                <!-- Using flag_middle.svg -->
+                                <img src="../../../icon/flag_middle.svg" class="devui-priority-icon" alt="Middle" />
+                                <span class="devui-priority-text">Middle</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="devui-cell-tree expanded" style="padding-left: 16px;"
+                                onclick="this.classList.toggle('expanded')">
+                                <span class="devui-tree-icon"></span>
+                                <span class="devui-tree-text">Child Node</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="devui-cell-operation">
+                                <img src="../../../icon/miniDev-icon/操作图标/star.svg" class="devui-operation-icon">
+                                <img src="../../../icon/miniDev-icon/操作图标/add-test-case.svg"
+                                    class="devui-operation-icon">
+                                <img src="../../../icon/miniDev-icon/操作图标/more-vertical.svg"
+                                    class="devui-operation-icon">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Row 3 -->
+                    <tr>
+                        <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                        <td>Error Case</td>
+                        <td>
+                            <div class="devui-table-cell-text-group">
+                                <div class="devui-text-primary">Alert ID</div>
+                                <div class="devui-text-secondary">10:45 AM</div>
+                            </div>
+                        </td>
+                        <td class="devui-table-col-link"><a href="#">Fix</a></td>
+                        <td>
+                            <div class="devui-cell-status">
+                                <span class="devui-status-dot devui-status-danger"></span>
+                                <span class="devui-cell-status-text">Blocked</span>
+                            </div>
+                        </td>
+                        <td><span class="devui-tag-solid devui-tag-danger">Err</span></td>
+                        <td>
+                            <div class="devui-cell-priority">
+                                <img src="../../../icon/flag_hight.svg" class="devui-priority-icon" alt="High" />
+                                <span class="devui-priority-text">High</span>
+                            </div>
+                        </td>
+                        <td>
+                            <!-- Leaf node indented -->
+                            <div style="padding-left: 32px; height: 100%; display: flex; align-items: center;">
+                                <span class="devui-tree-text">Leaf Item</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="devui-cell-operation">
+                                <!-- Example: different icons or same -->
+                                <img src="../../../icon/miniDev-icon/操作图标/star.svg" class="devui-operation-icon">
+                                <img src="../../../icon/miniDev-icon/操作图标/add-test-case.svg"
+                                    class="devui-operation-icon">
+                                <img src="../../../icon/miniDev-icon/操作图标/more-vertical.svg"
+                                    class="devui-operation-icon">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

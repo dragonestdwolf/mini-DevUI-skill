@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Component Test v3</title>
+    <style>
+        /* Global Variables & Reset */
+        :root {
+            --devui-global-bg: #f3f6f8;
+            --devui-base-bg: #ffffff;
+            --devui-text: #252b3a;
+            --devui-light-text: #ffffff;
+            --devui-dividing-line: #dfe1e6;
+            --devui-list-item-hover-bg: #f2f5fc;
+            --devui-link: #526ecc;
+            --devui-radius: 4px;
+            --devui-success: #50D4AB;
+            --devui-warning: #FAC20A;
+            --devui-danger: #F66F6A;
+            --devui-info: #5E7CE0;
+            --devui-primary: #5e7ce0;
+            /* Added for buttons */
+        }
+
+        body {
+            background-color: var(--devui-global-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: var(--devui-text);
+        }
+
+        /* Mock Button Styles (since they are external to Table Template) */
+        .devui-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 8px;
+            border: none;
+            background: transparent;
+            color: var(--devui-primary);
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 2px;
+        }
+
+        .devui-btn:hover {
+            background-color: var(--devui-list-item-hover-bg);
+        }
+    </style>
+
+    <!-- INJECTED TEMPLATE STYLES -->
+    <style>
+        /* Scoped Table Styles */
+        .devui-table-container {
+            width: 100%;
+            overflow-x: auto;
+            background-color: var(--devui-base-bg, #ffffff);
+            border-radius: var(--devui-radius, 4px);
+            /* Shadow from Figma 497:2419 */
+            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+        }
+
+        .devui-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-family: inherit;
+            /* Noto Sans SC */
+            table-layout: fixed;
+            /* Essential for text-overflow: ellipsis */
+        }
+
+        /* Header Styles */
+        .devui-table thead th {
+            /* Header Row Height: 42px */
+            height: 42px;
+            padding: 0 16px;
+            /* Horizontal padding only, height controlled by line-height/flex if needed, but here using table-cell */
+            box-sizing: border-box;
+
+            /* Background: White #ffffff */
+            background-color: var(--devui-base-bg, #ffffff);
+
+            /* Font: 12px Bold */
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 42px;
+            /* Vertical Center */
+            color: var(--devui-text, #252b3a);
+
+            /* Border: Bottom 1px solid #dfe1e6 */
+            border-bottom: 1px solid var(--devui-dividing-line, #dfe1e6);
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+            /* For icon positioning if needed */
+        }
+
+        /* Body Styles */
+        .devui-table tbody td {
+            /* Body Row Height: 42px */
+            height: 42px;
+            padding: 0 16px;
+            box-sizing: border-box;
+
+            /* Background: White #ffffff */
+            background-color: var(--devui-base-bg, #ffffff);
+
+            /* Font: 14px Regular */
+            font-size: 14px;
+            font-weight: 400;
+
+            /* Line Height logic: Text needs to be vertically centered. 
+               If height is 42px, setting line-height to 42px is simplest for single line text */
+            line-height: 42px;
+            color: var(--devui-text, #252b3a);
+
+            /* Border: Bottom 1px solid #dfe1e6 */
+            border-bottom: 1px solid var(--devui-dividing-line, #dfe1e6);
+
+            transition: background-color 0.2s;
+
+            /* Text Overflow Handling */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Hover Effect */
+        .devui-table tbody tr:hover td {
+            background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+        }
+
+        /* Specific Column Alignments/Types */
+        .devui-table-cell-center {
+            text-align: center;
+        }
+
+        .devui-table-cell-right {
+            text-align: right;
+        }
+
+        /* Checkbox Column */
+        .devui-table td.devui-table-checkbox-col,
+        .devui-table th.devui-table-checkbox-col {
+            width: 48px;
+            /* Fixed width */
+            padding: 0;
+            text-align: center;
+            overflow: visible;
+            /* Allow checkbox focus ring if needed */
+        }
+
+        /* Sort / Filter Icons */
+        .devui-table-icon-group {
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+            margin-left: 4px;
+            gap: 2px;
+        }
+
+        .devui-table-icon {
+            width: 16px;
+            height: 16px;
+            fill: #BABBC0;
+            /* devui-icon-fill-weak */
+            cursor: pointer;
+        }
+
+        .devui-table-icon:hover {
+            fill: var(--devui-text, #252B3A);
+        }
+
+        /* Link Style */
+        .devui-table a {
+            color: var(--devui-link, #526ecc);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .devui-table a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Integrations: Status Tag (Solid Style) --- */
+        .devui-tag-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 20px;
+            padding: 0 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            line-height: 20px;
+            font-weight: 500;
+            /* Medium */
+            white-space: nowrap;
+            color: var(--devui-light-text, #FFFFFF);
+        }
+
+        /* Tag Colors (Solid) */
+        .devui-tag-success {
+            background-color: var(--devui-success, #50D4AB);
+        }
+
+        .devui-tag-warning {
+            background-color: var(--devui-warning, #FAC20A);
+        }
+
+        .devui-tag-danger {
+            background-color: var(--devui-danger, #F66F6A);
+        }
+
+        .devui-tag-info {
+            background-color: var(--devui-info, #5E7CE0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Table Component Verification (v3)</h1>
+
+    <!-- 
+       Table Instance 
+       - checkable: true
+       - columns: Checkbox, ID (Sortable), Name, Status, Actions
+    -->
+    <div class="devui-table-container">
+        <table class="devui-table">
+            <!-- Header Content Slot -->
+            <thead>
+                <tr>
+                    <!-- Checkbox Column -->
+                    <th class="devui-table-checkbox-col">
+                        <input type="checkbox">
+                    </th>
+                    <!-- ID Column (Sortable) -->
+                    <th style="width: 100px;">
+                        <span>ID</span>
+                        <span class="devui-table-icon-group">
+                            <!-- Mock Sort Icon -->
+                            <svg class="devui-table-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M512 320l192 256H320l192-256z m0 384L320 448h384L512 704z"></path>
+                            </svg>
+                        </span>
+                    </th>
+                    <!-- Name Column (Text) -->
+                    <th>Name</th>
+                    <!-- Assigned To (Long Text stress test) -->
+                    <th>Assigned To</th>
+                    <!-- Status Column -->
+                    <th style="width: 120px;">Status</th>
+                    <!-- Actions Column -->
+                    <th style="width: 150px;">Actions</th>
+                </tr>
+            </thead>
+            <!-- Body Content Slot -->
+            <tbody>
+                <!-- Row 1: Standard Data -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox"></td>
+                    <td>1001</td>
+                    <td>Project Alpha</td>
+                    <td>Mark Johnson</td>
+                    <td><span class="devui-tag-solid devui-tag-success">Done</span></td>
+                    <td>
+                        <button class="devui-btn">Edit</button>
+                        <button class="devui-btn">Delete</button>
+                    </td>
+                </tr>
+
+                <!-- Row 2: Status Warning -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox"></td>
+                    <td>1002</td>
+                    <td>Project Beta</td>
+                    <td>Sarah Williams</td>
+                    <td><span class="devui-tag-solid devui-tag-warning">Pending</span></td>
+                    <td>
+                        <button class="devui-btn">Edit</button>
+                        <button class="devui-btn">Delete</button>
+                    </td>
+                </tr>
+
+                <!-- Row 3: Status Danger & Special Chars -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox"></td>
+                    <td>1003</td>
+                    <td>Project &lt;Gemma&gt;</td>
+                    <td>O'Neil & Son</td>
+                    <td><span class="devui-tag-solid devui-tag-danger">Error</span></td>
+                    <td>
+                        <button class="devui-btn">Edit</button>
+                        <button class="devui-btn">Delete</button>
+                    </td>
+                </tr>
+
+                <!-- Row 4: Info Status -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox"></td>
+                    <td>1004</td>
+                    <td>Internal Audit</td>
+                    <td>System Admin</td>
+                    <td><span class="devui-tag-solid devui-tag-info">Running</span></td>
+                    <td>
+                        <button class="devui-btn">Edit</button>
+                        <button class="devui-btn">Delete</button>
+                    </td>
+                </tr>
+
+                <!-- Row 5: Stress Test - Long Text (Overflow Check) -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox"></td>
+                    <td>9999</td>
+                    <td
+                        title="This is a very long project name to test the text-overflow: ellipsis functionality of the table cell">
+                        This is a very long project name to test the text-overflow: ellipsis functionality of the table
+                        cell
+                    </td>
+                    <td>
+                        ExtremelyLongUserEmailAddressOrNameThatShouldNotBreakTheLayout@VeryLongDomainNameConcept.com
+                    </td>
+                    <td><span class="devui-tag-solid devui-tag-success">Done</span></td>
+                    <td>
+                        <button class="devui-btn">Details</button>
+                    </td>
+                </tr>
+
+                <!-- Row 6: Empty Test -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox"></td>
+                    <td>-</td>
+                    <td>[EMPTY_NAME]</td>
+                    <td>-</td>
+                    <td><!-- No Status --></td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

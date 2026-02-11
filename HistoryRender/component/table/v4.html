@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Component Test v4 - IconWithLabelAndTitle</title>
+    <style>
+        /* Global Variables & Reset from Template Context */
+        :root {
+            --devui-global-bg: #f3f6f8;
+            --devui-base-bg: #ffffff;
+            --devui-text: #252b3a;
+            --devui-light-text: #ffffff;
+            --devui-dividing-line: #dfe1e6;
+            --devui-list-item-hover-bg: #f2f5fc;
+            --devui-link: #526ecc;
+            --devui-radius: 4px;
+            --devui-success: #50D4AB;
+            --devui-warning: #FAC20A;
+            --devui-danger: #F66F6A;
+            --devui-info: #5E7CE0;
+            --devui-primary: #5e7ce0;
+        }
+
+        body {
+            background-color: var(--devui-global-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: var(--devui-text);
+        }
+
+        /* Mock Icon */
+        .mock-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #E9EDFA;
+            color: #5E7CE0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+
+    <!-- INJECTED TEMPLATE STYLES -->
+    <style>
+        /* Scoped Table Styles Copy */
+        .devui-table-container {
+            width: 100%;
+            overflow-x: auto;
+            background-color: var(--devui-base-bg, #ffffff);
+            border-radius: var(--devui-radius, 4px);
+            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+        }
+
+        .devui-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-family: inherit;
+            table-layout: fixed;
+        }
+
+        .devui-table th,
+        .devui-table td {
+            height: 48px;
+            /* Increased for Icon+Text group */
+            padding: 8px 16px;
+            box-sizing: border-box;
+            background-color: var(--devui-base-bg, #ffffff);
+            color: var(--devui-text, #252b3a);
+            border-bottom: 1px solid var(--devui-dividing-line, #dfe1e6);
+            font-size: 14px;
+            font-weight: 400;
+            vertical-align: middle;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .devui-table th {
+            height: 42px;
+            /* Header stays 42px */
+            font-size: 12px;
+            font-weight: 700;
+            background-color: #F8F9FA;
+            /* Optional header bg */
+        }
+
+        .devui-table tbody tr:hover td {
+            background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+        }
+
+        /* --- New Pattern: IconWithLabelAndTitle --- */
+        .devui-cell-icon-text-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .devui-icon-wrapper {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .devui-text-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.2;
+        }
+
+        .devui-text-primary {
+            font-size: 14px;
+            color: var(--devui-text, #252b3a);
+            font-weight: 500;
+        }
+
+        .devui-text-secondary {
+            font-size: 12px;
+            color: #71757f;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Table Component Test v4 (IconWithLabelAndTitle)</h1>
+
+    <div class="devui-table-container">
+        <table class="devui-table">
+            <thead>
+                <tr>
+                    <th style="width: 250px;">User (IconWithLabelAndTitle)</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Row 1 -->
+                <tr>
+                    <td>
+                        <div class="devui-cell-icon-text-group">
+                            <div class="devui-icon-wrapper mock-icon">A</div>
+                            <div class="devui-text-group">
+                                <div class="devui-text-primary">Alice Smith</div>
+                                <div class="devui-text-secondary">Senior Engineer</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>Administrator</td>
+                    <td>Active</td>
+                </tr>
+                <!-- Row 2 -->
+                <tr>
+                    <td>
+                        <div class="devui-cell-icon-text-group">
+                            <div class="devui-icon-wrapper mock-icon" style="background-color: #FAC20A; color: #fff;">B
+                            </div>
+                            <div class="devui-text-group">
+                                <div class="devui-text-primary">Bob Jones</div>
+                                <div class="devui-text-secondary">Product Manager</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>Manager</td>
+                    <td>Away</td>
+                </tr>
+                <!-- Row 3: Long Text Test -->
+                <tr>
+                    <td>
+                        <div class="devui-cell-icon-text-group">
+                            <div class="devui-icon-wrapper mock-icon">C</div>
+                            <div class="devui-text-group">
+                                <div class="devui-text-primary" title="Christopher Alexander The Third">Christopher
+                                    Alexander...</div>
+                                <div class="devui-text-secondary">UX Designer & Researcher</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>Contributor</td>
+                    <td>Offline</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

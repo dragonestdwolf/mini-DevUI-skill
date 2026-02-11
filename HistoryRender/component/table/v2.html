@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Component Test v2</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f3f6f8;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        /* --- Dependency Styles (Mocking Tag and Button Skills for Table content) --- */
+        .devui-tag {
+            display: inline-block;
+            padding: 0 8px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 12px;
+            border-radius: 2px;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
+
+        .devui-tag-success {
+            background: #e3f9e9;
+            color: #3dcc6b;
+            border: 1px solid #e3f9e9;
+        }
+
+        .devui-tag-warning {
+            background: #fff3e0;
+            color: #ff9800;
+            border: 1px solid #fff3e0;
+        }
+
+        .devui-tag-danger {
+            background: #ffebee;
+            color: #f44336;
+            border: 1px solid #ffebee;
+        }
+
+        .devui-btn-text {
+            border: none;
+            background: none;
+            color: #526ecc;
+            cursor: pointer;
+            padding: 4px 8px;
+            font-size: 14px;
+        }
+
+        .devui-btn-text:hover {
+            color: #344899;
+        }
+
+        /* --- Table Template Styles (From skill/4.template/table-tem.html) --- */
+        /* Scoped Table Styles */
+        .devui-table-container {
+            width: 100%;
+            overflow-x: auto;
+            background-color: var(--devui-base-bg, #ffffff);
+            border-radius: var(--devui-radius, 4px);
+            /* Shadow from Figma 497:2419 */
+            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+            /* Max width for testing presentation */
+            max-width: 1000px;
+        }
+
+        .devui-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-family: inherit;
+        }
+
+        /* Header Styles */
+        .devui-table thead th {
+            height: 42px;
+            padding: 11px 16px;
+            box-sizing: border-box;
+            background-color: var(--devui-base-bg, #ffffff);
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 20px;
+            color: var(--devui-text, #252b3a);
+            border-bottom: 1px solid var(--devui-dividing-line, #dfe1e6);
+            white-space: nowrap;
+        }
+
+        /* Body Styles */
+        .devui-table tbody td {
+            height: 42px;
+            padding: 10px 16px;
+            box-sizing: border-box;
+            background-color: var(--devui-base-bg, #ffffff);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 22px;
+            color: var(--devui-text, #252b3a);
+            border-bottom: 1px solid var(--devui-dividing-line, #dfe1e6);
+            transition: background-color 0.2s;
+        }
+
+        /* Hover Effect */
+        .devui-table tbody tr:hover td {
+            background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+        }
+
+        /* Checkbox Column */
+        .devui-table td.devui-table-checkbox-col,
+        .devui-table th.devui-table-checkbox-col {
+            width: 48px;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Sort Icon Styling */
+        .devui-table-sort-icon {
+            display: inline-block;
+            vertical-align: middle;
+            width: 16px;
+            height: 16px;
+            margin-left: 4px;
+            /* Simple SVG data URI for testing */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23babbc0' d='M8 3l4 5H4l4-5zm0 10l-4-5h8l-4 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        /* Link Style */
+        .devui-table a {
+            color: var(--devui-link, #526ecc);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .devui-table a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="devui-table-container">
+        <table class="devui-table">
+            <thead>
+                <tr>
+                    <th class="devui-table-checkbox-col"><input type="checkbox" /></th>
+                    <th>ID <i class="devui-table-sort-icon"></i></th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Row 1: Normal Data -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox" /></td>
+                    <td>1001</td>
+                    <td><a href="#">Alice Smith</a></td>
+                    <td><span class="devui-tag devui-tag-success">Active</span></td>
+                    <td>Full-time employee</td>
+                    <td>
+                        <button class="devui-btn-text">Edit</button>
+                        <button class="devui-btn-text">Delete</button>
+                    </td>
+                </tr>
+
+                <!-- Row 2: Overflow/Long Text Test -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox" /></td>
+                    <td>1002</td>
+                    <td><a
+                            href="#">Bob_The_Builder_With_A_Very_Long_Name_To_Test_Wrapping_Behavior_In_The_Table_Cell</a>
+                    </td>
+                    <td><span class="devui-tag devui-tag-warning">Suspended</span></td>
+                    <td>This user has a very long description that might cause the table cell to expand or wrap
+                        unexpectedly. [STRESS_TEST_LONG_TEXT]</td>
+                    <td>
+                        <button class="devui-btn-text">Edit</button>
+                        <button class="devui-btn-text">Delete</button>
+                    </td>
+                </tr>
+
+                <!-- Row 3: Empty Data Test -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox" /></td>
+                    <td>1003</td>
+                    <td><a href="#">[TEST_EMPTY_STATUS]</a></td>
+                    <td>-</td>
+                    <td>[TEST_EMPTY_DESC]</td>
+                    <td>
+                        <button class="devui-btn-text">Edit</button>
+                    </td>
+                </tr>
+
+                <!-- Row 4: Checked State -->
+                <tr>
+                    <td class="devui-table-checkbox-col"><input type="checkbox" checked /></td>
+                    <td>1004</td>
+                    <td><a href="#">Charlie Brown</a></td>
+                    <td><span class="devui-tag devui-tag-danger">Deleted</span></td>
+                    <td>Contractor</td>
+                    <td>
+                        <button class="devui-btn-text">Restore</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

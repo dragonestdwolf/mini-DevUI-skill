@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Component Test v8 - IconWithLabelAndTitle (Fixed Icons)</title>
+    <style>
+        /* Global Variables */
+        :root {
+            --devui-global-bg: #f3f6f8;
+            --devui-base-bg: #ffffff;
+            --devui-text: #252b3a;
+            --devui-light-text: #ffffff;
+            --devui-dividing-line: #dfe1e6;
+            --devui-list-item-hover-bg: #f2f5fc;
+            --devui-link: #526ecc;
+            --devui-radius: 4px;
+            --devui-success: #50D4AB;
+            --devui-warning: #FAC20A;
+            --devui-danger: #F66F6A;
+            --devui-info: #5E7CE0;
+            --devui-primary: #5e7ce0;
+        }
+
+        body {
+            background-color: var(--devui-global-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: var(--devui-text);
+        }
+
+        /* Icon Pattern */
+        .devui-icon-toggle {
+            width: 16px;
+            height: 16px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .devui-cell-icon-label-text {
+            font-size: 14px;
+            color: var(--devui-text);
+            margin-left: 4px;
+            /* Reduced gap as per visual */
+            font-weight: 500;
+        }
+
+        .devui-cell-icon-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 100%;
+        }
+
+        /* Shim: Tag Styles */
+        .devui-tag-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 20px;
+            padding: 0 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            line-height: 20px;
+            font-weight: 500;
+            color: var(--devui-light-text, #FFFFFF);
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .devui-tag-success {
+            background-color: var(--devui-success, #50D4AB);
+        }
+
+        .devui-tag-warning {
+            background-color: var(--devui-warning, #FAC20A);
+        }
+
+        .devui-tag-danger {
+            background-color: var(--devui-danger, #F66F6A);
+        }
+
+        .devui-tag-info {
+            background-color: var(--devui-info, #5E7CE0);
+        }
+    </style>
+
+    <!-- INJECTED TEMPLATE STYLES -->
+    <style>
+        /* Scoped Table Styles Copy from table-tem.html */
+        .devui-table-container {
+            width: 100%;
+            overflow-x: auto;
+            background-color: var(--devui-base-bg, #ffffff);
+            border-radius: var(--devui-radius, 4px);
+            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+        }
+
+        .devui-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-family: inherit;
+            table-layout: fixed;
+        }
+
+        .devui-table th,
+        .devui-table td {
+            height: 42px;
+            padding: 0 16px;
+            box-sizing: border-box;
+            background-color: var(--devui-base-bg, #ffffff);
+            color: var(--devui-text, #252b3a);
+            border-bottom: 1px solid var(--devui-dividing-line, #dfe1e6);
+            font-size: 14px;
+            font-weight: 400;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 42px;
+        }
+
+        .devui-table th {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .devui-table tbody tr:hover td {
+            background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+        }
+    </style>
+
+    <script>
+        function toggleRow(element) {
+            // Toggle Logic: Swap Image Source
+            const img = element.querySelector('.devui-icon-toggle');
+            const isExpanded = element.classList.contains('expanded');
+
+            if (isExpanded) {
+                // Determine source: If currently expanded (Minus), switch to Plus
+                element.classList.remove('expanded');
+                img.src = "../../../icon/selector-expand.svg";
+                img.alt = "expand";
+            } else {
+                // If currently collapsed (Plus), switch to Minus
+                element.classList.add('expanded');
+                img.src = "../../../icon/selector-collapse.svg";
+                img.alt = "collapse";
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Table Component Test v8 (Fixed: Selector Icons)</h1>
+
+    <div class="devui-table-container">
+        <table class="devui-table">
+            <thead>
+                <tr>
+                    <th style="width: 320px;">Task (Selector + Label + Title)</th>
+                    <th>Owner</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Row 1: Expanded (Shows Minus in Box) -->
+                <tr>
+                    <td>
+                        <!-- Expected Visual: Minus/Dash in Box -->
+                        <div class="devui-cell-icon-label expanded" onclick="toggleRow(this)">
+                            <img src="../../../icon/selector-collapse.svg" class="devui-icon-toggle" alt="collapse" />
+                            <span class="devui-tag-solid devui-tag-warning shim-tag">Feature</span>
+                            <span class="devui-cell-icon-label-text">Setup Project Structure</span>
+                        </div>
+                    </td>
+                    <td>Alice</td>
+                    <td>In Progress</td>
+                </tr>
+
+                <!-- Row 2: Collapsed (Shows Plus in Box) -->
+                <tr>
+                    <td>
+                        <!-- Expected Visual: Plus in Box -->
+                        <div class="devui-cell-icon-label" onclick="toggleRow(this)">
+                            <img src="../../../icon/selector-expand.svg" class="devui-icon-toggle" alt="expand" />
+                            <span class="devui-tag-solid devui-tag-danger shim-tag">Bug</span>
+                            <span class="devui-cell-icon-label-text">Fix Login Crash</span>
+                        </div>
+                    </td>
+                    <td>Bob</td>
+                    <td>Open</td>
+                </tr>
+
+                <!-- Row 3: Collapsed -->
+                <tr>
+                    <td>
+                        <div class="devui-cell-icon-label" onclick="toggleRow(this)">
+                            <img src="../../../icon/selector-expand.svg" class="devui-icon-toggle" alt="expand" />
+                            <span class="devui-tag-solid devui-tag-info shim-tag">Docs</span>
+                            <span class="devui-cell-icon-label-text">Update API Reference</span>
+                        </div>
+                    </td>
+                    <td>Charlie</td>
+                    <td>Done</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

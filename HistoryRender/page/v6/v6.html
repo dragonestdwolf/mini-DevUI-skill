@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Test Page (v6)</title>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #F8F9FA;
+            padding: 40px;
+        }
+
+        h1 {
+            margin-bottom: 24px;
+            color: #252B3A;
+        }
+
+        h2 {
+            margin-top: 40px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #E3E5E9;
+            padding-bottom: 8px;
+            color: #575D6C;
+        }
+
+        .section {
+            background: #fff;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .label {
+            font-size: 12px;
+            color: #8A8E99;
+            margin-right: 8px;
+            min-width: 80px;
+        }
+
+        /* --- Breadcrumbs Template CSS --- */
+        /* Root Container */
+        .devui-breadcrumb {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0px;
+            /* Strict: Gap provided by separator width */
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        /* Item Wrapper */
+        .devui-breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 0px;
+            /* No gap between content and separator */
+        }
+
+        /* Content Area (Text + Optional Icon) */
+        .devui-breadcrumb-item .item-content {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            /* Atomic Gap: Text <-> Icon */
+            cursor: pointer;
+            text-decoration: none;
+            /* No underline by default */
+            transition: all 0.2s;
+        }
+
+        /* Text Styling */
+        .devui-breadcrumb-item .item-text {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 14px;
+            line-height: 22px;
+            color: var(--devui-text-weak, #575D6C);
+            /* Default State */
+        }
+
+        /* Hover State */
+        .devui-breadcrumb-item .item-content:hover .item-text {
+            color: var(--devui-brand, #5E7CE0);
+            /* Interaction Highlight */
+        }
+
+        /* Active / Last Item State */
+        .devui-breadcrumb-item.active .item-content {
+            cursor: default;
+            pointer-events: none;
+            /* Disable interference */
+        }
+
+        .devui-breadcrumb-item.active .item-text {
+            color: var(--devui-text, #252B3A);
+            /* Current Page: Distinct Dark Color */
+            font-weight: 400;
+            /* Regular weight per design */
+        }
+
+        /* Separator styling */
+        .devui-breadcrumb-item .separator {
+            width: 16px;
+            /* Fixed Width for visual spacing */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--devui-placeholder, #8A8E99);
+            font-size: 12px;
+            margin: 0;
+            /* Strict zero margin */
+        }
+
+        /* --- Button Template CSS --- */
+        /* Base Button Style */
+        .devui-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            gap: 4px;
+            border-radius: var(--devui-radius, 4px);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            box-sizing: border-box;
+            text-decoration: none;
+            user-select: none;
+        }
+
+        /* Sizes */
+        .devui-btn-sm {
+            height: 28px;
+            padding: 0 12px;
+            font-size: 12px;
+        }
+
+        .devui-btn-md {
+            height: 32px;
+            padding: 0 16px;
+            font-size: 14px;
+        }
+
+        .devui-btn.devui-btn-lg {
+            height: 40px;
+            padding: 0 20px;
+            font-size: 16px;
+        }
+
+        /* Variant: Primary */
+        .devui-btn-primary {
+            background-color: var(--devui-primary, #5E7CE0);
+            border: 1px solid transparent;
+            color: var(--devui-light-text, #FFFFFF);
+        }
+
+        .devui-btn-primary:hover:not(:disabled) {
+            background-color: var(--devui-primary-hover, #7693F5);
+        }
+
+        .devui-btn-primary:active:not(:disabled) {
+            background-color: var(--devui-primary-active, #344899);
+        }
+
+        .devui-btn-primary:disabled {
+            background-color: var(--devui-primary-disabled, #BECCFA);
+            color: var(--devui-light-text, #FFFFFF);
+            cursor: not-allowed;
+            border-color: transparent;
+        }
+
+        /* Variant: Secondary (Default) */
+        .devui-btn-secondary {
+            background-color: var(--devui-base-bg, #FFFFFF);
+            border: 1px solid var(--devui-form-control-line, #ADB0B8);
+            color: var(--devui-text, #252B3A);
+        }
+
+        .devui-btn-secondary:hover:not(:disabled) {
+            border-color: var(--devui-from-control-line-hover, #575D6C);
+        }
+
+        .devui-btn-secondary:active:not(:disabled) {
+            border-color: var(--devui-form-control-line-active, #5E7CE0);
+        }
+
+        .devui-btn-secondary:disabled {
+            background-color: var(--devui-btn-common-bg-disabled, #F5F5F5);
+            border-color: var(--devui-disabled-line, #DFE1E6);
+            color: var(--devui-disabled-text, #ADB0B8);
+            cursor: not-allowed;
+        }
+
+        /* Variant: Text */
+        .devui-btn-text {
+            background-color: transparent;
+            border: 1px solid transparent;
+            color: var(--devui-text, #252B3A);
+            padding: 0 8px;
+        }
+
+        .devui-btn-text:hover:not(:disabled) {
+            color: var(--devui-primary, #5E7CE0);
+            background-color: rgba(94, 124, 224, 0.05);
+        }
+
+        .devui-btn-text:active:not(:disabled) {
+            color: var(--devui-primary-active, #344899);
+        }
+
+        .devui-btn-text:disabled {
+            color: var(--devui-disabled-text, #ADB0B8);
+            cursor: not-allowed;
+            background-color: transparent;
+        }
+
+        /* Icon Support */
+        .devui-btn .devui-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            fill: currentColor;
+        }
+
+        /* --- Checkbox Template CSS --- */
+        /* Wrapper */
+        .devui-checkbox-wrapper {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            /* Strict Gap */
+            cursor: pointer;
+            user-select: none;
+            vertical-align: middle;
+        }
+
+        .devui-checkbox-wrapper.disabled {
+            cursor: not-allowed;
+        }
+
+        /* Hidden Native Input */
+        .devui-checkbox-input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            margin: 0;
+        }
+
+        /* Visual Box */
+        .devui-checkbox {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+            /* Fixed Radius */
+            border: 1px solid var(--devui-form-control-line, #ADB0B8);
+            background-color: var(--devui-base-bg, #FFFFFF);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* Hover State */
+        .devui-checkbox-wrapper:not(.disabled):hover .devui-checkbox {
+            border-color: var(--devui-brand, #5E7CE0);
+            box-shadow: 0 0 0 8px var(--devui-form-control-line-rippling, rgba(94, 124, 224, 0.08));
+        }
+
+        /* Checked & Half-Checked State */
+        .devui-checkbox-wrapper.checked .devui-checkbox,
+        .devui-checkbox-wrapper.half-checked .devui-checkbox {
+            background-color: var(--devui-brand, #5E7CE0);
+            border-color: var(--devui-brand, #5E7CE0);
+        }
+
+        /* Disabled State (Unchecked) */
+        .devui-checkbox-wrapper.disabled .devui-checkbox {
+            background-color: var(--devui-disabled-bg, #F3F3F3);
+            border-color: var(--devui-disabled-line, #DFE1E6);
+        }
+
+        /* Disabled State (Checked) */
+        .devui-checkbox-wrapper.disabled.checked .devui-checkbox,
+        .devui-checkbox-wrapper.disabled.half-checked .devui-checkbox {
+            background-color: var(--devui-disabled-bg-active, #BECCFA);
+            /* Figma: #BECCFA */
+            border-color: var(--devui-disabled-bg-active, #BECCFA);
+        }
+
+        /* Label Style */
+        .devui-checkbox-label {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 14px;
+            line-height: 22px;
+            color: var(--devui-text, #252B3A);
+        }
+
+        .devui-checkbox-wrapper.disabled .devui-checkbox-label {
+            color: var(--devui-disabled-text, #ADB0B8);
+        }
+
+        /* Icons */
+        .devui-checkbox-icon {
+            width: 10px;
+            /* Adjust size to fit 16px box */
+            height: auto;
+            fill: none;
+            stroke: var(--devui-light-text, #FFFFFF);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            display: none;
+        }
+
+        .devui-checkbox-marker {
+            width: 8px;
+            height: 2px;
+            background-color: var(--devui-light-text, #FFFFFF);
+            border-radius: 1px;
+            display: none;
+        }
+
+        /* Show Icons based on state */
+        .devui-checkbox-wrapper.checked .devui-checkbox-icon {
+            display: block;
+        }
+
+        .devui-checkbox-wrapper.half-checked .devui-checkbox-marker {
+            display: block;
+        }
+
+        /* --- Input Template CSS --- */
+        /* Wrapper */
+        .devui-input-wrapper {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 32px;
+            /* Default md size */
+            border-radius: 4px;
+            padding: 0 12px;
+            transition: all 0.2s;
+            position: relative;
+            background-color: var(--devui-base-bg, #FFFFFF);
+            border: 1px solid var(--devui-form-control-line, #C9C9C9);
+            box-sizing: border-box;
+            max-width: 300px;
+            /* For testing demo */
+        }
+
+        /* Size Variants */
+        .devui-input-wrapper.sm {
+            height: 28px;
+        }
+
+        .devui-input-wrapper.lg {
+            height: 40px;
+        }
+
+        /* Input Element */
+        .devui-input {
+            flex: 1;
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 0;
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 14px;
+            color: var(--devui-text, #252B3A);
+            line-height: 22px;
+        }
+
+        .devui-input::placeholder {
+            color: var(--devui-placeholder, #8A8E99);
+        }
+
+        /* Hover State */
+        .devui-input-wrapper:not(.disabled):hover {
+            border-color: var(--devui-form-control-line-hover, #575D6C);
+            box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling, rgba(94, 124, 224, 0.08));
+        }
+
+        /* Active/Focus State (Simulated via class 'active' or focus-within) */
+        .devui-input-wrapper:not(.disabled):focus-within,
+        .devui-input-wrapper.active {
+            border-color: var(--devui-form-control-line-active, #5E7CE0);
+            box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling, rgba(94, 124, 224, 0.08));
+        }
+
+        /* Status: Error */
+        .devui-input-wrapper.error {
+            border-color: var(--devui-danger, #F66F6A);
+            background-color: var(--devui-danger-bg, #FFEEDD);
+        }
+
+        /* Status: Success */
+        .devui-input-wrapper.success {
+            border-color: var(--devui-success, #50D4AB);
+        }
+
+        /* Disabled State */
+        .devui-input-wrapper.disabled {
+            background-color: var(--devui-disabled-bg, #F3F3F3);
+            border-color: var(--devui-disabled-line, #DFE1E6);
+            cursor: not-allowed;
+        }
+
+        .devui-input-wrapper.disabled .devui-input {
+            color: var(--devui-disabled-text, #ADB0B8);
+            cursor: not-allowed;
+        }
+
+        /* Number Input Specifics */
+        .devui-input[type="number"]::-webkit-inner-spin-button,
+        .devui-input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .devui-input-number-stepper {
+            display: flex;
+            flex-direction: column;
+            width: 22px;
+            height: 100%;
+            border-left: 1px solid var(--devui-dividing-line, #E3E5E9);
+            margin-right: -12px;
+        }
+
+        .devui-input-stepper-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .devui-input-stepper-btn:hover {
+            background-color: var(--devui-list-item-hover-bg, #F2F5FC);
+        }
+
+        .devui-input-stepper-btn.up {
+            border-bottom: 1px solid var(--devui-dividing-line, #E3E5E9);
+        }
+
+        .devui-stepper-icon {
+            width: 10px;
+            height: 10px;
+            fill: var(--devui-text, #252B3A);
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Template Test Page (v6)</h1>
+
+    <div class="section">
+        <h2>Breadcrumbs</h2>
+        <div class="devui-breadcrumb">
+            <div class="devui-breadcrumb-item">
+                <a class="item-content" href="#">
+                    <span class="item-text">Home</span>
+                </a>
+                <span class="separator">/</span>
+            </div>
+            <div class="devui-breadcrumb-item">
+                <a class="item-content" href="#">
+                    <span class="item-text">Library</span>
+                </a>
+                <span class="separator">/</span>
+            </div>
+            <div class="devui-breadcrumb-item active">
+                <a class="item-content" href="#">
+                    <span class="item-text">Data</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Buttons</h2>
+        <div class="row">
+            <span class="label">Primary</span>
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md"><span>Submit</span></button>
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md"
+                disabled><span>Disabled</span></button>
+        </div>
+        <div class="row">
+            <span class="label">Secondary</span>
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-md"><span>Cancel</span></button>
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-md"
+                disabled><span>Disabled</span></button>
+        </div>
+        <div class="row">
+            <span class="label">Text</span>
+            <button type="button" class="devui-btn devui-btn-text devui-btn-md"><span>Read More</span></button>
+            <button type="button" class="devui-btn devui-btn-text devui-btn-md" disabled><span>Disabled</span></button>
+        </div>
+        <div class="row">
+            <span class="label">Sizes</span>
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-sm"><span>Small</span></button>
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md"><span>Medium</span></button>
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-lg"><span>Large</span></button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Checkboxes</h2>
+        <div class="row">
+            <span class="label">Normal</span>
+            <!-- Unchecked -->
+            <label class="devui-checkbox-wrapper" for="cb1">
+                <input type="checkbox" id="cb1" class="devui-checkbox-input" />
+                <span class="devui-checkbox"><svg class="devui-checkbox-icon" viewBox="0 0 12 10">
+                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                    </svg><span class="devui-checkbox-marker"></span></span>
+                <span class="devui-checkbox-label">Unchecked</span>
+            </label>
+            <!-- Checked -->
+            <label class="devui-checkbox-wrapper checked" for="cb2">
+                <input type="checkbox" id="cb2" class="devui-checkbox-input" checked />
+                <span class="devui-checkbox"><svg class="devui-checkbox-icon" viewBox="0 0 12 10">
+                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                    </svg><span class="devui-checkbox-marker"></span></span>
+                <span class="devui-checkbox-label">Checked</span>
+            </label>
+            <!-- Indeterminate -->
+            <label class="devui-checkbox-wrapper half-checked" for="cb3">
+                <input type="checkbox" id="cb3" class="devui-checkbox-input" />
+                <span class="devui-checkbox"><svg class="devui-checkbox-icon" viewBox="0 0 12 10">
+                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                    </svg><span class="devui-checkbox-marker"></span></span>
+                <span class="devui-checkbox-label">Indeterminate</span>
+            </label>
+        </div>
+        <div class="row">
+            <span class="label">Disabled</span>
+            <!-- Disabled Unchecked -->
+            <label class="devui-checkbox-wrapper disabled" for="cb4">
+                <input type="checkbox" id="cb4" class="devui-checkbox-input" disabled />
+                <span class="devui-checkbox"><svg class="devui-checkbox-icon" viewBox="0 0 12 10">
+                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                    </svg><span class="devui-checkbox-marker"></span></span>
+                <span class="devui-checkbox-label">Disabled</span>
+            </label>
+            <!-- Disabled Checked -->
+            <label class="devui-checkbox-wrapper checked disabled" for="cb5">
+                <input type="checkbox" id="cb5" class="devui-checkbox-input" checked disabled />
+                <span class="devui-checkbox"><svg class="devui-checkbox-icon" viewBox="0 0 12 10">
+                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                    </svg><span class="devui-checkbox-marker"></span></span>
+                <span class="devui-checkbox-label">Disabled Checked</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Inputs</h2>
+        <div class="row">
+            <span class="label">Text</span>
+            <div class="devui-input-wrapper">
+                <input type="text" class="devui-input" placeholder="Please enter text" />
+                <div class="devui-input-number-stepper" style="display: none">...</div>
+            </div>
+        </div>
+        <div class="row">
+            <span class="label">Number</span>
+            <div class="devui-input-wrapper">
+                <input type="number" class="devui-input" value="10" placeholder="Number" />
+                <div class="devui-input-number-stepper" style="display: flex">
+                    <div class="devui-input-stepper-btn up"><svg class="devui-stepper-icon" viewBox="0 0 1024 1024">
+                            <path d="M512 320.4l-426.6 426.6-60.4-60.4L512 200l487 486.6-60.4 60.4z" />
+                        </svg></div>
+                    <div class="devui-input-stepper-btn down"><svg class="devui-stepper-icon" viewBox="0 0 1024 1024">
+                            <path d="M512 703.6l426.6-426.6 60.4 60.4L512 824 25 337.4l60.4-60.4z" />
+                        </svg></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <span class="label">States</span>
+            <div class="devui-input-wrapper error" style="margin-right: 16px;">
+                <input type="text" class="devui-input" value="Error Value" />
+                <div class="devui-input-number-stepper" style="display: none">...</div>
+            </div>
+            <div class="devui-input-wrapper disabled">
+                <input type="text" class="devui-input" value="Disabled" disabled />
+                <div class="devui-input-number-stepper" style="display: none">...</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -50,7 +50,8 @@ HistoryRender/v[n]/v[n].html
 HistoryRender/v[n]/v[n].png（1920*1080 浏览器截图）
 
 2. History Log 记录格式 (严格执行)
-每次生成后，按以下格式在@Pagelog.md中新增
+每次生成后，按以下格式在 `@HistoryRender/page/Pagelog.md` 中新增。
+**CRITICAL**: 该文件仅允许**追加 (Append)**。严禁使用 `Overwrite: true` 覆盖原有内容！必须先读取原文件内容，将新日志拼接到末尾，再写回。
 
 no：v[n] 时间： [月]-[日] [时]:[分] 框架与库： Angular / DevUI 读取 Skill：[记录本次生成读取了哪些skill/md] 生成描述： [记录本次生成用户输入提示词] 输出位置： /HistoryRender/page/v[n]/ 
 

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Component Test v2</title>
+    <style>
+        :root {
+            --devui-global-bg: #f3f6f8;
+            --devui-base-bg: #ffffff;
+            --devui-text: #252b3a;
+            --devui-placeholder: #8a8e99;
+            --devui-form-control-line: #adb0b8;
+            --devui-form-control-line-hover: #5e7ce0;
+            --devui-form-control-line-active: #5e7ce0;
+            --devui-form-control-line-rippling: rgba(94, 124, 224, 0.08);
+            --devui-disabled-bg: #f3f3f3;
+            --devui-disabled-line: #dfe1e6;
+            --devui-disabled-text: #adb0b8;
+        }
+
+        body {
+            background-color: var(--devui-global-bg);
+            padding: 40px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: center;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: var(--devui-text);
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+    </style>
+    <style>
+        /* Scoped Search Styles from search-tem.html */
+        .devui-search {
+            display: inline-flex;
+            align-items: center;
+            width: 296px;
+            height: 32px;
+            padding: 0 8px;
+            background-color: var(--devui-base-bg, #ffffff);
+            border: 1px solid var(--devui-form-control-line, #adb0b8);
+            border-radius: 6px;
+            box-sizing: border-box;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 4px;
+            position: relative;
+        }
+
+        .devui-search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            color: var(--devui-text, #252b3a);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 22px;
+        }
+
+        .devui-search-input::placeholder {
+            color: var(--devui-placeholder, #8a8e99);
+        }
+
+        .devui-search-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            /* Note: Path adjusted to relative for test file location */
+            content: url('../../../icon/miniDev-icon/操作图标/search.svg');
+            opacity: 0.6;
+        }
+
+        .devui-search:hover {
+            border-color: var(--devui-form-control-line-hover, #5e7ce0);
+        }
+
+        .devui-search:focus-within {
+            border-color: var(--devui-form-control-line-active, #5e7ce0);
+            box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling, rgba(94, 124, 224, 0.08));
+        }
+
+        .devui-search.disabled {
+            background-color: var(--devui-disabled-bg, #f3f3f3);
+            border-color: var(--devui-disabled-line, #dfe1e6);
+            cursor: not-allowed;
+            pointer-events: none;
+            /* Often helpful for disabled containers */
+        }
+
+        .devui-search.disabled .devui-search-input {
+            color: var(--devui-disabled-text, #adb0b8);
+            cursor: not-allowed;
+        }
+
+        .devui-search.disabled .devui-search-icon {
+            opacity: 0.4;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="section">
+        <h2>1. Default State</h2>
+        <div class="devui-search">
+            <img class="devui-search-icon" alt="search" />
+            <input type="text" class="devui-search-input" placeholder="Type key words">
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Auto-Focus (Simulated)</h2>
+        <!-- Manually adding focus style class for demo if focus-within doesn't show in static screenshot, 
+             but typically user interacts. Here we rely on :focus-within CSS -->
+        <div class="devui-search" style="border-color: #5e7ce0; box-shadow: 0 0 0 4px rgba(94, 124, 224, 0.08);">
+            <img class="devui-search-icon" alt="search" />
+            <input type="text" class="devui-search-input" placeholder="Focused State" value="DevUI">
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>3. Disabled State</h2>
+        <div class="devui-search disabled">
+            <img class="devui-search-icon" alt="search" />
+            <input type="text" class="devui-search-input" placeholder="Not allowed" disabled>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>4. Long Text Overflow</h2>
+        <div class="devui-search">
+            <img class="devui-search-icon" alt="search" />
+            <input type="text" class="devui-search-input"
+                value="This is a very long search query that should scroll horizontally inside the input field without breaking layout">
+        </div>
+    </div>
+
+</body>
+
+</html>

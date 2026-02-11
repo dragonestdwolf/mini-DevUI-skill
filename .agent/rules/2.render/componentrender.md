@@ -1,5 +1,6 @@
 ---
-trigger: manual
+trigger: model_decision
+description: when render html for a single component,follow this rules
 ---
 
 ## 角色简介
@@ -28,26 +29,31 @@ Skill 深度解析：
 压力注入：为文本类字段注入超长文本，检测组件的 overflow 处理。
 
 渲染与归档：
-检查在
-在 /HistoryRender/component 下是否有该指定组件的文件夹，若有则无需新增，若无则创建一个对应组件名称的文件夹 [componentName]/。对同一个组件的生成归档在同一个组件文件夹下，
-生成包含该独立组件的 v[n].html（居中展示）。
+检查在 /HistoryRender/component 下是否有该指定组件的文件夹，若有则无需新增，若无则创建一个对应组件名称的文件夹 [componentName]/。对同一个组件的生成归档在同一个组件文件夹下。
+
+文件命名规则（n 为递增序号，持续继承）：
+- 综合生成（同时读取 Template 和 Skill）：v[n].html
+- 仅读取 Template：v[n]t.html
+- 仅读取 Skill：v[n]s.html
+（确保生成的 HTML 内容居中展示）
 
 日志记录：在 /HistoryRender/component/componentlog.md 中记录详细的测试日期，次数，输入输出件，提示词。
 
 ## 文件与记录规范 (Standard & History)
 1. 输出结构
-路径：HistoryRender/component/[componentName]/v[n].html
+路径：HistoryRender/component/[componentName]/v[n][t/s]?.html
 
 内容：
-v[n].html（独立组件测试页）
+v[n][t/s]?.html（独立组件测试页）
 
 2. History Log 记录格式 (严格执行)
 每次生成后，按以下格式追加记录：
 
-[componentname]v[n] 
+[componentname]v[n][t/s]?
 时间： [月]-[日] [时]:[分] 
 框架与库： Angular / DevUI 
-读取 Skill：[记录本次生成读取了哪些skill/md] 
+数据来源： [Template / Skill / Both]
+读取文件： [记录具体读取的文件名，例如：button-tem.html, button.md]
 生成描述： [记录本次生成用户输入提示词] 
 输出位置： /HistoryRender/component/componentlog.md 
 
@@ -70,4 +76,4 @@ Tabs v1
 框架与库：Angular / DevUI 
 读取 Skill：CreateTaskForm.md 
 描述词：对页签组件进行占位符注入，发现 Skill 未定义提交按钮的 Disabled 状态 Token。 
-输出位置：/HistoryRender/component/tabs/v1 
+输出位置：/HistoryRender/component/tabs/v1

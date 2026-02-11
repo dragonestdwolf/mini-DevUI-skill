@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Component Test v5 - IconWithLabelAndTitle</title>
+    <style>
+        /* Global Variables */
+        :root {
+            --devui-global-bg: #f3f6f8;
+            --devui-base-bg: #ffffff;
+            --devui-text: #252b3a;
+            --devui-light-text: #ffffff;
+            --devui-dividing-line: #dfe1e6;
+            --devui-list-item-hover-bg: #f2f5fc;
+            --devui-link: #526ecc;
+            --devui-radius: 4px;
+            --devui-success: #50D4AB;
+            --devui-warning: #FAC20A;
+            --devui-danger: #F66F6A;
+            --devui-info: #5E7CE0;
+            --devui-primary: #5e7ce0;
+        }
+
+        body {
+            background-color: var(--devui-global-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: var(--devui-text);
+        }
+
+        /* Shims for classes present in Usage Example but missing in Template CSS */
+        .devui-icon-toggle {
+            width: 16px;
+            height: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        /* Chevron Right Icon */
+        .devui-icon-toggle::before {
+            content: "";
+            display: block;
+            width: 8px;
+            height: 8px;
+            border-top: 2px solid #71757f;
+            border-right: 2px solid #71757f;
+            transform: rotate(45deg);
+        }
+
+        .devui-cell-icon-label.expanded .devui-icon-toggle {
+            transform: rotate(90deg);
+        }
+
+        .devui-cell-icon-label-text {
+            font-size: 14px;
+            color: var(--devui-text);
+            margin-left: 4px;
+            font-weight: 500;
+        }
+    </style>
+
+    <!-- INJECTED TEMPLATE STYLES -->
+    <style>
+        /* Scoped Table Styles Copy from table-tem.html */
+        .devui-table-container {
+            width: 100%;
+            overflow-x: auto;
+            background-color: var(--devui-base-bg, #ffffff);
+            border-radius: var(--devui-radius, 4px);
+            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+        }
+
+        .devui-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-family: inherit;
+            table-layout: fixed;
+        }
+
+        .devui-table th,
+        .devui-table td {
+            height: 42px;
+            padding: 0 16px;
+            box-sizing: border-box;
+            background-color: var(--devui-base-bg, #ffffff);
+            color: var(--devui-text, #252b3a);
+            border-bottom: 1px solid var(--devui-dividing-line, #dfe1e6);
+            font-size: 14px;
+            font-weight: 400;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 42px;
+        }
+
+        .devui-table th {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .devui-table tbody tr:hover td {
+            background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+        }
+
+        /* --- Shared: Tag (Solid) --- */
+        .devui-tag-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 20px;
+            padding: 0 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            line-height: 20px;
+            font-weight: 500;
+            color: var(--devui-light-text, #FFFFFF);
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .devui-tag-success {
+            background-color: var(--devui-success, #50D4AB);
+        }
+
+        .devui-tag-warning {
+            background-color: var(--devui-warning, #FAC20A);
+        }
+
+        .devui-tag-danger {
+            background-color: var(--devui-danger, #F66F6A);
+        }
+
+        .devui-tag-info {
+            background-color: var(--devui-info, #5E7CE0);
+        }
+
+        /* --- Variant: IconWithLabelAndTitle --- */
+        /* Flex container for the cell */
+        .devui-cell-icon-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Table Component Test v5 (IconWithLabelAndTitle Pattern)</h1>
+
+    <div class="devui-table-container">
+        <table class="devui-table">
+            <thead>
+                <tr>
+                    <th style="width: 300px;">Task (Tree + Label)</th>
+                    <th>Owner</th>
+                    <th>Due Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Row 1: Collapsed -->
+                <tr>
+                    <td>
+                        <div class="devui-cell-icon-label" onclick="this.classList.toggle('expanded')">
+                            <span class="devui-icon-toggle"></span>
+                            <span class="devui-tag-solid devui-tag-warning">Feature</span>
+                            <span class="devui-cell-icon-label-text">Implement Login Flow</span>
+                        </div>
+                    </td>
+                    <td>Dev Team</td>
+                    <td>2023-10-01</td>
+                </tr>
+
+                <!-- Row 2: Expanded -->
+                <tr>
+                    <td>
+                        <div class="devui-cell-icon-label expanded" onclick="this.classList.toggle('expanded')">
+                            <span class="devui-icon-toggle"></span>
+                            <span class="devui-tag-solid devui-tag-danger">Bug</span>
+                            <span class="devui-cell-icon-label-text">Fix Crash on Startup</span>
+                        </div>
+                    </td>
+                    <td>QA Team</td>
+                    <td>2023-10-02</td>
+                </tr>
+
+                <!-- Row 3: Info Tag -->
+                <tr>
+                    <td>
+                        <div class="devui-cell-icon-label" onclick="this.classList.toggle('expanded')">
+                            <span class="devui-icon-toggle"></span>
+                            <span class="devui-tag-solid devui-tag-info">Chore</span>
+                            <span class="devui-cell-icon-label-text">Update Dependencies</span>
+                        </div>
+                    </td>
+                    <td>DevOps</td>
+                    <td>2023-10-05</td>
+                </tr>
+
+                <!-- Row 4: Long Text -->
+                <tr>
+                    <td>
+                        <div class="devui-cell-icon-label" onclick="this.classList.toggle('expanded')">
+                            <span class="devui-icon-toggle"></span>
+                            <span class="devui-tag-solid devui-tag-success">Done</span>
+                            <span class="devui-cell-icon-label-text"
+                                title="Refactor the legacy codebase to support new architecture patterns">
+                                Refactor the legacy codebase...
+                            </span>
+                        </div>
+                    </td>
+                    <td>Architecture</td>
+                    <td>2023-09-30</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

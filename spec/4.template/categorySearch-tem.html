@@ -1,0 +1,235 @@
+<!-- 
+  CategorySearch Component Template
+  Source: Figma Node 147:312
+  
+  Variables:
+  - {{class}}: Custom classes
+  - {{placeholder}}: Placeholder text
+-->
+
+<style>
+    /* Scoped CategorySearch Styles */
+    .devui-category-search {
+        display: inline-flex;
+        align-items: center;
+        width: 100%;
+        /* Default to 100% or specific width like 852px */
+        height: 32px;
+        padding: 0 8px;
+        background-color: var(--devui-base-bg, #ffffff);
+        border: 1px solid var(--devui-form-control-line, #adb0b8);
+        border-radius: 6px;
+        box-sizing: border-box;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        gap: 8px;
+        position: relative;
+    }
+
+    /* Icon */
+    .devui-category-search-icon {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        content: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/search.svg');
+        opacity: 0.6;
+    }
+
+    /* Tags Group */
+    .devui-category-search-tags {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex-shrink: 0;
+    }
+
+    /* Tag Item */
+    .devui-category-search-tag {
+        display: inline-flex;
+        align-items: center;
+        height: 20px;
+        padding: 0 8px;
+        background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 12px;
+        color: var(--devui-text, #252b3a);
+        line-height: 20px;
+        white-space: nowrap;
+        gap: 4px;
+        cursor: default;
+    }
+
+    /* Tag Close Icon */
+    .devui-category-search-tag-close {
+        width: 12px;
+        height: 12px;
+        cursor: pointer;
+        opacity: 0.6;
+        content: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/close.svg');
+        transition: opacity 0.2s;
+    }
+
+    .devui-category-search-tag-close:hover {
+        opacity: 1;
+    }
+
+    /* Input Element */
+    .devui-category-search-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        color: var(--devui-text, #252b3a);
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 400;
+        min-width: 50px;
+        /* Minimum width to type */
+    }
+
+    .devui-category-search-input::placeholder {
+        color: var(--devui-placeholder, #8a8e99);
+    }
+
+    /* Right Actions Group */
+    .devui-category-search-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: auto;
+        /* Push to right if needed, but flex 1 input usually handles it */
+    }
+
+    .devui-category-search-divider {
+        width: 1px;
+        height: 14px;
+        background-color: var(--devui-dividing-line, #dfe1e6);
+        margin: 0 4px;
+    }
+
+    .devui-category-search-action-icon {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+    }
+
+    .devui-category-search-action-icon:hover {
+        opacity: 1;
+    }
+
+    /* --- Interactive States --- */
+
+    /* Hover */
+    .devui-category-search:hover {
+        border-color: var(--devui-form-control-line-hover, #5e7ce0);
+    }
+
+    /* Focus-within (Simulates Focus State on Container) */
+    .devui-category-search:focus-within {
+        border-color: var(--devui-form-control-line-active, #5e7ce0);
+        box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling, rgba(94, 124, 224, 0.08));
+    }
+
+    /* Active Class for Click (Demo) */
+    .devui-category-search.active {
+        border-color: var(--devui-form-control-line-active, #5e7ce0);
+        box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling, rgba(94, 124, 224, 0.08));
+    }
+
+    /* Disabled */
+    .devui-category-search.disabled {
+        background-color: var(--devui-disabled-bg, #f3f3f3);
+        border-color: var(--devui-disabled-line, #dfe1e6);
+        cursor: not-allowed;
+    }
+
+    /* Dropdown Panel */
+    .devui-category-search-dropdown {
+        position: absolute;
+        top: calc(100% + 4px);
+        left: 0;
+        min-width: 200px;
+        background: #fff;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+        padding: 4px;
+        z-index: 1000;
+        display: none;
+        /* Hidden by default */
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    /* Show Dropdown when container is active or focused within */
+    .devui-category-search:focus-within .devui-category-search-dropdown,
+    .devui-category-search.active .devui-category-search-dropdown {
+        display: flex;
+    }
+
+    .devui-category-dropdown-item {
+        padding: 0 8px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        font-family: inherit;
+        font-size: 14px;
+        color: var(--devui-text, #252b3a);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.1s;
+    }
+
+    .devui-category-dropdown-item:hover {
+        background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+    }
+</style>
+
+<div class="devui-category-search {{class}}">
+    <!-- Icon -->
+    <img class="devui-category-search-icon" alt="search" />
+
+    <!-- Tags Group (Optional) -->
+    <div class="devui-category-search-tags">
+        <!-- Example Tag -->
+        <span class="devui-category-search-tag">
+            Category: Active
+            <img class="devui-category-search-tag-close" alt="close" />
+        </span>
+    </div>
+
+    <!-- Input -->
+    <!-- Added onclick to toggle 'active' class for demonstration purposes -->
+    <input type="text" class="devui-category-search-input" placeholder="{{placeholder}}">
+
+    <!-- Right Actions -->
+    <div class="devui-category-search-actions">
+        <!-- Clear -->
+        <img class="devui-category-search-action-icon"
+            src="file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/close.svg"
+            alt="clear" />
+
+        <div class="devui-category-search-divider"></div>
+
+        <!-- Save -->
+        <img class="devui-category-search-action-icon"
+            src="file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/save.svg"
+            alt="save" />
+        <!-- Directory -->
+        <img class="devui-category-search-action-icon"
+            src="file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/folder.svg"
+            alt="folder" style="height: 14px; width: 14px;" />
+        <!-- Adjusted folder icon size if needed to visual align, or keep 16px -->
+    </div>
+
+    <!-- Dropdown Panel -->
+    <div class="devui-category-search-dropdown">
+        <div class="devui-category-dropdown-item">Status</div>
+        <div class="devui-category-dropdown-item">Creator</div>
+        <div class="devui-category-dropdown-item">Date</div>
+    </div>
+</div>

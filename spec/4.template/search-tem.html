@@ -1,0 +1,99 @@
+<!-- 
+  Search Component Template
+  Source: Figma Node 164:370
+  
+  Variables:
+  - {{class}}: Custom classes
+  - {{placeholder}}: Placeholder text
+-->
+
+<style>
+    /* Scoped Search Styles */
+    .devui-search {
+        display: inline-flex;
+        align-items: center;
+        width: 296px;
+        /* Figma Default */
+        height: 32px;
+        /* Figma Fixed */
+        padding: 0 8px;
+        /* Figma Padding */
+        background-color: var(--devui-base-bg, #ffffff);
+        border: 1px solid var(--devui-form-control-line, #adb0b8);
+        border-radius: 6px;
+        /* Figma Radius */
+        box-sizing: border-box;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        gap: 4px;
+        /* Figma Gap */
+        position: relative;
+    }
+
+    /* Input Element */
+    .devui-search-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        color: var(--devui-text, #252b3a);
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 22px;
+    }
+
+    .devui-search-input::placeholder {
+        color: var(--devui-placeholder, #8a8e99);
+    }
+
+    /* Icon */
+    .devui-search-icon {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        /* Using Content approach for SVGs or background-image */
+        content: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/search.svg');
+        filter: none;
+        /* Adjust if needing color-filter logic */
+        opacity: 0.6;
+        /* Slight fade for icon if needed, or use specific color */
+    }
+
+    /* --- Interactive States --- */
+
+    /* Hover */
+    .devui-search:hover {
+        border-color: var(--devui-form-control-line-hover, #5e7ce0);
+    }
+
+    /* Focus-within (Simulates Focus State on Container) */
+    .devui-search:focus-within {
+        border-color: var(--devui-form-control-line-active, #5e7ce0);
+        box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling, rgba(94, 124, 224, 0.08));
+    }
+
+    /* Disabled */
+    .devui-search.disabled {
+        background-color: var(--devui-disabled-bg, #f3f3f3);
+        border-color: var(--devui-disabled-line, #dfe1e6);
+        cursor: not-allowed;
+    }
+
+    .devui-search.disabled .devui-search-input {
+        color: var(--devui-disabled-text, #adb0b8);
+        cursor: not-allowed;
+    }
+
+    .devui-search.disabled .devui-search-icon {
+        opacity: 0.4;
+    }
+</style>
+
+<div class="devui-search {{class}}">
+    <!-- Icon Left (Default) -->
+    <img class="devui-search-icon" alt="search" />
+    <input type="text" class="devui-search-input" placeholder="{{placeholder}}">
+</div>

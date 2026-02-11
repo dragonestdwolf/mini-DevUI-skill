@@ -39,3 +39,10 @@ no：v5
 读取 Skill：layout.md, theme.md, bread_crumbs.md, button.md, search.md, tabs.md, checkbox.md, tag.md 
 生成描述：Table Page restoration with Header, Sidebar, Filter Toolbar (Tabs+Search), Data Table (Checkbox+Tags), and Pagination.————layout布局不对
 输出位置：/HistoryRender/page/v5/
+
+no：v6 
+时间：02-10 14:48 
+框架与库：Template / HTML 
+读取 Skill：breadcrumbs-tem.html, button-tem.html, checkbox-tem.html, input-tem.html 
+生成描述：Template Verification Page for Breadcrumbs, Buttons, Checkboxes, and Inputs. 
+输出位置：/HistoryRender/page/v6/

@@ -1,0 +1,429 @@
+<!-- 
+  Table Component Template
+  Source: Figma Nodes 343:567 (Operations), 343:555 (Text), 343:557 (Checkbox), etc.
+  
+  Variables (Template Contract):
+  - {{headerContent}}: HTML string for <thead>...</thead>
+  - {{bodyContent}}: HTML string for <tbody>...</tbody>
+  - {{class}}: Additional classes
+  - Note: ALWAYS render at least 20 rows of data.
+-->
+
+<style>
+    /* Scoped Table Styles */
+    .devui-table-container {
+        width: 100%;
+        overflow-x: auto;
+        background-color: var(--devui-base-bg, #ffffff);
+        border-radius: var(--devui-radius, 4px);
+        box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+    }
+
+    .devui-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-family: inherit;
+        /* Noto Sans SC */
+        table-layout: fixed;
+        /* Fixed Layout for Ellipsis */
+    }
+
+    /* --- Base Header & Cell Styles --- */
+    .devui-table th,
+    .devui-table td {
+        height: 42px;
+        /* Strict Height */
+        padding: 0 16px;
+        /* Strict Padding */
+        box-sizing: border-box;
+        background-color: var(--devui-base-bg, #ffffff);
+        color: var(--devui-text, #252b3a);
+        border-bottom: 1px solid var(--devui-dividing-line, #dfe1e6);
+
+        /* Typography */
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 42px;
+        /* Vertically Center Text */
+
+        /* Overflow */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Header Specifics */
+    .devui-table th {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--devui-text, #252b3a);
+    }
+
+    /* Hover */
+    .devui-table tbody tr:hover td {
+        background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+    }
+
+    /* --- Variant: Checkbox Column --- */
+    .devui-table .devui-table-col-checkbox {
+        width: 32px;
+        /* Figma 343:557 */
+        padding: 0;
+        text-align: center;
+        overflow: visible;
+    }
+
+    .devui-checkbox-box {
+        width: 16px;
+        height: 16px;
+        margin: 0 auto;
+        border: 1px solid var(--devui-form-control-line, #ADB0B8);
+        border-radius: 2px;
+        display: block;
+    }
+
+    /* --- Variant: Link Column --- */
+    .devui-table .devui-table-col-link a {
+        color: var(--devui-link, #526ecc);
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .devui-table .devui-table-col-link a:hover {
+        text-decoration: underline;
+    }
+
+    /* --- Variant: Operation Column --- */
+    .devui-cell-operation {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        /* Gap for actions */
+        height: 100%;
+    }
+
+    .devui-cell-operation a {
+        color: var(--devui-link, #526ecc);
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    /* --- Variant: Tree Structure --- */
+    /* --- Variant: Tree Structure --- */
+    .devui-cell-tree {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        /* Fixed Gap */
+        height: 100%;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .devui-tree-icon {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        /* Default: Right Arrow (Collapsed) */
+        /* Use collapse-left (Left <) and rotate 180deg to get Right > */
+        background-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/collapse.svg');
+        transform: rotate(90deg);
+        transition: transform 0.2s;
+    }
+
+    /* Expanded State -> Rotate Down (270deg from Left base) */
+    .devui-cell-tree.expanded .devui-tree-icon {
+        transform: rotate(180deg);
+    }
+
+    .devui-tree-text {
+        font-size: 14px;
+        font-weight: 400;
+        /* Regular */
+        color: var(--devui-text, #252b3a);
+    }
+
+    /* --- Variant: Status / Priority / IconWithLabel --- */
+    .devui-cell-status,
+    .devui-cell-priority,
+    .devui-status-with-name,
+    .devui-cell-icon-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        /* Fixed Gap */
+        height: 100%;
+    }
+
+    .devui-status-icon,
+    .devui-priority-icon,
+    .devui-status-icon-img {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        /* Placeholder color/fill */
+        fill: currentColor;
+    }
+
+    .devui-priority-text,
+    .devui-status-text {
+        font-size: 14px;
+        font-weight: 400;
+        /* Regular */
+        color: var(--devui-text, #252b3a);
+    }
+
+    .devui-cell-status-text {
+        font-size: 14px;
+        color: var(--devui-text, #252b3a);
+    }
+
+    /* --- Variant: Label with Text / Text with Label --- */
+    .devui-cell-pair {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 100%;
+    }
+
+    /* Toggle Icon for IconWithLabelAndTitle */
+    .devui-icon-toggle {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        /* Default: Collapsed -> Show Expand Icon */
+        background-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/selector-expand.svg');
+        transition: transform 0.2s;
+    }
+
+    /* Expanded State -> Show Collapse Icon */
+    .devui-cell-icon-label.expanded .devui-icon-toggle {
+        background-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/操作图标/selector-collapse.svg');
+    }
+
+    .devui-cell-icon-label-text {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--devui-text, #252b3a);
+    }
+
+    /* --- Shared: Tag (Solid) --- */
+    /* User Requirement: Tags must use Solid style */
+    .devui-tag-solid {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 20px;
+        padding: 0 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        line-height: 20px;
+        font-weight: 500;
+        /* Medium */
+        color: var(--devui-light-text, #FFFFFF);
+        white-space: nowrap;
+    }
+
+    .devui-tag-success {
+        background-color: var(--devui-success, #50D4AB);
+    }
+
+    .devui-tag-warning {
+        background-color: var(--devui-warning, #FAC20A);
+    }
+
+    .devui-tag-danger {
+        background-color: var(--devui-danger, #F66F6A);
+    }
+
+    .devui-tag-info {
+        background-color: var(--devui-info, #5E7CE0);
+    }
+
+    /* --- Icons --- */
+    .devui-icon-svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    /* Sort/Filter in Header */
+    .devui-header-icon {
+        width: 16px;
+        height: 16px;
+        margin-left: 4px;
+        vertical-align: middle;
+        fill: #BABBC0;
+    }
+
+    /* --- New Tag Styles --- */
+    .devui-tag-md {
+        height: 24px;
+        line-height: 22px;
+        /* 24px - 2px border/padding adjustment if needed, usually line-height=height unless border */
+        font-size: 12px;
+        padding: 0 8px;
+        border-radius: 4px;
+        /* Assuming same radius */
+    }
+
+    /* Outline Tag */
+    .devui-tag-outline {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        border: 1px solid currentColor;
+        font-weight: 400;
+        /* Often regular for outline */
+        /* Color set by modifier */
+    }
+
+    /* Light/Shallow Tag */
+    .devui-tag-light {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        font-weight: 400;
+        /* Colors set by modifier */
+    }
+
+    /* Modifiers for Outline (Text Color = Border Color) */
+    .devui-tag-outline.devui-tag-primary {
+        color: var(--devui-primary, #5E7CE0);
+    }
+
+    .devui-tag-outline.devui-tag-success {
+        color: var(--devui-success, #50D4AB);
+    }
+
+    .devui-tag-outline.devui-tag-warning {
+        color: var(--devui-warning, #FAC20A);
+    }
+
+    .devui-tag-outline.devui-tag-danger {
+        color: var(--devui-danger, #F66F6A);
+    }
+
+    /* Modifiers for Light (Bg = Light, Text = Dark/Colored) */
+    /* Assuming standard DevUI light colors or using opacity */
+    .devui-tag-light.devui-tag-primary {
+        background-color: #F2F5FC;
+        color: #5E7CE0;
+    }
+
+    .devui-tag-light.devui-tag-success {
+        background-color: #EDFFF9;
+        color: #50D4AB;
+    }
+
+    .devui-tag-light.devui-tag-warning {
+        background-color: #FFF5D6;
+        color: #FAC20A;
+    }
+
+    /* Warning often orange/yellow */
+    .devui-tag-light.devui-tag-danger {
+        background-color: #FFEDEB;
+        color: #F66F6A;
+    }
+</style>
+
+<div class="devui-table-container {{class}}">
+    <table class="devui-table">
+        <!-- Header -->
+        <thead>
+            {{headerContent}}
+            <!-- 
+              Usage:
+              <th>Title <svg class="devui-header-icon" ...></svg></th>
+            -->
+        </thead>
+        <!-- Body -->
+        <tbody>
+            {{bodyContent}}
+            <!--
+              Usage Examples (Cell Content):
+              
+              1. Operation:
+              <td><div class="devui-cell-operation"><a href="#">Edit</a><a href="#">Delete</a></div></td>
+              
+              2. Checkbox:
+              <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+
+              3. Tree (Collapsed -> Expanded):
+              <td>
+                <div class="devui-cell-tree" onclick="this.classList.toggle('expanded')">
+                    <span class="devui-tree-icon"></span>
+                    <span class="devui-tree-text">Node</span>
+                </div>
+              </div>
+              </td>
+
+              10. TextWithLabel (Text First, Label Last - Outline):
+              <td>
+                  <div class="devui-cell-pair">
+                      <span class="devui-tree-text">Text Content</span>
+                      <span class="devui-tag-outline devui-tag-md devui-tag-primary">Label</span>
+                  </div>
+              </td>
+
+              11. LabelWithText (Label First, Text Last - Light):
+              <td>
+                  <div class="devui-cell-pair">
+                      <span class="devui-tag-light devui-tag-md devui-tag-warning">Label</span>
+                      <span class="devui-tree-text">Text Content</span>
+                  </div>
+              </td>
+            -->
+        </tbody>
+    </table>
+</div>
+
+9. StatusWithName (Icon+Text):
+<td>
+    <div class="devui-status-with-name">
+        <!-- Default Icon: Success -->
+        <img src="icon/miniDev-icon/状态图标/成功.svg" class="devui-status-icon-img" alt="Success">
+        <span class="devui-status-text">Successful</span>
+    </div>
+</td>
+
+4. Tag (Solid):
+<td><span class="devui-tag-solid devui-tag-success">Done</span></td>
+
+5. Status (Icon+Text):
+<td>
+    <div class="devui-cell-status"><span class="devui-status-icon">...</span><span>Running</span></div>
+</td>
+
+6. Label with Text:
+<td>
+    <div class="devui-cell-pair"><span class="devui-tag-solid devui-tag-warning">Label</span><span>Text</span></div>
+</td>
+
+7. IconWithLabelAndTitle (Toggle):
+<td>
+    <div class="devui-cell-icon-label expanded" onclick="this.classList.toggle('expanded')">
+        <!-- 
+                       Use 'icon/selector-collapse.svg' for Expanded (Minus) 
+                       Use 'icon/selector-expand.svg' for Collapsed (Plus)
+                    -->
+        <img src="icon/selector-collapse.svg" class="devui-icon-toggle" alt="collapse" />
+        <span class="devui-tag-solid devui-tag-warning shim-tag">Label</span>
+        <span class="devui-cell-icon-label-text">Title</span>
+    </div>
+</td>
+-->
+</tbody>
+</table>
+</div>
