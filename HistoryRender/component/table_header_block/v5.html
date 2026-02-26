@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevUI Table Header Block Component Test (v5)</title>
+    <style>
+        /* CSS Variables & Global Reset */
+        :root {
+            --devui-primary: #5E7CE0;
+            --devui-primary-hover: #7693F5;
+            --devui-primary-active: #344899;
+            --devui-light-text: #FFFFFF;
+            --devui-dark-text: #252B3A;
+            --devui-text: #252B3A;
+            --devui-text-weak: #575D6C;
+            --devui-line: #DFE1E6;
+            --devui-dividing-line: #DFE1E6;
+            --devui-base-bg: #FFFFFF;
+            --devui-border-radius: 4px;
+            --devui-font-size: 14px;
+            --devui-brand: #5E7CE0;
+
+            /* Tabs specifically */
+            --devui-list-item-hover-bg: #F2F2F3;
+            --devui-list-item-active-bg: #F2F2F3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #F8F9FA;
+            padding: 40px;
+        }
+
+        /* Test Container to hold the Component */
+        .test-container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: var(--devui-base-bg);
+            border: 1px dashed #ced4da;
+            padding: 24px 0;
+            /* Container inner padding */
+        }
+
+
+        /* ========================================================= */
+        /* Component Specific CSS (Based on toolbar-block.md & rules)*/
+        /* ========================================================= */
+
+        .devui-block-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0 16px;
+            height: 32px;
+            background-color: transparent;
+        }
+
+        .devui-block-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        .devui-block-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Dropdown Trigger (Text + Icon) */
+        .devui-dropdown-trigger {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            color: var(--devui-text);
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: color 0.2s;
+        }
+
+        .devui-dropdown-trigger:hover {
+            color: var(--devui-primary-hover);
+        }
+
+        .devui-dropdown-trigger .devui-icon-arrow {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: currentColor;
+            -webkit-mask-image: url('../../../../icon/select-arrow.svg');
+            mask-image: url('../../../../icon/select-arrow.svg');
+            -webkit-mask-size: 14px 14px;
+            mask-size: 14px 14px;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+        }
+
+
+        /* Tabs (Pills Mode) */
+        .devui-tabs[data-type="pills"] {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .devui-tabs[data-type="pills"] .devui-tab-item {
+            font-size: 14px;
+            color: var(--devui-text);
+            cursor: pointer;
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .devui-tabs[data-type="pills"] .devui-tab-item:hover {
+            color: var(--devui-brand);
+        }
+
+        .devui-tabs[data-type="pills"] .devui-tab-item.active {
+            color: var(--devui-brand);
+            font-weight: 600;
+        }
+
+
+        /* Vertical Divider */
+        .devui-divider-vertical {
+            width: 1px;
+            height: 16px;
+            background-color: var(--devui-line);
+        }
+
+        /* Buttons (Primary, Text) */
+        .devui-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 32px;
+            padding: 0 16px;
+            border-radius: var(--devui-border-radius);
+            font-size: var(--devui-font-size);
+            cursor: pointer;
+            border: 1px solid transparent;
+            outline: none;
+            transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+            white-space: nowrap;
+        }
+
+        .devui-btn-primary {
+            background-color: var(--devui-primary);
+            color: var(--devui-light-text);
+            border-color: var(--devui-primary);
+        }
+
+        .devui-btn-primary:hover {
+            background-color: var(--devui-primary-hover);
+            border-color: var(--devui-primary-hover);
+        }
+
+        .devui-btn-text {
+            background-color: transparent;
+            color: var(--devui-text);
+            padding: 0 8px;
+        }
+
+        .devui-btn-text:hover {
+            color: var(--devui-primary);
+            background-color: var(--devui-list-item-hover-bg);
+        }
+
+        .devui-btn-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: currentColor;
+            -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            flex-shrink: 0;
+        }
+
+
+        /* Category Search Container */
+        .devui-category-search-container {
+            flex: 1;
+            width: auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--devui-line);
+            border-radius: var(--devui-border-radius);
+            height: 32px;
+            padding: 0 8px;
+            gap: 8px;
+            background-color: #FFFFFF;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+        }
+
+        .devui-category-search-container:focus-within {
+            border-color: var(--devui-brand);
+            box-shadow: 0 0 0 2px rgba(94, 124, 224, 0.2);
+        }
+
+        .devui-search-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: var(--devui-text-weak);
+            -webkit-mask-image: url('../../../../icon/miniDev-icon/action/search.svg');
+            mask-image: url('../../../../icon/miniDev-icon/action/search.svg');
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            flex-shrink: 0;
+        }
+
+        .devui-search-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background-color: #F2F2F3;
+            border-radius: 2px;
+            padding: 0 8px;
+            height: 24px;
+            font-size: 12px;
+            color: var(--devui-text);
+            white-space: nowrap;
+        }
+
+        .devui-icon-close {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background-color: var(--devui-text-weak);
+            -webkit-mask-image: url('../../../../icon/miniDev-icon/action/close.svg');
+            mask-image: url('../../../../icon/miniDev-icon/action/close.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            cursor: pointer;
+        }
+
+        .devui-icon-close:hover {
+            background-color: var(--devui-brand);
+        }
+
+        .devui-search-input {
+            border: none;
+            outline: none;
+            flex: 1;
+            min-width: 50px;
+            font-size: 14px;
+            color: var(--devui-text);
+            background: transparent;
+        }
+
+        .devui-search-input::placeholder {
+            color: #AAB2BD;
+        }
+
+        .devui-search-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .devui-search-actions-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: var(--devui-text-weak);
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .devui-search-actions-icon:hover {
+            background-color: var(--devui-brand);
+        }
+
+        /* View Toggle (Wrapped Tabs) */
+        .devui-tabs[data-type="wrapped"] {
+            display: flex;
+            align-items: center;
+            background-color: transparent;
+            border-radius: var(--devui-border-radius);
+            gap: 2px;
+        }
+
+        .devui-tabs[data-type="wrapped"] .devui-tab-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            border-radius: var(--devui-border-radius);
+            cursor: pointer;
+            color: var(--devui-text-weak);
+            transition: all 0.2s;
+        }
+
+        .devui-tabs[data-type="wrapped"] .devui-tab-item:hover {
+            color: var(--devui-text);
+            background-color: var(--devui-list-item-hover-bg);
+        }
+
+        .devui-tabs[data-type="wrapped"] .devui-tab-item.active {
+            background-color: var(--devui-list-item-active-bg);
+            color: var(--devui-brand);
+            font-weight: bold;
+        }
+
+        .devui-tab-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: currentColor;
+            /* Matches parent color which changes on hover/active */
+            -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="test-container">
+        <!-- ============================================== -->
+        <!-- Toolbar Component HTML begins (from spec)      -->
+        <!-- ============================================== -->
+        <div class="devui-block-toolbar">
+
+            <!-- LEFT AREA -->
+            <div class="devui-block-left">
+                <!-- Scope Filter -->
+                <div class="devui-dropdown-trigger">
+                    <span>全部</span>
+                    <span class="devui-icon-arrow"></span> <!-- select-arrow.svg -->
+                </div>
+
+                <!-- Navigation Tabs (Pills) -->
+                <div class="devui-tabs" data-type="pills">
+                    <div class="devui-tab-item active">Backlog</div>
+                    <div class="devui-tab-item">缺陷</div>
+                </div>
+            </div>
+
+            <!-- RIGHT AREA -->
+            <div class="devui-block-right">
+
+                <!-- Divider -->
+                <div class="devui-divider-vertical"></div>
+
+                <!-- Main Button Primary -->
+                <button class="devui-btn devui-btn-primary">
+                    <span class="devui-btn-icon"
+                        style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/plus.svg'); mask-image: url('../../../../icon/miniDev-icon/action/plus.svg');"></span>
+                    <span>新建</span>
+                </button>
+
+                <!-- Temp Filter -->
+                <button class="devui-btn devui-btn-text" style="color: var(--devui-primary);">
+                    <span>临时过滤</span>
+                    <span class="devui-btn-icon"
+                        style="-webkit-mask-image: url('../../../../icon/select-arrow.svg'); mask-image: url('../../../../icon/select-arrow.svg'); width: 14px; height: 14px; margin-left: 2px;"></span>
+                </button>
+
+                <!-- Category Search -->
+                <div class="devui-category-search-container">
+                    <span class="devui-search-icon"></span>
+                    <!-- Tags -->
+                    <div class="devui-search-tag">
+                        <span>类型: Story | Task | Bug</span>
+                        <span class="devui-icon-close"></span>
+                    </div>
+                    <div class="devui-search-tag">
+                        <span>状态: 新建 | 进行中 | 已解决...</span>
+                        <span class="devui-icon-close"></span>
+                    </div>
+                    <input type="text" class="devui-search-input" placeholder="点击此处输入关键词或添加筛选条件...">
+                    <!-- Right Actions inside Search -->
+                    <div class="devui-search-actions">
+                        <span class="devui-search-actions-icon"
+                            style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/close.svg'); mask-image: url('../../../../icon/miniDev-icon/action/close.svg');"></span>
+                        <span class="devui-divider-vertical" style="height:12px; margin: 0 4px;"></span>
+                        <span class="devui-search-actions-icon"
+                            style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/star.svg'); mask-image: url('../../../../icon/miniDev-icon/action/star.svg');"></span>
+                        <span class="devui-search-actions-icon"
+                            style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/folder.svg'); mask-image: url('../../../../icon/miniDev-icon/action/folder.svg');"></span>
+                    </div>
+                </div>
+
+                <!-- Text Buttons -->
+                <button class="devui-btn devui-btn-text">
+                    <span class="devui-btn-icon"
+                        style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/setting.svg'); mask-image: url('../../../../icon/miniDev-icon/action/setting.svg');"></span>
+                    <span>表格设置</span>
+                </button>
+
+                <button class="devui-btn devui-btn-text">
+                    <span class="devui-btn-icon"
+                        style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/more.svg'); mask-image: url('../../../../icon/miniDev-icon/action/more.svg');"></span>
+                    <span>更多</span>
+                </button>
+
+                <!-- Divider -->
+                <div class="devui-divider-vertical"></div>
+
+                <!-- View Toggle (Wrapped/Solid) -->
+                <div class="devui-tabs" data-type="wrapped">
+                    <div class="devui-tab-item active">
+                        <span class="devui-tab-icon"
+                            style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/list-view.svg'); mask-image: url('../../../../icon/miniDev-icon/action/list-view.svg');"></span>
+                    </div>
+                    <div class="devui-tab-item">
+                        <span class="devui-tab-icon"
+                            style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/board-view.svg'); mask-image: url('../../../../icon/miniDev-icon/action/board-view.svg');"></span>
+                    </div>
+                    <div class="devui-tab-item">
+                        <span class="devui-tab-icon"
+                            style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/gantt-view.svg'); mask-image: url('../../../../icon/miniDev-icon/action/gantt-view.svg');"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- ============================================== -->
+        <!-- Toolbar Component HTML ends                    -->
+        <!-- ============================================== -->
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sidebar Component Test - v13s</title>
+    <style>
+        :root {
+            /* Variables defined in sidebar.md */
+            --sidebar-width: 240px;
+            --sidebar-bg: #FFFFFF;
+            --sidebar-hover-bg: #F2F5FC;
+            --sidebar-active-bg: #EBF1FF;
+            --sidebar-text: #252B3A;
+            --sidebar-primary: #5E7CE0;
+            --sidebar-border: #DFE1E6;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            /* Standalone centering padding */
+            background-color: #f5f5f5;
+            /* Off-white to distinguish from component */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        /* 1. Container */
+        .devui-sidebar {
+            width: var(--sidebar-width);
+            height: 800px;
+            /* Fixed height for testing overflow */
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--sidebar-border);
+            border-left: 1px solid var(--sidebar-border);
+            /* Added for standalone visibility */
+            display: flex;
+            flex-direction: column;
+            padding: 8px 0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 2. Project Header */
+        .devui-sidebar-header {
+            height: 48px;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--sidebar-text);
+        }
+
+        .devui-project-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            background-color: var(--sidebar-border);
+            /* Fallback */
+            background-image: url('../../../icon/miniDev-icon/project-initial/D-48x48.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            flex-shrink: 0;
+        }
+
+        .devui-header-text {
+            flex: 1;
+            margin: 0 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* Test constraint */
+            font-size: 14px;
+        }
+
+        .devui-header-arrow {
+            width: 16px;
+            height: 16px;
+            background-color: var(--sidebar-text);
+            /* MUST use relative paths as requested, with -webkit-mask */
+            -webkit-mask: url('../../../icon/select-arrow.svg') no-repeat center/contain;
+            flex-shrink: 0;
+        }
+
+        /* 3. Menu List */
+        .devui-menu-list {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 4px;
+        }
+
+        /* 4. Menu Item */
+        .devui-menu-item {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            cursor: pointer;
+            color: var(--sidebar-text);
+            font-size: 14px;
+            position: relative;
+            transition: background-color 0.2s;
+            border-radius: 4px;
+            flex-shrink: 0;
+            gap: 12px;
+        }
+
+        .devui-menu-item:hover {
+            background-color: var(--sidebar-hover-bg);
+        }
+
+        .devui-menu-item.active {
+            background-color: var(--sidebar-active-bg);
+            color: var(--sidebar-text);
+            font-weight: 700;
+        }
+
+        .devui-menu-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background-color: var(--sidebar-primary);
+        }
+
+        .devui-menu-icon {
+            width: 16px;
+            height: 16px;
+            background-color: currentColor;
+            /* Inherit color */
+            -webkit-mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            flex-shrink: 0;
+        }
+
+        .devui-menu-text {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Test Icon Paths correctly depth=3 */
+        .icon-dashboard {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/sidebar/dashboard.svg');
+        }
+
+        .icon-code {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/code.svg');
+        }
+
+        .icon-test {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/test-plan.svg');
+        }
+
+        .icon-test-case {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/test-case.svg');
+        }
+
+        .icon-missing {
+            -webkit-mask-image: url('../../../icon/missing-on-purpose.svg');
+        }
+
+        /* 5. Menu Group Wrapper */
+        .devui-menu-group {
+            /* Styles for normal/expanded group */
+        }
+
+        .devui-menu-group.is-expanded {
+            background-color: #FBFBFC;
+            border: 1px solid var(--sidebar-border);
+            border-radius: 4px;
+            margin: -2px -4px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Apply compensations */
+        .devui-menu-group.is-expanded>.devui-menu-item {
+            padding: 0 12px;
+            /* Compensate for margin */
+        }
+
+        /* 6. Sub Menu */
+        .devui-sub-menu-list {
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .devui-menu-group.is-expanded>.devui-sub-menu-list {
+            max-height: 500px;
+            /* Arbitrary fit */
+            opacity: 1;
+            padding-bottom: 2px;
+        }
+
+        .devui-sub-menu-item {
+            height: 40px;
+            padding-left: 44px;
+            /* Icon alignment based on spec */
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: var(--sidebar-text);
+            font-size: 14px;
+            transition: all 0.2s;
+            position: relative;
+            gap: 8px;
+            /* For icon inside sub menu if any */
+        }
+
+        .devui-menu-group.is-expanded .devui-sub-menu-item {
+            padding-right: 12px;
+            /* Add right padding as well */
+        }
+
+        .devui-sub-menu-item:hover {
+            background-color: var(--sidebar-hover-bg);
+        }
+
+        .devui-sub-menu-item.active {
+            background-color: var(--sidebar-active-bg);
+            color: var(--sidebar-primary);
+            font-weight: 700;
+            box-shadow: inset 3px 0 0 0 var(--sidebar-primary);
+        }
+
+        .devui-group-arrow {
+            width: 16px;
+            height: 16px;
+            background-color: var(--sidebar-text);
+            -webkit-mask: url('../../../icon/miniDev-icon/action/chevron-right.svg') no-repeat center/contain;
+            transition: transform 0.2s;
+        }
+
+        .devui-menu-group.is-expanded .devui-group-arrow {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="devui-sidebar">
+        <!-- TEST: Long project name -->
+        <div class="devui-sidebar-header" title="[VERY_LONG_STRING_THAT_MIGHT_OVERFLOW_THE_SIDEBAR_CONTAINER_TEST]">
+            <div class="devui-project-avatar"></div>
+            <span class="devui-header-text">[VERY_LONG_STRING_TITLE_TEST_PROJECT_NAME]</span>
+            <span class="devui-header-arrow"></span>
+        </div>
+
+        <div class="devui-menu-list">
+            <!-- Normal active item -->
+            <div class="devui-menu-item active">
+                <span class="devui-menu-icon icon-dashboard"></span>
+                <span class="devui-menu-text">仪表盘</span>
+            </div>
+
+            <!-- TEST: Extreme long text for component wrap/ellipsis check -->
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-code"></span>
+                <span class="devui-menu-text">[EXTREME_LONG_TEXT_OVERFLOW_TEST_FOR_SIDEBAR_ITEM]</span>
+            </div>
+
+            <!-- TEST: Missing Icon Fallback check -->
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-missing"></span>
+                <span class="devui-menu-text">Empty Icon Test</span>
+            </div>
+
+            <!-- Menu Group: Collapsed -->
+            <div class="devui-menu-group" onclick="this.classList.toggle('is-expanded')">
+                <div class="devui-menu-item">
+                    <span class="devui-menu-icon icon-test"></span>
+                    <span class="devui-menu-text">测试管理 (Collapsed)</span>
+                    <span class="devui-group-arrow"></span>
+                </div>
+                <div class="devui-sub-menu-list">
+                    <div class="devui-sub-menu-item active">
+                        <span class="devui-menu-icon icon-test-case"></span>
+                        <span class="devui-menu-text">测试用例</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Group: Expanded by default with specific padding tests -->
+            <div class="devui-menu-group is-expanded" onclick="this.classList.toggle('is-expanded')">
+                <div class="devui-menu-item">
+                    <span class="devui-menu-icon icon-test"></span>
+                    <span class="devui-menu-text">测试管理 (Expanded)</span>
+                    <span class="devui-group-arrow"></span>
+                </div>
+                <div class="devui-sub-menu-list">
+                    <div class="devui-sub-menu-item">
+                        <span class="devui-menu-icon icon-test-case"></span>
+                        <span class="devui-menu-text">测试用例</span>
+                    </div>
+                    <!-- TEST: Sub-menu long text + active state -->
+                    <div class="devui-sub-menu-item active">
+                        <span class="devui-menu-icon icon-test-case"></span>
+                        <span class="devui-menu-text">[SUB_MENU_LONG_TEXT_CHECK_ABCDEFG123]</span>
+                    </div>
+                    <div class="devui-sub-menu-item">
+                        <span class="devui-menu-text">No Icon Sub Menu</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </aside>
+
+</body>
+
+</html>

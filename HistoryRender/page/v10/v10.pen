@@ -1,0 +1,275 @@
+{
+  "version": "2.6",
+  "children": [
+    {
+      "type": "frame",
+      "id": "root_page",
+      "x": 0,
+      "y": 0,
+      "name": "Table Page (v10)",
+      "width": 1440,
+      "height": 900,
+      "fill": "#F5F5F5",
+      "layout": "horizontal",
+      "children": [
+        {
+          "type": "frame",
+          "id": "sidebar_container",
+          "name": "Sidebar",
+          "width": 240,
+          "height": "fill_container",
+          "fill": "#FFFFFF",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "right": 1
+            },
+            "fill": "#DFE1E6"
+          },
+          "layout": "vertical",
+          "padding": [
+            8,
+            0
+          ],
+          "gap": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "sidebar_header",
+              "name": "Project Header",
+              "width": "fill_container",
+              "height": 32,
+              "layout": "horizontal",
+              "alignItems": "center",
+              "padding": [
+                4,
+                8
+              ],
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "project_avatar",
+                  "name": "Avatar",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "#DFE1E6",
+                  "cornerRadius": 4
+                },
+                {
+                  "type": "text",
+                  "id": "project_title",
+                  "name": "Title",
+                  "content": "DevOps项目示例",
+                  "fill": "#252B3A",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sidebar_menu",
+              "name": "Menu List",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "menu_item_dashboard",
+                  "name": "Dashboard Item",
+                  "width": "fill_container",
+                  "height": 44,
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "padding": [
+                    0,
+                    12
+                  ],
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "dashboard_text",
+                      "content": "仪表盘",
+                      "fill": "#252B3A",
+                      "fontSize": 14
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "right_column",
+          "name": "Right Column",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "fill": "#F3F3F3",
+          "children": [
+            {
+              "type": "frame",
+              "id": "main_header",
+              "name": "Header",
+              "width": "fill_container",
+              "height": 48,
+              "fill": "#FFFFFF",
+              "stroke": {
+                "align": "inside",
+                "thickness": {
+                  "bottom": 1
+                },
+                "fill": "#DFE1E6"
+              },
+              "layout": "horizontal",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "padding": [
+                0,
+                20
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "head_l",
+                  "content": "Header Left",
+                  "fill": "#252B3A",
+                  "fontSize": 16
+                },
+                {
+                  "type": "text",
+                  "id": "head_r",
+                  "content": "Header Right",
+                  "fill": "#252B3A",
+                  "fontSize": 14
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "subheader_area",
+              "name": "SubHeader & Tabs",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "breadcrumbs",
+                  "name": "Breadcrumbs",
+                  "width": "fill_container",
+                  "height": 48,
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "padding": [
+                    0,
+                    24
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "bread_text",
+                      "content": "项目 / 模块 / 详情",
+                      "fill": "#8A8E99",
+                      "fontSize": 14
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "content_area",
+              "name": "Content Padding Area",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "padding": [
+                24,
+                24
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "content_card",
+                  "name": "Table Card",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 4,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "toolbar",
+                      "name": "Toolbar Region",
+                      "width": "fill_container",
+                      "height": 64,
+                      "layout": "horizontal",
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        24
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "btn_new",
+                          "content": "New Item Button / Filters",
+                          "fill": "#5E7CE0",
+                          "fontSize": 14
+                        }
+                      ]
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "table_view",
+                      "name": "Data Table Mock",
+                      "width": "fill_container",
+                      "height": 400,
+                      "fill": "#F5F5F5",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "#DFE1E6"
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "pagination",
+                      "name": "Pagination Region",
+                      "width": "fill_container",
+                      "height": 56,
+                      "layout": "horizontal",
+                      "justifyContent": "end",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        24
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "pagi_text",
+                          "content": "1 2 3 ... 10",
+                          "fill": "#252B3A",
+                          "fontSize": 14
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

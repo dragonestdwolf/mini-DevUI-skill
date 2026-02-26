@@ -443,3 +443,65 @@ Sidebar Navigation v12 (Visual Overflow)
 - Items Padding: Increased to 0 12px inside expanded group for alignment.
 - Menu List: overflow-x hidden.
 输出位置：/HistoryRender/component/sidebar/v12.html
+
+
+Header v1
+时间：02-26 13:51
+框架与库：HTML / CSS (DevUI)
+数据来源：Both
+输入物来源：Figma MCP
+读取文件：header.md, header-tem.html
+生成描述：根据模板和规范，利用占位符和极端文本数据测试顶部导航 Header 的基本布局与结构独立性。
+输出位置：/HistoryRender/component/header/v1.html
+
+Sidebar Navigation v13s
+时间：02-26 15:40
+框架与库：HTML / CSS (DevUI 纯手工)
+数据来源：Skill
+输入物来源：简单语言描述
+读取文件：sidebar.md, componentrender.md
+生成描述：用户反馈页面中侧边栏组件图标渲染失败，新建 v13s 版本以检测底层规范边界，排查相对路径层级错误，并进行超长文本边界测试。
+输出位置：/HistoryRender/component/sidebar/v13s.html
+
+icon_role update
+时间：02-26 16:01
+框架与库：Markdown Spec
+数据来源：Rule Refinement 
+输入物来源：人工校验经验反馈
+读取文件：icon_role.md
+生成描述：基于 Sidebar v13s vs v12 对比，总结出了基于 currentColor 和 mask 技术由于导致 SVG 单色化而造成渲染黑块或美感丢失的问题。故严格在 icon_role.md 定义禁止使用 mask 手段，强制所有后续相关工具使用 background-image 还原 Figma SVG 的原本风采。
+输出位置：/spec/0.role/icon_role.md
+
+Table Header Block v5
+时间：02-26 19:10
+框架与库：DevUI (HTML/CSS)
+数据来源：Skill (Block Spec) + Templates + Render Rules
+读取文件：toolbar-block.md, componentrender.md
+生成描述：渲染表格头部操作区 (Toolbar Block) 独立测试页。根据最新规范，所有线性结构（操作按钮、搜索框内部功能如星标等图标）全面启用了 CSS variables 并带 -webkit-mask 实现 currentColor 的继承着色，摒弃直接使用 background-image 导致的无状态黑色图块，并在居中独立容器中进行压力边界展示。
+输出位置：/HistoryRender/component/table_header_block/v5.html
+
+Table Header Block v6
+时间：02-26 19:23
+框架与库：DevUI (HTML/CSS)
+数据来源：Toolbar-block.md (v1.0 Modified for pristine quality)
+读取文件：icon_role.md, toolbar-block.md
+生成描述：基于修改后的规范重新渲染的独立 Toolbar 组件。消除了内联 mask，应用了标准的 .icon-xxx 类。恢复了 v4 版本所有的高级视觉处理（Tab 下划线、分类搜索框高、圆角等）。
+输出文件：/HistoryRender/component/table_header_block/v6.html
+
+Table Block v3
+时间：02-26 20:15
+框架与库：Angular / DevUI
+数据来源：Both
+输入物来源：简单语言描述
+读取文件：table-block.md, toolbar-block.md, table.md, pagination.md, componentrender.md
+生成描述：基于刚刚确立的最新的 `table-block` 紧凑型内外边距以及 `devui-table-content-wrap` 规制提取生成的结构测试件，验证占满屏幕宽度与自适应内容高度的结构逻辑。
+输出位置：/HistoryRender/component/table_block/v3.html
+
+Table Block v4 (PRD Based Render)
+时间：02-26 20:26
+框架与库：Angular / DevUI
+数据来源：PRD + Spec
+输入物来源：简单语言描述
+读取文件：table-block-PRD.md, table-block.md, componentrender.md
+生成描述：基于 `table-block-PRD.md` 和刚刚确立的 `table-block.md` 结合进行规范渲染输出。包含了 10 列严格对齐 PRD 要求的表头与对应字段占位元素，以及 12px padding、透明Toolbar、纯白无空底内容包裹盒。
+输出位置：/HistoryRender/component/table_block/v4.html

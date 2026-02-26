@@ -9,32 +9,28 @@
 
 ## 1. Layout Structure (布局结构)
 
-整个区块为垂直排列的 Flex 容器。
+外围大容器以流式伸缩结构向下延伸，但通过容器划分避免不需要的白底面积。
 
--   **Container (`.devui-table-block`)**:
+-   **Content Container (`.devui-content`)**:
+    -   上下 `padding: 12px` 左右`padding: 20px`以紧凑排布周围。
+    -   底色跟随最外层内容底色 `#F3F3F3`。
+
+-   **Wrapper (`.devui-table-block`)**:
     -   `display: flex`
     -   `flex-direction: column`
     -   `width: 100%`
-    -   `background-color`: `transparent`
+    -   `min-height: 0`
 
-### 1.1 Header Area
+### 1.1 Header Area / Toolbar
 -   **Source**: `spec/5.block/toolbar-block.md`
 -   **Class**: `.devui-block-toolbar`
--   **Placement**: Top
+-   **Style**: 直接放置于背景上 (`background-color: transparent`)，独立占据上方区域。规定为紧凑型定高 `32px` 以及下外边距 `margin-bottom: 10px` 提供间距。
 
-### 1.2 Table Area
--   **Source**: `spec/3.component/table.md`
--   **Class**: `.devui-table-container`
--   **Placement**: Middle (below Header)
--   **Style**: `margin-top: 10px`
--   **Style**: `flex: 1` (optional, depends on page layout, but usually table takes height)
-
-### 1.3 Pagination Area
--   **Source**: `spec/3.component/pagination.md`
--   **Class**: `.devui-pagination`
--   **Placement**: Bottom (below Table)
--   **Padding**: `16px 0` (Top/Bottom padding)
--   **Alignment**: Right aligned (based on design image typically, or specified in pagination spec as center/right). *Note: Pagination spec says Items Alignment: Total(Left), List(Center/Right). Let's use `justify-content: flex-end` or space-between if total is present.*
+### 1.2 Table & Pagination Container
+要求高度紧凑：不使用拉伸填充整页高度导致在数据较少时出现巨大的白底下半部分。
+-   **Class**: `.devui-table-content-wrap`
+-   **Style**: 白色实体背景 `var(--devui-base-bg, #FFFFFF)`，有 `border-radius: 4px` 和浅阴影 `box-shadow: 0 1px 3px 0 rgba(0,0,0,0.04)`。
+-   **Structure**: 这是一个内部 flex 列容器，内部分别囊括 `Table Container` (`.devui-table-container`) 与左对齐或右对齐的底层 `Pagination` 区块。这样白底框子就只会被撑到真实表格与底部分页的实际总高度。
 
 ## 2. Template Code (模版代码)
 
@@ -45,42 +41,47 @@
         <!-- ... content from toolbar-block ... -->
     </div>
 
-    <!-- 2. Table Container -->
-    <div class="devui-table-container">
-        <!-- ... content from table component ... -->
-    </div>
-
-    <!-- 3. Pagination -->
-    <div class="devui-pagination">
-        <!-- Total -->
-        <span class="devui-pagination-total">总条数: 8</span>
+    <!-- 2. Table & Pagination Wrap (White background container) -->
+    <div class="devui-table-content-wrap">
         
-        <!-- Spacer -->
-        <div style="flex: 1"></div>
-
-        <!-- Size Changer -->
-        <div class="devui-select-sm">
-            <span>15 条/页</span>
-            <span class="devui-icon-arrow"></span>
+        <!-- 2.1 Table Container -->
+        <div class="devui-table-container">
+            <!-- ... content from table component ... -->
         </div>
 
-        <!-- Warning: Icon paths must be relative ../../../icon/... -->
-        <button class="devui-pagination-item disabled">
-            <img src="../../../icon/miniDev-icon/action/arrow-left.svg" class="devui-icon-s">
-        </button>
-        
-        <button class="devui-pagination-item active">1</button>
-        
-        <button class="devui-pagination-item disabled">
-            <img src="../../../icon/miniDev-icon/action/arrow-left.svg" class="devui-icon-s" style="transform: rotate(180deg);">
-        </button>
+        <!-- 2.2 Pagination -->
+        <div class="devui-pagination">
+            <!-- Total -->
+            <span class="devui-pagination-total">总条数: 8</span>
+            
+            <!-- Spacer -->
+            <div style="flex: 1"></div>
 
-        <!-- Jump -->
-        <div class="devui-pagination-jump">
-            <span>跳至</span>
-            <input type="text" value="1">
-            <span>页</span>
+            <!-- Size Changer -->
+            <div class="devui-select-sm">
+                <span>15 条/页</span>
+                <span class="devui-icon-arrow"></span>
+            </div>
+
+            <!-- Warning: Icon paths must be relative ../../../icon/... -->
+            <button class="devui-pagination-item disabled">
+                <img src="../../../icon/miniDev-icon/action/arrow-left.svg" class="devui-icon-s">
+            </button>
+            
+            <button class="devui-pagination-item active">1</button>
+            
+            <button class="devui-pagination-item disabled">
+                <img src="../../../icon/miniDev-icon/action/arrow-left.svg" class="devui-icon-s" style="transform: rotate(180deg);">
+            </button>
+
+            <!-- Jump -->
+            <div class="devui-pagination-jump">
+                <span>跳至</span>
+                <input type="text" value="1">
+                <span>页</span>
+            </div>
         </div>
+        
     </div>
 </div>
 ```
@@ -91,8 +92,16 @@
 .devui-table-block {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     width: 100%;
+    min-height: 0;
+}
+
+.devui-table-content-wrap {
+    background-color: var(--devui-base-bg, #FFFFFF);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
 }
 
 .devui-pagination {
