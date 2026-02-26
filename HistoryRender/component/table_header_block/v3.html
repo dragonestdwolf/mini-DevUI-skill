@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Header Block v3</title>
+    <style>
+        /* --- Global Reset --- */
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #f3f6f8;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* --- Block Layout (from table-header-block.md) --- */
+        .devui-block-table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            /* Limit width for demo */
+            height: 48px;
+            /* Slightly taller for breathing room */
+            padding: 0 16px;
+            background-color: #F3F6F8;
+            /* As requested in spec */
+            border-radius: 4px;
+        }
+
+        .devui-block-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        .devui-block-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* --- Components: Button (Refined from v4 logic) --- */
+        .devui-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            gap: 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            user-select: none;
+        }
+
+        /* Sizes */
+        .devui-btn-md {
+            height: 32px;
+            padding: 0 16px;
+            font-size: 14px;
+        }
+
+        /* Primary */
+        .devui-btn-primary {
+            background-color: #5E7CE0;
+            border: 1px solid transparent;
+            color: #FFFFFF;
+        }
+
+        .devui-btn-primary:hover {
+            background-color: #7693F5;
+        }
+
+        .devui-btn-primary:active {
+            background-color: #344899;
+        }
+
+        /* Text */
+        .devui-btn-text {
+            background-color: transparent;
+            border: 1px solid transparent;
+            color: #252B3A;
+            padding: 0 8px;
+        }
+
+        .devui-btn-text:hover {
+            color: #5E7CE0;
+            background-color: rgba(94, 124, 224, 0.05);
+        }
+
+        .devui-btn-text:active {
+            color: #344899;
+        }
+
+        /* Icons in buttons - Strict Color Sync via Mask */
+        .devui-btn .devui-icon {
+            width: 16px;
+            height: 16px;
+            display: block;
+            background-color: currentColor;
+            /* Syncs with text color */
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            -webkit-mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+        }
+
+        /* --- Components: Tabs (Mocked from tabs.md) --- */
+        .devui-tabs {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Type: Pills (Underline) */
+        .devui-tabs[data-type="pills"] {
+            gap: 24px;
+        }
+
+        .devui-tabs[data-type="pills"] .devui-tab-item {
+            position: relative;
+            cursor: pointer;
+            color: #575D6C;
+            padding: 8px 0;
+            font-size: 14px;
+            user-select: none;
+        }
+
+        .devui-tabs[data-type="pills"] .devui-tab-item.active {
+            color: #252B3A;
+            font-weight: 700;
+        }
+
+        .devui-tabs[data-type="pills"] .devui-tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #252B3A;
+        }
+
+        /* Type: Wrapped (Solid Block) */
+        .devui-tabs[data-type="wrapped"] {
+            gap: 2px;
+        }
+
+        .devui-tabs[data-type="wrapped"] .devui-tab-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #575D6C;
+            transition: background 0.2s;
+        }
+
+        .devui-tabs[data-type="wrapped"] .devui-tab-item:hover {
+            background-color: #EBEBEB;
+        }
+
+        .devui-tabs[data-type="wrapped"] .devui-tab-item.active {
+            background-color: #F5F5F5;
+            color: #333;
+        }
+
+        /* Darker icon color for active */
+        .devui-tabs[data-type="wrapped"] .devui-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.8;
+            background-color: currentColor;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            -webkit-mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+        }
+
+        .devui-tabs[data-type="wrapped"] .devui-tab-item.active .devui-icon {
+            opacity: 1;
+            font-weight: bold;
+        }
+
+
+        /* --- Components: CategorySearch (Responsive) --- */
+        .devui-category-search-container {
+            display: inline-flex;
+            align-items: center;
+            width: auto;
+            /* Responsive */
+            flex: 1;
+            /* Fills remaining space */
+            height: 32px;
+            padding: 0 8px;
+            background-color: #ffffff;
+            border: 1px solid #adb0b8;
+            border-radius: 6px;
+            transition: all 0.2s;
+            gap: 8px;
+        }
+
+        .devui-category-search-container:hover {
+            border-color: #5e7ce0;
+        }
+
+        .devui-category-search-container:focus-within {
+            border-color: #5e7ce0;
+            box-shadow: 0 0 0 4px rgba(94, 124, 224, 0.08);
+        }
+
+        .devui-search-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.6;
+            background-color: #252b3a;
+            -webkit-mask: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/search.svg') no-repeat center;
+            mask: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/search.svg') no-repeat center;
+        }
+
+        .devui-search-tag {
+            display: inline-flex;
+            align-items: center;
+            height: 20px;
+            padding: 0 8px;
+            background-color: #f2f5fc;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #252b3a;
+            white-space: nowrap;
+            gap: 4px;
+        }
+
+        .devui-icon-close {
+            width: 12px;
+            height: 12px;
+            opacity: 0.6;
+            cursor: pointer;
+            background-color: currentColor;
+            -webkit-mask: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/close.svg') no-repeat center;
+            mask: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/close.svg') no-repeat center;
+        }
+
+        .devui-search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            height: 100%;
+            font-size: 14px;
+            min-width: 50px;
+        }
+
+        .devui-search-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .devui-icon-action {
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+            opacity: 0.6;
+            background-color: #252b3a;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+        }
+
+        .devui-icon-action:hover {
+            opacity: 1;
+        }
+
+        /* --- Components: Dropdown Trigger (from filter-tem.html idea) --- */
+        .devui-dropdown-trigger {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            color: #252B3A;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+            /* Fix width issue */
+            flex-shrink: 0;
+            /* Prevent shrinking */
+        }
+
+        .devui-icon-arrow {
+            width: 12px;
+            height: 12px;
+            background-color: currentColor;
+            -webkit-mask: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/select-arrow.svg') no-repeat center;
+            mask: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/select-arrow.svg') no-repeat center;
+        }
+
+        /* --- Divider --- */
+        .devui-divider-vertical {
+            width: 1px;
+            height: 16px;
+            background-color: #DFE1E6;
+        }
+
+        .devui-divider-vertical-sm {
+            width: 1px;
+            height: 12px;
+            background-color: #DFE1E6;
+            margin: 0 2px;
+        }
+
+        /* --- Icons with Masks --- */
+        /* Fixed: Using 'new.svg' instead of 'add.svg' */
+        .devui-icon-add {
+            -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/new.svg');
+            mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/new.svg');
+        }
+
+        /* Fixed: Using 'settings.svg' instead of 'setting.svg' */
+        .devui-icon-setting {
+            -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/settings.svg');
+            mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/settings.svg');
+        }
+
+        /* Fixed: Using 'more-horizontal.svg' instead of 'more.svg' */
+        .devui-icon-more {
+            -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/more-horizontal.svg');
+            mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/more-horizontal.svg');
+            background-color: currentColor;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        .devui-icon-list {
+            -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/list-view.svg');
+            mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/list-view.svg');
+        }
+
+        /* Fixed: Using 'board-view.svg' instead of 'kanban-view.svg' */
+        .devui-icon-kanban {
+            -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/board-view.svg');
+            mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/board-view.svg');
+        }
+
+        /* Search Action Icons */
+        .icon-close-circle {
+            -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/close.svg');
+            mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/close.svg');
+        }
+
+        .icon-save {
+            -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/save.svg');
+            mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/save.svg');
+        }
+
+        .icon-folder {
+            -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/folder.svg');
+            mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/folder.svg');
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="devui-block-table-header">
+
+        <!-- LEFT AREA -->
+        <div class="devui-block-left">
+            <!-- Scope Filter -->
+            <div class="devui-dropdown-trigger">
+                <span>全部</span>
+                <span class="devui-icon-arrow"></span>
+            </div>
+
+            <!-- Navigation Tabs (Pills/Underline) -->
+            <div class="devui-tabs" data-type="pills">
+                <div class="devui-tab-item active">Backlog</div>
+                <div class="devui-tab-item">缺陷</div>
+            </div>
+        </div>
+
+        <!-- RIGHT AREA -->
+        <div class="devui-block-right">
+
+            <!-- Divider -->
+            <div class="devui-divider-vertical"></div>
+
+            <!-- Main Button -->
+            <button class="devui-btn devui-btn-primary devui-btn-md">
+                <span class="devui-icon devui-icon-add"></span>
+                <span>新建</span>
+            </button>
+
+            <!-- Temp Filter (Fixed Width) -->
+            <div class="devui-dropdown-trigger">
+                <span>临时过滤</span>
+                <span class="devui-icon-arrow"></span>
+            </div>
+
+            <!-- Category Search (Responsive Flex: 1) -->
+            <div class="devui-category-search-container">
+                <span class="devui-search-icon"></span>
+                <!-- Tags -->
+                <div class="devui-search-tag">
+                    <span>类型: Story | Task | Bug</span>
+                    <span class="devui-icon-close"></span>
+                </div>
+                <div class="devui-search-tag">
+                    <span>状态: 新建 | 进行中 | 已解决...</span>
+                    <span class="devui-icon-close"></span>
+                </div>
+                <!-- Input can shrink/grow as needed -->
+                <input type="text" class="devui-search-input" placeholder="点击此处输入关键词...">
+                <!-- Right Actions inside Search -->
+                <div class="devui-search-actions">
+                    <span class="devui-icon-action icon-close-circle"></span>
+                    <span class="devui-divider-vertical-sm"></span>
+                    <span class="devui-icon-action icon-save"></span>
+                    <span class="devui-icon-action icon-folder"></span>
+                </div>
+            </div>
+
+            <!-- Text Buttons -->
+            <button class="devui-btn devui-btn-text devui-btn-md">
+                <span class="devui-icon devui-icon-setting"></span>
+                <span>表格设置</span>
+            </button>
+
+            <span class="devui-icon-more"></span>
+            <button class="devui-btn devui-btn-text devui-btn-md">
+                <span>更多</span>
+            </button>
+
+            <!-- Divider -->
+            <div class="devui-divider-vertical"></div>
+
+            <!-- View Toggle (Wrapped/Solid) -->
+            <div class="devui-tabs" data-type="wrapped">
+                <div class="devui-tab-item active">
+                    <span class="devui-icon devui-icon-list"></span>
+                </div>
+                <div class="devui-tab-item">
+                    <span class="devui-icon devui-icon-kanban"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

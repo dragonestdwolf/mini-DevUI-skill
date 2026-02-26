@@ -4,6 +4,7 @@
 - **Component**: `d-filter`
 - **Figma Node**: 960:2744
 - **Template Source**: `spec/4.template/filter-tem.html`
+- **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
 ## 1. Content Presentation (内容呈现格式)
 

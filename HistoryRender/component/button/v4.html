@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Icon Verification v4</title>
+    <!-- CSS Mask Style -->
+    <style>
+        body {
+            padding: 40px;
+            background: #f3f6f8;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #252b3a;
+        }
+
+        .row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        /* Base Button Style from Template */
+        .devui-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            gap: 4px;
+            border-radius: var(--devui-radius, 4px);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            box-sizing: border-box;
+            text-decoration: none;
+            user-select: none;
+        }
+
+        /* Sizes */
+        .devui-btn-sm {
+            height: 28px;
+            padding: 0 12px;
+            font-size: 12px;
+        }
+
+        .devui-btn-md {
+            height: 32px;
+            padding: 0 16px;
+            font-size: 14px;
+        }
+
+        .devui-btn.devui-btn-lg {
+            height: 40px;
+            padding: 0 20px;
+            font-size: 16px;
+        }
+
+        /* Variant: Primary */
+        .devui-btn-primary {
+            background-color: var(--devui-primary, #5E7CE0);
+            border: 1px solid transparent;
+            color: var(--devui-light-text, #FFFFFF);
+        }
+
+        .devui-btn-primary:hover:not(:disabled) {
+            background-color: var(--devui-primary-hover, #7693F5);
+        }
+
+        .devui-btn-primary:active:not(:disabled) {
+            background-color: var(--devui-primary-active, #344899);
+        }
+
+        /* Variant: Secondary (Default) */
+        .devui-btn-secondary {
+            background-color: var(--devui-base-bg, #FFFFFF);
+            border: 1px solid var(--devui-form-control-line, #ADB0B8);
+            color: var(--devui-text, #252B3A);
+        }
+
+        .devui-btn-secondary:hover:not(:disabled) {
+            border-color: var(--devui-from-control-line-hover, #575D6C);
+        }
+
+        .devui-btn-secondary:active:not(:disabled) {
+            border-color: var(--devui-form-control-line-active, #5E7CE0);
+            color: var(--devui-primary-active, #5E7CE0);
+            /* Optional: text color change on active */
+        }
+
+        .devui-btn-secondary:hover:not(:disabled) {
+            /* Secondary hover behavior: Border changes, text might no change or change slightly */
+        }
+
+        /* Variant: Text */
+        .devui-btn-text {
+            background-color: transparent;
+            border: 1px solid transparent;
+            color: var(--devui-text, #252B3A);
+            padding: 0 8px;
+        }
+
+        .devui-btn-text:hover:not(:disabled) {
+            color: var(--devui-primary, #5E7CE0);
+            background-color: rgba(94, 124, 224, 0.05);
+        }
+
+        .devui-btn-text:active:not(:disabled) {
+            color: var(--devui-primary-active, #344899);
+        }
+
+        /* Icon Support (CSS Mask Implementation) */
+        .devui-btn .devui-icon-mask {
+            width: 16px;
+            height: 16px;
+            background-color: currentColor;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            display: inline-block;
+        }
+
+        /* Disable State (Generic) */
+        .devui-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="section">
+        <div class="section-title">1. Primary Button (Icon should be WHITE)</div>
+        <div class="row">
+            <!-- Search Icon -->
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../icon/miniDev-icon/action/search.svg'); mask-image: url('../../../icon/miniDev-icon/action/search.svg');"></span>
+                <span>Search</span>
+            </button>
+
+            <!-- Edit Icon -->
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../icon/miniDev-icon/action/edit.svg'); mask-image: url('../../../icon/miniDev-icon/action/edit.svg');"></span>
+                <span>Edit</span>
+            </button>
+
+            <!-- Settings Icon -->
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../icon/miniDev-icon/action/settings.svg'); mask-image: url('../../../icon/miniDev-icon/action/settings.svg');"></span>
+                <span>Settings</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">2. Secondary Button (Icon should be DARK GREY)</div>
+        <div class="row">
+            <!-- Delete Icon -->
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-md">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../icon/miniDev-icon/action/delete.svg'); mask-image: url('../../../icon/miniDev-icon/action/delete.svg');"></span>
+                <span>Delete</span>
+            </button>
+
+            <!-- Filter Icon -->
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-md">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../icon/miniDev-icon/action/filter.svg'); mask-image: url('../../../icon/miniDev-icon/action/filter.svg');"></span>
+                <span>Filter</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">3. Text Button (Icon should be DARK GREY, turn BLUE on Hover)</div>
+        <div class="row">
+            <!-- More Icon -->
+            <button type="button" class="devui-btn devui-btn-text devui-btn-md">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../icon/miniDev-icon/action/more-horizontal.svg'); mask-image: url('../../../icon/miniDev-icon/action/more-horizontal.svg');"></span>
+                <span>More</span>
+            </button>
+
+            <!-- Refresh Icon -->
+            <button type="button" class="devui-btn devui-btn-text devui-btn-md">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../icon/miniDev-icon/action/refresh.svg'); mask-image: url('../../../icon/miniDev-icon/action/refresh.svg');"></span>
+                <span>Refresh</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">4. Size Check (Sm/Md/Lg) - Icon Stays 16px</div>
+        <div class="row">
+            <!-- Small -->
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-sm">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../icon/miniDev-icon/action/plus.svg'); mask-image: url('../../../icon/miniDev-icon/action/add-node.svg');"></span>
+                <span>Small</span>
+            </button>
+
+            <!-- Medium -->
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../icon/miniDev-icon/action/plus.svg'); mask-image: url('../../../icon/miniDev-icon/action/add-node.svg');"></span>
+                <span>Medium</span>
+            </button>
+
+            <!-- Large -->
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-lg">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../icon/miniDev-icon/action/plus.svg'); mask-image: url('../../../icon/miniDev-icon/action/add-node.svg');"></span>
+                <span>Large</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">5. Path Check (Relative Path: `../../../`)</div>
+        <div class="row">
+            <p style="font-size: 14px; color: #666;">
+                Verify via Inspector: Paths should be `../../../icon/miniDev-icon/action/...`
+            </p>
+        </div>
+    </div>
+
+</body>
+
+</html>

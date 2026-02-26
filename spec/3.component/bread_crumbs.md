@@ -5,6 +5,7 @@
 - **Figma Node**: 23:101
 - **DevUI Component**: `d-breadcrumb`
 - **Version**: v1.1
+- **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
 ## Property Skill
 定义组件的 API 接口，确保与 DevUI 标准对齐。

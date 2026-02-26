@@ -4,6 +4,7 @@
 - **Component**: `d-category-search`
 - **Figma Node**: 147:312
 - **Template Source**: `spec/4.template/categorySearch-tem.html`
+- **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
 ## 1. Content Presentation (内容呈现格式)
 
@@ -25,10 +26,10 @@
     -   Border: None.
     -   Placeholder: "Click to filter..." (or specific to context).
 4.  **Right Actions**:
-    -   **Clear Icon**: `close.svg`.
+    -   **Clear Icon**: `close.svg` (Relative Path: `../../../icon/miniDev-icon/action/close.svg`).
     -   **Divider**: Vertical line.
-    -   **Save Icon**: `save.svg`.
-    -   **Directory Icon**: `folder.svg`.
+    -   **Save Icon**: `save.svg` (Relative Path: `../../../icon/miniDev-icon/action/save.svg`).
+    -   **Directory Icon**: `folder.svg` (Relative Path: `../../../icon/miniDev-icon/action/folder.svg`).
 
 ## 2. Visual Variants (视觉变体)
 

@@ -10,13 +10,31 @@
 ## Core Rule: Source of Truth
 **所有 HTML 生成中的图标资源，必须严格从 `icon/miniDev-icon/` 及其子目录中选取。**
 
-- **Primary Location**: 大多数功能性图标 (Search, Close, Delete, Settings etc.) 位于 `icon/miniDev-icon/action/`。
-- **Naming Note**: 文件名多为中文或“中文(english)”格式。
-    - Search -> `icon/miniDev-icon/action/搜索.svg`
-    - Close -> `icon/miniDev-icon/action/close.svg` 或 `icon/miniDev-icon/action/清除.svg`
-    - Settings -> `icon/miniDev-icon/action/设置.svg`
-    - Check -> `icon/miniDev-icon/action/已选.svg`
+- **Primary Location**: Most functional icons (Search, Close, Delete, Settings etc.) are located in `icon/miniDev-icon/action/`.
+- **Naming Note**: Filenames are in English/Kebab-case.
+    - Search -> `icon/miniDev-icon/action/search.svg`
+    - Close -> `icon/miniDev-icon/action/close.svg`
+    - Settings -> `icon/miniDev-icon/action/settings.svg`
+    - Check -> `icon/miniDev-icon/action/selected.svg`
 - **Action**: 若不确定文件名，需先使用 `find` 或 `list_dir` 确认文件存在，禁止猜测路径。
+
+## Critical Rule: Relative Path Resolution (相对路径解析)
+**HTML 文件通常位于深层目录 (e.g., `HistoryRender/component/table/v17.html`)，必须计算相对路径以正确访问根目录的 Icon 资源。**
+
+**绝对禁止** 直接使用 `icon/...` 或 `/icon/...` (除非确信在服务器根目录下运行)。
+**必须使用** `../` 回退到根目录。
+
+### Calculation Logic
+1.  **Identify HTML Depth**: 计算当前 HTML 文件相对于项目根目录的深度。
+    - `HistoryRender/component/table/v17.html` -> Depth = 3
+2.  **Calculate Prefix**: Depth * `../`
+    - Depth 3 -> `../../../`
+3.  **Construct Path**: `[Prefix]Icon/miniDev-icon/...`
+
+### Examples
+- **Wrong**: `src="icon/miniDev-icon/action/search.svg"` (Browser looks in `HistoryRender/component/table/icon/...` -> 404)
+- **Correct**: `src="../../../Icon/miniDev-icon/action/search.svg"` (Browser resolves to Project Root/Icon/... -> 200)
+
 
 ## Core Rule: Dimension Control (尺寸严格定义)
 **图标尺寸必须严格遵循用户需求或组件设计规范。**

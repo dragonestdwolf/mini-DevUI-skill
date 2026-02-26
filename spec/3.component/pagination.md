@@ -5,6 +5,7 @@
 - **Figma Node**: 233:431
 - **DevUI Component**: `d-pagination`
 - **Version**: v1.0
+- **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
 ## Property Skill
 定义组件的 API 接口，确保与 DevUI 标准对齐。
@@ -63,7 +64,7 @@
 | **Disabled** | `cursor` | `not-allowed` | - |
 
 #### Prev/Next Button (翻页按钮)
-- **Icon**: Chevron Left / Chevron Right (`icon/miniDev-icon/action/向左(chevron-left).svg`, `icon/miniDev-icon/action/向右(chevron-right).svg`).
+- **Icon**: Chevron Left / Chevron Right (Relative Path: `../../../icon/miniDev-icon/action/chevron-left.svg`).
 - **Style**: Same hover/active rules as Page Number.
 - **Disabled**: Opacity 0.5 or specific disabled token if at start/end.
 

@@ -119,14 +119,20 @@
         background-color: transparent;
     }
 
-    /* Icon Support */
-    .devui-btn .devui-icon {
+    /* Icon Support (CSS Mask Implementation) */
+    .devui-btn .devui-icon-mask {
         width: 16px;
         height: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        fill: currentColor;
+        background-color: currentColor;
+        /* Magic: Inherit text color */
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        /* Default to loading if var not set, but var must be set inline */
+        display: inline-block;
     }
 </style>
 
@@ -134,6 +140,8 @@
 <button type="button" class="devui-btn devui-btn-{{variant}} devui-btn-{{size}} {{class}}" {{disabled}}
     onclick="{{onclick}}">
     <!-- Icon Slot (Optional) -->
+    <!-- Usage: Pass the relative path to the icon in style="--icon-path: url(...)" -->
+    <!-- Example: <span class="devui-icon-mask" style="-webkit-mask-image: url('../../../icon/miniDev-icon/action/settings.svg'); mask-image: url('../../../icon/miniDev-icon/action/settings.svg');"></span> -->
     {{icon}}
     <!-- Text Slot -->
     <span>{{text}}</span>

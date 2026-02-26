@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DevUI Sidebar</title>
+    <style>
+        /* Sidebar Variables */
+        :root {
+            --sidebar-width: 240px;
+            --sidebar-bg: #FFFFFF;
+            --sidebar-hover-bg: #F2F5FC;
+            --sidebar-active-bg: #EBF1FF;
+            --sidebar-text: #252B3A;
+            --sidebar-primary: #5E7CE0;
+            --sidebar-border: #DFE1E6;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .devui-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--sidebar-border);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 8px 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            user-select: none;
+        }
+
+        /* Header */
+        .devui-sidebar-header {
+            height: 32px;
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--sidebar-text);
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .devui-project-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            margin-right: 8px;
+            background-image: url('../../../icon/miniDev-icon/project-initial/D-48x48.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        .devui-header-text {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+        }
+
+        .devui-header-arrow {
+            width: 16px;
+            height: 16px;
+            margin: 6px;
+            background-color: #575D6C;
+            -webkit-mask: url('../../../icon/miniDev-icon/action/chevron-down.svg') no-repeat center;
+            mask: url('../../../icon/miniDev-icon/action/chevron-down.svg') no-repeat center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+        }
+
+        /* Menu List */
+        .devui-menu-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 4px;
+        }
+
+        /* Menu Group Wrapper */
+        .devui-menu-group {
+            border-radius: 4px;
+            transition: background-color 0.2s, border-color 0.2s;
+            /* Border needs to be transparent primarily to avoid layout jump, or set 1px transparent */
+            border: 1px solid transparent;
+        }
+
+        .devui-menu-group.is-expanded {
+            background-color: #FBFBFC;
+            border-color: #DFE1E6;
+        }
+
+        /* Menu Item */
+        .devui-menu-item {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            cursor: pointer;
+            color: var(--sidebar-text);
+            font-size: 14px;
+            position: relative;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            border-radius: 4px;
+            flex-shrink: 0;
+            gap: 12px;
+        }
+
+        .devui-menu-item:hover {
+            background-color: var(--sidebar-hover-bg);
+        }
+
+        .devui-menu-item.active {
+            background-color: var(--sidebar-active-bg);
+            font-weight: 700;
+            color: var(--sidebar-text);
+        }
+
+        /* Parent Item inside Group need to inherit rounded corners or fit tight? 
+           User said "eliminate internal gaps": 
+           Parent item is inside group. Group has border. Parent needs no border. */
+        .devui-menu-group .devui-menu-item:hover {
+            /* If group is expanded, maybe parent hover is subtle or same? */
+            background-color: transparent;
+            /* Or maybe keep hover effect? Keeping default for now unless specified. */
+        }
+
+        .devui-menu-group.is-expanded .devui-menu-item {
+            font-weight: 700;
+            /* Remove hover bg if we want it "continuous" */
+        }
+
+
+        .devui-menu-icon {
+            width: 20px;
+            height: 20px;
+            /* margin-right: 12px;  (Handled by flex gap) */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            flex-shrink: 0;
+            /* When using mask icons, default color */
+            background-color: currentColor;
+        }
+
+        /* Specific Icons (Background Mode for Sidebar Main) */
+        .icon-dashboard,
+        .icon-code,
+        .icon-repo,
+        .icon-test,
+        .icon-design,
+        .icon-collab,
+        .icon-wiki,
+        .icon-ci {
+            background-color: transparent;
+            /* Reset because these use background-image */
+        }
+
+        /* Sub Menu List Container */
+        .devui-sub-menu-list {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease-out;
+            padding: 0;
+            margin: -4px;
+            /* No padding on wrapper to let grid work cleanly */
+            overflow: hidden;
+        }
+
+        .devui-menu-group.is-expanded .devui-sub-menu-list {
+            grid-template-rows: 1fr;
+            padding-bottom: 4px;
+            /* Optional bottom spacing inside group */
+        }
+
+        .devui-sub-menu-inner {
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .devui-sub-menu-item {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            /* 
+               Alignment: 
+               Parent: P(0 8) + Icon(20) + Gap(12) + Text
+               Text starts at 8+20+12 = 40px from left edge.
+               Sub-Item Icon needs to align with Parent Text.
+               So Sub-Item Icon left edge should be at 40px?
+               Sub-Item: Padding-Left X. Icon is there.
+               If Padding-Left = 40px? 
+            */
+            padding: 0 8px 0 8px;
+            cursor: pointer;
+            color: var(--sidebar-text);
+            font-size: 14px;
+            position: relative;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            border-radius: 4px;
+            flex-shrink: 0;
+            gap: 16px;
+            /* Icon to Text gap */
+        }
+
+        .devui-sub-menu-item .devui-menu-icon {
+            width: 16px;
+            height: 16px;
+            /* Action icons use Mask + currentColor */
+            background-image: none !important;
+            background-color: currentColor;
+        }
+
+        .devui-sub-menu-item:hover {
+            background-color: var(--sidebar-hover-bg);
+        }
+
+        .devui-sub-menu-item.active {
+            background-color: #EBF1FF;
+            font-weight: 700;
+            color: #5E7CE0;
+            /* Blue Text */
+            /* Blue Left Bar: 3px solid #5E7CE0 */
+            /* Implementation: Box Shadow or Pseudo el. User said "Left 3px wide blue solid line". 
+               If we use border-left, it takes space. Box-shadow inset does not. 
+               Or absolute position pseudo. */
+            box-shadow: inset 3px 0 0 0 #5E7CE0;
+        }
+
+        /* Menu Arrow */
+        .devui-menu-arrow {
+            width: 16px;
+            height: 16px;
+            margin-left: auto;
+            background-color: #575D6C;
+            -webkit-mask: url('../../../icon/miniDev-icon/action/chevron-right.svg') no-repeat center;
+            mask: url('../../../icon/miniDev-icon/action/chevron-right.svg') no-repeat center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            transition: transform 0.2s;
+        }
+
+        .devui-menu-group.is-expanded .devui-menu-arrow {
+            transform: rotate(90deg);
+        }
+
+
+        /* Icon Mappings Main */
+        .icon-dashboard {
+            background-image: url('../../../icon/miniDev-icon/sidebar/dashboard.svg');
+        }
+
+        .icon-code {
+            background-image: url('../../../icon/miniDev-icon/sidebar/code-management.svg');
+        }
+
+        .icon-repo {
+            background-image: url('../../../icon/miniDev-icon/sidebar/artifact-repo.svg');
+        }
+
+        .icon-test {
+            background-image: url('../../../icon/miniDev-icon/sidebar/test-management.svg');
+        }
+
+        .icon-design {
+            background-image: url('../../../icon/miniDev-icon/sidebar/software-design.svg');
+        }
+
+        .icon-collab {
+            background-image: url('../../../icon/miniDev-icon/sidebar/project-collaboration.svg');
+        }
+
+        .icon-wiki {
+            background-image: url('../../../icon/miniDev-icon/sidebar/wiki.svg');
+        }
+
+        .icon-ci {
+            background-image: url('../../../icon/miniDev-icon/sidebar/continuous-delivery.svg');
+        }
+
+        /* Icon Mappings Sub (Action) */
+        .icon-test-case {
+            -webkit-mask: url('../../../icon/miniDev-icon/action/test-case.svg') no-repeat center;
+            mask: url('../../../icon/miniDev-icon/action/test-case.svg') no-repeat center;
+        }
+
+        .icon-test-task {
+            -webkit-mask: url('../../../icon/miniDev-icon/action/test-task.svg') no-repeat center;
+            mask: url('../../../icon/miniDev-icon/action/test-task.svg') no-repeat center;
+        }
+
+        .icon-view-report {
+            -webkit-mask: url('../../../icon/miniDev-icon/action/view-report.svg') no-repeat center;
+            mask: url('../../../icon/miniDev-icon/action/view-report.svg') no-repeat center;
+        }
+
+        .devui-sidebar-footer {
+            height: 48px;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            border-top: 1px solid #F3F6F8;
+        }
+
+        .devui-collapse-btn {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            background-color: #575D6C;
+            -webkit-mask: url('../../../icon/miniDev-icon/action/indent-decrease.svg') no-repeat center;
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/list-view.svg');
+            /* Fallback */
+            opacity: 0.6;
+        }
+
+        .devui-sidebar-divider {
+            height: 1px;
+            background-color: #DFE1E6;
+            margin: 0 4px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="devui-sidebar">
+        <!-- Project Header -->
+        <div class="devui-sidebar-header">
+            <div class="devui-project-avatar">D</div>
+            <span class="devui-header-text">DevOps项目示例</span>
+            <span class="devui-header-arrow"></span>
+        </div>
+
+        <!-- Divider -->
+        <div class="devui-sidebar-divider"></div>
+
+        <!-- Menu Items -->
+        <div class="devui-menu-list">
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-dashboard"></span>
+                <span>仪表盘</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-collab"></span>
+                <span>项目协作</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-design"></span>
+                <span>软件设计</span>
+            </div>
+
+            <!-- Grouped Menu Item: Test Management -->
+            <div class="devui-menu-group" id="test-management-group">
+                <div class="devui-menu-item" onclick="toggleGroup(this)">
+                    <span class="devui-menu-icon icon-test"></span>
+                    <span>测试管理</span>
+                    <span class="devui-menu-arrow"></span>
+                </div>
+                <div class="devui-sub-menu-list">
+                    <div class="devui-sub-menu-inner">
+                        <div class="devui-sub-menu-item active">
+                            <span class="devui-menu-icon icon-test-case"></span>
+                            <span>测试用例</span>
+                        </div>
+                        <div class="devui-sub-menu-item">
+                            <span class="devui-menu-icon icon-test-task"></span>
+                            <span>测试计划</span>
+                        </div>
+                        <div class="devui-sub-menu-item">
+                            <span class="devui-menu-icon icon-view-report"></span>
+                            <span>测试报告</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-code"></span>
+                <span>代码管理</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-ci"></span>
+                <span>持续交付</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-repo"></span>
+                <span>制品仓库</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-wiki"></span>
+                <span>知识库</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="devui-sidebar-footer">
+            <span class="devui-collapse-btn"></span>
+        </div>
+    </div>
+
+    <script>
+        function toggleGroup(element) {
+            // Find the parent group
+            const group = element.closest('.devui-menu-group');
+            if (group) {
+                group.classList.toggle('is-expanded');
+
+                // Interaction: Default select first item logic
+                if (group.classList.contains('is-expanded')) {
+                    const subMenuInner = group.querySelector('.devui-sub-menu-inner');
+                    if (subMenuInner) {
+                        const firstItem = subMenuInner.querySelector('.devui-sub-menu-item');
+                        const activeItem = subMenuInner.querySelector('.devui-sub-menu-item.active');
+                        if (firstItem && !activeItem) {
+                            firstItem.classList.add('active');
+                        }
+                    }
+                }
+            }
+        }
+
+        // Initialize: Expand the group containing active sub-item
+        document.addEventListener('DOMContentLoaded', () => {
+            const activeSubItem = document.querySelector('.devui-sub-menu-item.active');
+            if (activeSubItem) {
+                const group = activeSubItem.closest('.devui-menu-group');
+                if (group) {
+                    group.classList.add('is-expanded');
+                }
+            }
+        });
+    </script>
+
+</html>

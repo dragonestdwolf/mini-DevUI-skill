@@ -53,6 +53,7 @@ v[n][t/s]?.html（独立组件测试页）
 时间： [月]-[日] [时]:[分] 
 框架与库： Angular / DevUI 
 数据来源： [Template / Skill / Both]
+输入物来源： [Figma MCP / 图片 / PRD / 简单语言描述]
 读取文件： [记录具体读取的文件名，例如：button-tem.html, button.md]
 生成描述： [记录本次生成用户输入提示词] 
 输出位置： /HistoryRender/component/componentlog.md 

@@ -1,0 +1,109 @@
+<!-- 
+  Form Component Template
+  Source: skill/3.component/form.md
+  Version: v1.0
+  
+  Variables:
+  - {{layout}}: 'horizontal' | 'vertical'
+  - {{formItems}}: HTML string containing multiple .devui-form-item
+-->
+
+<style>
+    /* Scoped Form Styles */
+    .devui-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+        font-family: 'Noto Sans SC', sans-serif;
+    }
+
+    .devui-form-item {
+        display: flex;
+    }
+
+    /* Horizontal Layout */
+    .devui-form.horizontal .devui-form-item {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 16px;
+        /* or 8px based on spec preference */
+    }
+
+    .devui-form.horizontal .devui-form-label {
+        width: 100px;
+        /* Fixed width for alignment in horizontal */
+        text-align: right;
+        padding-top: 5px;
+        /* Visual alignment with input 32px height */
+    }
+
+    /* Vertical Layout */
+    .devui-form.vertical .devui-form-item {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .devui-form.vertical .devui-form-label {
+        width: 100%;
+        text-align: left;
+    }
+
+    /* Label Styling */
+    .devui-form-label {
+        font-size: 14px;
+        color: var(--devui-text, #252B3A);
+        line-height: 22px;
+        flex-shrink: 0;
+    }
+
+    .devui-form-label.required::before {
+        content: '*';
+        color: var(--devui-danger, #F66F6A);
+        margin-right: 4px;
+    }
+
+    /* Optional Info */
+    .devui-form-label-help {
+        color: var(--devui-aide-text, #8A8E99);
+        margin-left: 4px;
+        font-size: 12px;
+    }
+
+    /* Control Container */
+    .devui-form-control {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    /* Validation Message */
+    .devui-form-help-message {
+        font-size: 12px;
+        line-height: 1.5;
+        color: var(--devui-danger, #F66F6A);
+        margin-top: 4px;
+        min-height: 18px;
+        /* Prevent layout jump */
+    }
+</style>
+
+<div class="devui-form {{layout}}">
+    {{formItems}}
+</div>
+
+<!-- 
+  Reference: Form Item Structure
+  
+  <div class="devui-form-item">
+      <label class="devui-form-label {{required}}">
+          Label Name
+          <span class="devui-form-label-help">(Optional)</span>
+      </label>
+      <div class="devui-form-control">
+          {{controlContent}} (Input, Select, etc.)
+          <div class="devui-form-help-message">{{errorMessage}}</div>
+      </div>
+  </div>
+-->

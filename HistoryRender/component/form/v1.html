@@ -1,318 +1,256 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Component Validator v1</title>
+    <title>Form Component Test (v1)</title>
     <style>
-        /* Global & Token Simulation */
-        :root {
-            --devui-brand: #5E7CE0;
-            --devui-text: #252B3A;
-            --devui-text-weak: #575D6C;
-            --devui-placeholder: #8A8E99;
-            --devui-base-bg: #FFFFFF;
-            --devui-aide-text: #8A8E99;
-
-            --devui-form-control-line: #ADB0B8;
-            --devui-form-control-line-hover: #575D6C;
-            --devui-form-control-line-active: #5E7CE0;
-            --devui-form-control-line-rippling: rgba(94, 124, 224, 0.08);
-
-            --devui-danger: #F66F6A;
-            --devui-danger-bg: #FFEEED;
-
-            --devui-radius: 4px;
-            --devui-font-size: 14px;
-        }
-
+        /* Global Reset */
         body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f7f8fa;
+            padding: 40px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            gap: 48px;
+            gap: 40px;
         }
 
-        .test-case {
+        /* Test Container */
+        .test-container {
             width: 800px;
-            padding: 20px;
-            border: 1px dashed #ccc;
+            background: #fff;
+            padding: 32px;
             border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .case-title {
-            font-size: 12px;
-            color: #999;
-            text-transform: uppercase;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 8px;
+        h2 {
+            margin-bottom: 24px;
+            color: #252B3A;
+            border-bottom: 1px solid #DFE1E6;
+            padding-bottom: 12px;
         }
 
-        /* 
-           ------------------------------------------------
-           Component Styles: Form
-           ------------------------------------------------
-        */
+        /* --- Included Form Template Styles --- */
         .devui-form {
             display: flex;
             flex-direction: column;
             gap: 16px;
+            width: 100%;
         }
 
-        /* Form Item */
         .devui-form-item {
             display: flex;
         }
 
-        /* Horizontal Layout (Default for this demo, or via class) */
-        .devui-form-item.horizontal {
-            display: flex;
+        /* Horizontal Layout */
+        .devui-form.horizontal .devui-form-item {
+            flex-direction: row;
             align-items: flex-start;
-            /* Label top-aligned with control */
             gap: 16px;
         }
 
+        .devui-form.horizontal .devui-form-label {
+            width: 120px;
+            text-align: right;
+            padding-top: 5px;
+            /* Align with 32px input */
+        }
+
         /* Vertical Layout */
-        .devui-form-item.vertical {
-            display: flex;
+        .devui-form.vertical .devui-form-item {
             flex-direction: column;
             gap: 8px;
         }
 
-        /* Label */
+        .devui-form.vertical .devui-form-label {
+            width: 100%;
+            text-align: left;
+        }
+
         .devui-form-label {
-            font-size: var(--devui-font-size);
-            color: var(--devui-text);
-            line-height: 32px;
-            /* Center with 32px Input */
-            min-width: 100px;
-            /* Fixed width for alignment in horizontal */
-            box-sizing: border-box;
+            font-size: 14px;
+            color: var(--devui-text, #252B3A);
+            line-height: 22px;
+            flex-shrink: 0;
+            font-weight: 500;
         }
 
         .devui-form-label.required::before {
             content: '*';
-            color: var(--devui-danger);
+            color: var(--devui-danger, #F66F6A);
             margin-right: 4px;
         }
 
-        /* Control Container */
-        .devui-form-control-container {
+        .devui-form-label-help {
+            color: var(--devui-aide-text, #8A8E99);
+            margin-left: 4px;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .devui-form-control {
             flex: 1;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
-        /* Help/Error Message */
-        .devui-form-help {
+        .devui-form-help-message {
             font-size: 12px;
             line-height: 1.5;
+            color: var(--devui-danger, #F66F6A);
             margin-top: 4px;
-            color: var(--devui-aide-text);
+            min-height: 18px;
         }
 
-        .devui-form-error {
-            font-size: 12px;
-            line-height: 1.5;
-            margin-top: 4px;
-            color: var(--devui-danger);
-        }
-
-        /* 
-           ------------------------------------------------
-           Reused Component: Input (from input.md)
-           ------------------------------------------------
-        */
+        /* --- Included Input Template Styles (for Demo) --- */
         .devui-input-wrapper {
             display: flex;
             align-items: center;
             width: 100%;
             height: 32px;
-            border-radius: var(--devui-radius);
+            border-radius: 4px;
             padding: 0 12px;
-            transition: all .2s;
-            background-color: var(--devui-base-bg);
-            border: 1px solid var(--devui-form-control-line);
+            transition: all 0.2s;
+            background-color: #FFFFFF;
+            border: 1px solid #ADB0B8;
+            /* devui-form-control-line */
             box-sizing: border-box;
         }
 
-        .devui-input-wrapper input {
+        .devui-input-wrapper:hover {
+            border-color: #575D6C;
+            box-shadow: 0 0 0 4px rgba(94, 124, 224, 0.08);
+        }
+
+        .devui-input-wrapper.active,
+        .devui-input-wrapper:focus-within {
+            border-color: #5E7CE0;
+            /* devui-form-control-line-active */
+            box-shadow: 0 0 0 4px rgba(94, 124, 224, 0.08);
+        }
+
+        .devui-input-wrapper.error {
+            border-color: #F66F6A;
+            /* devui-danger */
+            background-color: #FFEEDD;
+        }
+
+        .devui-input {
             flex: 1;
+            width: 100%;
             border: none;
             outline: none;
             background: transparent;
             padding: 0;
-            font-size: var(--devui-font-size);
-            color: var(--devui-text);
-            width: 100%;
-        }
-
-        .devui-input-wrapper:hover {
-            border-color: var(--devui-form-control-line-hover);
-        }
-
-        .devui-input-wrapper:focus-within {
-            border-color: var(--devui-form-control-line-active);
-            box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling);
-        }
-
-        .devui-input-wrapper.error {
-            border-color: var(--devui-danger);
-            background-color: var(--devui-danger-bg);
-        }
-
-        /* Reused Component: Simulated Select */
-        .devui-select-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            height: 32px;
-            border-radius: 4px;
-            padding: 0 12px;
-            background-color: #fff;
-            border: 1px solid var(--devui-form-control-line);
-            cursor: pointer;
-            box-sizing: border-box;
-            color: var(--devui-text);
             font-size: 14px;
+            color: #252B3A;
+            line-height: 22px;
         }
 
-        .devui-select-wrapper:hover {
-            border-color: var(--devui-form-control-line-hover);
+        .devui-input::placeholder {
+            color: #8A8E99;
         }
 
-        /* Reused Component: Checkbox Group Simulator */
-        .devui-checkbox-group {
-            display: flex;
-            gap: 16px;
-            height: 32px;
-            /* Align height */
-            align-items: center;
+        /* Mock Textarea */
+        .devui-textarea-wrapper {
+            padding: 8px 12px;
+            height: auto;
+            min-height: 80px;
+            align-items: flex-start;
         }
 
-        .devui-checkbox-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: var(--devui-text);
-            cursor: pointer;
-        }
-
-        .devui-checkbox-box {
-            width: 16px;
-            height: 16px;
-            border: 1px solid var(--devui-form-control-line);
-            border-radius: 2px;
+        .devui-textarea {
+            resize: vertical;
+            min-height: 60px;
+            font-family: inherit;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Case 1: Horizontal Form (Standard) -->
-    <div class="test-case">
-        <span class="case-title">Test Case 1: Horizontal Form Layout</span>
-        <form class="devui-form">
+    <!-- Test Case 1: Horizontal Form -->
+    <div class="test-container">
+        <h2>Horizontal Layout Form</h2>
+        <div class="devui-form horizontal">
 
-            <!-- Item 1: Name (Input) -->
-            <div class="devui-form-item horizontal">
+            <!-- Item 1: Name (Required) -->
+            <div class="devui-form-item">
+                <label class="devui-form-label required">Member Name</label>
+                <div class="devui-form-control">
+                    <!-- Input Component -->
+                    <div class="devui-input-wrapper">
+                        <input type="text" class="devui-input" placeholder="Enter member name">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2: Email (Optional) -->
+            <div class="devui-form-item">
+                <label class="devui-form-label">
+                    Email
+                    <span class="devui-form-label-help">(Optional)</span>
+                </label>
+                <div class="devui-form-control">
+                    <div class="devui-input-wrapper">
+                        <input type="email" class="devui-input" placeholder="Enter email address">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 3: Age (Number Input) -->
+            <div class="devui-form-item">
+                <label class="devui-form-label">Age</label>
+                <div class="devui-form-control">
+                    <div class="devui-input-wrapper" style="width: 120px;">
+                        <input type="number" class="devui-input" value="18">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 4: Error State -->
+            <div class="devui-form-item">
                 <label class="devui-form-label required">Username</label>
-                <div class="devui-form-control-container">
-                    <div class="devui-input-wrapper">
-                        <input type="text" placeholder="Enter username">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 2: Role (Select) -->
-            <div class="devui-form-item horizontal">
-                <label class="devui-form-label required">Role</label>
-                <div class="devui-form-control-container">
-                    <div class="devui-select-wrapper">
-                        <span>Administrator</span>
-                        <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M8 11L3 6h10l-5 5z" />
-                        </svg>
-                    </div>
-                    <div class="devui-form-help">Select the user role for permissions.</div>
-                </div>
-            </div>
-
-            <!-- Item 3: Interests (Checkbox) -->
-            <div class="devui-form-item horizontal">
-                <label class="devui-form-label">Interests</label>
-                <div class="devui-form-control-container">
-                    <div class="devui-checkbox-group">
-                        <label class="devui-checkbox-label">
-                            <div class="devui-checkbox-box"></div> Coding
-                        </label>
-                        <label class="devui-checkbox-label">
-                            <div class="devui-checkbox-box"></div> Design
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 4: Email (Error State) -->
-            <div class="devui-form-item horizontal">
-                <label class="devui-form-label required">Email</label>
-                <div class="devui-form-control-container">
+                <div class="devui-form-control">
                     <div class="devui-input-wrapper error">
-                        <input type="text" value="invalid-email">
+                        <input type="text" class="devui-input" value="user!">
                     </div>
-                    <div class="devui-form-error">Please enter a valid email address.</div>
+                    <div class="devui-form-help-message">Special characters are not allowed.</div>
                 </div>
             </div>
 
-        </form>
+        </div>
     </div>
 
-    <!-- Case 2: Vertical Form -->
-    <div class="test-case">
-        <span class="case-title">Test Case 2: Vertical Form Layout</span>
-        <form class="devui-form">
+    <!-- Test Case 2: Vertical Form -->
+    <div class="test-container">
+        <h2>Vertical Layout Form</h2>
+        <div class="devui-form vertical">
 
-            <div class="devui-form-item vertical">
-                <label class="devui-form-label required" style="line-height: 22px; min-height: 22px;">Project
-                    Name</label>
-                <div class="devui-form-control-container">
+            <!-- Item 1: Title -->
+            <div class="devui-form-item">
+                <label class="devui-form-label required">Project Title</label>
+                <div class="devui-form-control">
                     <div class="devui-input-wrapper">
-                        <input type="text" placeholder="Project Alpha">
+                        <input type="text" class="devui-input" placeholder="Enter project title">
                     </div>
                 </div>
             </div>
 
-            <div class="devui-form-item vertical">
-                <label class="devui-form-label" style="line-height: 22px; min-height: 22px;">Description</label>
-                <div class="devui-form-control-container">
-                    <div class="devui-input-wrapper">
-                        <input type="text" placeholder="Optional description...">
+            <!-- Item 2: Description (Textarea) -->
+            <div class="devui-form-item">
+                <label class="devui-form-label">Description</label>
+                <div class="devui-form-control">
+                    <div class="devui-input-wrapper devui-textarea-wrapper">
+                        <textarea class="devui-input devui-textarea" placeholder="describe the project..."></textarea>
                     </div>
                 </div>
             </div>
 
-        </form>
-    </div>
-
-    <!-- Audit Info -->
-    <div class="test-case">
-        <span class="case-title">Audit: Component Status</span>
-        <div style="font-size: 12px; color: #666; font-family: monospace;">
-            Form Gap: 16px (Vertical stack)<br>
-            Item Gap: 16px (Horizontal) / 8px (Vertical)<br>
-            Label: Required field marked with Red *. Vertical align center with Input.<br>
-            Error: Red text, 12px, margin-top 4px.
         </div>
     </div>
 

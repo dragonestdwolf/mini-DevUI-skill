@@ -80,7 +80,9 @@
         margin: 0 auto;
         border: 1px solid var(--devui-form-control-line, #ADB0B8);
         border-radius: 2px;
-        display: block;
+        display: inline-block;
+        box-sizing: border-box;
+        background-color: #fff;
     }
 
     /* --- Variant: Link Column --- */
@@ -131,7 +133,7 @@
         background-size: contain;
         /* Default: Right Arrow (Collapsed) */
         /* Use collapse-left (Left <) and rotate 180deg to get Right > */
-        background-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/collapse.svg');
+        background-image: url('../../../icon/miniDev-icon/action/collapse.svg');
         transform: rotate(90deg);
         transition: transform 0.2s;
     }
@@ -200,13 +202,13 @@
         background-position: center;
         background-size: contain;
         /* Default: Collapsed -> Show Expand Icon */
-        background-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/selector-expand.svg');
+        background-image: url('../../../icon/miniDev-icon/action/selector-expand.svg');
         transition: transform 0.2s;
     }
 
     /* Expanded State -> Show Collapse Icon */
     .devui-cell-icon-label.expanded .devui-icon-toggle {
-        background-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/selector-collapse.svg');
+        background-image: url('../../../icon/miniDev-icon/action/selector-collapse.svg');
     }
 
     .devui-cell-icon-label-text {
@@ -277,7 +279,7 @@
         width: 16px;
         height: 16px;
         flex-shrink: 0;
-        background-color: #BABBC0;
+        background-color: #191919;
         /* Default header icon color */
         -webkit-mask-repeat: no-repeat;
         -webkit-mask-position: center;
@@ -289,13 +291,13 @@
     }
 
     .devui-table-sort-icon {
-        -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/sort-icon.svg');
-        mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/sort-icon.svg');
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/sort-icon.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/sort-icon.svg');
     }
 
     .devui-table-filter-icon {
-        -webkit-mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/filter.svg');
-        mask-image: url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/filter.svg');
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/filter.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/filter.svg');
     }
 
     .devui-table-header-cell:hover .devui-table-sort-icon,
@@ -433,7 +435,7 @@
 <td>
     <div class="devui-status-with-name">
         <!-- Default Icon: Success -->
-        <img src="icon/miniDev-icon/action/success.svg" class="devui-status-icon-img" alt="Success">
+        <img src="../../../icon/miniDev-icon/action/success.svg" class="devui-status-icon-img" alt="Success">
         <span class="devui-status-text">Successful</span>
     </div>
 </td>

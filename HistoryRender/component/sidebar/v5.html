@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DevUI Sidebar</title>
+    <style>
+        /* Sidebar Variables */
+        :root {
+            --sidebar-width: 240px;
+            --sidebar-bg: #FFFFFF;
+            --sidebar-hover-bg: #F2F5FC;
+            --sidebar-active-bg: #EBF1FF;
+            --sidebar-text: #252B3A;
+            --sidebar-primary: #5E7CE0;
+            --sidebar-border: #DFE1E6;
+        }
+
+        .devui-sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--sidebar-border);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 8px 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            user-select: none;
+        }
+
+        /* Header */
+        .devui-sidebar-header {
+            height: 32px;
+            padding: 4 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--sidebar-text);
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .devui-project-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            margin-right: 8px;
+            /* User requested "D-48px*48px.svg" in background mode */
+            background-image: url('../../../icon/miniDev-icon/project-initial/D-48x48.svg');
+            /* Original filename usually doesn't have * */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        .devui-header-text {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+        }
+
+        .devui-header-arrow {
+            width: 16px;
+            height: 16px;
+            background-color: #575D6C;
+            -webkit-mask: url('../../../icon/miniDev-icon/action/chevron-down.svg') no-repeat center;
+            mask: url('../../../icon/miniDev-icon/action/chevron-down.svg') no-repeat center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+        }
+
+        /* Menu List */
+        .devui-menu-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            /* Gap between items */
+            padding: 4px;
+            /* Padding inside the list container */
+        }
+
+        /* Menu Item */
+        .devui-menu-item {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            /* Internal left/right padding */
+            cursor: pointer;
+            color: var(--sidebar-text);
+            font-size: 14px;
+            position: relative;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            border-radius: 4px;
+            /* Radius visible on hover/active */
+            flex-shrink: 0;
+            /* Ensure fixed height, do not shrink */
+        }
+
+        .devui-menu-item:hover {
+            background-color: var(--sidebar-hover-bg);
+        }
+
+        .devui-menu-item.active {
+            background-color: var(--sidebar-active-bg);
+            font-weight: 700;
+            color: var(--sidebar-text);
+        }
+
+        /* Active Indicator Bar - Adjusted for rounded style or removed based on "Radius" focus */
+        /* Keeping it but ensuring it respects the padding/radius look. 
+           If radius is 4px, a straight bar at left:0 might look detached. 
+           Let's move it inside slightly or remove. 
+           User didn't ask to remove, but "design from Figma" usually implies a specific look. 
+           Typical rounded sidebar items DON'T have a left bar, just bg color. 
+           I will comment it out to verify if user wants it back, or make it a small pill inside. 
+           Re-reading: "带有4px radius（hover与Active时可见）" -> The shape IS the indicator.
+           I will remove the left bar for v2 to match "Rounded Item" style. */
+        /* 
+        .devui-menu-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background-color: var(--sidebar-primary);
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
+        } 
+        */
+
+        .devui-menu-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            /* Using Background Image to preserve SVG colors */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        /* Specific Icons mapping */
+        .icon-dashboard {
+            background-image: url('../../../icon/miniDev-icon/sidebar/dashboard.svg');
+        }
+
+        .icon-code {
+            background-image: url('../../../icon/miniDev-icon/sidebar/code-management.svg');
+        }
+
+        .icon-repo {
+            background-image: url('../../../icon/miniDev-icon/sidebar/artifact-repo.svg');
+        }
+
+        .icon-test {
+            background-image: url('../../../icon/miniDev-icon/sidebar/test-management.svg');
+        }
+
+        .icon-design {
+            background-image: url('../../../icon/miniDev-icon/sidebar/software-design.svg');
+        }
+
+        .icon-collab {
+            background-image: url('../../../icon/miniDev-icon/sidebar/project-collaboration.svg');
+        }
+
+        .icon-wiki {
+            background-image: url('../../../icon/miniDev-icon/sidebar/wiki.svg');
+        }
+
+        .icon-ci {
+            background-image: url('../../../icon/miniDev-icon/sidebar/continuous-delivery.svg');
+        }
+
+        /* Bottom Toggle */
+        .devui-sidebar-footer {
+            height: 48px;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            /* Align right as per typical sidebar toggle */
+            border-top: 1px solid #F3F6F8;
+        }
+
+        .devui-collapse-btn {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            background-color: #575D6C;
+            -webkit-mask: url('../../../icon/miniDev-icon/action/indent-decrease.svg') no-repeat center;
+            /* Assuming an icon exists, or use generic */
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/list-view.svg');
+            /* Fallback */
+            opacity: 0.6;
+        }
+
+        /* Divider */
+        .devui-sidebar-divider {
+            height: 1px;
+            background-color: #DFE1E6;
+            margin: 0 4px;
+            /* 4px left/right spacing */
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="devui-sidebar">
+        <!-- Project Header -->
+        <div class="devui-sidebar-header">
+            <div class="devui-project-avatar">D</div>
+            <span class="devui-header-text">DevOps项目示例</span>
+            <span class="devui-header-arrow"></span>
+        </div>
+
+        <!-- Divider -->
+        <div class="devui-sidebar-divider"></div>
+
+        <!-- Menu Items -->
+        <div class="devui-menu-list">
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-dashboard"></span>
+                <span>仪表盘</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-collab"></span>
+                <span>项目协作</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-design"></span>
+                <span>软件设计</span>
+            </div>
+            <div class="devui-menu-item active">
+                <span class="devui-menu-icon icon-test"></span>
+                <span>测试管理</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-code"></span>
+                <span>代码管理</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-ci"></span>
+                <span>持续交付</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-repo"></span>
+                <span>制品仓库</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-wiki"></span>
+                <span>知识库</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="devui-sidebar-footer">
+            <span class="devui-collapse-btn"></span>
+        </div>
+    </div>
+
+</body>
+
+</html>

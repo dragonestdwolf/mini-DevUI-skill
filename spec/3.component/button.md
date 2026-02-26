@@ -19,18 +19,27 @@
 | `children` | `ReactNode` | 按钮内容 | - |
 
 ## Icon Skill (图标规范)
-图标资源位于项目根目录 `icon/` 文件夹下。
+**图标资源必须严格遵循以下规则，确保视觉一致性。**
 
-### 1. Usage Rules (使用规则)
-- **Import**: 需从 `icon/` 目录导入 SVG 文件。
-- **Prop**:
-    - **Primary/Secondary**: 使用 `icon` 属性传递 Icon 组件。
-    - **Text**: 可直接作为 `children` 的一部分，或使用 `icon` 属性。
-- **Size**: 按钮内图标默认尺寸为 `16px x 16px`。图标与文字的间距为4px
-- **Color**:
-    - Icon 颜色应继承父级文字颜色 (`currentColor`) 或显式跟随 Variant 规则。
-    - **Primary**: `var(--devui-light-text)` (White).
-    - **Secondary/Text**: `var(--devui-text)` / Hover: `var(--devui-primary)`.
+### 1. Source Control (来源控制)
+-   **Directory**: 必须且只能使用 `icon/miniDev-icon/action/` 目录下的线性图标 (Linear Icons)。
+-   **Examples**: `settings.svg`, `search.svg`, `delete.svg`, `edit.svg`, `plus.svg` 等。
+
+### 2. Dimension & Spacing (尺寸与间距)
+-   **Icon Size**: 严格限制为 `16px x 16px`。
+    -   ❌ 禁止使用 `width: auto` 或其他尺寸。
+-   **Gap**: 图标与文本之间的间距为 `4px`。
+
+### 3. Color Synchronization (颜色同步)
+**核心规则：图标颜色必须始终与按钮文本颜色保持一致。**
+
+-   **Implementation**: 必须使用 **CSS Mask** 技术实现，禁止直接使用 `<img>` 标签。
+    -   Reason: `<img>` 标签无法通过 CSS 修改 SVG 内部颜色 (fill/stroke)。
+    -   Solution: 使用 `background-color: currentColor` + `mask-image: url(...)`。
+-   **Behavior**:
+    -   Primary Button: Text works explicitly as White -> Icon becomes White.
+    -   Secondary Button: Text works as Dark Grey -> Icon becomes Dark Grey.
+    -   Hover/Active: Text color changes -> Icon color automatically changes.
 
 ## Visual Skill
 定义视觉还原的严格规范，强制使用 Token 和 Flex 布局。

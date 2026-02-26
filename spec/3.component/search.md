@@ -4,6 +4,7 @@
 - **Component**: `d-search`
 - **Figma Node**: 164:370
 - **Template Source**: `spec/4.template/search-tem.html`
+- **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
 ## 1. Content Presentation (内容呈现格式)
 
@@ -16,7 +17,7 @@
 -   **Gap**: 4px (Icon to Text).
 
 ### 1.2 Icon & Text
--   **Icon**: `icon/miniDev-icon/action/search.svg` (16x16px).
+-   **Icon**: `../../../icon/miniDev-icon/action/search.svg` (Relative Path).
 -   **Placeholder**: 14px Regular, Color `var(--devui-placeholder)`.
 -   **Text**: 14px Regular, Color `var(--devui-text)`.
 -   **Visual**:

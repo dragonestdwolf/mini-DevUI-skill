@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Project Table Page</title>
+    <style>
+        /* --- Global Reset & Theme Variables --- */
+        :root {
+            /* Theme Colors (Merged from theme.md) */
+            --devui-brand: #5E7CE0;
+            --devui-brand-hover: #7693F5;
+            --devui-brand-active: #526ECC;
+            --devui-global-bg: #F5F5F5;
+            --devui-text: #252B3A;
+            --devui-text-weak: #575D6C;
+            --devui-placeholder: #8A8E99;
+            --devui-line: #ADB0B8;
+            --devui-dividing-line: #DFE1E6;
+            --devui-list-item-hover-bg: #F2F5FC;
+            --devui-list-item-active-bg: #5E7CE0;
+            --devui-list-item-active-text: #FFFFFF;
+
+            /* Sidebar Variables */
+            --sidebar-width: 240px;
+            --sidebar-bg: #FFFFFF;
+            --sidebar-hover-bg: #F2F5FC;
+            --sidebar-active-bg: #EBF1FF;
+            --sidebar-text: #252B3A;
+            --sidebar-primary: #5E7CE0;
+            --sidebar-border: #DFE1E6;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--devui-global-bg);
+            height: 100vh;
+            overflow: hidden;
+            /* Prevent body scroll, handle in content */
+            display: flex;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* --- Layout Structure --- */
+        /* Sidebar is fixed, so we need a main wrapper for the rest */
+        .devui-layout-main {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .devui-layout-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* --- Component: Breadcrumbs (Static HTML from v5) --- */
+        .devui-breadcrumb {
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 0px;
+            font-size: 14px;
+            color: var(--devui-text);
+            padding: 0 24px;
+            /* Align with content padding if needed, or just top spacing */
+            height: 40px;
+            /* Standard breadcrumb height */
+            flex-shrink: 0;
+        }
+
+        .devui-breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 0px;
+            white-space: nowrap;
+        }
+
+        .breadcrumb-link {
+            color: var(--devui-text-weak);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb-link:hover {
+            color: var(--devui-brand);
+        }
+
+        .breadcrumb-text-active {
+            color: var(--devui-text);
+            cursor: default;
+            font-weight: 700;
+        }
+
+        .separator {
+            width: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--devui-placeholder);
+            user-select: none;
+        }
+
+        /* --- Component: Sidebar (v12 CSS) --- */
+        .devui-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--sidebar-border);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 8px 0;
+            box-sizing: border-box;
+            user-select: none;
+            z-index: 100;
+        }
+
+        .devui-sidebar-header {
+            height: 32px;
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--sidebar-text);
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .devui-project-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            margin-right: 8px;
+            background-image: url('../../../icon/miniDev-icon/project-initial/D-48x48.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        .devui-header-text {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+        }
+
+        .devui-header-arrow {
+            width: 16px;
+            height: 16px;
+            margin: 6px;
+            background-color: #575D6C;
+            -webkit-mask: url('../../../icon/miniDev-icon/action/chevron-down.svg') no-repeat center;
+            mask: url('../../../icon/miniDev-icon/action/chevron-down.svg') no-repeat center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+        }
+
+        .devui-menu-list {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 4px;
+        }
+
+        .devui-menu-group {
+            border-radius: 4px;
+            transition: background-color 0.2s, border-color 0.2s, margin 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .devui-menu-group.is-expanded {
+            background-color: #FBFBFC;
+            border-color: #DFE1E6;
+            margin: -2px -4px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .devui-menu-item {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            cursor: pointer;
+            color: var(--sidebar-text);
+            font-size: 14px;
+            position: relative;
+            transition: background-color 0.2s, padding 0.2s;
+            text-decoration: none;
+            border-radius: 4px;
+            flex-shrink: 0;
+            gap: 12px;
+        }
+
+        .devui-menu-group.is-expanded>.devui-menu-item {
+            padding: 0 12px;
+        }
+
+        .devui-menu-item:hover {
+            background-color: var(--sidebar-hover-bg);
+        }
+
+        .devui-menu-item.active {
+            background-color: var(--sidebar-active-bg);
+            font-weight: 700;
+            color: var(--sidebar-text);
+        }
+
+        .devui-menu-group .devui-menu-item:hover {
+            background-color: transparent;
+        }
+
+        .devui-menu-group.is-expanded .devui-menu-item {
+            font-weight: 700;
+        }
+
+        .devui-menu-icon {
+            width: 20px;
+            height: 20px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            flex-shrink: 0;
+            background-color: currentColor;
+        }
+
+        /* Specific Icons */
+        .icon-dashboard {
+            background-image: url('../../../icon/miniDev-icon/sidebar/dashboard.svg');
+            background-color: transparent;
+        }
+
+        .icon-code {
+            background-image: url('../../../icon/miniDev-icon/sidebar/code-management.svg');
+            background-color: transparent;
+        }
+
+        .icon-repo {
+            background-image: url('../../../icon/miniDev-icon/sidebar/artifact-repo.svg');
+            background-color: transparent;
+        }
+
+        .icon-test {
+            background-image: url('../../../icon/miniDev-icon/sidebar/test-management.svg');
+            background-color: transparent;
+        }
+
+        .icon-design {
+            background-image: url('../../../icon/miniDev-icon/sidebar/software-design.svg');
+            background-color: transparent;
+        }
+
+        .icon-collab {
+            background-image: url('../../../icon/miniDev-icon/sidebar/project-collaboration.svg');
+            background-color: transparent;
+        }
+
+        .icon-wiki {
+            background-image: url('../../../icon/miniDev-icon/sidebar/wiki.svg');
+            background-color: transparent;
+        }
+
+        .icon-ci {
+            background-image: url('../../../icon/miniDev-icon/sidebar/continuous-delivery.svg');
+            background-color: transparent;
+        }
+
+        /* Sub Menu */
+        .devui-sub-menu-list {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease-out;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .devui-menu-group.is-expanded .devui-sub-menu-list {
+            grid-template-rows: 1fr;
+            padding-bottom: 4px;
+        }
+
+        .devui-sub-menu-inner {
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .devui-sub-menu-item {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            cursor: pointer;
+            color: var(--sidebar-text);
+            font-size: 14px;
+            position: relative;
+            transition: background-color 0.2s, padding 0.2s;
+            text-decoration: none;
+            border-radius: 4px;
+            flex-shrink: 0;
+            gap: 16px;
+        }
+
+        .devui-menu-group.is-expanded .devui-sub-menu-item {
+            padding: 0 12px;
+        }
+
+        .devui-sub-menu-item .devui-menu-icon {
+            width: 16px;
+            height: 16px;
+            background-image: none !important;
+            background-color: currentColor;
+        }
+
+        .devui-sub-menu-item:hover {
+            background-color: var(--sidebar-hover-bg);
+        }
+
+        .devui-sub-menu-item.active {
+            background-color: #EBF1FF;
+            font-weight: 700;
+            color: #5E7CE0;
+            box-shadow: inset 3px 0 0 0 #5E7CE0;
+        }
+
+        .devui-menu-arrow {
+            width: 16px;
+            height: 16px;
+            margin-left: auto;
+            background-color: #575D6C;
+            -webkit-mask: url('../../../icon/miniDev-icon/action/chevron-right.svg') no-repeat center;
+            mask: url('../../../icon/miniDev-icon/action/chevron-right.svg') no-repeat center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            transition: transform 0.2s;
+        }
+
+        .devui-menu-group.is-expanded .devui-menu-arrow {
+            transform: rotate(90deg);
+        }
+
+        /* Sub Icons */
+        .icon-test-case {
+            mask: url('../../../icon/miniDev-icon/action/test-case.svg') no-repeat center;
+            -webkit-mask: url('../../../icon/miniDev-icon/action/test-case.svg') no-repeat center;
+        }
+
+        .icon-test-task {
+            mask: url('../../../icon/miniDev-icon/action/test-task.svg') no-repeat center;
+            -webkit-mask: url('../../../icon/miniDev-icon/action/test-task.svg') no-repeat center;
+        }
+
+        .icon-view-report {
+            mask: url('../../../icon/miniDev-icon/action/view-report.svg') no-repeat center;
+            -webkit-mask: url('../../../icon/miniDev-icon/action/view-report.svg') no-repeat center;
+        }
+
+        .devui-sidebar-footer {
+            height: 48px;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            border-top: 1px solid #F3F6F8;
+        }
+
+        .devui-collapse-btn {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            background-color: #575D6C;
+            -webkit-mask: url('../../../icon/miniDev-icon/action/indent-decrease.svg') no-repeat center;
+            mask: url('../../../icon/miniDev-icon/action/indent-decrease.svg') no-repeat center;
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/list-view.svg');
+            /* Fallback */
+            opacity: 0.6;
+        }
+
+        .devui-sidebar-divider {
+            height: 1px;
+            background-color: #DFE1E6;
+            margin: 0 4px;
+            flex-shrink: 0;
+        }
+
+        /* --- Component: Table Block (v2 CSS) --- */
+        .devui-table-block {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            /* max-width: 1400px; Remove max-width for full page feeling */
+            margin: 0 auto;
+            flex: 1;
+            /* Fill height */
+            min-height: 0;
+            /* Enable scrolling inside */
+        }
+
+        /* Toolbar */
+        .devui-block-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 32px;
+            padding: 0;
+            /* Reset padding as it's inside content */
+            background-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        .devui-block-left,
+        .devui-block-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .devui-block-right {
+            flex: 1;
+            min-width: 0;
+            justify-content: flex-end;
+            /* Push right */
+        }
+
+        /* Common Elements */
+        .devui-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            gap: 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            user-select: none;
+            border: none;
+            outline: none;
+        }
+
+        .devui-btn-md {
+            height: 32px;
+            padding: 0 16px;
+            font-size: 14px;
+        }
+
+        .devui-btn-primary {
+            background-color: #5E7CE0;
+            color: #FFFFFF;
+        }
+
+        .devui-btn-primary:hover {
+            background-color: #7693F5;
+        }
+
+        .devui-btn-text {
+            background-color: transparent;
+            color: #252B3A;
+            padding: 0 8px;
+        }
+
+        .devui-btn-text:hover {
+            color: #5E7CE0;
+            background-color: rgba(94, 124, 224, 0.05);
+        }
+
+        .devui-btn .devui-icon {
+            width: 16px;
+            height: 16px;
+            display: block;
+            background-color: currentColor;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+        }
+
+        .devui-tabs {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .devui-tabs[data-type="pills"] {
+            gap: 24px;
+        }
+
+        .devui-tabs[data-type="pills"] .devui-tab-item {
+            position: relative;
+            cursor: pointer;
+            color: #575D6C;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .devui-tabs[data-type="pills"] .devui-tab-item.active {
+            color: #252B3A;
+            font-weight: 700;
+        }
+
+        .devui-tabs[data-type="pills"] .devui-tab-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #252B3A;
+        }
+
+        .devui-tabs[data-type="wrapped"] {
+            gap: 2px;
+        }
+
+        .devui-tabs[data-type="wrapped"] .devui-tab-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #575D6C;
+        }
+
+        .devui-tabs[data-type="wrapped"] .devui-tab-item:hover {
+            background-color: #EBEBEB;
+        }
+
+        .devui-tabs[data-type="wrapped"] .devui-tab-item.active {
+            background-color: #F5F5F5;
+            color: #333;
+        }
+
+        .devui-tabs[data-type="wrapped"] .devui-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.8;
+            background-color: currentColor;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+        }
+
+        .devui-tabs[data-type="wrapped"] .devui-tab-item.active .devui-icon {
+            opacity: 1;
+            font-weight: bold;
+        }
+
+        .devui-category-search-container {
+            display: inline-flex;
+            align-items: center;
+            width: auto;
+            flex: 1;
+            height: 32px;
+            padding: 0 8px;
+            background-color: #ffffff;
+            border: 1px solid #adb0b8;
+            border-radius: 6px;
+            gap: 8px;
+        }
+
+        .devui-search-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.6;
+            background-color: #252b3a;
+            -webkit-mask: url('../../../icon/miniDev-icon/action/search.svg') no-repeat center;
+            mask: url('../../../icon/miniDev-icon/action/search.svg') no-repeat center;
+        }
+
+        .devui-search-tag {
+            display: inline-flex;
+            align-items: center;
+            height: 20px;
+            padding: 0 8px;
+            background-color: #f2f5fc;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #252b3a;
+            white-space: nowrap;
+            gap: 4px;
+        }
+
+        .devui-icon-close {
+            width: 12px;
+            height: 12px;
+            opacity: 0.6;
+            cursor: pointer;
+            background-color: currentColor;
+            -webkit-mask: url('../../../icon/miniDev-icon/action/close.svg') no-repeat center;
+            mask: url('../../../icon/miniDev-icon/action/close.svg') no-repeat center;
+        }
+
+        .devui-search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            height: 100%;
+            font-size: 14px;
+            min-width: 50px;
+        }
+
+        .devui-search-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .devui-icon-action {
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+            opacity: 0.6;
+            background-color: #252b3a;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+        }
+
+        .devui-dropdown-trigger {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            color: #252B3A;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .devui-icon-arrow {
+            width: 12px;
+            height: 12px;
+            background-color: currentColor;
+            -webkit-mask: url('../../../icon/select-arrow.svg') no-repeat center;
+            mask: url('../../../icon/select-arrow.svg') no-repeat center;
+        }
+
+        /* Icon Masks */
+        .devui-icon-add {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/new.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/new.svg');
+        }
+
+        .devui-icon-setting {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/settings.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/settings.svg');
+        }
+
+        .devui-icon-more {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/more-horizontal.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/more-horizontal.svg');
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            background-color: currentColor;
+        }
+
+        .devui-icon-list {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/list-view.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/list-view.svg');
+        }
+
+        .devui-icon-kanban {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/board-view.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/board-view.svg');
+        }
+
+        .icon-close-circle {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/close.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/close.svg');
+        }
+
+        .icon-save {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/save.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/save.svg');
+        }
+
+        .icon-folder {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/folder.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/folder.svg');
+        }
+
+        .devui-divider-vertical {
+            width: 1px;
+            height: 16px;
+            background-color: #DFE1E6;
+        }
+
+        .devui-divider-vertical-sm {
+            width: 1px;
+            height: 12px;
+            background-color: #DFE1E6;
+            margin: 0 2px;
+        }
+
+        /* Table */
+        .devui-table-container {
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+            flex: 1;
+            /* Take remaining space */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .devui-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .devui-table th,
+        .devui-table td {
+            height: 42px;
+            padding: 0 16px;
+            border-bottom: 1px solid #dfe1e6;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .devui-table th {
+            font-size: 12px;
+            font-weight: 700;
+            color: #252b3a;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 2;
+        }
+
+        .devui-table tbody tr:hover td {
+            background-color: #f2f5fc;
+        }
+
+        .devui-table-header-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .devui-header-icons {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .devui-table-sort-icon,
+        .devui-table-filter-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            background-color: #191919;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            transition: background-color 0.2s;
+        }
+
+        .devui-table-sort-icon {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/sort-icon.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/sort-icon.svg');
+        }
+
+        .devui-table-filter-icon {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/filter.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/filter.svg');
+        }
+
+        .devui-table-header-cell:hover .devui-table-sort-icon,
+        .devui-table-header-cell:hover .devui-table-filter-icon {
+            background-color: #252b3a;
+        }
+
+        .devui-header-custom-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+
+        .devui-table-col-checkbox {
+            width: 48px;
+            text-align: center;
+            padding: 0;
+        }
+
+        .devui-checkbox-box {
+            width: 16px;
+            height: 16px;
+            border: 1px solid #adb0b8;
+            border-radius: 2px;
+            margin: 0 auto;
+            display: inline-block;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        .devui-tag-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 20px;
+            padding: 0 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #fff;
+            margin-right: 8px;
+        }
+
+        .devui-tag-warning {
+            background-color: #FAC20A;
+        }
+
+        .devui-tag-success {
+            background-color: #50D4AB;
+        }
+
+        .devui-cell-priority {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .devui-priority-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .devui-cell-operation {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .devui-operation-icon {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        .devui-operation-icon:hover {
+            opacity: 1;
+        }
+
+        /* Pagination */
+        .devui-pagination {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            gap: 8px;
+            font-size: 12px;
+            color: #252B3A;
+        }
+
+        .devui-pagination-item {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background: transparent;
+            cursor: pointer;
+            font-size: 12px;
+            color: #252B3A;
+            transition: all 0.2s;
+            padding: 0;
+            outline: none;
+        }
+
+        .devui-pagination-item:hover:not(.disabled) {
+            background-color: #F2F5FC;
+            color: #5E7CE0;
+        }
+
+        .devui-pagination-item.active {
+            background-color: #F2F5FC;
+            color: #5E7CE0;
+            font-weight: 700;
+        }
+
+        .devui-pagination-item.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .devui-select-sm {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            height: 28px;
+            padding: 0 8px;
+            border: 1px solid #D7D8DA;
+            border-radius: 4px;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        .devui-icon-s {
+            width: 12px;
+            height: 12px;
+        }
+
+        .devui-pagination-jump {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 8px;
+        }
+
+        .devui-pagination-jump input {
+            width: 48px;
+            height: 28px;
+            border: 1px solid #D7D8DA;
+            border-radius: 4px;
+            text-align: center;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="devui-sidebar">
+        <!-- Project Header -->
+        <div class="devui-sidebar-header">
+            <div class="devui-project-avatar">D</div>
+            <span class="devui-header-text">DevOps项目示例</span>
+            <span class="devui-header-arrow"></span>
+        </div>
+
+        <!-- Divider -->
+        <div class="devui-sidebar-divider"></div>
+
+        <!-- Menu Items -->
+        <div class="devui-menu-list">
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-dashboard"></span>
+                <span>仪表盘</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-collab"></span>
+                <span>项目协作</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-design"></span>
+                <span>软件设计</span>
+            </div>
+
+            <!-- Grouped Menu Item: Test Management -->
+            <div class="devui-menu-group is-expanded" id="test-management-group">
+                <div class="devui-menu-item" onclick="toggleGroup(this)">
+                    <span class="devui-menu-icon icon-test"></span>
+                    <span>测试管理</span>
+                    <span class="devui-menu-arrow"></span>
+                </div>
+                <div class="devui-sub-menu-list">
+                    <div class="devui-sub-menu-inner">
+                        <div class="devui-sub-menu-item active">
+                            <span class="devui-menu-icon icon-test-case"></span>
+                            <span>测试用例</span>
+                        </div>
+                        <div class="devui-sub-menu-item">
+                            <span class="devui-menu-icon icon-test-task"></span>
+                            <span>测试计划</span>
+                        </div>
+                        <div class="devui-sub-menu-item">
+                            <span class="devui-menu-icon icon-view-report"></span>
+                            <span>测试报告</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-code"></span>
+                <span>代码管理</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-ci"></span>
+                <span>持续交付</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-repo"></span>
+                <span>制品仓库</span>
+            </div>
+            <div class="devui-menu-item">
+                <span class="devui-menu-icon icon-wiki"></span>
+                <span>知识库</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="devui-sidebar-footer">
+            <span class="devui-collapse-btn"></span>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <div class="devui-layout-main">
+        <!-- BREADCRUMBS -->
+        <div class="devui-breadcrumb">
+            <div class="devui-breadcrumb-item">
+                <a href="#" class="breadcrumb-link">首页</a>
+                <span class="separator">/</span>
+            </div>
+            <div class="devui-breadcrumb-item">
+                <a href="#" class="breadcrumb-link">项目管理</a>
+                <span class="separator">/</span>
+            </div>
+            <div class="devui-breadcrumb-item">
+                <a href="#" class="breadcrumb-link">DevOps全流程示例项目</a>
+                <span class="separator">/</span>
+            </div>
+            <div class="devui-breadcrumb-item">
+                <span class="breadcrumb-text-active">测试用例</span>
+            </div>
+        </div>
+
+        <!-- CONTENT AREA -->
+        <div class="devui-layout-content">
+            <div class="devui-table-block">
+
+                <!-- Toolbar Block (Table Header) -->
+                <div class="devui-block-toolbar">
+                    <!-- LEFT AREA -->
+                    <div class="devui-block-left">
+                        <div class="devui-dropdown-trigger">
+                            <span>全部</span>
+                            <span class="devui-icon-arrow"></span>
+                        </div>
+                        <div class="devui-tabs" data-type="pills">
+                            <div class="devui-tab-item active">Backlog</div>
+                            <div class="devui-tab-item">缺陷</div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT AREA -->
+                    <div class="devui-block-right">
+                        <div class="devui-divider-vertical"></div>
+                        <button class="devui-btn devui-btn-primary devui-btn-md">
+                            <span class="devui-icon devui-icon-add"></span> <span>新建</span>
+                        </button>
+                        <div class="devui-dropdown-trigger">
+                            <span>临时过滤</span> <span class="devui-icon-arrow"></span>
+                        </div>
+                        <div class="devui-category-search-container">
+                            <span class="devui-search-icon"></span>
+                            <div class="devui-search-tag">
+                                <span>类型: Story | Task | Bug</span> <span class="devui-icon-close"></span>
+                            </div>
+                            <div class="devui-search-tag">
+                                <span>状态: 新建 | 进行中 | 已解决...</span> <span class="devui-icon-close"></span>
+                            </div>
+                            <input type="text" class="devui-search-input" placeholder="点击此处输入关键词或添加筛选条件">
+                            <div class="devui-search-actions">
+                                <span class="devui-icon-action icon-close-circle"></span>
+                                <span class="devui-divider-vertical-sm"></span>
+                                <span class="devui-icon-action icon-save"></span>
+                                <span class="devui-icon-action icon-folder"></span>
+                            </div>
+                        </div>
+                        <button class="devui-btn devui-btn-text devui-btn-md">
+                            <span class="devui-icon devui-icon-setting"></span> <span>表格设置</span>
+                        </button>
+                        <span class="devui-icon-more"></span>
+                        <button class="devui-btn devui-btn-text devui-btn-md"><span>更多</span></button>
+                        <div class="devui-divider-vertical"></div>
+                        <div class="devui-tabs" data-type="wrapped">
+                            <div class="devui-tab-item active"><span class="devui-icon devui-icon-list"></span></div>
+                            <div class="devui-tab-item"><span class="devui-icon devui-icon-kanban"></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table Container -->
+                <div class="devui-table-container">
+                    <table class="devui-table">
+                        <thead>
+                            <tr>
+                                <th class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></th>
+                                <th style="width: 100px;">
+                                    <div class="devui-table-header-cell"><span>编号</span><span
+                                            class="devui-table-sort-icon"></span></div>
+                                </th>
+                                <th style="width: 300px;">
+                                    <div class="devui-table-header-cell"><img
+                                            src="../../../icon/miniDev-icon/action/project.svg"
+                                            class="devui-header-custom-icon" alt="Title"><span>标题</span><span
+                                            class="devui-table-sort-icon"></span></div>
+                                </th>
+                                <th style="width: 120px;">
+                                    <div class="devui-table-header-cell"><span>结束时间</span><span
+                                            class="devui-table-sort-icon"></span></div>
+                                </th>
+                                <th style="width: 100px;">
+                                    <div class="devui-table-header-cell"><span>状态</span>
+                                        <div class="devui-header-icons"><span
+                                                class="devui-table-filter-icon"></span><span
+                                                class="devui-table-sort-icon"></span></div>
+                                    </div>
+                                </th>
+                                <th style="width: 120px;">
+                                    <div class="devui-table-header-cell"><span>处理人</span>
+                                        <div class="devui-header-icons"><span
+                                                class="devui-table-filter-icon"></span><span
+                                                class="devui-table-sort-icon"></span></div>
+                                    </div>
+                                </th>
+                                <th style="width: 140px;">
+                                    <div class="devui-table-header-cell"><span>预计开始时间</span><span
+                                            class="devui-table-sort-icon"></span></div>
+                                </th>
+                                <th style="width: 140px;">
+                                    <div class="devui-table-header-cell"><span>预计结束时间</span><span
+                                            class="devui-table-sort-icon"></span></div>
+                                </th>
+                                <th style="width: 100px;">
+                                    <div class="devui-table-header-cell"><span>优先级</span>
+                                        <div class="devui-header-icons"><span
+                                                class="devui-table-filter-icon"></span><span
+                                                class="devui-table-sort-icon"></span></div>
+                                    </div>
+                                </th>
+                                <th style="width: 120px;">
+                                    <div class="devui-table-header-cell"><img
+                                            src="../../../icon/miniDev-icon/action/developer-panel.svg"
+                                            class="devui-header-custom-icon" alt="Operation"><span>操作</span></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                                <td>70666073</td>
+                                <td><span
+                                        class="devui-tag-solid devui-tag-warning">Bug</span><span>用户管理-无法手动设置会员级别</span>
+                                </td>
+                                <td>--</td>
+                                <td>新建</td>
+                                <td>hw86750640</td>
+                                <td>--</td>
+                                <td>--</td>
+                                <td>
+                                    <div class="devui-cell-priority"><img src="../../../icon/flag_middle.svg"
+                                            class="devui-priority-icon"><span>中</span></div>
+                                </td>
+                                <td>
+                                    <div class="devui-cell-operation"><img
+                                            src="../../../icon/miniDev-icon/action/star.svg"
+                                            class="devui-operation-icon"><img
+                                            src="../../../icon/miniDev-icon/action/list-view.svg"
+                                            class="devui-operation-icon"><img
+                                            src="../../../icon/miniDev-icon/action/more-vertical.svg"
+                                            class="devui-operation-icon"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                                <td>70666071</td>
+                                <td><span
+                                        class="devui-tag-solid devui-tag-warning">Bug</span><span>积分管理-无法显示积分规则界面</span>
+                                </td>
+                                <td>--</td>
+                                <td>新建</td>
+                                <td>hw86750640</td>
+                                <td>--</td>
+                                <td>--</td>
+                                <td>
+                                    <div class="devui-cell-priority"><img src="../../../icon/flag_middle.svg"
+                                            class="devui-priority-icon"><span>中</span></div>
+                                </td>
+                                <td>
+                                    <div class="devui-cell-operation"><img
+                                            src="../../../icon/miniDev-icon/action/star.svg"
+                                            class="devui-operation-icon"><img
+                                            src="../../../icon/miniDev-icon/action/list-view.svg"
+                                            class="devui-operation-icon"><img
+                                            src="../../../icon/miniDev-icon/action/more-vertical.svg"
+                                            class="devui-operation-icon"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                                <td>70666067</td>
+                                <td><span
+                                        class="devui-tag-solid devui-tag-success">Story</span><span>作为用户应该可以查看产品列表</span>
+                                </td>
+                                <td>--</td>
+                                <td>新建</td>
+                                <td>hw86750640</td>
+                                <td>--</td>
+                                <td>--</td>
+                                <td>
+                                    <div class="devui-cell-priority"><img src="../../../icon/flag_middle.svg"
+                                            class="devui-priority-icon"><span>中</span></div>
+                                </td>
+                                <td>
+                                    <div class="devui-cell-operation"><img
+                                            src="../../../icon/miniDev-icon/action/star.svg"
+                                            class="devui-operation-icon"><img
+                                            src="../../../icon/miniDev-icon/action/list-view.svg"
+                                            class="devui-operation-icon"><img
+                                            src="../../../icon/miniDev-icon/action/more-vertical.svg"
+                                            class="devui-operation-icon"></div>
+                                </td>
+                            </tr>
+                            <!-- Duplicate rows to show scrolling -->
+                            <tr>
+                                <td class="devui-table-col-checkbox"><span class="devui-checkbox-box"></span></td>
+                                <td>70666066</td>
+                                <td><span
+                                        class="devui-tag-solid devui-tag-success">Story</span><span>作为用户应该可以搜索商品</span>
+                                </td>
+                                <td>--</td>
+                                <td>进行中</td>
+                                <td>hw86750640</td>
+                                <td>--</td>
+                                <td>--</td>
+                                <td>
+                                    <div class="devui-cell-priority"><img src="../../../icon/flag_middle.svg"
+                                            class="devui-priority-icon"><span>中</span></div>
+                                </td>
+                                <td>
+                                    <div class="devui-cell-operation"><img
+                                            src="../../../icon/miniDev-icon/action/star.svg"
+                                            class="devui-operation-icon"><img
+                                            src="../../../icon/miniDev-icon/action/list-view.svg"
+                                            class="devui-operation-icon"><img
+                                            src="../../../icon/miniDev-icon/action/more-vertical.svg"
+                                            class="devui-operation-icon"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- 3. Pagination (Inside Table Container or Below? Design says below usually, but in v2 it was outside) -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="devui-pagination">
+                    <div style="flex: 1"></div>
+                    <div class="devui-select-sm">
+                        <span>15 条/页</span>
+                        <span class="devui-icon-arrow"></span>
+                    </div>
+                    <span style="color: #999; margin: 0 8px;">条/页，总条数: 8</span>
+                    <button class="devui-pagination-item disabled">
+                        <img src="../../../icon/miniDev-icon/action/arrow-left.svg" class="devui-icon-s">
+                    </button>
+                    <button class="devui-pagination-item active">1</button>
+                    <button class="devui-pagination-item">2</button>
+                    <button class="devui-pagination-item">3</button>
+                    <button class="devui-pagination-item">4</button>
+                    <button class="devui-pagination-item">5</button>
+                    <button class="devui-pagination-item">...</button>
+                    <button class="devui-pagination-item">10</button>
+                    <button class="devui-pagination-item">
+                        <img src="../../../icon/miniDev-icon/action/arrow-right.svg" class="devui-icon-s">
+                    </button>
+                    <div class="devui-pagination-jump">
+                        <span>跳至</span>
+                        <input type="text">
+                        <span>页</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar Toggling Logic
+        function toggleGroup(element) {
+            const group = element.closest('.devui-menu-group');
+            if (group) {
+                group.classList.toggle('is-expanded');
+                // Optional: Select first item if expanding and nothing active
+                if (group.classList.contains('is-expanded')) {
+                    const subMenuInner = group.querySelector('.devui-sub-menu-inner');
+                    if (subMenuInner) {
+                        const firstItem = subMenuInner.querySelector('.devui-sub-menu-item');
+                        const activeItem = subMenuInner.querySelector('.devui-sub-menu-item.active');
+                        // if (firstItem && !activeItem) {
+                        //     firstItem.classList.add('active');
+                        // }
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

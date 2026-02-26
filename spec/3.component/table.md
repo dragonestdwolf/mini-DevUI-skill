@@ -4,6 +4,7 @@
 - **Component**: `d-table`
 - **Template Source**: `spec/4.template/table-tem.html`
 - **Figma Node**: 259:426
+- **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths (e.g., `../../../icon/...`)**.
 
 ## 1. Content Presentation (内容呈现格式)
 定义表格内部不同类型数据的 HTML 组装方式。
@@ -23,7 +24,7 @@
     <div class="devui-table-header-cell">
         <span>{{label}}</span>
         <span class="devui-table-filter-icon"></span>
-        <!-- Icon: icon/miniDev-icon/action/filter.svg -->
+        <!-- Icon: ../../../icon/miniDev-icon/action/filter.svg (Must rely on relative path from html location) -->
     </div>
     ```
 -   **Sort & Filter**:
@@ -40,7 +41,8 @@
     -   Icon Size: 16x16px.
     -   Gap (Text to Icon): 8px.
     -   Gap (Icon to Icon): 4px.
--   **Checkbox**: `<input type="checkbox" />` (Centered)
+    -   Icon Color: #191919.
+-   **Checkbox**: `<span class="devui-checkbox-box"></span>` (Size: 16x16px, Border: 1px solid #ADB0B8, Radius: 2px)
 
 ### 1.2 Body Cell Types (单元格类型)
 
@@ -177,7 +179,7 @@
 
 ## 4. Space Strategy (空间策略)
 
--   **Checkbox Column**: Fixed Width **40px**.
+-   **Checkbox Column**: Fixed Width **48px**.
 -   **Action Column**: Hug Content (Min-width 100px).
 -   **Data Columns**:
     -   Fluid: `flex: 1` or `width: auto` (distribute remaining space).

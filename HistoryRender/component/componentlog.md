@@ -226,3 +226,220 @@ Table v16
     - Icons: Flag (Priority), Edit/Star/More (Operation), Sort/Filter (Default).
 - **Header Icons**: 尝试匹配 'list-view.svg' 作为标题和操作列的标识图标（近似还原）。
 输出位置：/HistoryRender/component/table/v16.html
+
+Table v17
+时间：02-12 10:05
+框架与库：DevUI
+数据来源：Design Image Refinement
+读取文件：table.md, table-tem.html
+生成描述：生成 Table v17 HTML，进一步精细化还原设计稿，并应用此前修复的 Checkbox 和 Header Icon Color 问题。
+- **Header Icons**: 
+    - Title: `project.svg`
+    - Operation: `developer-panel.svg`
+- **Fixes Applied**: Checkbox 16x16px (Col 48px), Header Icon Color #191919.
+输出位置：/HistoryRender/component/table/v17.html
+
+Table Header Block v1
+时间：02-12 10:18
+框架与库：DevUI (HTML/CSS)
+数据来源：Skill (Block Spec) + Templates
+读取文件：table-header-block.md, button-tem.html, categorySearch-tem.html, filter-tem.html, tabs.md
+生成描述：渲染表格头部操作区 Block 样式参考，整合了 Button, Tabs, Search 等组件的样式。
+输出位置：/HistoryRender/component/table_header_block/v1.html
+
+Table Header Block v1 (Responsive Update)
+时间：02-12 10:20
+调整内容：响应式布局优化
+- 左侧区域：flex-shrink: 0 (适应内容)
+- 右侧区域：flex: 1 (占据剩余空间)
+- 分类搜索框：flex: 1 (填充右侧剩余空间)
+输出位置：/HistoryRender/component/table_header_block/v1.html
+
+Button v4
+时间：02-12 10:35
+框架与库：DevUI
+数据来源：Spec + Template (Updated)
+读取文件：button-tem.html, button.md
+生成描述：生成 Button v4 测试 HTML，验证严格图标规范：
+- Source: `icon/miniDev-icon/action/`
+- Size: Strict 16x16px
+- Spacing: 4px Gap
+- Color: CSS Mask Ensure Icon matches Text Color (White for Primary, Dark for Secondary, Blue for Hover).
+输出位置：/HistoryRender/component/button/v4.html
+结论：Icon color synchronization works perfectly.
+
+
+Table Header Block v2
+时间：02-12 10:45
+框架与库：DevUI (HTML/CSS)
+数据来源：Block Spec + Responsive Rules
+读取文件：table-header-block.md, v1.html
+生成描述：生成 v2 版本，固化了响应式布局规则（左侧适应内容，右侧分类搜索填充剩余空间），校准了 Button 内部图标样色。
+输出位置：/HistoryRender/component/table_header_block/v2.html
+
+Table Header Block v3 (Icon & Layout Fix)
+时间：02-12 10:50
+调整内容：
+- 图标修复：add -> new.svg, setting -> settings.svg, more -> more-horizontal.svg, kanban -> board-view.svg
+- 布局修复：临时过滤 (Temporary Filter) 增加 white-space: nowrap 防止换行
+输出位置：/HistoryRender/component/table_header_block/v3.html
+
+Table Header Block v4 (Relative Paths)
+时间：02-12 10:55
+调整内容：
+- 路径修复：所有图标引用改为相对路径 (../../../icon/...)，符合 icon_role 规范。
+输出位置：/HistoryRender/component/table_header_block/v4.html
+
+Table Block v1 (Composite)
+时间：02-12 11:00
+内容：组合了 Table Header Block, Table, Pagination
+布局：垂直排列，Header与Table间距10px，Pagination上下padding 16px
+图标：分页器使用 arrow-left.svg (左) 和 arrow-left.svg + rotate(180deg) (右)
+输出位置：/HistoryRender/component/table_block/v1.html
+
+Table Block v1 (Adjustment)
+时间：02-12 11:05
+调整内容：
+- 布局调整：移除容器 flex gap。
+- Table：添加 margin-top: 10px。
+- Pagination：确认 padding: 16px 0。
+输出位置：/HistoryRender/component/table_block/v1.html
+
+Toolbar Block Adjustment (Rename from Table Header Block)
+时间：02-12 11:10
+调整内容：
+- 名称变更：table-header-block -> toolbar-block
+- 样式变更：高度 32px (固定)，垂直居中，背景色透明。
+输出位置：/HistoryRender/component/table_block/v1.html
+
+PRD Table Page v1.0
+时间：02-12 11:40
+内容：根据设计稿（Step 192）生成的 Table 页面产品需求文档。
+包含：Header Toolbar, Data Table, Pagination 组件规范。
+输出位置：/PRD/Table/prd.md
+
+Form v1.0
+时间：02-12 14:40
+框架与库：DevUI
+数据来源：Template (Created) + Skill (form.md)
+输入物来源：简单语言描述
+读取文件：form.md, form-tem.html, input-tem.html
+生成描述：生成 Form 组件测试 HTML，包含 Horizontal/Vertical 布局以及 Input 控件集成验证。
+输出位置：/HistoryRender/component/form/v1.html
+
+Table Block v2 (PRD Based)
+时间：02-12 11:45
+来源：PRD/Table/table-block-PRD.md
+调整内容：
+- Search Placeholder: '点击此处输入关键词或添加筛选条件'
+- Pagination: 确保所有图标使用相对路径。
+- Layout: 保持 v1 调整后的布局 (Margin Top, Transparent Toolbar)。
+输出位置：/HistoryRender/component/table_block/v2.html
+
+Sidebar Navigation v1
+时间：02-12 14:40
+来源：Figma Node 2937-10485
+内容：侧边导航组件 (Spec + Template)。
+图标：icon/miniDev-icon/侧边导航图标/
+输出位置：/HistoryRender/component/sidebar/v1.html
+
+Sidebar Navigation v1 (Icon Fix)
+时间：02-12 14:45
+内容：图标实现方式调整为 background-image 以还原 SVG 原色。
+输出位置：/HistoryRender/component/sidebar/v1.html
+
+Sidebar Navigation v2 (Style Adjustment)
+时间：02-12 14:55
+调整内容：
+- Menu List Padding: 4px (Container).
+- Menu Item Height: 44px.
+- Menu Item Padding: 0 8px.
+- Menu Item Radius: 4px.
+- Gap: 4px.
+- Active Indicator: Removed Left Bar (relying on bg color + radius).
+输出位置：/HistoryRender/component/sidebar/v2.html
+
+Sidebar Navigation v3
+时间：02-12 15:10
+框架与库：DevUI
+数据来源：Template (Updated by User)
+输入物来源：简单语言描述
+读取文件：sidebar-tem.html
+生成描述：基于用户调整后的 Template 生成 v3 版本，验证图标背景色修复及样式调整。
+输出位置：/HistoryRender/component/sidebar/v3.html
+
+Sidebar Navigation v4
+时间：02-12 15:30
+框架与库：DevUI
+数据来源：Template (Updated by User)
+输入物来源：简单语言描述
+读取文件：sidebar-tem.html
+生成描述：基于 v3 版本，修复项目中 Project Avatar 图标路径为英文路径 (project-initial/D-48x48.svg)。
+输出位置：/HistoryRender/component/sidebar/v4.html
+
+Sidebar Navigation v2 (Fix)
+时间：02-12 15:00
+内容：Menu Item 增加 flex-shrink: 0，防止随容器高度变化而压缩。
+输出位置：/HistoryRender/component/sidebar/v2.html
+
+Sidebar Navigation v4 (Divider)
+时间：02-12 15:35
+内容：Added horizontal divider (#DFE1E6, 1px height, 0 4px margin) above menu list.
+输出位置：/HistoryRender/component/sidebar/v4.html
+
+Sidebar Navigation v5
+时间：02-12 15:37
+框架与库：DevUI
+数据来源：Template (Updated by User)
+输入物来源：简单语言描述
+读取文件：sidebar-tem.html
+生成描述：基于 v4 版本，再次生成 v5 版本以确认当前最新状态。
+输出位置：/HistoryRender/component/sidebar/v5.html
+——sidebar header 没生成正确间距
+
+Sidebar Navigation v6 (Sub-Menu)
+时间：02-12 16:35
+内容：Added expandable sub-menu to '测试管理'. Use 'chevron-right.svg' (masks) for toggle. Added JS logic for expansion and default selection.
+输出位置：/HistoryRender/component/sidebar/v6.html
+
+Sidebar Navigation v7 (Layout Fix)
+时间：02-12 16:40
+内容：Fixed sidebar position to left (position: fixed; left: 0; top: 0) and reset body margin to 0.
+输出位置：/HistoryRender/component/sidebar/v7.html
+
+Sidebar Navigation v8 (Sub-Menu Refinement)
+时间：02-12 16:50
+内容：Refined sub-menu style. 
+- Background: #FBFBFC. 
+- Border: 1px #DFE1E6 (Top/Left/Bottom). 
+- Padding: 2px 4px.
+- Icons: test-case, test-task, view-report (16x16, 16px gap).
+- Active/Parent states: Bold, #FBFBFC bg.
+输出位置：/HistoryRender/component/sidebar/v8.html
+
+Sidebar Navigation v9 (Gapless Sub-Menu)
+时间：02-12 16:55
+内容：Expanded Sub-Menu block (Parent + List) to use -4px margin, creating a unified container with specific borders.
+输出位置：/HistoryRender/component/sidebar/v9.html
+
+Sidebar Navigation v10 (Grouped Layout)
+时间：02-12 17:10
+内容：Refactored to use Grouped Layout (.devui-menu-group).
+- Structure: Wrapper for Parent + Sub-Menu.
+- Style: Expanded group gets bg #FBFBFC and border. No internal gaps.
+- Active: Sub-item gets blue left bar (box-shadow) and blue text.
+- Interaction: Smooth height transition.
+输出位置：/HistoryRender/component/sidebar/v10.html
+
+Sidebar Navigation v11 (Manual Adjustment)
+时间：02-12 17:13
+内容：User manually adjusted padding to 0 8px 0 8px and margin to -4px for sub-menu items.
+输出位置：/HistoryRender/component/sidebar/v11.html
+
+Sidebar Navigation v12 (Visual Overflow)
+时间：02-12 17:15
+内容：Optimized Group visual overflow logic.
+- Group Expanded: margin -2px -4px, position relative, z-index 1.
+- Items Padding: Increased to 0 12px inside expanded group for alignment.
+- Menu List: overflow-x hidden.
+输出位置：/HistoryRender/component/sidebar/v12.html
