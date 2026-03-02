@@ -13,7 +13,7 @@
 | :--- | :--- | :--- | :--- |
 | `activeTab` | `string \| number` | 当前激活的 Tab ID | - |
 | `data` | `Array<{ id: string\|number, title: string, disabled?: boolean }>` | 页签数据源 | `[]` |
-| `type` | `'pills' \| 'tabs' \| 'wrapped'` | 页签样式类型：胶囊(Pills)/标准(Tabs)/包裹(Wrapped) | `'pills'` |
+| `type` | `'pills' \| 'tabs' \| 'wrapped' \| 'icon' \| 'text'` | 页签样式类型：胶囊(Pills)/标准(Tabs)/包裹(Wrapped)/纯图标(Icon)/文本带图标(Text) | `'pills'` |
 | `onChange` | `(id: string \| number) => void` | 切换页签时的回调 | - |
 
 ## Visual Skill
@@ -73,6 +73,27 @@
 > **Naming vs Visual**: Figma 中的命名与 DevUI 标准组件库有差异。请严格遵循上述 **Preview 视觉特征** 而非仅看名字。
 > - `type="pills"` -> Output **Underline** style.
 > - `type="wrapped"` -> Output **Solid Gray Block** style.
+> - `type="icon" / "text"` -> Output **Segmented Block** style with shadows on active.
+
+### 3. Icon Usage Rules (图标使用规范)
+- ⚠️ **强制约束**: 对于图标页签和文本页签中的图标调用，**必须且只能使用 `action` 目录下的底层图标素材** (即路径类似 `../../../icon/miniDev-icon/action/[name].svg`)。
+- 图标渲染方式: 必须采用 `-webkit-mask-image` 配合 `background-color: currentColor`，以确保 Hover/Active 等交互状态下色值的自然继承。
+
+#### Type: Icon / Text (图标/文本组页签)
+*Note: 此类页签常用于工具栏内部或面板内的局部切换，外层为一个带2px Padding与浅灰色背景的集合容器，激活项具有白底加阴影呈现凸起效果。*
+
+| Component Part | CSS Property | Token / Value | Fallback (Hex) |
+| :--- | :--- | :--- | :--- |
+| **Container (Group)** | `background-color` | `var(--devui-list-item-hover-bg)` | `#F2F5FC` |
+| **Container (Group)** | `padding` / `border-radius` | `padding: 2px`, `border-radius: 4px` | - |
+| **Icon Item (Size)** | `width` / `height` | `28px` | - |
+| **Text Item (Padding)** | `padding` | `4px 8px` (外加 `gap: 4px`) | - |
+| **Item (Normal Text)** | `color` | Icon为 `var(--devui-text)`, Text为 `var(--devui-aide-text)` | Icon:`#25`, Text:`#8A` |
+| **Item (Hover)** | `background-color` | Icon项为 `var(--devui-list-item-hover-bg)` | `#F2F5FC` |
+| **Item (Active)** | `background-color` | `var(--devui-base-bg)` | `#FFFFFF` |
+| **Item (Active)** | `box-shadow` | `0px 4px 12px 0px rgba(0, 0, 0, 0.16)` | - |
+| **Item (Active)** | `color` | 均激活为 `var(--devui-text)` | `#252B3A` |
+| **Item (Disabled)** | `color` | `var(--devui-disabled-text)` | `#ADB0B8` |
 
 ## Anti-Patterns (负面示例)
 禁止在生成代码时出现以下模式：
@@ -96,4 +117,6 @@
 - [ ] 颜色引用是否全部为 `var(--devui-*)`？
 - [ ] Pills 类型激活态是否为 Brand 背景？
 - [ ] Wrapped 类型激活态是否与内容区连通（底边框处理）？
+- [ ] Icon/Text 类型激活态是否正确包含 `0 4px 12px rgba(0,0,0,0.16)` 阴影与白色背景？
+- [ ] 图标是否严格限定使用 `icon/miniDev-icon/action/` 目录？
 - [ ] 布局是否使用了 Flex？

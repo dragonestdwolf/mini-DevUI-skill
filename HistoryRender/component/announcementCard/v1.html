@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnnouncementCard v1 Test Component</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Context Layout for testing only */
+        body {
+            background-color: #ECEFF1;
+            padding: 50px;
+            font-family: 'Noto Sans SC', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .test-case {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .test-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+            font-family: monospace;
+        }
+
+        /* 
+           命名空间原则：所有 Class 必须以 devui-announcement 开头 
+           Token 原则：必须使用 var(--devui-token) 形式
+        */
+        .devui-announcementCard {
+            width: 384px;
+            background-color: var(--devui-base-bg, #FFFFFF);
+            padding: 16px 20px 20px 20px;
+            border-radius: var(--devui-border-radius-xl, 16px);
+            box-shadow: var(--devui-shadow-length-base, 0 1px 6px 0 rgba(0, 0, 0, 0.08));
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .devui-announcement-content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .devui-announcement-title {
+            width: 100%;
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            font-size: var(--devui-font-size-lg, 16px);
+            color: var(--devui-text, #252B3A);
+            line-height: 24px;
+        }
+
+        .devui-announcement-info {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .devui-announcement-desc {
+            width: 100%;
+            font-size: var(--devui-font-size-md, 14px);
+            font-weight: 400;
+            color: var(--devui-text, #252B3A);
+            line-height: 22px;
+            height: 66px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            text-overflow: ellipsis;
+        }
+
+        .devui-announcement-meta {
+            width: 100%;
+            font-size: var(--devui-font-size-sm, 12px);
+            font-weight: 400;
+            color: var(--devui-placeholder, #8A8E99);
+            line-height: 20px;
+        }
+
+        .devui-announcement-indicators {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .devui-indicator {
+            width: 4px;
+            height: 4px;
+            background-color: var(--devui-shape-icon-fill, #D7D8DA);
+            border-radius: 100px;
+        }
+
+        .devui-indicator.active {
+            width: 32px;
+            background-color: var(--devui-icon-text, #252B3A);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="test-case">
+        <span class="test-label">Case 1: Normal State</span>
+        <div class="devui-announcementCard">
+            <div class="devui-announcement-content">
+                <div class="devui-announcement-title">全新功能上线</div>
+                <div class="devui-announcement-info">
+                    <div class="devui-announcement-desc">体验最新的 DevUI 极简设计系统，现已全面支持黑暗模式和高对比度显示，带来更加畅快的编码体验。</div>
+                    <div class="devui-announcement-meta">刚刚发布</div>
+                </div>
+            </div>
+            <div class="devui-announcement-indicators">
+                <div class="devui-indicator active"></div>
+                <div class="devui-indicator"></div>
+                <div class="devui-indicator"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-case">
+        <span class="test-label">Case 2: Extreme Overflow Description & Title (Pressure Test)</span>
+        <div class="devui-announcementCard">
+            <div class="devui-announcement-content">
+                <div class="devui-announcement-title">
+                    这个是一个超级长的标题用来测试即使在极其夸张的情况下标题组件是否能够正确换行以及展示表现情况ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+                <div class="devui-announcement-info">
+                    <div class="devui-announcement-desc">
+                        这是一段用于压力测试的极端长文本，用来验证是否能准确在第三行出现省略号，同时确保组件不会因为这段无法容忍的长文本而导致自身的高度无限制被拉伸。这段文本会非常非常地长，足够触发
+                        -webkit-line-clamp 设定在 3 行时候的规则机制。AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</div>
+                    <div class="devui-announcement-meta">2026-12-31 23:59:59 时间展示</div>
+                </div>
+            </div>
+            <div class="devui-announcement-indicators">
+                <div class="devui-indicator"></div>
+                <div class="devui-indicator active"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-case">
+        <span class="test-label">Case 3: Missing Information / Short Field (Empty State Layout Check)</span>
+        <div class="devui-announcementCard">
+            <div class="devui-announcement-content">
+                <div class="devui-announcement-title">仅有一行文本</div>
+                <div class="devui-announcement-info">
+                    <div class="devui-announcement-desc">不足三行内容，测试固定高度66px是否撑开容器，导致排版不会因此变化。</div>
+                    <div class="devui-announcement-meta"></div>
+                </div>
+            </div>
+            <div class="devui-announcement-indicators">
+                <div class="devui-indicator"></div>
+                <div class="devui-indicator"></div>
+                <div class="devui-indicator"></div>
+                <div class="devui-indicator active"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

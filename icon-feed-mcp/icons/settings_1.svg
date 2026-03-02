@@ -1,0 +1,24 @@
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80.000000" height="80.000000" fill="none">
+	<defs>
+		<linearGradient id="paint_linear_17" x1="4.02180862" x2="63.6394196" y1="-1.90734863e-06" y2="66.1780624" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(255,139,5)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(255,136,0)" offset="1" stop-opacity="1" />
+		</linearGradient>
+		<radialGradient id="paint_radial_8" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,-16.8974,16.8974,0,40,40)">
+			<stop stop-color="rgb(255,235,209)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(255,235,208)" offset="1" stop-opacity="1" />
+		</radialGradient>
+		<linearGradient id="paint_linear_18" x1="40.4328575" x2="40.4328575" y1="25" y2="55" gradientUnits="userSpaceOnUse">
+			<stop stop-color="rgb(255,255,255)" offset="0" stop-opacity="1" />
+			<stop stop-color="rgb(255,255,255)" offset="1" stop-opacity="0" />
+		</linearGradient>
+	</defs>
+	<rect id="设置" width="80.000000" height="80.000000" x="0.000000" y="0.000000" />
+	<g id="质感图标/ic_public_setting_material-设置_质感">
+		<rect id="矩形" width="80.000000" height="80.000000" x="0.000000" y="0.000000" />
+		<path id="path" d="M47.0406 0L33.824 0L33.4787 0.00887185C30.6166 0.156202 28.1511 2.12516 27.3915 4.91534L25.7796 10.8333L22.5546 12.7L16.6532 11.1436C13.7424 10.3758 10.6782 11.6538 9.17574 14.2624L2.55708 25.7537L2.38656 26.0688C1.09596 28.6146 1.56795 31.72 3.59352 33.7685L7.90459 38.1283L7.90459 41.8667L3.59199 46.2318C1.48291 48.3658 1.05915 51.6457 2.55662 54.2456L9.17574 65.7376L9.35593 66.0326C10.9137 68.4415 13.8544 69.5947 16.6532 68.8564L22.5546 67.2983L25.7796 69.165L27.3915 75.0847C28.1815 77.9864 30.8166 80 33.824 80L47.0408 80L47.3861 79.9911C50.2489 79.8437 52.7147 77.8739 53.4738 75.0829L55.0813 69.1667L58.3096 67.2983L64.2127 68.8564C67.1235 69.6242 70.1877 68.3462 71.6901 65.7376L78.3088 54.2463L78.4793 53.9312C79.7699 51.3853 79.2979 48.28 77.2723 46.2315L72.9579 41.8683L72.9579 38.13L77.2723 33.7685C79.3823 31.6346 79.8065 28.354 78.3088 25.7537L71.69 14.2621L71.5098 13.9671C69.9521 11.5584 67.0117 10.4052 64.2131 11.1432L58.3063 12.7L55.0813 10.8333L53.4737 4.91736C52.6843 2.01458 50.0488 0 47.0406 0Z" fill="url(#paint_linear_17)" fill-rule="nonzero" />
+		<circle id="path" cx="40" cy="40" r="15" fill="url(#paint_radial_8)" />
+		<ellipse id="path" rx="14.999997" ry="15.000000" cx="40.4328575" cy="40" fill="rgb(125,223,231)" fill-opacity="0.300000012" />
+		<ellipse id="path" rx="14.999997" ry="15.000000" cx="40.4328575" cy="40" stroke="url(#paint_linear_18)" stroke-width="3" />
+	</g>
+</svg>

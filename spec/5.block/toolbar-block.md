@@ -204,14 +204,14 @@
 }
 
 /* CSS Mask Image Definitions - ONLY use CSS classes, never inline styles */
-.icon-add { -webkit-mask-image: url('../../../icon/miniDev-icon/action/new.svg'); }
-.icon-setting { -webkit-mask-image: url('../../../icon/miniDev-icon/action/settings.svg'); }
-.icon-more { -webkit-mask-image: url('../../../icon/miniDev-icon/action/more-horizontal.svg'); }
-.icon-list { -webkit-mask-image: url('../../../icon/miniDev-icon/action/list-view.svg'); }
-.icon-kanban { -webkit-mask-image: url('../../../icon/miniDev-icon/action/board-view.svg'); }
-.icon-close-circle { -webkit-mask-image: url('../../../icon/miniDev-icon/action/close.svg'); }
-.icon-save { -webkit-mask-image: url('../../../icon/miniDev-icon/action/save.svg'); }
-.icon-folder { -webkit-mask-image: url('../../../icon/miniDev-icon/action/folder.svg'); }
+.icon-add { -webkit-mask-image: url('../../icon/miniDev-icon/action/new.svg'); }
+.icon-setting { -webkit-mask-image: url('../../icon/miniDev-icon/action/settings.svg'); }
+.icon-more { -webkit-mask-image: url('../../icon/miniDev-icon/action/more-horizontal.svg'); }
+.icon-list { -webkit-mask-image: url('../../icon/miniDev-icon/action/list-view.svg'); }
+.icon-kanban { -webkit-mask-image: url('../../icon/miniDev-icon/action/board-view.svg'); }
+.icon-close-circle { -webkit-mask-image: url('../../icon/miniDev-icon/action/close.svg'); }
+.icon-save { -webkit-mask-image: url('../../icon/miniDev-icon/action/save.svg'); }
+.icon-folder { -webkit-mask-image: url('../../icon/miniDev-icon/action/folder.svg'); }
 
 
 /* Category Search Specifics */
@@ -260,7 +260,7 @@
     width: 12px;
     height: 12px;
     background-color: currentColor;
-    -webkit-mask: url('../../../icon/select-arrow.svg') no-repeat center;
+    -webkit-mask: url('../../icon/select-arrow.svg') no-repeat center;
 }
 
 /* Vertical Divider */

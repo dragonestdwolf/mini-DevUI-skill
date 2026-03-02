@@ -505,3 +505,152 @@ Table Block v4 (PRD Based Render)
 读取文件：table-block-PRD.md, table-block.md, componentrender.md
 生成描述：基于 `table-block-PRD.md` 和刚刚确立的 `table-block.md` 结合进行规范渲染输出。包含了 10 列严格对齐 PRD 要求的表头与对应字段占位元素，以及 12px padding、透明Toolbar、纯白无空底内容包裹盒。
 输出位置：/HistoryRender/component/table_block/v4.html
+
+no: header/v3
+时间: 02-27 15:06
+框架与库: Angular / DevUI Component
+数据来源：Both
+输入物来源：简单语言描述
+读取文件：header-tem.html, header.md
+生成描述: 根据header文档（包括template和spec），遵循componentrender.md的原则，进行单组件鲁棒性、溢出压力测试和占位符验证分离，不依赖具体图例纯结构。
+输出位置: /HistoryRender/component/header/v3.html
+
+no: header/v4
+时间: 02-27 15:15
+框架与库: HTML / DevUI Component
+数据来源：Template + Spec
+输入物来源：图片（截图引用）
+读取文件：header-tem.html, header.md
+生成描述: 根据用户提供的真实截图，填入所有对应的文字、图标和状态占位，尽最大可能追求百分之百的像素级视觉还原，结构遵循已固化的 header template 标准。
+输出位置: /HistoryRender/component/header/v4.html
+
+no: select/benchmark
+时间: 02-27 15:58
+框架与库: HTML / DevUI Component
+数据来源：Figma MCP (节点 431:4454, 578:4417)
+输入物来源：Figma直接导出结构与数据
+读取文件：Figma MCP 临时提取流
+生成描述: 综合Figma实际节点分析生成Select的Benchmark基准模板。完整复现了单选下拉、多选结合Checkbox逻辑，以及Disabled状态和下拉选单悬浮光影规范及色彩变量。
+输出位置: /HistoryRender/component/select/benchmark.html
+
+no: select/v1
+时间: 02-27 16:15
+框架与库: HTML / DevUI Component
+数据来源：Spec + Template 
+输入物来源：简单语言描述
+读取文件：select.md, select-tem.html, componentrender.md
+生成描述: 严格遵守componentrender的测试开发规范：脱离上下文只测组件本身，强行塞入超长且重叠的中英文混合字符串、"0" 等极端边界数据，排查组件在真实环境下的响应及溢出截断表现。
+输出位置: /HistoryRender/component/select/v1.html
+
+no: card/benchmark
+时间: 02-27 16:41
+框架与库: HTML / CSS (DevUI Tokens)
+数据来源：Figma Node MCP (3501-10161)
+输入物来源：Figma 现网卡片样式截图 + 浏览器数值提取
+读取文件：(无依赖 Spec/Template，直接基于 Figma 节点)
+生成描述: 基于 Figma 节点 3501-10161 (现网卡片样式) 生成标杆卡片 HTML。完整还原了 380×182 Hug 卡片布局，包含：
+- Header：40×40 App Icon (橙黄渐变)，16px/700 标题，收藏星标 + 更多 (•••) 操作按钮
+- Tags：绿色文字标签 (#E6F6F0 / #00A870) + 灰色文字标签 (#F2F5FC / #252B3A)，4px 圆角，22px 高度
+- Meta：12px 创建者+用户名 + 1px分割线 + 项目ID+复制图标，水平排列
+- Token Audit 表格：所有 Design Tokens 汇总（尺寸/颜色/间距/阴影）
+覆盖 3 个状态：默认、收藏激活（金色 #FAC20A 填充星标）、无标签空状态。
+输出位置: /HistoryRender/component/card/benchmark.html
+
+no: card/v1
+时间: 02-27 17:03
+框架与库: HTML / CSS (DevUI Tokens)
+数据来源：Both
+输入物来源：简单语言描述
+读取文件：card.md, card-tem.html, componentrender.md
+生成描述: 仅依据 card.md (Spec) 和 card-tem.html (Template) 生成独立组件测试页。7 个测试用例覆盖：基础占位符、收藏激活态(is-starred)、极长标题溢出(ellipsis)、空标签(min-height占位)、特殊字符/Emoji/XSS注入、多标签换行(8个标签)、最短单字符内容。每个卡片使用 engineering-initial 目录下不同字母图标。
+输出位置: /HistoryRender/component/card/v1.html
+
+no: menuCard/benchmark
+时间: 02-28 09:55
+框架与库: HTML / DevUI Component
+数据来源: Figma MCP (节点 1009-2572)
+输入物来源: Figma直接导出结构与数据
+读取文件: Figma MCP 临时提取流
+生成描述: 基于Figma节点1009-2572生成menuCard标杆HTML。完整还原了240×36px的组件形态，并覆盖无背景默认态和白色背景带阴影(0 1px 6px rgba(0,0,0,0.08))的悬浮/激活态，提取出图标尺寸(16×16)和文字属性(14px)。页面附有Design Token统计。
+输出位置: /HistoryRender/component/menuCard/benchmark.html
+
+menuCard v1
+时间： 02-28 10:15 
+框架与库： Angular / DevUI
+数据来源： Both
+输入物来源： 简单语言描述
+读取文件： menuCard-tem.html, menuCard.md
+生成描述： 生成 menuCard 测试HTML，脱离上下文居中展示，覆盖正常文字、文本水平溢出极长情况、空数据情况以及Active激活态演示。
+输出位置： /HistoryRender/component/menuCard/v1.html
+
+no: announcementCard/benchmark
+时间: 02-28 10:20
+框架与库: HTML / DevUI Component
+数据来源: Figma MCP (节点 1819-2753)
+输入物来源: Figma直接导出结构与数据
+读取文件: Figma MCP 临时提取流
+生成描述: 基于Figma节点1819-2753生成公告卡片(AnnouncementCard)标杆HTML。完整还原384px宽度的弹窗信息流体，拥有16px大圆角与阴影。内容精准包含Flex布局和严格字号与色彩字重映射（16px bold 标题）。还原了底部的四点轮播指示器。提供Design Token全貌图。
+输出位置: /HistoryRender/component/announcementCard/benchmark.html
+
+announcementCard v1
+时间： 02-28 10:50 
+框架与库： Angular / DevUI
+数据来源： Both
+输入物来源： 内部联动 (只读取 Spec & Template)
+读取文件： announcementCard-tem.html, announcementCard.md
+生成描述： 生成 announcementCard 的压力测试组件，强制验证了多行长文本溢出、超长中英混合标题对 Flex 的拉伸以及不足三行时的强占位固定高度。验证了组件结构设计的鲁棒性。
+输出位置： /HistoryRender/component/announcementCard/v1.html
+
+no: activityCard/benchmark
+时间: 02-28 14:15
+框架与库: HTML / DevUI Component
+数据来源: Figma MCP (节点 1833-2799)
+输入物来源: Figma直接导出结构与数据
+读取文件: Figma MCP 临时提取流
+生成描述: 基于Figma节点1833-2799生成活动卡片(ActivityCard)标杆HTML。完整还原了384px容纳展示的海报横幅，包括底图的三层多背景色叠加(`linear-gradient`)设计，内部绝对定位图文（16px medium 文本、22px bold 渐变字、`mask-clip: text`截断映射）以及从 Figma 图层镜像提取得来的180°翻折后小箭头图标（还原 `arrow-left` 镜像为 pointing-right）。右侧附有基于 localhost 调用的 3D 效果 png。页面附有Design Token全貌。
+输出位置: /HistoryRender/component/activityCard/benchmark.html
+
+activityCard v1
+时间： 02-28 14:18
+框架与库： Angular / DevUI
+数据来源： Both
+输入物来源： 内部联动 (只读取 Spec & Template)
+读取文件： activityCard-tem.html, activityCard.md
+生成描述： 生成 activityCard 测试组件结构 HTML，并塞入了超出限制的长文本数据来验证内部绝对定位系统的鲁棒性。发现在强行置入过长 Badge 文本时会与固有的 Highlight (Gradient text) 产生重叠与视觉崩塌。并包含对空值数据的缺省响应情况。
+输出位置： /HistoryRender/component/activityCard/v1.html
+
+activityCard v2
+时间： 02-28 14:20
+框架与库： Angular / DevUI
+数据来源： Both
+输入物来源： 用户纠偏与图像标识确认
+读取文件： activityCard-tem.html, activityCard.md
+生成描述： 基于图片反馈再次校准：对活动卡片内部的 `.devui-activity-desc` 区块限定高度为固定 `44px` 并利用 `-webkit-line-clamp: 2` 给与超过两行高度的断头截断打点。防止多行挤占底部箭头布局。
+输出位置： /HistoryRender/component/activityCard/v2.html
+
+no: helpDocCard/benchmark
+时间: 02-28 14:30
+框架与库: HTML / DevUI Component
+数据来源: Figma MCP (节点 1973-2837)
+输入物来源: Figma 直接导出结构与数据 + 本地图标路径映射
+读取文件: Figma MCP 临时提取流 + /icon/miniDev-icon/ SVG 索引
+生成描述: 基于Figma节点1973-2837生成帮助文档卡片(HelpDocCard)标杆HTML。卡片无固定高度（内容自适应撑高），内含上方标题栏（"帮助文档" 大标题 + "所有文档 >" 次级跳转链接）与一个 4列×多行的图标网格区域。图标尺寸 24px，通过 CSS `mask-image` 方式引用本地 `/icon/miniDev-icon/action/` 下的图标：learn(产品介绍) / execute(快速入门) / user-guide(使用指南) / star(最佳实践) / help(常见问题) / readme(理论实践) / description-1(通用参考) / api(API×2)。每个 cell 86×76px，含 4px gap 间距标签居中对齐。页面附有 Design Token 全表。
+输出位置: /HistoryRender/component/helpDocCard/benchmark.html
+
+no: helpDocCard/v1
+时间: 02-28 14:33
+框架与库: HTML / CSS (自封装)
+数据来源: helpDocCard-tem.html, helpDocCard.md
+输入物来源: Spec文档 + Template文档
+读取文件: 
+生成描述: 从 benchmark.html 中提取帮助文档卡片的模板 (`helpDocCard-tem.html`) 与规则 (`helpDocCard.md`)。并在 spec 中特殊强调了图标选取原则：由于使用 `mask-image` 实现跟随字体颜色的单色效果，严禁选用含有内置填底或色彩多层的复杂 SVG 2D 图标（这会导致所有内容合并被 mask 染色为全黑实心方块）。生成了供验收的 `v1.html` 测试页，以确保其按模板正常渲染并使用单色路径图（如 `execute.svg`，`readme.svg`）。
+输出位置: /HistoryRender/component/helpDocCard/v1.html
+
+no: componentrender-tabs/bench
+时间: 02-28 15:38
+框架与库: HTML / DevUI Component
+数据来源: Figma MCP (节点 97-267, 107-283, 183-325, 185-414)
+输入物来源: Figma直接导出结构与数据
+读取文件: Figma MCP 临时提取流
+生成描述: 生成页签(Tabs)图标与文本模式的标杆HTML，包含单项所有状态（默认、悬浮、激活、禁用）展示以及多项组合（2至6项等）横排展示。
+输出位置: /HistoryRender/component/componentrender-tabs/bench.html

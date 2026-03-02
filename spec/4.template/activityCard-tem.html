@@ -1,0 +1,149 @@
+<!-- 
+  ActivityCard Template
+  Source: Figma Node 1833-2799
+  
+  Variables (Template Contract):
+  - {{cardTitle}}: Top-level card title (e.g., '活动')
+  - {{imageSrc}}: URL for the right-side illustration image
+  - {{badgeText}}: Left text (e.g., '频繁')
+  - {{highlightText}}: Gradient text (e.g., '重新登录?')
+  - {{description}}: Instructions text
+  - {{actionUrl}}: URL mapping for the banner click area
+-->
+
+<style>
+    /* 
+   命名空间原则：所有 Class 必须以 devui-activity 开头 
+   Token 原则：必须使用 var(--devui-token) 形式
+*/
+    .devui-activityCard {
+        width: 384px;
+        height: 261px;
+        background-color: var(--devui-base-bg, #FFFFFF);
+        padding: 16px 20px 20px 20px;
+        border-radius: var(--devui-border-radius-xl, 16px);
+        box-shadow: var(--devui-shadow-length-base, 0 1px 6px 0 rgba(0, 0, 0, 0.08));
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .devui-activity-title {
+        width: 100%;
+        font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+        font-weight: 700;
+        font-size: var(--devui-font-size-lg, 16px);
+        color: var(--devui-text, #252B3A);
+        line-height: 24px;
+    }
+
+    .devui-activity-banner {
+        position: relative;
+        width: 344px;
+        height: 172px;
+        flex-shrink: 0;
+        border-radius: var(--devui-border-radius-xl, 16px);
+        overflow: hidden;
+        background-image:
+            linear-gradient(-44.0652deg, rgba(58, 167, 255, 0) 83.841%, rgb(58, 167, 255) 116.4%),
+            linear-gradient(140.577deg, rgba(255, 180, 234, 0) 69.535%, rgb(255, 180, 234) 99.566%),
+            linear-gradient(rgb(191, 229, 255) 0%, rgb(232, 227, 255) 100%);
+        cursor: pointer;
+        display: block;
+        text-decoration: none;
+    }
+
+    .devui-activity-bg-img {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 220px;
+        height: 125px;
+        object-fit: cover;
+        pointer-events: none;
+    }
+
+    .devui-activity-badge {
+        position: absolute;
+        left: 16px;
+        top: 63px;
+        transform: translateY(-50%);
+        font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+        font-weight: 500;
+        font-size: var(--devui-font-size-lg, 16px);
+        color: var(--devui-text, #252B3A);
+        line-height: 24px;
+        white-space: nowrap;
+    }
+
+    .devui-activity-highlight {
+        position: absolute;
+        left: 52px;
+        top: 60px;
+        transform: translateY(-50%);
+        font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 24px;
+        background-image: linear-gradient(to bottom, #002672 0%, #6b9bfa 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        white-space: nowrap;
+    }
+
+    .devui-activity-desc {
+        position: absolute;
+        left: 16px;
+        top: 118px;
+        transform: translateY(-50%);
+        width: 124px;
+        height: 44px;
+        font-family: 'Noto Sans SC', sans-serif;
+        font-weight: 400;
+        font-size: var(--devui-font-size-md, 14px);
+        color: var(--devui-text, #252B3A);
+        line-height: 22px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+    }
+
+    .devui-activity-arrow {
+        position: absolute;
+        left: 111px;
+        top: 122px;
+        width: 16px;
+        height: 16px;
+        background-color: var(--devui-text, #252B3A);
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/arrow-left.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/arrow-left.svg');
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        transform: rotate(180deg);
+    }
+</style>
+
+<!-- 根元素必须包含所有必要的类名组合 -->
+<div class="devui-activityCard">
+    <div class="devui-activity-title">{{cardTitle}}</div>
+    <a href="{{actionUrl}}" class="devui-activity-banner">
+        <img class="devui-activity-bg-img" src="{{imageSrc}}" alt="" />
+        <span class="devui-activity-badge">{{badgeText}}</span>
+        <span class="devui-activity-highlight">{{highlightText}}</span>
+        <div class="devui-activity-desc">{{description}}</div>
+        <span class="devui-activity-arrow"></span>
+    </a>
+</div>

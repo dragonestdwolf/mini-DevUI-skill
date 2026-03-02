@@ -7,8 +7,8 @@
 
 ### 2.1 <img> 标签引用路径错误
 HTML 文件中大量使用了相对路径引用图标，例如：
-- 行 207: `<img src="icon/miniDev-icon/action/list-view.svg" ...>`
-- 行 279: `<img src="icon/flag_middle.svg" ...>`
+- 行 207: `<img src="../../../icon/miniDev-icon/action/list-view.svg" ...>`
+- 行 279: `<img src="../../../icon/flag_middle.svg" ...>`
 
 **原因**:
 - `v16.html` 位于 `HistoryRender/component/table/` 目录下。
@@ -18,7 +18,7 @@ HTML 文件中大量使用了相对路径引用图标，例如：
 
 ### 2.2 CSS 中绝对路径引用隐患
 CSS 样式中使用了本地绝对路径：
-- 行 80: `url('file:///Users/renyuqing/Desktop/2026/miniDevUI/AI-MiniDevUI/icon/miniDev-icon/action/sort-icon.svg')`
+- 行 80: `url('../../../icon/miniDev-icon/action/sort-icon.svg')`
 
 **原因**:
 - 虽然文件路径在本地是正确的，但这种写法极其脆弱。
@@ -28,13 +28,13 @@ CSS 样式中使用了本地绝对路径：
 
 ### 2.3 文件存在性验证
 经过扫描验证，代码引用的所有图标文件在项目根目录下 **均存在**：
-- `icon/miniDev-icon/action/list-view.svg` (存在)
+- `../../../icon/miniDev-icon/action/list-view.svg` (存在)
 - `icon/miniDev-icon/action/sort-icon.svg` (存在)
 - `icon/miniDev-icon/action/filter.svg` (存在)
 - `icon/miniDev-icon/action/edit.svg` (存在)
 - `icon/miniDev-icon/action/star.svg` (存在)
 - `icon/miniDev-icon/action/more-vertical.svg` (存在)
-- `icon/flag_middle.svg` (存在)
+- `../../../icon/flag_middle.svg` (存在)
 - `icon/flag_low.svg` (存在)
 - `icon/flag_hight.svg` (存在，文件名虽然包含拼写错误 "hight"，但代码引用匹配，不影响使用)
 
@@ -53,7 +53,7 @@ CSS 样式中使用了本地绝对路径：
 将 CSS 中的 `file://` 绝对路径也替换为相对路径，确保可移植性和服务器兼容性。
 
 **修改前**:
-`url('file:///Users/.../icon/miniDev-icon/action/sort-icon.svg')`
+`url('../../../icon/miniDev-icon/action/sort-icon.svg')`
 
 **修改后**:
 `url('../../../icon/miniDev-icon/action/sort-icon.svg')`

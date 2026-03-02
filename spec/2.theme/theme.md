@@ -17,7 +17,7 @@
 
 | Token Name | Hex Value | Sample |
 | :--- | :--- | :--- |
-| `devui-global-bg` | `#F5F5F5` | <div style='background-color:#F5F5F5; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
+| `devui-global-bg` | `#F3F3F3` | <div style='background-color:#F3F3F3; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-glass-morphism-bg` | `#F5F6F8` | <div style='background-color:#F5F6F8; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-global-bg-normal` | `#FFFFFF` | <div style='background-color:#FFFFFF; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-base-bg` | `#FFFFFF` | <div style='background-color:#FFFFFF; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
@@ -26,9 +26,9 @@
 | `devui-area` | `#F8F8F8` | <div style='background-color:#F8F8F8; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-icon-bg` | `#FFFFFF` | <div style='background-color:#FFFFFF; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-form-control-bg` | `#FFFFFF` | <div style='background-color:#FFFFFF; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
-| `devui-list-item-active-bg` | `#5E7CE0` | <div style='background-color:#5E7CE0; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
+| `devui-list-item-active-bg` | `#E1E8FD` | <div style='background-color:#E1E8FD; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-list-item-active-hover-bg` | `#526ECC` | <div style='background-color:#526ECC; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
-| `devui-list-item-hover-bg` | `#F2F5FC` | <div style='background-color:#F2F5FC; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
+| `devui-list-item-hover-bg` | `rgba(25, 25, 25, 0.05)` | <div style='background-color:rgba(25, 25, 25, 0.05); width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-list-item-selected-bg` | `#E9EDFA` | <div style='background-color:#E9EDFA; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-list-item-strip-bg` | `#F2F5FC` | <div style='background-color:#F2F5FC; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-disabled-bg` | `#F5F5F6` | <div style='background-color:#F5F5F6; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
@@ -48,7 +48,7 @@
 | `devui-info-bg` | `#F2F5FC` | <div style='background-color:#F2F5FC; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-success-bg` | `#EDFFF9` | <div style='background-color:#EDFFF9; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-primary-bg` | `#F2F5FC` | <div style='background-color:#F2F5FC; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
-| `devui-default-bg` | `#F3F6F8` | <div style='background-color:#F3F6F8; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
+| `devui-default-bg` | `#F5F5F5` | <div style='background-color:#F5F5F5; width: 20px; height: 20px; border: 1px solid #f5f5f5ff;'></div> |
 
 
 ## Text Colors
@@ -60,7 +60,7 @@
 | `devui-aide-text` | `#8A8E99` | <div style='background-color:#8A8E99; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-aide-text-hover` | `#252B3A` | <div style='background-color:#252B3A; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-aide-text-stress` | `#575D6C` | <div style='background-color:#575D6C; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
-| `devui-placeholder` | `#8A8E99` | <div style='background-color:#8A8E99; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
+| `devui-placeholder` | `#AEAEAE` | <div style='background-color:#AEAEAE; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-light-text` | `#FFFFFF` | <div style='background-color:#FFFFFF; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-dark-text` | `#252B3A` | <div style='background-color:#252B3A; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-link` | `#526ECC` | <div style='background-color:#526ECC; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
@@ -81,7 +81,7 @@
 | `devui-danger` | `#F66F6A` | <div style='background-color:#F66F6A; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-warning` | `#FAC20A` | <div style='background-color:#FAC20A; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-waiting` | `#9FAAD7` | <div style='background-color:#9FAAD7; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
-| `devui-success` | `#50D4AB` | <div style='background-color:#50D4AB; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
+| `devui-success` | `#2EB78A` | <div style='background-color:#2EB78A; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-info` | `#5E7CE0` | <div style='background-color:#5E7CE0; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-danger-line` | `#F66F6A` | <div style='background-color:#F66F6A; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-warning-line` | `#FA9841` | <div style='background-color:#FA9841; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
@@ -94,13 +94,13 @@
 | Token Name | Hex Value | Sample |
 | :--- | :--- | :--- |
 | `devui-line` | `#ADB0B8` | <div style='background-color:#ADB0B8; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
-| `devui-dividing-line` | `#DFE1E6` | <div style='background-color:#DFE1E6; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
-| `devui-form-control-line` | `#ADB0B8` | <div style='background-color:#ADB0B8; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
-| `devui-form-control-line-hover` | `#575D6C` | <div style='background-color:#575D6C; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
+| `devui-dividing-line` | `#F3F3F3` | <div style='background-color:#F3F3F3; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
+| `devui-form-control-line` | `#C9C9C9` | <div style='background-color:#C9C9C9; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
+| `devui-form-control-line-hover` | `#191919` | <div style='background-color:#191919; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-form-control-line-active` | `#5E7CE0` | <div style='background-color:#5E7CE0; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-form-control-interactive-outline` | `#5E7CE0` | <div style='background-color:#5E7CE0; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-form-control-line-active-hover` | `#344899` | <div style='background-color:#344899; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
-| `devui-disabled-line` | `#DFE1E6` | <div style='background-color:#DFE1E6; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
+| `devui-disabled-line` | `#C9C9C9` | <div style='background-color:#C9C9C9; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-connected-overlay-line` | `#526ECC` | <div style='background-color:#526ECC; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-primary-line` | `#5E7CE0` | <div style='background-color:#5E7CE0; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-default-line` | `#5E7CE0` | <div style='background-color:#5E7CE0; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
@@ -127,7 +127,7 @@
 | `devui-unavailable` | `#F5F5F6` | <div style='background-color:#F5F5F6; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-feedback-overlay-backdrop` | `#000000` | <div style='background-color:#000000; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-icon-fill` | `#252B3A` | <div style='background-color:#252B3A; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
-| `devui-icon-fill-weak` | `#BABBC0` | <div style='background-color:#BABBC0; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
+| `devui-icon-fill-weak` | `#777777` | <div style='background-color:#777777; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-icon-fill-hover` | `#5E7CE0` | <div style='background-color:#5E7CE0; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-icon-fill-active` | `#5E7CE0` | <div style='background-color:#5E7CE0; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |
 | `devui-icon-fill-active-hover` | `#526ECC` | <div style='background-color:#526ECC; width: 20px; height: 20px; border: 1px solid #ddd;'></div> |

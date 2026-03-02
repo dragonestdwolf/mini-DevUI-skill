@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner Card Benchmark - 1806-2750</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ============================================
+           Design Tokens — from Figma Node 1806-2750
+           ============================================ */
+        :root {
+            /* Text */
+            --devui-text: #252B3A;
+            --devui-text-weak: #5E6678;
+            /* Background */
+            --devui-base-bg: #FFFFFF;
+            --devui-banner-card-bg: #FFFFFF;
+            /* Border */
+            --devui-line: #DFE1E6;
+            /* Shadow */
+            --devui-shadow-length-hover: 0 4px 16px 0 rgba(37, 43, 58, 0.16);
+            /* Typography */
+            --devui-font-size-sm: 12px;
+            --devui-font-size-md: 14px;
+            --devui-font-size-title: 32px;
+            /* Radius */
+            --devui-border-radius-lg: 12px;
+            --devui-border-radius-pill: 22px;
+        }
+
+        /* ============================================
+           Page Canvas
+           ============================================ */
+        body {
+            margin: 0;
+            padding: 50px;
+            background-color: #F3F6F8;
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-family: monospace;
+            color: #999;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 4px 12px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* ============================================
+           Component: devui-banner
+           Figma: 1200 × 223 (Hug Content vertically)
+           Auto-layout: Vertical
+           Padding: 24px 32px
+           Gap: (title-to-section) ~16px
+           Border: 1px solid #DFE1E6
+           Radius: 12px
+           Background: #FFFFFF
+           ============================================ */
+        .devui-banner {
+            width: 1200px;
+            /* Figma: width 1200px Fixed */
+            background-color: var(--devui-base-bg);
+            /* Figma: fill #FFFFFF */
+            border: 1px solid var(--devui-line);
+            /* Figma: stroke #DFE1E6 1px */
+            border-radius: var(--devui-border-radius-lg);
+            /* Figma: cornerRadius 12px */
+            padding: 24px 32px;
+            /* Figma: padding T24 R32 B24 L32 */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            /* Figma: layoutMode VERTICAL */
+            cursor: default;
+        }
+
+        /* ============================================
+           Title: "Hello,Jingwen"
+           Figma: 32px, Semi-Bold(600), #252B3A
+           Line Height: ~auto (approx 44px)
+           ============================================ */
+        .devui-banner-title {
+            font-size: var(--devui-font-size-title);
+            /* Figma: fontSize 32 */
+            font-weight: 600;
+            /* Figma: fontWeight Semi-Bold */
+            color: var(--devui-text);
+            /* Figma: fill #252B3A */
+            line-height: 1.375;
+            /* Figma: ~44px / 32px */
+            margin: 0 0 16px 0;
+            /* Figma: spacing below title ~16px */
+        }
+
+        /* ============================================
+           Section: "最近访问"
+           Figma: 14px, Bold(700), #252B3A
+           Margin bottom: 12px
+           ============================================ */
+        .devui-banner-section-label {
+            font-size: var(--devui-font-size-md);
+            /* Figma: fontSize 14 */
+            font-weight: 700;
+            /* Figma: fontWeight Bold */
+            color: var(--devui-text);
+            /* Figma: fill #252B3A */
+            line-height: 22px;
+            /* Figma: lineHeight 22px */
+            margin: 0 0 12px 0;
+            /* Figma: itemSpacing to list ~12px */
+        }
+
+        /* ============================================
+           Card List Container
+           Figma: Auto-layout Horizontal, gap 12px
+           ============================================ */
+        .devui-banner-card-list {
+            display: flex;
+            /* Figma: layoutMode HORIZONTAL */
+            align-items: center;
+            /* Figma: counterAxisAlignItems CENTER */
+            gap: 12px;
+            /* Figma: itemSpacing 12 */
+            flex-wrap: nowrap;
+        }
+
+        /* ============================================
+           Banner Card (胶囊卡片)
+           Figma: height 44px, Hug width
+           Padding: 0 16px 0 6px
+           Radius: 22px (pill shape)
+           Background: #FFFFFF
+           Gap: 8px (icon-to-text)
+           ============================================ */
+        .devui-banner-card {
+            display: inline-flex;
+            /* Figma: Auto-layout Horizontal */
+            align-items: center;
+            /* Figma: counterAxisAlignItems CENTER */
+            height: 44px;
+            /* Figma: height 44px Fixed */
+            padding: 0 16px 0 16px;
+            /* Figma: padding T0 R16 B0 L16 */
+            background-color: var(--devui-banner-card-bg);
+            /* Figma: fill #FFFFFF */
+            border-radius: var(--devui-border-radius-pill);
+            /* Figma: cornerRadius 22px */
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+            /* Figma: shadow 0 1px 3px rgba(0,0,0,0.08) */
+            gap: 8px;
+            /* Figma: itemSpacing 8 */
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        .devui-banner-card:hover {
+            transform: translateY(-4px);
+            /* Hover: move up */
+            box-shadow: 0 4px 8px 0 rgba(37, 43, 58, 0.16);
+        }
+
+        /* ============================================
+           Card Icon
+           Figma: 32×33 (engineering-initial SVG)
+           Border Radius: inherits from SVG's internal rx
+           ============================================ */
+        .devui-banner-card-icon {
+            width: 32px;
+            /* Figma: width 32 */
+            height: 33px;
+            /* Figma: height 33 */
+            flex-shrink: 0;
+            border-radius: 3px;
+            /* Figma: SVG internal rx ~2.67, round to 3 */
+            overflow: hidden;
+        }
+
+        .devui-banner-card-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* ============================================
+           Card Text
+           Figma: 14px, Regular(400), #252B3A
+           Line Height: 22px
+           ============================================ */
+        .devui-banner-card-text {
+            font-size: var(--devui-font-size-md);
+            /* Figma: fontSize 14 */
+            font-weight: 400;
+            /* Figma: fontWeight Regular */
+            color: var(--devui-text);
+            /* Figma: fill #252B3A */
+            line-height: 22px;
+            /* Figma: lineHeight 22px */
+            white-space: nowrap;
+            /* Prevent text wrapping in pill */
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ============================================
+           Design Token Audit Table
+           ============================================ */
+        .audit-section {
+            width: 1200px;
+            background: var(--devui-text);
+            border-radius: 8px;
+            padding: 24px 32px;
+            box-sizing: border-box;
+            color: #E0E0E0;
+        }
+
+        .audit-section h3 {
+            color: #FFFFFF;
+            font-size: 16px;
+            margin: 0 0 16px 0;
+        }
+
+        .audit-section table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+
+        .audit-section th {
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            color: #8A8E99;
+            font-weight: 500;
+        }
+
+        .audit-section td {
+            padding: 6px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .audit-section .color-swatch {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-right: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================
+         STATE 1: Default — 标准 Banner 展示
+         ============================================ -->
+    <div class="section-title">默认状态 / Default</div>
+    <div class="devui-banner">
+        <!-- Title -->
+        <div class="devui-banner-title">Hello,Jingwen</div>
+        <!-- Section Label -->
+        <div class="devui-banner-section-label">最近访问</div>
+        <!-- Card List -->
+        <div class="devui-banner-card-list">
+            <!-- Card 1: Build -->
+            <a class="devui-banner-card" href="javascript:void(0)">
+                <div class="devui-banner-card-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/B-32x33.svg" alt="B">
+                </div>
+                <span class="devui-banner-card-text">Build持续演进个人项目规划说明</span>
+            </a>
+            <!-- Card 2: DigitalCity -->
+            <a class="devui-banner-card" href="javascript:void(0)">
+                <div class="devui-banner-card-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/D-32x33.svg" alt="D">
+                </div>
+                <span class="devui-banner-card-text">DigitalCity智慧城市</span>
+            </a>
+            <!-- Card 3: ROMA -->
+            <a class="devui-banner-card" href="javascript:void(0)">
+                <div class="devui-banner-card-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/R-32x33.svg" alt="R">
+                </div>
+                <span class="devui-banner-card-text">ROMA持续演进个人项目</span>
+            </a>
+        </div>
+    </div>
+    <div class="section-title">1200 × 223 Hug | Figma: 1806-2750</div>
+
+    <!-- ============================================
+         STATE 2: 多卡片状态 — 超出宽度测试
+         ============================================ -->
+    <div class="section-title">多卡片状态 / Multiple Cards</div>
+    <div class="devui-banner">
+        <div class="devui-banner-title">Hello,Jingwen</div>
+        <div class="devui-banner-section-label">最近访问</div>
+        <div class="devui-banner-card-list">
+            <a class="devui-banner-card" href="javascript:void(0)">
+                <div class="devui-banner-card-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/B-32x33.svg" alt="B">
+                </div>
+                <span class="devui-banner-card-text">Build持续演进个人项目规划说明</span>
+            </a>
+            <a class="devui-banner-card" href="javascript:void(0)">
+                <div class="devui-banner-card-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/D-32x33.svg" alt="D">
+                </div>
+                <span class="devui-banner-card-text">DigitalCity智慧城市</span>
+            </a>
+            <a class="devui-banner-card" href="javascript:void(0)">
+                <div class="devui-banner-card-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/R-32x33.svg" alt="R">
+                </div>
+                <span class="devui-banner-card-text">ROMA持续演进个人项目</span>
+            </a>
+            <a class="devui-banner-card" href="javascript:void(0)">
+                <div class="devui-banner-card-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/M-32x33.svg" alt="M">
+                </div>
+                <span class="devui-banner-card-text">MO安全编程规范</span>
+            </a>
+            <a class="devui-banner-card" href="javascript:void(0)">
+                <div class="devui-banner-card-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/K-32x33.svg" alt="K">
+                </div>
+                <span class="devui-banner-card-text">Kubernetes集群管理平台</span>
+            </a>
+        </div>
+    </div>
+    <div class="section-title">5 Cards — 溢出边界测试</div>
+
+    <!-- ============================================
+         STATE 3: 空卡片状态 — 无最近访问
+         ============================================ -->
+    <div class="section-title">空状态 / No Recent Access</div>
+    <div class="devui-banner">
+        <div class="devui-banner-title">Hello,Jingwen</div>
+        <div class="devui-banner-section-label">最近访问</div>
+        <div class="devui-banner-card-list">
+            <!-- Empty: no cards -->
+        </div>
+    </div>
+    <div class="section-title">无卡片 — 保持结构</div>
+
+    <!-- ============================================
+         STATE 4: 长用户名
+         ============================================ -->
+    <div class="section-title">长用户名 / Long Username</div>
+    <div class="devui-banner">
+        <div class="devui-banner-title">Hello,AlexanderMaximilianJohnsonSmithIII</div>
+        <div class="devui-banner-section-label">最近访问</div>
+        <div class="devui-banner-card-list">
+            <a class="devui-banner-card" href="javascript:void(0)">
+                <div class="devui-banner-card-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/A-48x49.svg" alt="A">
+                </div>
+                <span class="devui-banner-card-text">API网关服务持续集成与自动化部署运维管理平台</span>
+            </a>
+            <a class="devui-banner-card" href="javascript:void(0)">
+                <div class="devui-banner-card-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/S-32x33.svg" alt="S">
+                </div>
+                <span class="devui-banner-card-text">S</span>
+            </a>
+        </div>
+    </div>
+    <div class="section-title">长标题卡片 + 短标题卡片 + 长用户名</div>
+
+    <!-- ============================================
+         Design Token Audit
+         ============================================ -->
+    <div class="audit-section">
+        <h3>📋 Design Token Audit — Figma: 1806-2750</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Figma Value</th>
+                    <th>CSS Token</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Banner Width</td>
+                    <td>1200px (Fixed)</td>
+                    <td>width: 1200px</td>
+                </tr>
+                <tr>
+                    <td>Banner Height</td>
+                    <td>223px (Hug)</td>
+                    <td>height: auto</td>
+                </tr>
+                <tr>
+                    <td>Banner Padding</td>
+                    <td>24px 32px</td>
+                    <td>padding: 24px 32px</td>
+                </tr>
+                <tr>
+                    <td>Banner Radius</td>
+                    <td>12px</td>
+                    <td>var(--devui-border-radius-lg)</td>
+                </tr>
+                <tr>
+                    <td>Banner Background</td>
+                    <td><span class="color-swatch" style="background:#FFFFFF"></span>#FFFFFF</td>
+                    <td>var(--devui-base-bg)</td>
+                </tr>
+                <tr>
+                    <td>Banner Border</td>
+                    <td><span class="color-swatch" style="background:#DFE1E6"></span>1px #DFE1E6</td>
+                    <td>var(--devui-line)</td>
+                </tr>
+                <tr>
+                    <td>Title Font</td>
+                    <td>32px / Semi-Bold 600</td>
+                    <td>var(--devui-font-size-title)</td>
+                </tr>
+                <tr>
+                    <td>Title Color</td>
+                    <td><span class="color-swatch" style="background:#252B3A"></span>#252B3A</td>
+                    <td>var(--devui-text)</td>
+                </tr>
+                <tr>
+                    <td>Title → Label Gap</td>
+                    <td>16px</td>
+                    <td>margin-bottom: 16px</td>
+                </tr>
+                <tr>
+                    <td>Section Label</td>
+                    <td>14px / Bold 700</td>
+                    <td>var(--devui-font-size-md)</td>
+                </tr>
+                <tr>
+                    <td>Label → Cards Gap</td>
+                    <td>12px</td>
+                    <td>margin-bottom: 12px</td>
+                </tr>
+                <tr>
+                    <td>Card List Gap</td>
+                    <td>12px</td>
+                    <td>gap: 12px</td>
+                </tr>
+                <tr>
+                    <td>Card Height</td>
+                    <td>44px (Fixed)</td>
+                    <td>height: 44px</td>
+                </tr>
+                <tr>
+                    <td>Card Padding</td>
+                    <td>0 16px 0 6px</td>
+                    <td>padding: 0 16px 0 6px</td>
+                </tr>
+                <tr>
+                    <td>Card Radius</td>
+                    <td>22px (Pill)</td>
+                    <td>var(--devui-border-radius-pill)</td>
+                </tr>
+                <tr>
+                    <td>Card Background</td>
+                    <td><span class="color-swatch" style="background:#FFFFFF"></span>#FFFFFF</td>
+                    <td>var(--devui-base-bg)</td>
+                </tr>
+                <tr>
+                    <td>Card Icon-Text Gap</td>
+                    <td>8px</td>
+                    <td>gap: 8px</td>
+                </tr>
+                <tr>
+                    <td>Card Icon Size</td>
+                    <td>32 × 33px</td>
+                    <td>width: 32px; height: 33px</td>
+                </tr>
+                <tr>
+                    <td>Card Text</td>
+                    <td>14px / Regular 400</td>
+                    <td>var(--devui-font-size-md)</td>
+                </tr>
+                <tr>
+                    <td>Card Text Color</td>
+                    <td><span class="color-swatch" style="background:#252B3A"></span>#252B3A</td>
+                    <td>var(--devui-text)</td>
+                </tr>
+                <tr>
+                    <td>Icon Source Dir</td>
+                    <td colspan="2">icon/miniDev-icon/engineering-initial/[A-Z0-9]-32x33.svg</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

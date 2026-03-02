@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ActivityCard Benchmark - 1833-2799</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ============================================
+           Design Tokens — from Figma Node 1833-2799
+           ============================================ */
+        :root {
+            /* Configs */
+            --devui-text: #252B3A;
+            --devui-base-bg: #FFFFFF;
+
+            /* Shadows */
+            --devui-shadow-length-base: 0 1px 6px 0 rgba(0, 0, 0, 0.08);
+
+            /* Font Sizes */
+            --devui-font-size-md: 14px;
+            --devui-font-size-lg: 16px;
+
+            /* Radii */
+            --devui-border-radius-xl: 16px;
+        }
+
+        /* ============================================
+           Page Canvas
+           ============================================ */
+        body {
+            margin: 0;
+            padding: 50px;
+            background-color: #F3F6F8;
+            font-family: 'Noto Sans SC', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-family: monospace;
+            color: #999;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 4px 12px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* ============================================
+           Component: devui-activityCard
+           ============================================ */
+        /* Figma: Auto-layout Vertical */
+        .devui-activityCard {
+            width: 384px;
+            /* Figma: 384px */
+            height: 261px;
+            /* Figma: 261px */
+            background-color: var(--devui-base-bg, #FFFFFF);
+            /* Figma: fill #FFFFFF */
+            padding: 16px 20px 20px 20px;
+            /* Figma: padding 16px 20px 20px 20px */
+            border-radius: var(--devui-border-radius-xl, 16px);
+            /* Figma: radius 16px */
+            box-shadow: var(--devui-shadow-length-base);
+            /* Figma: shadow */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            /* Figma: itemSpacing 16px */
+            align-items: flex-start;
+        }
+
+        /* Card Overview Title */
+        .devui-activity-title {
+            width: 100%;
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            /* Figma: Bold */
+            font-size: var(--devui-font-size-lg, 16px);
+            color: var(--devui-text, #252B3A);
+            /* Figma: #252B3A */
+            line-height: 24px;
+            /* Figma: 24px */
+        }
+
+        /* Card Inner Banner Wrapper */
+        .devui-activity-banner {
+            position: relative;
+            width: 344px;
+            /* Figma: 344px */
+            height: 172px;
+            /* Figma: 172px */
+            flex-shrink: 0;
+            border-radius: var(--devui-border-radius-xl, 16px);
+            /* Figma: 16px */
+            overflow: hidden;
+            background-image:
+                linear-gradient(-44.0652deg, rgba(58, 167, 255, 0) 83.841%, rgb(58, 167, 255) 116.4%),
+                linear-gradient(140.577deg, rgba(255, 180, 234, 0) 69.535%, rgb(255, 180, 234) 99.566%),
+                linear-gradient(rgb(191, 229, 255) 0%, rgb(232, 227, 255) 100%);
+            cursor: pointer;
+        }
+
+        /* Right 3D Illustration Graphic */
+        .devui-activity-bg-img {
+            position: absolute;
+            right: 0;
+            /* Figma: right 0 */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 220px;
+            /* Figma: width 220px */
+            height: 125px;
+            /* Figma: height 125px */
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        /* Subtitle Part 1 (Left Text) */
+        .devui-activity-badge {
+            position: absolute;
+            left: 16px;
+            /* Figma: left 16px */
+            top: 63px;
+            /* Figma: top 63px */
+            transform: translateY(-50%);
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            font-weight: 500;
+            /* Figma: Medium */
+            font-size: var(--devui-font-size-lg, 16px);
+            color: var(--devui-text, #252B3A);
+            line-height: 24px;
+            white-space: nowrap;
+        }
+
+        /* Subtitle Part 2 (Gradient Highlight Text) */
+        .devui-activity-highlight {
+            position: absolute;
+            left: 52px;
+            /* Figma: left 52px */
+            top: 60px;
+            /* Figma: top 60px */
+            transform: translateY(-50%);
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            /* Figma: Bold */
+            font-size: 22px;
+            /* Figma: 22px */
+            line-height: 24px;
+            background-image: linear-gradient(to bottom, #002672 0%, #6b9bfa 100%);
+            /* Figma Gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            white-space: nowrap;
+        }
+
+        /* Description Below Title */
+        .devui-activity-desc {
+            position: absolute;
+            left: 16px;
+            /* Figma: left 16px */
+            top: 118px;
+            /* Figma: top 118px */
+            transform: translateY(-50%);
+            width: 124px;
+            /* Figma: width 124px */
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 400;
+            /* Figma: Regular */
+            font-size: var(--devui-font-size-md, 14px);
+            color: var(--devui-text, #252B3A);
+            line-height: 22px;
+            white-space: pre-wrap;
+        }
+
+        /* Interaction Arrow Icon */
+        .devui-activity-arrow {
+            position: absolute;
+            left: 111px;
+            /* Figma: left 111px */
+            top: 122px;
+            /* Figma: top 122px */
+            width: 16px;
+            /* Figma: size 16px */
+            height: 16px;
+            background-color: var(--devui-text, #252B3A);
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/arrow-left.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/arrow-left.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            /* Rotate 180 deg to point to the right as specified in Figma: -scale-y-100 rotate-180 */
+            transform: rotate(180deg);
+        }
+
+        /* ============================================
+           Design Token Audit Table
+           ============================================ */
+        .audit-section {
+            width: 800px;
+            background: var(--devui-text);
+            border-radius: 8px;
+            padding: 24px 32px;
+            box-sizing: border-box;
+            color: #E0E0E0;
+        }
+
+        .audit-section h3 {
+            color: #FFFFFF;
+            font-size: 16px;
+            margin: 0 0 16px 0;
+        }
+
+        .audit-section table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            font-family: monospace;
+        }
+
+        .audit-section th {
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            color: #8A8E99;
+            font-weight: 500;
+        }
+
+        .audit-section td {
+            padding: 6px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .color-swatch {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-right: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="section-title">ActivityCard / Default (状态: 默认)</div>
+
+    <!-- Component Starts Here -->
+    <div class="devui-activityCard">
+        <div class="devui-activity-title">活动</div>
+        <div class="devui-activity-banner">
+            <img class="devui-activity-bg-img"
+                src="http://localhost:3845/assets/0db7cd0da06b8ad0752b1670660ee5d5cf292f1d.png"
+                alt="Activity Banner Illustration" />
+            <span class="devui-activity-badge">频繁</span>
+            <span class="devui-activity-highlight">重新登录?</span>
+            <div class="devui-activity-desc">点击查看如何增加登录保持时长</div>
+            <span class="devui-activity-arrow"></span>
+        </div>
+    </div>
+
+    <!-- Design Token Audit -->
+    <div class="audit-section">
+        <h3>📋 Design Token Audit — Figma: 1833-2799 (活动卡片)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Figma Value</th>
+                    <th>CSS Token / Style</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Card Width / Height</td>
+                    <td>384px / 261px</td>
+                    <td>width: 384px; height: 261px;</td>
+                </tr>
+                <tr>
+                    <td>Card Padding</td>
+                    <td>Top:16, Right:20, Bottom:20, Left:20</td>
+                    <td>padding: 16px 20px 20px 20px</td>
+                </tr>
+                <tr>
+                    <td>Card Gap</td>
+                    <td>16px (Title to Banner)</td>
+                    <td>gap: 16px</td>
+                </tr>
+                <tr>
+                    <td>Card Background</td>
+                    <td><span class="color-swatch" style="background:#FFFFFF"></span>#FFFFFF</td>
+                    <td>var(--devui-base-bg)</td>
+                </tr>
+                <tr>
+                    <td>Card Radius</td>
+                    <td>16px</td>
+                    <td>var(--devui-border-radius-xl, 16px)</td>
+                </tr>
+                <tr>
+                    <td>Card Shadow</td>
+                    <td>0px 1px 6px 0px rgba(0,0,0,0.08)</td>
+                    <td>var(--devui-shadow-length-base)</td>
+                </tr>
+                <tr>
+                    <td>Banner Size</td>
+                    <td>344px × 172px</td>
+                    <td>width: 344px; height: 172px;</td>
+                </tr>
+                <tr>
+                    <td>Banner Background</td>
+                    <td>Multilayer Linear Gradient Array</td>
+                    <td>linear-gradient(...) * 3</td>
+                </tr>
+                <tr>
+                    <td>Badge Text</td>
+                    <td><span class="color-swatch" style="background:#252B3A"></span>#252B3A, 16px, Medium 500</td>
+                    <td>var(--devui-text), var(--devui-font-size-lg)</td>
+                </tr>
+                <tr>
+                    <td>Highlight Gradient Text</td>
+                    <td>#002672 To #6b9bfa, 22px, Bold 700</td>
+                    <td>background-clip: text; color: transparent</td>
+                </tr>
+                <tr>
+                    <td>Description Text</td>
+                    <td><span class="color-swatch" style="background:#252B3A"></span>#252B3A, 14px, Regular 400</td>
+                    <td>var(--devui-text), var(--devui-font-size-md)</td>
+                </tr>
+                <tr>
+                    <td>Arrow Icon</td>
+                    <td>Mask Fill #252B3A, Size 16px, Rotate 180°</td>
+                    <td>transform: rotate(180deg)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Component Render Bench</title>
+    <!-- CSS Mask Style -->
+    <style>
+        body {
+            padding: 40px;
+            background: #f3f6f8;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #252b3a;
+        }
+
+        .row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* Base Button Style from Template */
+        .devui-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            gap: 4px;
+            border-radius: var(--devui-radius, 4px);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            box-sizing: border-box;
+            text-decoration: none;
+            user-select: none;
+        }
+
+        /* Sizes */
+        .devui-btn-sm {
+            height: 28px;
+            padding: 0 12px;
+            font-size: 12px;
+        }
+
+        .devui-btn-md {
+            height: 32px;
+            padding: 0 16px;
+            font-size: 14px;
+        }
+
+        .devui-btn.devui-btn-lg {
+            height: 40px;
+            padding: 0 20px;
+            font-size: 16px;
+        }
+
+        /* Variant: Primary */
+        .devui-btn-primary {
+            background-color: var(--devui-primary, #5E7CE0);
+            border: 1px solid transparent;
+            color: var(--devui-light-text, #FFFFFF);
+        }
+
+        .devui-btn-primary:hover:not(:disabled) {
+            background-color: var(--devui-primary-hover, #7693F5);
+        }
+
+        .devui-btn-primary:active:not(:disabled) {
+            background-color: var(--devui-primary-active, #344899);
+        }
+
+        .devui-btn-primary:disabled {
+            background-color: var(--devui-primary-disabled, #BECCFA);
+            color: #FFFFFF;
+        }
+
+        /* Variant: Secondary (Default) */
+        .devui-btn-secondary {
+            background-color: var(--devui-base-bg, #FFFFFF);
+            border: 1px solid var(--devui-form-control-line, #ADB0B8);
+            color: var(--devui-text, #252B3A);
+        }
+
+        .devui-btn-secondary:hover:not(:disabled) {
+            border-color: var(--devui-from-control-line-hover, #575D6C);
+        }
+
+        .devui-btn-secondary:active:not(:disabled) {
+            border-color: var(--devui-form-control-line-active, #5E7CE0);
+            color: var(--devui-primary-active, #5E7CE0);
+        }
+
+        .devui-btn-secondary:disabled {
+            background-color: var(--devui-btn-common-bg-disabled, #F5F5F5);
+            border-color: var(--devui-disabled-line, #DFE1E6);
+            color: var(--devui-disabled-text, #ADB0B8);
+        }
+
+        /* Variant: Text */
+        .devui-btn-text {
+            background-color: transparent;
+            border: 1px solid transparent;
+            color: var(--devui-text, #252B3A);
+            padding: 0 8px;
+        }
+
+        .devui-btn-text:hover:not(:disabled) {
+            color: var(--devui-primary, #5E7CE0);
+            background-color: rgba(94, 124, 224, 0.05);
+        }
+
+        .devui-btn-text:active:not(:disabled) {
+            color: var(--devui-primary-active, #344899);
+        }
+
+        .devui-btn-text:disabled {
+            color: var(--devui-disabled-text, #ADB0B8);
+            background-color: transparent;
+        }
+
+        /* Icon Support (CSS Mask Implementation) */
+        .devui-btn .devui-icon-mask {
+            width: 16px;
+            height: 16px;
+            background-color: currentColor;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            display: inline-block;
+        }
+
+        /* Disable State (Generic) */
+        .devui-btn:disabled {
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="section">
+        <div class="section-title">1. Button Variants Showcase</div>
+        <div class="row">
+            <!-- Primary -->
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md">
+                <span>Primary Button</span>
+            </button>
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md" disabled>
+                <span>Primary Disabled</span>
+            </button>
+
+            <!-- Secondary -->
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-md">
+                <span>Secondary Button</span>
+            </button>
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-md" disabled>
+                <span>Secondary Disabled</span>
+            </button>
+
+            <!-- Text -->
+            <button type="button" class="devui-btn devui-btn-text devui-btn-md">
+                <span>Text Button</span>
+            </button>
+            <button type="button" class="devui-btn devui-btn-text devui-btn-md" disabled>
+                <span>Text Disabled</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">2. Primary Button with Icons (White Mask)</div>
+        <div class="row">
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/search.svg'); mask-image: url('../../../../icon/miniDev-icon/action/search.svg');"></span>
+                <span>Search</span>
+            </button>
+
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-md">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/edit.svg'); mask-image: url('../../../../icon/miniDev-icon/action/edit.svg');"></span>
+                <span>Edit</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">3. Secondary Button with Icons (Dark Grey Mask)</div>
+        <div class="row">
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-md">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/delete.svg'); mask-image: url('../../../../icon/miniDev-icon/action/delete.svg');"></span>
+                <span>Delete</span>
+            </button>
+
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-md">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/filter.svg'); mask-image: url('../../../../icon/miniDev-icon/action/filter.svg');"></span>
+                <span>Filter</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">4. Sizes Benchmark</div>
+        <div class="row">
+            <!-- Small -->
+            <button type="button" class="devui-btn devui-btn-primary devui-btn-sm">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/plus.svg'); mask-image: url('../../../../icon/miniDev-icon/action/plus.svg');"></span>
+                <span>Small Size</span>
+            </button>
+
+            <!-- Medium -->
+            <button type="button" class="devui-btn devui-btn-secondary devui-btn-md">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/plus.svg'); mask-image: url('../../../../icon/miniDev-icon/action/plus.svg');"></span>
+                <span>Medium Size</span>
+            </button>
+
+            <!-- Large -->
+            <button type="button" class="devui-btn devui-btn-text devui-btn-lg">
+                <span class="devui-icon-mask"
+                    style="-webkit-mask-image: url('../../../../icon/miniDev-icon/action/plus.svg'); mask-image: url('../../../../icon/miniDev-icon/action/plus.svg');"></span>
+                <span>Large Size</span>
+            </button>
+        </div>
+    </div>
+
+</body>
+
+</html>

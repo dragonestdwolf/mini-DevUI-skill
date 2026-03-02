@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ActivityCard v1 Test Component</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Context Layout for testing only */
+        body {
+            background-color: #ECEFF1;
+            padding: 50px;
+            font-family: 'Noto Sans SC', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .test-case {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .test-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+            font-family: monospace;
+        }
+
+        /* 
+           命名空间原则：所有 Class 必须以 devui-activity 开头 
+           Token 原则：必须使用 var(--devui-token) 形式
+        */
+        .devui-activityCard {
+            width: 384px;
+            height: 261px;
+            background-color: var(--devui-base-bg, #FFFFFF);
+            padding: 16px 20px 20px 20px;
+            border-radius: var(--devui-border-radius-xl, 16px);
+            box-shadow: var(--devui-shadow-length-base, 0 1px 6px 0 rgba(0, 0, 0, 0.08));
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .devui-activity-title {
+            width: 100%;
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            font-size: var(--devui-font-size-lg, 16px);
+            color: var(--devui-text, #252B3A);
+            line-height: 24px;
+        }
+
+        .devui-activity-banner {
+            position: relative;
+            width: 344px;
+            height: 172px;
+            flex-shrink: 0;
+            border-radius: var(--devui-border-radius-xl, 16px);
+            overflow: hidden;
+            background-image:
+                linear-gradient(-44.0652deg, rgba(58, 167, 255, 0) 83.841%, rgb(58, 167, 255) 116.4%),
+                linear-gradient(140.577deg, rgba(255, 180, 234, 0) 69.535%, rgb(255, 180, 234) 99.566%),
+                linear-gradient(rgb(191, 229, 255) 0%, rgb(232, 227, 255) 100%);
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+        }
+
+        .devui-activity-bg-img {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 220px;
+            height: 125px;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .devui-activity-badge {
+            position: absolute;
+            left: 16px;
+            top: 63px;
+            transform: translateY(-50%);
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            font-weight: 500;
+            font-size: var(--devui-font-size-lg, 16px);
+            color: var(--devui-text, #252B3A);
+            line-height: 24px;
+            white-space: nowrap;
+        }
+
+        .devui-activity-highlight {
+            position: absolute;
+            left: 52px;
+            top: 60px;
+            transform: translateY(-50%);
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            line-height: 24px;
+            background-image: linear-gradient(to bottom, #002672 0%, #6b9bfa 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            white-space: nowrap;
+        }
+
+        .devui-activity-desc {
+            position: absolute;
+            left: 16px;
+            top: 118px;
+            transform: translateY(-50%);
+            width: 124px;
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 400;
+            font-size: var(--devui-font-size-md, 14px);
+            color: var(--devui-text, #252B3A);
+            line-height: 22px;
+            white-space: pre-wrap;
+        }
+
+        .devui-activity-arrow {
+            position: absolute;
+            left: 111px;
+            top: 122px;
+            width: 16px;
+            height: 16px;
+            background-color: var(--devui-text, #252B3A);
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/arrow-left.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/arrow-left.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="test-case">
+        <span class="test-label">Case 1: Normal State (Standard Data)</span>
+        <div class="devui-activityCard">
+            <div class="devui-activity-title">活动</div>
+            <a href="javascript:void(0)" class="devui-activity-banner">
+                <!-- Using placeholder for img since it may become broken externally -->
+                <img class="devui-activity-bg-img"
+                    src="http://localhost:3845/assets/0db7cd0da06b8ad0752b1670660ee5d5cf292f1d.png" alt="" />
+                <span class="devui-activity-badge">频繁</span>
+                <span class="devui-activity-highlight">重新登录?</span>
+                <div class="devui-activity-desc">点击查看如何增加登录保持时长</div>
+                <span class="devui-activity-arrow"></span>
+            </a>
+        </div>
+    </div>
+
+    <div class="test-case">
+        <span class="test-label">Case 2: Extreme Data Boundaries (Very Long Texts)</span>
+        <div class="devui-activityCard">
+            <div class="devui-activity-title">这个也是一个很长很长的活动标题部分</div>
+            <a href="javascript:void(0)" class="devui-activity-banner">
+                <span class="devui-activity-badge">特别非常地无比长</span>
+                <span class="devui-activity-highlight">的断头文字?</span>
+                <!-- Notice that highlight uses absolute positioning, extremely long badge text will OVERLAP the highlight text -->
+                <!-- The description will just span multiple lines because pre-wrap allows breaking -->
+                <div class="devui-activity-desc">这段文字真的非常长看看超出124px限制会向下换几行并且是否挡住小箭头呢</div>
+                <span class="devui-activity-arrow"></span>
+            </a>
+        </div>
+    </div>
+
+    <div class="test-case">
+        <span class="test-label">Case 3: Missing Fields (Empty Data / Nulls)</span>
+        <div class="devui-activityCard">
+            <div class="devui-activity-title">空值活动测试</div>
+            <a href="javascript:void(0)" class="devui-activity-banner">
+                <span class="devui-activity-badge"></span>
+                <span class="devui-activity-highlight"></span>
+                <div class="devui-activity-desc"></div>
+                <span class="devui-activity-arrow"></span>
+            </a>
+        </div>
+    </div>
+
+</body>
+
+</html>

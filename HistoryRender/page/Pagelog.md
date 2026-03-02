@@ -101,3 +101,50 @@ no：v14
 读取 Skill：htmlrender.md, Page/表格页.png
 生成描述： @[.agent/rules/2.render/htmlrender.md]@[Page/表格页.png]，生成一份表格页测试
 输出位置： /HistoryRender/page/v14/
+no: v15
+时间: 02-27 10:00
+框架与库: Angular / DevUI
+读取 Skill: form.md, input.md, button.md, checkbox.md, htmlrender.md
+生成描述: @[Page/表单页.png]@[.agent/rules/2.render/htmlrender.md],现在试试生成一张表单页
+输出位置: /HistoryRender/page/v15/
+no: v16
+时间: 02-27 10:05
+框架与库: Angular / DevUI
+读取 Skill: htmlrender.md
+生成描述: @[Page/表单页.png]@[.agent/rules/2.render/htmlrender.md],现在试试生成一张表单页 (complex form layout rendering)
+输出位置: /HistoryRender/page/v16/
+no: v17
+时间: 02-27 10:11
+框架与库: Angular / DevUI
+读取 Skill: header.md, sidebar.md, htmlrender.md
+生成描述: @[Page/表单页.png]@[.agent/rules/2.render/htmlrender.md],生成测试严格采用规范 Sidebar 和 Header 的 HTML页面
+输出位置: /HistoryRender/page/v17/
+
+no: bench-card
+时间: 02-28 15:10
+框架与库: HTML / CSS
+读取 Skill: header.md, sidebar.md 等组件规范
+生成描述: 为工作台创建高保真标杆 HTML (`bench-card.html`)，集成并直接复用了已被认证过的组件 Benchmark 代码，如顶导 `.devui-header`、`.devui-menuCard` 和各类内容卡片，并映射真实 `icon-feed-mcp` SVG 图标进行多维度的视觉还原。
+输出位置: /HistoryRender/page/bench-card.html
+
+no: v18
+时间: 02-28 16:50
+框架与库: HTML / CSS
+读取 Skill: header.md, sidebar.md, menuCard-tem.html, activityCard-tem.html, announcementCard-tem.html, helpDocCard-tem.html, card-tem.html
+生成描述: 综合各卡片组件规范，严格依据卡片工作台设计稿 (Hello, Jingwen版)，生成高保真、布局精准的v18完整大盘页面，整合了全部的顶部导航、左右侧栏结构及主内容区的卡片排布与响应逻辑。
+输出位置: /HistoryRender/page/v18/v18.html
+
+no: v19
+时间: 02-28 17:03
+框架与库: HTML / CSS
+读取 Skill: header.md, sidebar.md, menuCard-tem.html, activityCard-tem.html, announcementCard-tem.html, helpDocCard-tem.html, card-tem.html
+生成描述: 综合各卡片组件规范，严格依据卡片工作台设计稿，生成高保真HTML至v19版本，修正了图标及静态资源的相对路径(="../../../")层级缺陷。
+输出位置: /HistoryRender/page/v19/v19.html
+
+no: v20
+时间: 02-28 17:40
+框架与库: HTML / CSS
+读取 Skill: .agent/rules/2.render/htmlrender.md, spec/1.layout/layout.md, header-tem.html, sidebar-tem.html, menuCard-tem.html, activityCard-tem.html, announcementCard-tem.html, helpDocCard-tem.html, card-tem.html
+生成描述: 综合各类工作台卡片组件规范，严格遵循 layout 布局规范中的“卡片工作台布局架构”，在 1920x1080 的绝对定位画布上物理还原了“Hello, Jingwen”大盘页面。通过动态路径（="../../../"）准确调用了 SVG 静态资源，确保了顶导、浮动侧边栏、网格项目卡片及右侧业务面板的像素级还原与一致性。
+输出位置: /HistoryRender/page/v20/v20.html
+

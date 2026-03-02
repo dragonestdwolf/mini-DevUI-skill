@@ -1,0 +1,183 @@
+<!-- 
+  HelpDocCard Template
+  Source: Figma Node 1973-2837
+  
+  Variables (Template Contract):
+  - {{cardTitle}}: Top-level card title (e.g., '帮助文档')
+  - {{allDocsUrl}}: Navigation URL for '所有文档'
+  - {{docUrl}}: Navigation URL for each individual grid <a> block
+  - {{iconClass}}: The specific mask image mapping class (e.g., '.devui-helpDoc-icon--product-intro')
+  - {{docTitle}}: The mapped title text (e.g., '产品介绍')
+-->
+
+<style>
+    /* 
+   命名空间原则：所有 Class 必须以 devui-helpDoc 开头 
+   Token 原则：必须使用 var(--devui-token) 形式
+*/
+    .devui-helpDocCard {
+        width: 384px;
+        background-color: var(--devui-base-bg, #FFFFFF);
+        padding: 16px 20px 20px 20px;
+        border-radius: var(--devui-border-radius-xl, 16px);
+        box-shadow: var(--devui-shadow-length-base, 0 1px 6px 0 rgba(0, 0, 0, 0.08));
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        align-items: flex-start;
+    }
+
+    .devui-helpDoc-header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+    }
+
+    .devui-helpDoc-title {
+        font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+        font-weight: 700;
+        font-size: var(--devui-font-size-lg, 16px);
+        color: var(--devui-text, #252B3A);
+        line-height: 24px;
+        white-space: nowrap;
+    }
+
+    .devui-helpDoc-all-link {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .devui-helpDoc-all-text {
+        font-family: 'Noto Sans SC', sans-serif;
+        font-weight: 400;
+        font-size: var(--devui-font-size-sm, 12px);
+        color: var(--devui-placeholder, #8A8E99);
+        line-height: 20px;
+    }
+
+    .devui-helpDoc-all-icon {
+        width: 16px;
+        height: 16px;
+        background-color: var(--devui-placeholder, #8A8E99);
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/next.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/next.svg');
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        flex-shrink: 0;
+    }
+
+    .devui-helpDoc-grid {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 0;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    .devui-helpDoc-item {
+        width: 86px;
+        height: 76px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .devui-helpDoc-item-icon {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        background-color: var(--devui-text, #252B3A);
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+    }
+
+    .devui-helpDoc-item-label {
+        font-family: 'Noto Sans SC', sans-serif;
+        font-weight: 400;
+        font-size: var(--devui-font-size-sm, 12px);
+        color: var(--devui-text, #252B3A);
+        line-height: 20px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    /* Base Predefined Mappings for Icons (linear only, no solid fills) */
+    .devui-helpDoc-icon--product-intro {
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/documentation.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/documentation.svg');
+    }
+
+    .devui-helpDoc-icon--quick-start {
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/execute.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/execute.svg');
+    }
+
+    .devui-helpDoc-icon--user-guide {
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/user-guide.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/user-guide.svg');
+    }
+
+    .devui-helpDoc-icon--best-practice {
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/star.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/star.svg');
+    }
+
+    .devui-helpDoc-icon--faq {
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/help.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/help.svg');
+    }
+
+    .devui-helpDoc-icon--theory {
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/readme.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/readme.svg');
+    }
+
+    .devui-helpDoc-icon--reference {
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/description-1.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/description-1.svg');
+    }
+
+    .devui-helpDoc-icon--api {
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/api.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/api.svg');
+    }
+</style>
+
+<!-- 根元素必需类名组合 -->
+<div class="devui-helpDocCard">
+    <div class="devui-helpDoc-header">
+        <div class="devui-helpDoc-title">{{cardTitle}}</div>
+        <a href="{{allDocsUrl}}" class="devui-helpDoc-all-link">
+            <span class="devui-helpDoc-all-text">所有文档</span>
+            <span class="devui-helpDoc-all-icon"></span>
+        </a>
+    </div>
+
+    <!-- 图标网格区域 (动态插槽组装内容) -->
+    <div class="devui-helpDoc-grid">
+        <a href="{{docUrl}}" class="devui-helpDoc-item">
+            <span class="devui-helpDoc-item-icon {{iconClass}}"></span>
+            <span class="devui-helpDoc-item-label">{{docTitle}}</span>
+        </a>
+    </div>
+</div>

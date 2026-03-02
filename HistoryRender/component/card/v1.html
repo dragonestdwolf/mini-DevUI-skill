@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Component Test v1</title>
+    <style>
+        /* ============================================
+           Design Tokens (from card-tem.html)
+           ============================================ */
+        :root {
+            --devui-text: #252B3A;
+            --devui-text-weak: #5E6678;
+            --devui-base-bg: #FFFFFF;
+            --devui-line: #DFE1E6;
+            --devui-brand: #5E7CE0;
+            --devui-pjcard-tag-success-bg: #E6F6F0;
+            --devui-pjcard-tag-success-text: #00A870;
+            --devui-pjcard-tag-general-bg: #F2F5FC;
+            --devui-pjcard-tag-general-text: #252B3A;
+            --devui-shadow-length-hover: 0 4px 16px 0 rgba(37, 43, 58, 0.16);
+            --devui-font-size-sm: 12px;
+            --devui-font-size-md: 14px;
+            --devui-font-size-lg: 16px;
+            --devui-border-radius-sm: 4px;
+            --devui-border-radius-md: 8px;
+            --devui-border-radius-lg: 12px;
+        }
+
+        /* ============================================
+           Page: Center isolated component
+           ============================================ */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #F3F6F8;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+            gap: 32px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .test-case {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .case-label {
+            font-size: 11px;
+            font-family: monospace;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           Component: devui-pjcard (from card-tem.html)
+           ============================================ */
+        .devui-pjcard {
+            width: 380px;
+            background-color: var(--devui-base-bg, #FFFFFF);
+            border: 1px solid var(--devui-line, #DFE1E6);
+            border-radius: var(--devui-border-radius-lg, 12px);
+            padding: 20px 24px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .devui-pjcard:hover {
+            box-shadow: var(--devui-shadow-length-hover, 0 4px 16px 0 rgba(37, 43, 58, 0.16));
+            border-color: #C8CADE;
+        }
+
+        .devui-pjcard-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .devui-pjcard-app-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--devui-border-radius-md, 8px);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .devui-pjcard-app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .devui-pjcard-title {
+            flex: 1;
+            font-size: var(--devui-font-size-lg, 16px);
+            font-weight: 700;
+            color: var(--devui-text, #252B3A);
+            line-height: 24px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .devui-pjcard-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .devui-pjcard-action-btn {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: var(--devui-border-radius-sm, 4px);
+            color: var(--devui-text-weak, #5E6678);
+            transition: background-color 0.2s, color 0.2s;
+            padding: 0;
+        }
+
+        .devui-pjcard-action-btn:hover {
+            background-color: var(--devui-pjcard-tag-general-bg, #F2F5FC);
+            color: var(--devui-brand, #5E7CE0);
+        }
+
+        .devui-pjcard-action-btn.is-starred {
+            color: #FAC20A;
+        }
+
+        .devui-pjcard-tags {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            min-height: 22px;
+        }
+
+        .devui-pjcard-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 22px;
+            padding: 0 8px;
+            border-radius: var(--devui-border-radius-sm, 4px);
+            font-size: var(--devui-font-size-sm, 12px);
+            font-weight: 400;
+            line-height: 22px;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+
+        .devui-pjcard-tag--success {
+            background-color: var(--devui-pjcard-tag-success-bg, #E6F6F0);
+            color: var(--devui-pjcard-tag-success-text, #00A870);
+        }
+
+        .devui-pjcard-tag--general {
+            background-color: var(--devui-pjcard-tag-general-bg, #F2F5FC);
+            color: var(--devui-pjcard-tag-general-text, #252B3A);
+        }
+
+        .devui-pjcard-meta {
+            display: flex;
+            align-items: center;
+            font-size: var(--devui-font-size-sm, 12px);
+            color: var(--devui-text-weak, #5E6678);
+            line-height: 20px;
+        }
+
+        .devui-pjcard-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .devui-pjcard-meta-divider {
+            width: 1px;
+            height: 12px;
+            background-color: var(--devui-line, #DFE1E6);
+            margin: 0 12px;
+            flex-shrink: 0;
+        }
+
+        .devui-pjcard-meta-label {
+            color: var(--devui-text-weak, #5E6678);
+            white-space: nowrap;
+        }
+
+        .devui-pjcard-meta-value {
+            color: var(--devui-text, #252B3A);
+            font-weight: 400;
+            max-width: 160px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .devui-pjcard-meta-value--truncated {
+            max-width: 80px;
+        }
+
+        .devui-pjcard-copy-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            padding: 0;
+            color: var(--devui-text-weak, #5E6678);
+            transition: color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .devui-pjcard-copy-btn:hover {
+            color: var(--devui-brand, #5E7CE0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================
+         CASE 1: Normal — 基础数据填充
+         ============================================ -->
+    <div class="test-case">
+        <span class="case-label">Case 1: Normal (基础数据)</span>
+        <div class="devui-pjcard">
+            <div class="devui-pjcard-header">
+                <div class="devui-pjcard-app-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/M-32x33.svg" alt="M">
+                </div>
+                <span class="devui-pjcard-title">{{TEST_TITLE}}</span>
+                <div class="devui-pjcard-actions">
+                    <button class="devui-pjcard-action-btn" aria-label="收藏">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path
+                                d="M8 1.5L9.854 5.256L14 5.866L11 8.793L11.708 12.923L8 10.977L4.292 12.923L5 8.793L2 5.866L6.146 5.256L8 1.5Z"
+                                stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none" />
+                        </svg>
+                    </button>
+                    <button class="devui-pjcard-action-btn" aria-label="更多操作">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="3" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="13" cy="8" r="1.2" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="devui-pjcard-tags">
+                <span class="devui-pjcard-tag devui-pjcard-tag--success">{{TEST_TAG_SUCCESS}}</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--general">{{TEST_TAG_GENERAL}}</span>
+            </div>
+            <div class="devui-pjcard-meta">
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">创建者：</span>
+                    <span class="devui-pjcard-meta-value">{{TEST_CREATOR}}</span>
+                </div>
+                <div class="devui-pjcard-meta-divider"></div>
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">项目ID：</span>
+                    <span class="devui-pjcard-meta-value devui-pjcard-meta-value--truncated">{{TEST_ID}}</span>
+                    <button class="devui-pjcard-copy-btn" aria-label="复制"><svg width="14" height="14"
+                            viewBox="0 0 14 14" fill="none">
+                            <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" />
+                            <path d="M10 4V3C10 2.448 9.552 2 9 2H3C2.448 2 2 2.448 2 3V9C2 9.552 2.448 10 3 10H4"
+                                stroke="currentColor" stroke-width="1.2" />
+                        </svg></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         CASE 2: Starred — 收藏激活态
+         ============================================ -->
+    <div class="test-case">
+        <span class="case-label">Case 2: Starred Active</span>
+        <div class="devui-pjcard">
+            <div class="devui-pjcard-header">
+                <div class="devui-pjcard-app-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/D-32x33.svg" alt="D">
+                </div>
+                <span class="devui-pjcard-title">DevCloud_Sprint_Review</span>
+                <div class="devui-pjcard-actions">
+                    <button class="devui-pjcard-action-btn is-starred" aria-label="已收藏">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path
+                                d="M8 1.5L9.854 5.256L14 5.866L11 8.793L11.708 12.923L8 10.977L4.292 12.923L5 8.793L2 5.866L6.146 5.256L8 1.5Z"
+                                fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button class="devui-pjcard-action-btn" aria-label="更多操作">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="3" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="13" cy="8" r="1.2" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="devui-pjcard-tags">
+                <span class="devui-pjcard-tag devui-pjcard-tag--success">生产</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--general">Sprint-42</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--general">后端</span>
+            </div>
+            <div class="devui-pjcard-meta">
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">创建者：</span>
+                    <span class="devui-pjcard-meta-value">zhang_san</span>
+                </div>
+                <div class="devui-pjcard-meta-divider"></div>
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">项目ID：</span>
+                    <span class="devui-pjcard-meta-value devui-pjcard-meta-value--truncated">f9c3...</span>
+                    <button class="devui-pjcard-copy-btn" aria-label="复制"><svg width="14" height="14"
+                            viewBox="0 0 14 14" fill="none">
+                            <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" />
+                            <path d="M10 4V3C10 2.448 9.552 2 9 2H3C2.448 2 2 2.448 2 3V9C2 9.552 2.448 10 3 10H4"
+                                stroke="currentColor" stroke-width="1.2" />
+                        </svg></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         CASE 3: Extreme Long Title — 标题溢出压力
+         ============================================ -->
+    <div class="test-case">
+        <span class="case-label">Case 3: Extreme Long Title (Overflow Stress)</span>
+        <div class="devui-pjcard">
+            <div class="devui-pjcard-header">
+                <div class="devui-pjcard-app-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/A-48x49.svg" alt="A">
+                </div>
+                <span
+                    class="devui-pjcard-title">这是一个极其冗长的项目标题用于测试文字截断效果_ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789_超长溢出测试_OverflowStressTest</span>
+                <div class="devui-pjcard-actions">
+                    <button class="devui-pjcard-action-btn" aria-label="收藏">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path
+                                d="M8 1.5L9.854 5.256L14 5.866L11 8.793L11.708 12.923L8 10.977L4.292 12.923L5 8.793L2 5.866L6.146 5.256L8 1.5Z"
+                                stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none" />
+                        </svg>
+                    </button>
+                    <button class="devui-pjcard-action-btn" aria-label="更多操作">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="3" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="13" cy="8" r="1.2" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="devui-pjcard-tags">
+                <span class="devui-pjcard-tag devui-pjcard-tag--success">安全</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--general">测试</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--general">DevOps</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--success">CI/CD</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--general">SRE</span>
+            </div>
+            <div class="devui-pjcard-meta">
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">创建者：</span>
+                    <span
+                        class="devui-pjcard-meta-value">extremely_long_username_abcdefghijklmnopqrstuvwxyz_overflow_test</span>
+                </div>
+                <div class="devui-pjcard-meta-divider"></div>
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">项目ID：</span>
+                    <span
+                        class="devui-pjcard-meta-value devui-pjcard-meta-value--truncated">a1b2c3d4-e5f6-7890-abcd-ef1234567890</span>
+                    <button class="devui-pjcard-copy-btn" aria-label="复制"><svg width="14" height="14"
+                            viewBox="0 0 14 14" fill="none">
+                            <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" />
+                            <path d="M10 4V3C10 2.448 9.552 2 9 2H3C2.448 2 2 2.448 2 3V9C2 9.552 2.448 10 3 10H4"
+                                stroke="currentColor" stroke-width="1.2" />
+                        </svg></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         CASE 4: Empty Tags — 空标签状态
+         ============================================ -->
+    <div class="test-case">
+        <span class="case-label">Case 4: Empty Tags Slot</span>
+        <div class="devui-pjcard">
+            <div class="devui-pjcard-header">
+                <div class="devui-pjcard-app-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/0-32x33.svg" alt="0">
+                </div>
+                <span class="devui-pjcard-title">空标签项目</span>
+                <div class="devui-pjcard-actions">
+                    <button class="devui-pjcard-action-btn" aria-label="收藏">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path
+                                d="M8 1.5L9.854 5.256L14 5.866L11 8.793L11.708 12.923L8 10.977L4.292 12.923L5 8.793L2 5.866L6.146 5.256L8 1.5Z"
+                                stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none" />
+                        </svg>
+                    </button>
+                    <button class="devui-pjcard-action-btn" aria-label="更多操作">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="3" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="13" cy="8" r="1.2" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="devui-pjcard-tags">
+                <!-- Empty: no tags -->
+            </div>
+            <div class="devui-pjcard-meta">
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">创建者：</span>
+                    <span class="devui-pjcard-meta-value">admin</span>
+                </div>
+                <div class="devui-pjcard-meta-divider"></div>
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">项目ID：</span>
+                    <span class="devui-pjcard-meta-value devui-pjcard-meta-value--truncated">0</span>
+                    <button class="devui-pjcard-copy-btn" aria-label="复制"><svg width="14" height="14"
+                            viewBox="0 0 14 14" fill="none">
+                            <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" />
+                            <path d="M10 4V3C10 2.448 9.552 2 9 2H3C2.448 2 2 2.448 2 3V9C2 9.552 2.448 10 3 10H4"
+                                stroke="currentColor" stroke-width="1.2" />
+                        </svg></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         CASE 5: Special Characters — 特殊字符注入
+         ============================================ -->
+    <div class="test-case">
+        <span class="case-label">Case 5: Special Characters &amp; Unicode</span>
+        <div class="devui-pjcard">
+            <div class="devui-pjcard-header">
+                <div class="devui-pjcard-app-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/S-32x33.svg" alt="S">
+                </div>
+                <span class="devui-pjcard-title">&lt;script&gt;alert("XSS")&lt;/script&gt; 🚀 émojï</span>
+                <div class="devui-pjcard-actions">
+                    <button class="devui-pjcard-action-btn is-starred" aria-label="已收藏">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path
+                                d="M8 1.5L9.854 5.256L14 5.866L11 8.793L11.708 12.923L8 10.977L4.292 12.923L5 8.793L2 5.866L6.146 5.256L8 1.5Z"
+                                fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button class="devui-pjcard-action-btn" aria-label="更多操作">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="3" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="13" cy="8" r="1.2" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="devui-pjcard-tags">
+                <span class="devui-pjcard-tag devui-pjcard-tag--success">→ 特殊/符号</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--general">"引号测试"</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--general">0</span>
+            </div>
+            <div class="devui-pjcard-meta">
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">创建者：</span>
+                    <span class="devui-pjcard-meta-value">用户/名@#$%^&*()</span>
+                </div>
+                <div class="devui-pjcard-meta-divider"></div>
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">项目ID：</span>
+                    <span class="devui-pjcard-meta-value devui-pjcard-meta-value--truncated">null</span>
+                    <button class="devui-pjcard-copy-btn" aria-label="复制"><svg width="14" height="14"
+                            viewBox="0 0 14 14" fill="none">
+                            <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" />
+                            <path d="M10 4V3C10 2.448 9.552 2 9 2H3C2.448 2 2 2.448 2 3V9C2 9.552 2.448 10 3 10H4"
+                                stroke="currentColor" stroke-width="1.2" />
+                        </svg></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         CASE 6: Many Tags Wrap — 多标签换行
+         ============================================ -->
+    <div class="test-case">
+        <span class="case-label">Case 6: Many Tags (Wrap Test)</span>
+        <div class="devui-pjcard">
+            <div class="devui-pjcard-header">
+                <div class="devui-pjcard-app-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/W-32x33.svg" alt="W">
+                </div>
+                <span class="devui-pjcard-title">多标签换行测试</span>
+                <div class="devui-pjcard-actions">
+                    <button class="devui-pjcard-action-btn" aria-label="收藏">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path
+                                d="M8 1.5L9.854 5.256L14 5.866L11 8.793L11.708 12.923L8 10.977L4.292 12.923L5 8.793L2 5.866L6.146 5.256L8 1.5Z"
+                                stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none" />
+                        </svg>
+                    </button>
+                    <button class="devui-pjcard-action-btn" aria-label="更多操作">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="3" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="13" cy="8" r="1.2" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="devui-pjcard-tags">
+                <span class="devui-pjcard-tag devui-pjcard-tag--success">前端</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--success">后端</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--general">测试</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--general">DevOps</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--success">安全</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--general">运维</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--general">产品</span>
+                <span class="devui-pjcard-tag devui-pjcard-tag--success">设计</span>
+            </div>
+            <div class="devui-pjcard-meta">
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">创建者：</span>
+                    <span class="devui-pjcard-meta-value">team_lead</span>
+                </div>
+                <div class="devui-pjcard-meta-divider"></div>
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">项目ID：</span>
+                    <span class="devui-pjcard-meta-value devui-pjcard-meta-value--truncated">xyz99...</span>
+                    <button class="devui-pjcard-copy-btn" aria-label="复制"><svg width="14" height="14"
+                            viewBox="0 0 14 14" fill="none">
+                            <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" />
+                            <path d="M10 4V3C10 2.448 9.552 2 9 2H3C2.448 2 2 2.448 2 3V9C2 9.552 2.448 10 3 10H4"
+                                stroke="currentColor" stroke-width="1.2" />
+                        </svg></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         CASE 7: Single Character — 最短内容
+         ============================================ -->
+    <div class="test-case">
+        <span class="case-label">Case 7: Minimal Content (Single Char)</span>
+        <div class="devui-pjcard">
+            <div class="devui-pjcard-header">
+                <div class="devui-pjcard-app-icon">
+                    <img src="../../../icon/miniDev-icon/engineering-initial/1-32x33.svg" alt="1">
+                </div>
+                <span class="devui-pjcard-title">X</span>
+                <div class="devui-pjcard-actions">
+                    <button class="devui-pjcard-action-btn" aria-label="收藏">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path
+                                d="M8 1.5L9.854 5.256L14 5.866L11 8.793L11.708 12.923L8 10.977L4.292 12.923L5 8.793L2 5.866L6.146 5.256L8 1.5Z"
+                                stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none" />
+                        </svg>
+                    </button>
+                    <button class="devui-pjcard-action-btn" aria-label="更多操作">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="3" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="13" cy="8" r="1.2" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="devui-pjcard-tags">
+                <span class="devui-pjcard-tag devui-pjcard-tag--success">A</span>
+            </div>
+            <div class="devui-pjcard-meta">
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">创建者：</span>
+                    <span class="devui-pjcard-meta-value">u</span>
+                </div>
+                <div class="devui-pjcard-meta-divider"></div>
+                <div class="devui-pjcard-meta-item">
+                    <span class="devui-pjcard-meta-label">项目ID：</span>
+                    <span class="devui-pjcard-meta-value devui-pjcard-meta-value--truncated">1</span>
+                    <button class="devui-pjcard-copy-btn" aria-label="复制"><svg width="14" height="14"
+                            viewBox="0 0 14 14" fill="none">
+                            <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" />
+                            <path d="M10 4V3C10 2.448 9.552 2 9 2H3C2.448 2 2 2.448 2 3V9C2 9.552 2.448 10 3 10H4"
+                                stroke="currentColor" stroke-width="1.2" />
+                        </svg></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

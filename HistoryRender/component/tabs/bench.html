@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs Benchmark</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 全局 DevUI Token 定义 */
+            --devui-base-bg: #ffffff;
+            --devui-text: #252b3a;
+            --devui-aide-text: #8a8e99;
+            --devui-disabled-text: #adb0b8;
+            --devui-list-item-hover-bg: #f2f5fc;
+        }
+
+        body {
+            margin: 0;
+            padding: 50px;
+            background-color: #f3f5f8;
+            font-family: 'Noto Sans SC', sans-serif;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* ================== 图标公用组件 ================== */
+        .devui-icon {
+            width: 16px;
+            height: 16px;
+            background-color: currentColor;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+        }
+
+        .icon-list-view {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/list-view.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/list-view.svg');
+        }
+
+        .icon-menu-2 {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/menu-2.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/menu-2.svg');
+        }
+
+        .icon-service-tree {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/service-2d/service-tree.svg');
+            mask-image: url('../../../icon/miniDev-icon/service-2d/service-tree.svg');
+        }
+
+        /* ================== 图标页签项 (Icon Tab) ================== */
+        .devui-icon-tab {
+            /* Figma: Auto-layout Horizontal */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            /* Figma: radius 4px */
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--devui-text);
+        }
+
+        .devui-icon-tab.active {
+            /* Figma: fill #FFFFFF */
+            background-color: var(--devui-base-bg);
+            /* Figma: shadow 0 4px 12px rgba(0,0,0,0.16) */
+            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+        }
+
+        .devui-icon-tab.hover,
+        .devui-icon-tab:hover:not(.disabled):not(.active) {
+            background-color: var(--devui-list-item-hover-bg);
+        }
+
+        .devui-icon-tab.disabled {
+            color: var(--devui-disabled-text);
+            cursor: not-allowed;
+        }
+
+        /* ================== 图标页签组 (Icon Tabs Group) ================== */
+        .devui-icon-tabs-group {
+            display: inline-flex;
+            align-items: center;
+            /* Figma: padding 2px */
+            padding: 2px;
+            /* Figma: radius 4px */
+            border-radius: 4px;
+            /* Figma: fill #F2F5FC */
+            background-color: var(--devui-list-item-hover-bg);
+        }
+
+        /* ================== 文本页签项 (Text Tab) ================== */
+        .devui-text-tab {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            /* Figma: itemSpacing 4px */
+            gap: 4px;
+            /* Figma: padding 4px 8px */
+            padding: 4px 8px;
+            /* Figma: radius 4px */
+            border-radius: 4px;
+            cursor: pointer;
+            /* Figma: noto 12/20 500 */
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 20px;
+            color: var(--devui-aide-text);
+        }
+
+        .devui-text-tab.active {
+            /* Figma: fill #FFFFFF */
+            background-color: var(--devui-base-bg);
+            /* Figma: shadow 0 4px 12px rgba(0,0,0,0.16) */
+            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+            color: var(--devui-text);
+        }
+
+        .devui-text-tab.hover,
+        .devui-text-tab:hover:not(.disabled):not(.active) {
+            color: var(--devui-text);
+        }
+
+        .devui-text-tab.disabled {
+            color: var(--devui-disabled-text);
+            cursor: not-allowed;
+        }
+
+        /* ================== 文本页签组 (Text Tabs Group) ================== */
+        .devui-text-tabs-group {
+            display: inline-flex;
+            align-items: center;
+            /* Figma: itemSpacing 4px */
+            gap: 4px;
+            /* Figma: padding 2px */
+            padding: 2px;
+            /* Figma: radius 4px */
+            border-radius: 4px;
+            /* Figma: fill #F2F5FC */
+            background-color: var(--devui-list-item-hover-bg);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 图标页签单项状态展示 -->
+    <div>
+        <h2>图标页签项 / 单个状态 (状态: 默认/悬浮/激活/禁用)</h2>
+    </div>
+    <div style="display: flex; gap: 16px;">
+        <div class="devui-icon-tab" title="默认">
+            <div class="devui-icon icon-list-view"></div>
+        </div>
+        <div class="devui-icon-tab hover" title="悬浮">
+            <div class="devui-icon icon-list-view"></div>
+        </div>
+        <div class="devui-icon-tab active" title="激活">
+            <div class="devui-icon icon-list-view"></div>
+        </div>
+        <div class="devui-icon-tab disabled" title="禁用">
+            <div class="devui-icon icon-list-view"></div>
+        </div>
+    </div>
+
+    <!-- 图标页签组展示 -->
+    <div>
+        <h2>图标页签组 / 2项与3项组合</h2>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+        <div class="devui-icon-tabs-group">
+            <div class="devui-icon-tab active">
+                <div class="devui-icon icon-service-tree"></div>
+            </div>
+            <div class="devui-icon-tab">
+                <div class="devui-icon icon-menu-2"></div>
+            </div>
+        </div>
+
+        <div class="devui-icon-tabs-group">
+            <div class="devui-icon-tab active">
+                <div class="devui-icon icon-service-tree"></div>
+            </div>
+            <div class="devui-icon-tab">
+                <div class="devui-icon icon-list-view"></div>
+            </div>
+            <div class="devui-icon-tab">
+                <div class="devui-icon icon-menu-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 文本页签单项状态展示 -->
+    <div>
+        <h2>文本页签项 / 状态展示 (状态: 默认/悬浮/激活/禁用)</h2>
+    </div>
+    <div style="display: flex; gap: 16px; align-items: flex-start;">
+        <div class="devui-text-tab" title="默认">
+            <div class="devui-icon icon-list-view"></div>
+            <span>列表</span>
+        </div>
+        <div class="devui-text-tab hover" title="悬浮">
+            <div class="devui-icon icon-list-view"></div>
+            <span>列表</span>
+        </div>
+        <div class="devui-text-tab active" title="激活">
+            <div class="devui-icon icon-list-view"></div>
+            <span>列表</span>
+        </div>
+        <div class="devui-text-tab disabled" title="禁用">
+            <div class="devui-icon icon-list-view"></div>
+            <span>列表</span>
+        </div>
+    </div>
+
+    <!-- 文本页签组展示 -->
+    <div>
+        <h2>文本页签组 / 多项组合展示</h2>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+        <!-- 2项 -->
+        <div class="devui-text-tabs-group">
+            <div class="devui-text-tab active">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签一</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签二</span>
+            </div>
+        </div>
+
+        <!-- 3项 -->
+        <div class="devui-text-tabs-group">
+            <div class="devui-text-tab active">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签一</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签二</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签三</span>
+            </div>
+        </div>
+
+        <!-- 4项 -->
+        <div class="devui-text-tabs-group">
+            <div class="devui-text-tab active">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签一</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签二</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签三</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签四</span>
+            </div>
+        </div>
+
+        <!-- 5项 -->
+        <div class="devui-text-tabs-group">
+            <div class="devui-text-tab active">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签一</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签二</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签三</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签四</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签五</span>
+            </div>
+        </div>
+
+        <!-- 6项 -->
+        <div class="devui-text-tabs-group">
+            <div class="devui-text-tab active">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签一</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签二</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签三</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签四</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签五</span>
+            </div>
+            <div class="devui-text-tab">
+                <div class="devui-icon icon-list-view"></div>
+                <span>标签六</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

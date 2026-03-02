@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "icon-feed-mcp"
+version = "0.1.0"
+description = "图标推荐 MCP 服务：支持文本搜索与图搜"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.0.0",
+    "Pillow>=9.0.0",
+    "imagehash>=4.3.0",
+    "cairosvg>=2.7.0",
+]
+
+[project.scripts]
+icon-feed-mcp = "server:main"

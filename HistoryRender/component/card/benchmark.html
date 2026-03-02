@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Component Benchmark - 3501-10161</title>
+    <style>
+        /* ============================================
+           Design Tokens (from Mini-DevUI Theme)
+           Source: Figma Node 3501-10161 (现网卡片样式)
+           ============================================ */
+        :root {
+            /* Text Colors */
+            --devui-text: #252B3A;
+            --devui-text-weak: #5E6678;
+            --devui-text-placeholder: #AAAAAA;
+
+            /* Background */
+            --devui-base-bg: #FFFFFF;
+            --devui-global-bg: #F3F6F8;
+
+            /* Border */
+            --devui-line: #DFE1E6;
+
+            /* Brand */
+            --devui-brand: #5E7CE0;
+
+            /* Tag: Success/Green variant */
+            --devui-pjcard-tag-success-bg: #E6F6F0;
+            --devui-pjcard-tag-success-text: #00A870;
+
+            /* Tag: General/Grey variant */
+            --devui-pjcard-tag-general-bg: #F2F5FC;
+            --devui-pjcard-tag-general-text: #252B3A;
+
+            /* Shadow */
+            --devui-shadow-length-base: 0 2px 8px 0 rgba(37, 43, 58, 0.12);
+            --devui-shadow-length-hover: 0 4px 16px 0 rgba(37, 43, 58, 0.16);
+
+            /* Typography */
+            --devui-font-size-sm: 12px;
+            --devui-font-size-md: 14px;
+            --devui-font-size-lg: 16px;
+
+            /* Radius */
+            --devui-border-radius-sm: 4px;
+            --devui-border-radius-md: 8px;
+            --devui-border-radius-lg: 12px;
+        }
+
+        /* ============================================
+           Page Layout
+           ============================================ */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--devui-global-bg);
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+            gap: 40px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--devui-text-weak);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .card-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* ============================================
+           Component: Project Card (pj-card)
+           Figma Node: 3501-10161
+           Dimensions: 380 x Hug (min 182px)
+           ============================================ */
+        .pj-card {
+            width: 380px;
+            background-color: var(--devui-base-bg);
+            border: 1px solid var(--devui-line);
+            border-radius: var(--devui-border-radius-lg);
+            /* 12px */
+            padding: 20px 24px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .pj-card:hover {
+            box-shadow: var(--devui-shadow-length-hover);
+            border-color: #C8CADE;
+        }
+
+        /* ============================================
+           Card Header
+           ============================================ */
+        .pj-card__header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* App Icon */
+        .pj-card__app-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--devui-border-radius-md);
+            /* 8px */
+            flex-shrink: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .pj-card__app-icon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* App Icon: uses <img> referencing engineering-initial SVGs */
+
+        /* Title */
+        .pj-card__title {
+            flex: 1;
+            font-size: var(--devui-font-size-lg);
+            /* 16px */
+            font-weight: 700;
+            color: var(--devui-text);
+            line-height: 24px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Action Icons (Favorite + More) */
+        .pj-card__actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .pj-card__action-btn {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: var(--devui-border-radius-sm);
+            color: var(--devui-text-weak);
+            transition: background-color 0.2s, color 0.2s;
+            padding: 0;
+        }
+
+        .pj-card__action-btn:hover {
+            background-color: var(--devui-pjcard-tag-general-bg);
+            color: var(--devui-brand);
+        }
+
+        .pj-card__action-btn.is-starred {
+            color: #FAC20A;
+        }
+
+        /* ============================================
+           Card Tags Section
+           ============================================ */
+        .pj-card__tags {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            min-height: 22px;
+        }
+
+        /* Tag component (reusing devui-tag structure) */
+        .pj-card__tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 22px;
+            padding: 0 8px;
+            border-radius: var(--devui-border-radius-sm);
+            /* 4px */
+            font-size: var(--devui-font-size-sm);
+            /* 12px */
+            font-weight: 400;
+            line-height: 22px;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+
+        /* Tag variant: Success (Green) */
+        .pj-card__tag--success {
+            background-color: var(--devui-pjcard-tag-success-bg);
+            color: var(--devui-pjcard-tag-success-text);
+        }
+
+        /* Tag variant: General (Grey) */
+        .pj-card__tag--general {
+            background-color: var(--devui-pjcard-tag-general-bg);
+            color: var(--devui-pjcard-tag-general-text);
+        }
+
+        /* ============================================
+           Card Meta (Bottom info bar)
+           ============================================ */
+        .pj-card__meta {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            font-size: var(--devui-font-size-sm);
+            /* 12px */
+            color: var(--devui-text-weak);
+            line-height: 20px;
+        }
+
+        .pj-card__meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        /* 分隔线 */
+        .pj-card__meta-divider {
+            width: 1px;
+            height: 12px;
+            background-color: var(--devui-line);
+            margin: 0 12px;
+            flex-shrink: 0;
+        }
+
+        .pj-card__meta-label {
+            color: var(--devui-text-weak);
+            white-space: nowrap;
+        }
+
+        .pj-card__meta-value {
+            color: var(--devui-text);
+            font-weight: 400;
+            max-width: 160px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .pj-card__meta-value--truncated {
+            max-width: 80px;
+        }
+
+        /* Copy icon button */
+        .pj-card__copy-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            padding: 0;
+            color: var(--devui-text-weak);
+            transition: color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .pj-card__copy-btn:hover {
+            color: var(--devui-brand);
+        }
+
+        /* ============================================
+           Benchmark Annotation Styles
+           ============================================ */
+        .benchmark-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .annotation-label {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #252B3A;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 11px;
+            font-family: monospace;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================
+         BENCHMARK: State 1 - Default (With Text Tags)
+         Node: 3501-10161, Left Variant
+         ============================================ -->
+    <div class="benchmark-section">
+        <div class="section-title">现网卡片样式 / 标签-文字标签版本</div>
+        <div class="pj-card" id="card-default-text-tags">
+            <!-- Header -->
+            <div class="pj-card__header">
+                <!-- App Icon: M (MO安全编程规范) -->
+                <div class="pj-card__app-icon">
+                    <img class="pj-card__app-icon-img" src="../../../icon/miniDev-icon/engineering-initial/M-32x33.svg"
+                        alt="MO">
+                </div>
+                <!-- Title -->
+                <span class="pj-card__title">MO安全编程规范</span>
+                <!-- Action Buttons -->
+                <div class="pj-card__actions">
+                    <!-- Favorite / Star Icon -->
+                    <button class="pj-card__action-btn" title="收藏" aria-label="收藏">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M8 1.5L9.854 5.256L14 5.866L11 8.793L11.708 12.923L8 10.977L4.292 12.923L5 8.793L2 5.866L6.146 5.256L8 1.5Z"
+                                stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none" />
+                        </svg>
+                    </button>
+                    <!-- More Actions (•••) -->
+                    <button class="pj-card__action-btn" title="更多操作" aria-label="更多操作">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="3" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="13" cy="8" r="1.2" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="pj-card__tags">
+                <span class="pj-card__tag pj-card__tag--success">标签</span>
+                <span class="pj-card__tag pj-card__tag--general">标签</span>
+            </div>
+
+            <!-- Meta Info -->
+            <div class="pj-card__meta">
+                <div class="pj-card__meta-item">
+                    <span class="pj-card__meta-label">创建者：</span>
+                    <span class="pj-card__meta-value">abc_abcdefghijklmn</span>
+                </div>
+                <div class="pj-card__meta-divider"></div>
+                <div class="pj-card__meta-item">
+                    <span class="pj-card__meta-label">项目ID：</span>
+                    <span class="pj-card__meta-value pj-card__meta-value--truncated">a2b...</span>
+                    <button class="pj-card__copy-btn" title="复制ID" aria-label="复制项目ID">
+                        <!-- Copy icon -->
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" />
+                            <path d="M10 4V3C10 2.448 9.552 2 9 2H3C2.448 2 2 2.448 2 3V9C2 9.552 2.448 10 3 10H4"
+                                stroke="currentColor" stroke-width="1.2" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <span class="annotation-label">380 × 182 Hug | Figma: 3501-10161 (Left)</span>
+    </div>
+
+    <!-- ============================================
+         BENCHMARK: State 2 - Starred (Active Star)
+         ============================================ -->
+    <div class="benchmark-section">
+        <div class="section-title">收藏激活状态</div>
+        <div class="pj-card" id="card-starred">
+            <div class="pj-card__header">
+                <div class="pj-card__app-icon">
+                    <img class="pj-card__app-icon-img" src="../../../icon/miniDev-icon/engineering-initial/M-32x33.svg"
+                        alt="MO">
+                </div>
+                <span class="pj-card__title">MO安全编程规范</span>
+                <div class="pj-card__actions">
+                    <!-- Starred state -->
+                    <button class="pj-card__action-btn is-starred" title="已收藏" aria-label="取消收藏">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M8 1.5L9.854 5.256L14 5.866L11 8.793L11.708 12.923L8 10.977L4.292 12.923L5 8.793L2 5.866L6.146 5.256L8 1.5Z"
+                                fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button class="pj-card__action-btn" title="更多操作" aria-label="更多操作">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="3" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="13" cy="8" r="1.2" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="pj-card__tags">
+                <span class="pj-card__tag pj-card__tag--success">标签</span>
+                <span class="pj-card__tag pj-card__tag--general">标签</span>
+            </div>
+            <div class="pj-card__meta">
+                <div class="pj-card__meta-item">
+                    <span class="pj-card__meta-label">创建者：</span>
+                    <span class="pj-card__meta-value">abc_abcdefghijklmn</span>
+                </div>
+                <div class="pj-card__meta-divider"></div>
+                <div class="pj-card__meta-item">
+                    <span class="pj-card__meta-label">项目ID：</span>
+                    <span class="pj-card__meta-value pj-card__meta-value--truncated">a2b...</span>
+                    <button class="pj-card__copy-btn" title="复制ID" aria-label="复制项目ID">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" />
+                            <path d="M10 4V3C10 2.448 9.552 2 9 2H3C2.448 2 2 2.448 2 3V9C2 9.552 2.448 10 3 10H4"
+                                stroke="currentColor" stroke-width="1.2" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <span class="annotation-label">⭐ Star Active | #FAC20A</span>
+    </div>
+
+    <!-- ============================================
+         BENCHMARK: State 3 - Empty Tags / No Tags
+         ============================================ -->
+    <div class="benchmark-section">
+        <div class="section-title">无标签状态</div>
+        <div class="pj-card" id="card-no-tags">
+            <div class="pj-card__header">
+                <div class="pj-card__app-icon">
+                    <img class="pj-card__app-icon-img" src="../../../icon/miniDev-icon/engineering-initial/K-32x33.svg"
+                        alt="K">
+                </div>
+                <span class="pj-card__title">MO安全编程规范（无标签版）</span>
+                <div class="pj-card__actions">
+                    <button class="pj-card__action-btn" title="收藏" aria-label="收藏">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M8 1.5L9.854 5.256L14 5.866L11 8.793L11.708 12.923L8 10.977L4.292 12.923L5 8.793L2 5.866L6.146 5.256L8 1.5Z"
+                                stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none" />
+                        </svg>
+                    </button>
+                    <button class="pj-card__action-btn" title="更多操作" aria-label="更多操作">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="3" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="13" cy="8" r="1.2" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Empty tags area (maintains layout height) -->
+            <div class="pj-card__tags">
+                <!-- No tags -->
+            </div>
+            <div class="pj-card__meta">
+                <div class="pj-card__meta-item">
+                    <span class="pj-card__meta-label">创建者：</span>
+                    <span class="pj-card__meta-value">abc_abcdefghijklmn</span>
+                </div>
+                <div class="pj-card__meta-divider"></div>
+                <div class="pj-card__meta-item">
+                    <span class="pj-card__meta-label">项目ID：</span>
+                    <span class="pj-card__meta-value pj-card__meta-value--truncated">a2b...</span>
+                    <button class="pj-card__copy-btn" title="复制ID">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" />
+                            <path d="M10 4V3C10 2.448 9.552 2 9 2H3C2.448 2 2 2.448 2 3V9C2 9.552 2.448 10 3 10H4"
+                                stroke="currentColor" stroke-width="1.2" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <span class="annotation-label">Tags: Empty Slot</span>
+    </div>
+
+    <!-- ============================================
+         TOKEN AUDIT
+         ============================================ -->
+    <div
+        style="width: 380px; padding: 20px; background: #fff; border-radius: 12px; border: 1px solid #DFE1E6; font-family: monospace; font-size: 12px; color: #5E6678; line-height: 1.8;">
+        <div style="font-weight: 700; color: #252B3A; margin-bottom: 12px;">📋 Design Token Audit — Figma: 3501-10161
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px;">
+            <span>Card Width:</span><span style="color: #252B3A;">380px</span>
+            <span>Card Height:</span><span style="color: #252B3A;">182px (Hug)</span>
+            <span>Card Padding:</span><span style="color: #252B3A;">20px 24px</span>
+            <span>Card Radius:</span><span style="color: #252B3A;">12px</span>
+            <span>Card Border:</span><span style="color: #252B3A;">1px #DFE1E6</span>
+            <span>Card Gap:</span><span style="color: #252B3A;">16px</span>
+            <span>App Icon Size:</span><span style="color: #252B3A;">40×40px, r=8px</span>
+            <span>Title Font:</span><span style="color: #252B3A;">16px, 700, #252B3A</span>
+            <span>Tag Height:</span><span style="color: #252B3A;">22px</span>
+            <span>Tag Radius:</span><span style="color: #252B3A;">4px</span>
+            <span>Tag Font:</span><span style="color: #252B3A;">12px</span>
+            <span>Tag Gap:</span><span style="color: #252B3A;">8px</span>
+            <span>Tag[Success]BG:</span><span style="color: #00A870;">#E6F6F0</span>
+            <span>Tag[Success]Text:</span><span style="color: #00A870;">#00A870</span>
+            <span>Tag[General]BG:</span><span style="color: #252B3A;">#F2F5FC</span>
+            <span>Tag[General]Text:</span><span style="color: #252B3A;">#252B3A</span>
+            <span>Meta Font:</span><span style="color: #252B3A;">12px, #5E6678/#252B3A</span>
+            <span>Divider:</span><span style="color: #252B3A;">1px×12px #DFE1E6, mx=12px</span>
+            <span>Hover Shadow:</span><span style="color: #252B3A;">0 4px 16px rgba(…,0.16)</span>
+            <span>Star Active:</span><span style="color: #FAC20A;">#FAC20A (filled)</span>
+        </div>
+    </div>
+
+</body>
+
+</html>

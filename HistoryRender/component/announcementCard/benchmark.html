@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnnouncementCard Benchmark - 1819-2753</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ============================================
+           Design Tokens — from Figma Node 1819-2753
+           ============================================ */
+        :root {
+            /* Configs */
+            --devui-text: #252B3A;
+            --devui-placeholder: #8A8E99;
+            --devui-icon-text: #252B3A;
+            --devui-shape-icon-fill: #D7D8DA;
+            --devui-base-bg: #FFFFFF;
+
+            /* Shadows */
+            --devui-shadow-length-base: 0 1px 6px 0 rgba(0, 0, 0, 0.08);
+
+            /* Font Sizes */
+            --devui-font-size-sm: 12px;
+            --devui-font-size-md: 14px;
+            --devui-font-size-lg: 16px;
+
+            /* Radii */
+            --devui-border-radius-xl: 16px;
+        }
+
+        /* ============================================
+           Page Canvas
+           ============================================ */
+        body {
+            margin: 0;
+            padding: 50px;
+            background-color: #F3F6F8;
+            font-family: 'Noto Sans SC', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-family: monospace;
+            color: #999;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 4px 12px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* ============================================
+           Component: devui-announcementCard
+           ============================================ */
+        /* Figma: Auto-layout Vertical */
+        .devui-announcementCard {
+            width: 384px;
+            /* Figma: 384px */
+            background-color: var(--devui-base-bg);
+            /* Figma: fill #FFFFFF */
+            padding: 16px 20px 20px 20px;
+            /* Figma: padding 16px 20px 20px 20px */
+            border-radius: var(--devui-border-radius-xl, 16px);
+            /* Figma: radius 16px */
+            box-shadow: var(--devui-shadow-length-base);
+            /* Figma: shadow */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            /* Figma: itemSpacing 20px */
+            align-items: flex-start;
+        }
+
+        /* Content Wrapper */
+        .devui-announcement-content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            /* Figma: itemSpacing 16px */
+            align-items: flex-start;
+        }
+
+        /* Title */
+        .devui-announcement-title {
+            width: 100%;
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            /* Figma: Bold */
+            font-size: var(--devui-font-size-lg, 16px);
+            color: var(--devui-text);
+            /* Figma: #252B3A */
+            line-height: 24px;
+            /* Figma: 24px */
+        }
+
+        /* Info container (Desc + Meta) */
+        .devui-announcement-info {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            /* Figma: itemSpacing 8px */
+            align-items: flex-start;
+        }
+
+        /* Description */
+        .devui-announcement-desc {
+            width: 100%;
+            font-size: var(--devui-font-size-md, 14px);
+            font-weight: 400;
+            /* Figma: Regular */
+            color: var(--devui-text);
+            /* Figma: #252B3A */
+            line-height: 22px;
+            /* Figma: 22px */
+            height: 66px;
+            /* Figma: Fixed Height 66px for 3 lines */
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            text-overflow: ellipsis;
+        }
+
+        /* Meta Info (Time) */
+        .devui-announcement-meta {
+            width: 100%;
+            font-size: var(--devui-font-size-sm, 12px);
+            font-weight: 400;
+            /* Figma: Regular */
+            color: var(--devui-placeholder);
+            /* Figma: #8A8E99 */
+            line-height: 20px;
+            /* Figma: 20px */
+        }
+
+        /* Indicators Wrapper */
+        .devui-announcement-indicators {
+            width: 100%;
+            display: flex;
+            /* Figma: Horizontal Auto Layout */
+            flex-direction: row;
+            justify-content: center;
+            /* Figma: Center */
+            align-items: center;
+            /* Figma: Center */
+            gap: 2px;
+            /* Figma: gap 2px */
+        }
+
+        .devui-indicator {
+            width: 4px;
+            /* Figma: 4px */
+            height: 4px;
+            /* Figma: 4px */
+            background-color: var(--devui-shape-icon-fill, #D7D8DA);
+            /* Figma: #D7D8DA */
+            border-radius: 100px;
+            /* Figma: 100px */
+        }
+
+        .devui-indicator.active {
+            width: 32px;
+            /* Figma: 32px */
+            background-color: var(--devui-icon-text, #252B3A);
+            /* Figma: #252B3A */
+        }
+
+        /* ============================================
+           Design Token Audit Table
+           ============================================ */
+        .audit-section {
+            width: 800px;
+            background: var(--devui-text);
+            border-radius: 8px;
+            padding: 24px 32px;
+            box-sizing: border-box;
+            color: #E0E0E0;
+        }
+
+        .audit-section h3 {
+            color: #FFFFFF;
+            font-size: 16px;
+            margin: 0 0 16px 0;
+        }
+
+        .audit-section table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            font-family: monospace;
+        }
+
+        .audit-section th {
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            color: #8A8E99;
+            font-weight: 500;
+        }
+
+        .audit-section td {
+            padding: 6px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .color-swatch {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-right: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="section-title">AnnouncementCard / Default (状态: 默认带多行文本)</div>
+
+    <!-- Component Starts Here -->
+    <div class="devui-announcementCard">
+        <div class="devui-announcement-content">
+            <div class="devui-announcement-title">公告</div>
+            <div class="devui-announcement-info">
+                <div class="devui-announcement-desc">
+                    【品牌升级】“软件开发平台DevCloud”及“项目管理ProjectMan”即日起正式更名“为软件开发生产线CodeArts”和“需求管理CodeArts Req”
+                </div>
+                <div class="devui-announcement-meta">2天前</div>
+            </div>
+        </div>
+        <!-- Indicators Setup -->
+        <div class="devui-announcement-indicators">
+            <div class="devui-indicator active"></div>
+            <div class="devui-indicator"></div>
+            <div class="devui-indicator"></div>
+            <div class="devui-indicator"></div>
+        </div>
+    </div>
+
+    <!-- Design Token Audit -->
+    <div class="audit-section">
+        <h3>📋 Design Token Audit — Figma: 1819-2753 (公告卡片)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Figma Value</th>
+                    <th>CSS Token / Style</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Card Width</td>
+                    <td>384px (Fixed)</td>
+                    <td>width: 384px</td>
+                </tr>
+                <tr>
+                    <td>Card Padding</td>
+                    <td>Top:16, Right:20, Bottom:20, Left:20</td>
+                    <td>padding: 16px 20px 20px 20px</td>
+                </tr>
+                <tr>
+                    <td>Card Gap</td>
+                    <td>20px (Between Content & Indicators)</td>
+                    <td>gap: 20px</td>
+                </tr>
+                <tr>
+                    <td>Content Gap</td>
+                    <td>16px (Between Title & Info block)</td>
+                    <td>gap: 16px</td>
+                </tr>
+                <tr>
+                    <td>Info Block Gap</td>
+                    <td>8px (Between Description & Time)</td>
+                    <td>gap: 8px</td>
+                </tr>
+                <tr>
+                    <td>Card Background</td>
+                    <td><span class="color-swatch" style="background:#FFFFFF"></span>#FFFFFF</td>
+                    <td>var(--devui-base-bg)</td>
+                </tr>
+                <tr>
+                    <td>Card Radius</td>
+                    <td>16px</td>
+                    <td>var(--devui-border-radius-xl, 16px)</td>
+                </tr>
+                <tr>
+                    <td>Card Shadow</td>
+                    <td>0px 1px 6px 0px rgba(0,0,0,0.08)</td>
+                    <td>var(--devui-shadow-length-base)</td>
+                </tr>
+                <tr>
+                    <td>Title Text</td>
+                    <td><span class="color-swatch" style="background:#252B3A"></span>#252B3A, 16px, Bold 700</td>
+                    <td>var(--devui-text), var(--devui-font-size-lg)</td>
+                </tr>
+                <tr>
+                    <td>Description Text</td>
+                    <td><span class="color-swatch" style="background:#252B3A"></span>#252B3A, 14px, Regular 400</td>
+                    <td>var(--devui-text), var(--devui-font-size-md)</td>
+                </tr>
+                <tr>
+                    <td>Meta Time Text</td>
+                    <td><span class="color-swatch" style="background:#8A8E99"></span>#8A8E99, 12px, Regular 400</td>
+                    <td>var(--devui-placeholder), var(--devui-font-size-sm)</td>
+                </tr>
+                <tr>
+                    <td>Active Indicator</td>
+                    <td>Width: 32px, <span class="color-swatch" style="background:#252B3A"></span>#252B3A</td>
+                    <td>width: 32px, var(--devui-icon-text)</td>
+                </tr>
+                <tr>
+                    <td>Inactive Indicator</td>
+                    <td>Width: 4px, <span class="color-swatch" style="background:#D7D8DA"></span>#D7D8DA</td>
+                    <td>width: 4px, var(--devui-shape-icon-fill)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

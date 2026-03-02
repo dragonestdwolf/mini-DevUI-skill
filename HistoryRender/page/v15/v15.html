@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Page - v15</title>
+    <!-- Include basic CSS reset and variables -->
+    <style>
+        /* CSS Variables based on DevUI Tokens & Spec Requirements */
+        :root {
+            --devui-primary: #5e7ce0;
+            --devui-primary-hover: #7693f5;
+            --devui-primary-active: #344899;
+            --devui-brand: #5e7ce0;
+
+            --devui-text: #252b3a;
+            --devui-text-weak: #575d6c;
+            --devui-light-text: #ffffff;
+            --devui-placeholder: #8a8e99;
+            --devui-disabled-text: #adb0b8;
+
+            --devui-base-bg: #ffffff;
+            --devui-global-bg: #f5f5f5;
+            --devui-list-item-hover-bg: #f2f5fc;
+            --devui-disabled-bg: #f3f3f3;
+
+            --devui-dividing-line: #dfe1e6;
+            --devui-form-control-line: #adb0b8;
+            --devui-form-control-line-hover: #575d6c;
+            --devui-form-control-line-active: #5e7ce0;
+            --devui-form-control-line-rippling: rgba(94, 124, 224, 0.08);
+
+            --devui-radius: 4px;
+            --devui-padding-base: 8px 16px;
+
+            --devui-danger: #f66f6a;
+            --devui-success: #3cce86;
+            --devui-warning: #fa9841;
+
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: var(--devui-text);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--devui-global-bg);
+            box-sizing: border-box;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        /* Page Layout */
+        .devui-layout-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .devui-main {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .devui-right-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #F3F3F3;
+            overflow: hidden;
+        }
+
+        .devui-subheader {
+            background-color: var(--devui-base-bg);
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--devui-dividing-line);
+        }
+
+        .devui-page-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--devui-text);
+            margin: 0;
+        }
+
+        .devui-content {
+            flex: 1;
+            padding: 24px;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Card style for form */
+        .devui-content-card {
+            background-color: var(--devui-base-bg);
+            border-radius: 4px;
+            padding: 32px 40px;
+            width: 100%;
+            max-width: 800px;
+            /* limit form width */
+            height: fit-content;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+            /* very light shadow for card */
+        }
+
+        /* ----------------------------------------- */
+        /* FORM STYLES (from template)               */
+        /* ----------------------------------------- */
+        .devui-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            /* Increased gap for better page layout */
+            width: 100%;
+        }
+
+        .devui-form-item {
+            display: flex;
+        }
+
+        /* Horizontal Layout defaults */
+        .devui-form.horizontal .devui-form-item {
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .devui-form.horizontal .devui-form-label {
+            width: 120px;
+            text-align: right;
+            padding-top: 5px;
+            /* Visual alignment with 32px input */
+        }
+
+        .devui-form-label {
+            font-size: 14px;
+            color: var(--devui-text);
+            line-height: 22px;
+            flex-shrink: 0;
+        }
+
+        .devui-form-label.required::before {
+            content: '*';
+            color: var(--devui-danger);
+            margin-right: 4px;
+        }
+
+        .devui-form-label-help {
+            color: var(--devui-placeholder);
+            margin-left: 4px;
+            font-size: 12px;
+        }
+
+        .devui-form-control {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            max-width: 480px;
+            /* Limiting input width in horizontal mode */
+        }
+
+        .devui-form-help-message {
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--devui-danger);
+            margin-top: 4px;
+            min-height: 18px;
+        }
+
+        /* ----------------------------------------- */
+        /* INPUT STYLES                              */
+        /* ----------------------------------------- */
+        .devui-input-wrapper {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 32px;
+            border-radius: 4px;
+            padding: 0 12px;
+            transition: all 0.2s;
+            background-color: var(--devui-base-bg);
+            border: 1px solid var(--devui-form-control-line);
+            box-sizing: border-box;
+        }
+
+        .devui-input-wrapper:hover {
+            border-color: var(--devui-form-control-line-hover);
+        }
+
+        .devui-input-wrapper:focus-within {
+            border-color: var(--devui-form-control-line-active);
+            box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling);
+        }
+
+        .devui-input,
+        .devui-textarea {
+            flex: 1;
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 0;
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--devui-text);
+            line-height: 22px;
+        }
+
+        .devui-input::placeholder,
+        .devui-textarea::placeholder {
+            color: var(--devui-placeholder);
+        }
+
+        /* Textarea specifics */
+        .devui-textarea-wrapper {
+            display: flex;
+            width: 100%;
+            border-radius: 4px;
+            padding: 6px 12px;
+            transition: all 0.2s;
+            background-color: var(--devui-base-bg);
+            border: 1px solid var(--devui-form-control-line);
+            box-sizing: border-box;
+            min-height: 80px;
+        }
+
+        .devui-textarea-wrapper:hover {
+            border-color: var(--devui-form-control-line-hover);
+        }
+
+        .devui-textarea-wrapper:focus-within {
+            border-color: var(--devui-form-control-line-active);
+            box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling);
+        }
+
+        .devui-textarea {
+            resize: vertical;
+        }
+
+        /* ----------------------------------------- */
+        /* CHECKBOX STYLES                           */
+        /* ----------------------------------------- */
+        .devui-checkbox-wrapper {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+            margin-right: 16px;
+            margin-top: 5px;
+            /* align with text baseline */
+        }
+
+        .devui-checkbox-input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            margin: 0;
+        }
+
+        .devui-checkbox {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+            border: 1px solid var(--devui-form-control-line);
+            background-color: var(--devui-base-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .devui-checkbox-wrapper:hover .devui-checkbox {
+            border-color: var(--devui-brand);
+        }
+
+        .devui-checkbox-wrapper.checked .devui-checkbox {
+            background-color: var(--devui-brand);
+            border-color: var(--devui-brand);
+        }
+
+        .devui-checkbox-label {
+            font-size: 14px;
+            line-height: 22px;
+            color: var(--devui-text);
+        }
+
+        .devui-checkbox-icon {
+            width: 10px;
+            height: auto;
+            fill: none;
+            stroke: var(--devui-light-text);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            display: none;
+        }
+
+        .devui-checkbox-wrapper.checked .devui-checkbox-icon {
+            display: block;
+        }
+
+        /* ----------------------------------------- */
+        /* BUTTON STYLES                             */
+        /* ----------------------------------------- */
+        .devui-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+            padding: 0 16px;
+            border-radius: var(--devui-radius);
+            font-size: 14px;
+            cursor: pointer;
+            gap: 4px;
+            white-space: nowrap;
+            transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-sizing: border-box;
+        }
+
+        .devui-btn-primary {
+            background-color: var(--devui-primary);
+            color: var(--devui-light-text);
+            border: 1px solid transparent;
+        }
+
+        .devui-btn-primary:hover {
+            background-color: var(--devui-primary-hover);
+        }
+
+        .devui-btn-secondary {
+            background-color: var(--devui-base-bg);
+            color: var(--devui-text);
+            border: 1px solid var(--devui-form-control-line);
+        }
+
+        .devui-btn-secondary:hover {
+            border-color: var(--devui-form-control-line-hover);
+        }
+
+        /* Form Action Buttons Wrapper */
+        .devui-form-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="devui-layout-wrapper">
+        <div class="devui-main">
+            <!-- Content Area perfectly centering the card form -->
+            <div class="devui-right-column">
+                <div class="devui-subheader">
+                    <h1 class="devui-page-title">新建项目 / 基础表单</h1>
+                </div>
+                <div class="devui-content">
+                    <div class="devui-content-card">
+
+                        <!-- Formal Form Area -->
+                        <div class="devui-form horizontal">
+                            <!-- Item 1: Name -->
+                            <div class="devui-form-item">
+                                <label class="devui-form-label required">
+                                    项目名称
+                                </label>
+                                <div class="devui-form-control">
+                                    <div class="devui-input-wrapper">
+                                        <input type="text" class="devui-input" placeholder="请输入项目名称" />
+                                    </div>
+                                    <div class="devui-form-help-message"></div>
+                                </div>
+                            </div>
+
+                            <!-- Item 2: Identifier -->
+                            <div class="devui-form-item">
+                                <label class="devui-form-label required">
+                                    项目标识
+                                </label>
+                                <div class="devui-form-control">
+                                    <div class="devui-input-wrapper">
+                                        <input type="text" class="devui-input" placeholder="请输入项目唯一标识" />
+                                    </div>
+                                    <div class="devui-form-help-message">项目标识只能由小写字母和数字组成。</div>
+                                </div>
+                            </div>
+
+                            <!-- Item 3: Options -->
+                            <div class="devui-form-item">
+                                <label class="devui-form-label">
+                                    可见范围
+                                </label>
+                                <div class="devui-form-control" style="flex-direction: row; flex-wrap: wrap;">
+                                    <label class="devui-checkbox-wrapper checked">
+                                        <input type="checkbox" class="devui-checkbox-input" checked />
+                                        <span class="devui-checkbox">
+                                            <svg class="devui-checkbox-icon" viewBox="0 0 12 10">
+                                                <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                            </svg>
+                                        </span>
+                                        <span class="devui-checkbox-label">团队可见</span>
+                                    </label>
+                                    <label class="devui-checkbox-wrapper">
+                                        <input type="checkbox" class="devui-checkbox-input" />
+                                        <span class="devui-checkbox">
+                                            <svg class="devui-checkbox-icon" viewBox="0 0 12 10">
+                                                <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                            </svg>
+                                        </span>
+                                        <span class="devui-checkbox-label">私下可见</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Item 4: Description -->
+                            <div class="devui-form-item">
+                                <label class="devui-form-label">
+                                    项目描述
+                                </label>
+                                <div class="devui-form-control">
+                                    <div class="devui-textarea-wrapper">
+                                        <textarea class="devui-textarea" rows="4"
+                                            placeholder="请输入详细的项目描述信息..."></textarea>
+                                    </div>
+                                    <div class="devui-form-help-message"></div>
+                                </div>
+                            </div>
+
+                            <!-- Form Actions -->
+                            <div class="devui-form-item">
+                                <label class="devui-form-label"></label>
+                                <div class="devui-form-control devui-form-actions">
+                                    <button class="devui-btn devui-btn-primary">确定创建</button>
+                                    <button class="devui-btn devui-btn-secondary">取消</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script for handling checkbox toggles for preview -->
+    <script>
+        document.querySelectorAll('.devui-checkbox-input').forEach(input => {
+            input.addEventListener('change', function () {
+                if (this.checked) {
+                    this.parentElement.classList.add('checked');
+                } else {
+                    this.parentElement.classList.remove('checked');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

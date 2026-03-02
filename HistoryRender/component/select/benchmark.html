@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Component - Benchmark</title>
+    <style>
+        /* 
+  Global DevUI CSS Variables setup for accurate component testing 
+  extracted from Figma component parameters
+*/
+        :root {
+            --devui-base-bg: #ffffff;
+            --devui-text: #252b3a;
+            --devui-placeholder: #8a8e99;
+            --devui-form-control-line: #adb0b8;
+            --devui-form-control-line-hover: #575d6c;
+            --devui-list-item-hover-bg: #f2f5fc;
+            --devui-constant-blue: #5e7ce0;
+            --devui-disabled-fill-bg: #f3f3f3;
+            --devui-disabled-line: #dfe1e6;
+            --devui-form-control-line-rippling: rgba(94, 124, 224, 0.08);
+            /* Derived from focus shadow */
+            --devui-aide-text: #8a8e99;
+
+            --devui-animation-duration-slow: 0.3s;
+        }
+
+        body {
+            margin: 0;
+            padding: 50px;
+            background-color: #f3f5f8;
+            font-family: 'Noto Sans SC', sans-serif;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* Base Component Typography mapping to "noto 14/22 reg" */
+        .devui-select-container {
+            font-family: "Noto Sans SC", sans-serif;
+            font-style: normal;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 22px;
+            letter-spacing: 0;
+            position: relative;
+            width: 296px;
+            /* standard width from the design frame */
+        }
+
+        /* Label & Help Text */
+        .devui-form-label {
+            display: flex;
+            align-items: center;
+            color: var(--devui-text);
+            margin-bottom: 8px;
+        }
+
+        .devui-form-help {
+            font-size: 12px;
+            line-height: 20px;
+            color: var(--devui-aide-text);
+            margin-top: 8px;
+        }
+
+        /* ================== Select Control / Input Area ================== */
+        .devui-select-input {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 32px;
+            /* Typical height extracted from flex layouts padding */
+            padding: 5px 12px;
+            background-color: var(--devui-base-bg);
+            border: 1px solid var(--devui-form-control-line);
+            border-radius: 4px;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: border-color var(--devui-animation-duration-slow), box-shadow var(--devui-animation-duration-slow);
+        }
+
+        .devui-select-input:hover {
+            border-color: var(--devui-form-control-line-hover);
+        }
+
+        .devui-select-input.focus,
+        .devui-select-input.active {
+            border-color: var(--devui-constant-blue);
+            /* Replicating the focus ring from symbol status=active/focus */
+            box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling);
+        }
+
+        .devui-select-input.disabled {
+            background-color: var(--devui-disabled-fill-bg);
+            border-color: var(--devui-disabled-line);
+            cursor: not-allowed;
+        }
+
+        .devui-select-placeholder {
+            color: var(--devui-placeholder);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+        }
+
+        .devui-select-value {
+            color: var(--devui-text);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+        }
+
+        /* Chevron arrow */
+        .devui-select-arrow {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            margin-left: 8px;
+            background-color: var(--devui-placeholder);
+            /* default chevron color */
+            -webkit-mask-image: url('../../../icon/select-arrow.svg');
+            mask-image: url('../../../icon/select-arrow.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            transition: transform var(--devui-animation-duration-slow) cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .devui-select-input.active .devui-select-arrow,
+        .devui-select-input.focus .devui-select-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* ================== Dropdown Menus Panel ================== */
+        .devui-select-dropdown {
+            position: absolute;
+            top: 100%;
+            /* Dropdown directly below with 4px margin usually handled by popper, but static here */
+            left: 0;
+            width: 100%;
+            margin-top: 4px;
+            padding: 4px;
+            background-color: var(--devui-base-bg);
+            border-radius: 6px;
+            /* Shadow matched from "Effect(type: DROP_SHADOW, color: #00000029, offset: (0, 4), radius: 12, spread: 0)" */
+            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 1050;
+        }
+
+        /* Hidden by default */
+        .devui-select-dropdown.hidden {
+            display: none;
+        }
+
+        /* individual items inside the dropdown */
+        .devui-select-option {
+            display: flex;
+            align-items: flex-start;
+            padding: 7px 8px;
+            height: 36px;
+            border-radius: 4px;
+            background-color: var(--devui-base-bg);
+            cursor: pointer;
+            transition: background-color var(--devui-animation-duration-slow);
+            box-sizing: border-box;
+        }
+
+        .devui-select-option:hover {
+            background-color: var(--devui-list-item-hover-bg);
+        }
+
+        .devui-select-option.selected {
+            /* In standard design, often the selection brings a primary color or bold style. 
+     The MCP notes options have similar layout, text gets 'active' treatment implicitly */
+            color: var(--devui-constant-blue);
+            /* The design didn't explicitly show changing background for selected unless hovered, but common */
+        }
+
+        .devui-select-option-text {
+            flex: 1;
+            color: inherit;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Multiselect Checkbox block mapping Node: 179:324 */
+        .devui-select-checkbox {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+            border: 1px solid var(--devui-form-control-line);
+            background-color: var(--devui-base-bg);
+            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all var(--devui-animation-duration-slow);
+            margin-top: 3px;
+            /* visual align with text line-height */
+        }
+
+        /* Checked State - Solid Blue */
+        .devui-select-option.selected .devui-select-checkbox {
+            background-color: var(--devui-constant-blue);
+            border-color: var(--devui-constant-blue);
+        }
+
+        /* Checkmark logic using standard DevUI svg approach if available */
+        .devui-select-option.selected .devui-select-checkbox::after {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 8px;
+            background-color: #ffffff;
+            -webkit-mask-image: url('../../../icon/select-arrow.svg');
+            /* Requires specific tick svg if missing, fallback below is generic CSS approach */
+            mask-image: url('../../../icon/select-arrow.svg');
+            /* Using select arrow rotated temporarily or precise tick */
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <h2>Select / 单选 (状态: 默认/未选择)</h2>
+    </div>
+    <!-- Standard Select: Default Unselected -->
+    <div class="devui-select-container">
+        <div class="devui-form-label">标题</div>
+        <div class="devui-select-input">
+            <div class="devui-select-placeholder">请选择</div>
+            <div class="devui-select-arrow"></div>
+        </div>
+        <div class="devui-form-help">辅助文本</div>
+    </div>
+
+    <div>
+        <h2>Select / 单选 (状态: 聚焦/下拉面板开启)</h2>
+    </div>
+    <!-- Standard Select: Focus / Panel Open. Mapped to node 512:2738 -->
+    <div class="devui-select-container" style="margin-bottom: 200px;">
+        <div class="devui-form-label">标题</div>
+        <div class="devui-select-input focus active">
+            <!-- Active state adds the solid blue focus ring -->
+            <div class="devui-select-placeholder">请选择</div>
+            <div class="devui-select-arrow"></div>
+        </div>
+
+        <div class="devui-select-dropdown">
+            <div class="devui-select-option">
+                <span class="devui-select-option-text">选项文本</span>
+            </div>
+            <div class="devui-select-option" style="background-color: var(--devui-list-item-hover-bg);">
+                <span class="devui-select-option-text">选项文本</span>
+            </div>
+            <div class="devui-select-option">
+                <span class="devui-select-option-text">选项文本</span>
+            </div>
+            <div class="devui-select-option">
+                <span class="devui-select-option-text">选项文本</span>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h2>Select / 多选 (状态: 默认列表)</h2>
+    </div>
+    <!-- Multi-select Menu Content Demo -->
+    <div class="devui-select-container">
+        <div class="devui-select-dropdown"
+            style="position: relative; display: flex; box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.16);">
+            <!-- Item Single Demo -->
+            <div class="devui-select-option">
+                <div class="devui-select-checkbox"></div>
+                <span class="devui-select-option-text">选项文本</span>
+            </div>
+
+            <!-- Item Hover Demo -->
+            <div class="devui-select-option" style="background-color: var(--devui-list-item-hover-bg);">
+                <div class="devui-select-checkbox"></div>
+                <span class="devui-select-option-text">选项文本</span>
+            </div>
+
+            <!-- Item Selected / Checked -->
+            <div class="devui-select-option selected">
+                <div class="devui-select-checkbox">
+                    <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M3.57143 7.64706L0 4.29412L0.902256 3.44706L3.57143 5.94118L9.09774 0.752941L10 1.6L3.57143 7.64706Z"
+                            fill="white" />
+                    </svg>
+                </div>
+                <span class="devui-select-option-text" style="color: var(--devui-text)">已选中文本</span>
+            </div>
+
+            <!-- Item Disabled -->
+            <div class="devui-select-option">
+                <div class="devui-select-checkbox"
+                    style="background-color: var(--devui-disabled-fill-bg); border-color: var(--devui-disabled-line);">
+                </div>
+                <span class="devui-select-option-text" style="color: var(--devui-placeholder)">禁用选项</span>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h2>Select / 禁用状态 (Disabled)</h2>
+    </div>
+    <div class="devui-select-container">
+        <div class="devui-form-label">标题</div>
+        <div class="devui-select-input disabled">
+            <div class="devui-select-placeholder" style="color: var(--devui-placeholder);">禁用内容无法选择</div>
+            <div class="devui-select-arrow" style="opacity: 0.5;"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>

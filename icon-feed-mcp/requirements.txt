@@ -1,0 +1,4 @@
+mcp[cli]>=1.0.0
+Pillow>=9.0.0
+imagehash>=4.3.0
+cairosvg>=2.7.0

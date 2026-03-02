@@ -12,7 +12,7 @@
 
 - **Primary Location**: Most functional icons (Search, Close, Delete, Settings etc.) are located in `icon/miniDev-icon/action/`.
 - **Naming Note**: Filenames are in English/Kebab-case.
-    - Search -> `icon/miniDev-icon/action/search.svg`
+    - Search -> `../../icon/miniDev-icon/action/search.svg`
     - Close -> `icon/miniDev-icon/action/close.svg`
     - Settings -> `icon/miniDev-icon/action/settings.svg`
     - Check -> `icon/miniDev-icon/action/selected.svg`
@@ -32,8 +32,8 @@
         width: 16px;
         height: 16px;
         background-color: currentColor; /* 或 var(--devui-primary) */
-        -webkit-mask: url('../../../icon/miniDev-icon/action/search.svg') no-repeat center/contain;
-        mask: url('../../../icon/miniDev-icon/action/search.svg') no-repeat center/contain;
+        -webkit-mask: url('../../icon/miniDev-icon/action/search.svg') no-repeat center/contain;
+        mask: url('../../icon/miniDev-icon/action/search.svg') no-repeat center/contain;
       }
       ```
 
@@ -46,7 +46,7 @@
       .devui-icon-brand {
         width: 32px;
         height: 32px;
-        background-image: url('../../../icon/miniDev-icon/project-initial/D-48x48.svg');
+        background-image: url('../../icon/miniDev-icon/project-initial/D-48x48.svg');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
@@ -68,8 +68,8 @@
 3.  **Construct Path**: `[Prefix]Icon/miniDev-icon/...`
 
 ### Examples
-- **Wrong**: `src="icon/miniDev-icon/action/search.svg"` (Browser looks in `HistoryRender/component/table/icon/...` -> 404)
-- **Correct**: `src="../../../Icon/miniDev-icon/action/search.svg"` (Browser resolves to Project Root/Icon/... -> 200)
+- **Wrong**: `src="../../icon/miniDev-icon/action/search.svg"` (Browser looks in `HistoryRender/component/table/icon/...` -> 404)
+- **Correct**: `src="../../icon/miniDev-icon/action/search.svg"` (Browser resolves to Project Root/Icon/... -> 200)
 
 
 ## Core Rule: Dimension Control (尺寸严格定义)
@@ -104,7 +104,7 @@
 .devui-project-avatar {
   width: 32px;
   height: 32px;
-  background-image: url('../../../icon/miniDev-icon/project-initial/D-48x48.svg');
+  background-image: url('../../icon/miniDev-icon/project-initial/D-48x48.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -118,8 +118,8 @@
   width: 16px;
   height: 16px;
   background-color: currentColor;
-  -webkit-mask: url('../../../icon/miniDev-icon/action/search.svg') no-repeat center/contain;
-  mask: url('../../../icon/miniDev-icon/action/search.svg') no-repeat center/contain;
+  -webkit-mask: url('../../icon/miniDev-icon/action/search.svg') no-repeat center/contain;
+  mask: url('../../icon/miniDev-icon/action/search.svg') no-repeat center/contain;
 }
 ```
 

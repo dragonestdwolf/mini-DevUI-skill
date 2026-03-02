@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Component v1 Test (Spec-based)</title>
+    <style>
+        /* Environment Setup for Isolated Component Testing */
+        :root {
+            --devui-base-bg: #ffffff;
+            --devui-text: #252b3a;
+            --devui-placeholder: #8a8e99;
+            --devui-form-control-line: #adb0b8;
+            --devui-form-control-line-hover: #575d6c;
+            --devui-list-item-hover-bg: #f2f5fc;
+            --devui-constant-blue: #5e7ce0;
+            --devui-disabled-fill-bg: #f3f3f3;
+            --devui-disabled-line: #dfe1e6;
+            --devui-form-control-line-rippling: rgba(94, 124, 224, 0.08);
+            --devui-aide-text: #8a8e99;
+        }
+
+        body {
+            margin: 0;
+            padding: 50px;
+            background-color: #f3f5f8;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+            /* Large gap to prevent expanded panels from overlapping during test */
+            align-items: flex-start;
+        }
+
+        h3 {
+            color: #ff4d4f;
+            margin-bottom: 20px;
+            font-family: monospace;
+        }
+
+        /* =========================================================
+   Component CSS EXACTLY as defined in select-tem.html 
+   ========================================================= */
+        .devui-select-container {
+            font-family: "Noto Sans SC", sans-serif;
+            font-style: normal;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 22px;
+            position: relative;
+            width: 296px;
+        }
+
+        .devui-form-label {
+            display: flex;
+            align-items: center;
+            color: var(--devui-text, #252b3a);
+            margin-bottom: 8px;
+        }
+
+        .devui-form-help {
+            font-size: 12px;
+            line-height: 20px;
+            color: var(--devui-aide-text, #8a8e99);
+            margin-top: 8px;
+        }
+
+        .devui-select-input {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 32px;
+            padding: 5px 12px;
+            background-color: var(--devui-base-bg, #ffffff);
+            border: 1px solid var(--devui-form-control-line, #adb0b8);
+            border-radius: 4px;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .devui-select-input:hover:not(.devui-select-disabled) {
+            border-color: var(--devui-form-control-line-hover, #575d6c);
+        }
+
+        .devui-select-input.devui-select-active,
+        .devui-select-input.devui-select-focus {
+            border-color: var(--devui-constant-blue, #5e7ce0);
+            box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling, rgba(94, 124, 224, 0.08));
+        }
+
+        .devui-select-input.devui-select-disabled {
+            background-color: var(--devui-disabled-fill-bg, #f3f3f3);
+            border-color: var(--devui-disabled-line, #dfe1e6);
+            cursor: not-allowed;
+        }
+
+        .devui-select-placeholder {
+            color: var(--devui-placeholder, #8a8e99);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+        }
+
+        .devui-select-input.devui-select-disabled .devui-select-placeholder {
+            color: var(--devui-placeholder, #8a8e99);
+        }
+
+        .devui-select-arrow {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            margin-left: 8px;
+            background-color: var(--devui-placeholder, #8a8e99);
+            -webkit-mask-image: url('../../../icon/select-arrow.svg');
+            mask-image: url('../../../icon/select-arrow.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .devui-select-input.devui-select-active .devui-select-arrow,
+        .devui-select-input.devui-select-focus .devui-select-arrow {
+            transform: rotate(180deg);
+        }
+
+        .devui-select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            margin-top: 4px;
+            padding: 4px;
+            background-color: var(--devui-base-bg, #ffffff);
+            border-radius: 6px;
+            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 1050;
+        }
+
+        .devui-select-dropdown.devui-hidden {
+            display: none;
+        }
+
+        .devui-select-option {
+            display: flex;
+            align-items: flex-start;
+            padding: 7px 8px;
+            height: 36px;
+            border-radius: 4px;
+            background-color: var(--devui-base-bg, #ffffff);
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        .devui-select-option:hover {
+            background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+        }
+
+        .devui-select-option.devui-option-selected {
+            color: var(--devui-constant-blue, #5e7ce0);
+        }
+
+        .devui-select-option-text {
+            flex: 1;
+            color: inherit;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .devui-select-checkbox {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+            border: 1px solid var(--devui-form-control-line, #adb0b8);
+            background-color: var(--devui-base-bg, #ffffff);
+            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s;
+            margin-top: 3px;
+        }
+
+        .devui-select-option.devui-option-selected .devui-select-checkbox {
+            background-color: var(--devui-constant-blue, #5e7ce0);
+            border-color: var(--devui-constant-blue, #5e7ce0);
+        }
+
+        .devui-select-option.devui-option-selected .devui-select-checkbox::after {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 8px;
+            background-color: #ffffff;
+            -webkit-mask-image: url('../../../icon/select-arrow.svg');
+            mask-image: url('../../../icon/select-arrow.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+        }
+
+        /* ========================================================= */
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <h3>TEST 1: Standard Normal State, Missing Help Text, Short Placeholders</h3>
+        <!-- 
+      Based on injection logic:
+      {{label}} = "常规单选"
+      {{status}} = ""
+      {{placeholder}} = "请选择"
+      {{dropdownState}} = "devui-hidden" (hide dropdown)
+      {{help}} = null
+    -->
+        <div class="devui-select-container">
+            <div class="devui-form-label">常规单选</div>
+
+            <div class="devui-select-input">
+                <div class="devui-select-placeholder">请选择</div>
+                <div class="devui-select-arrow"></div>
+            </div>
+
+            <div class="devui-select-dropdown devui-hidden">
+                <div class="devui-select-option">
+                    <span class="devui-select-option-text">选项 1</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 250px;">
+        <h3>TEST 2: Extreme Overflow Data, Hover Status + Visible Focus Panel (Active State)</h3>
+        <!-- 
+      Based on injection logic:
+      {{label}} = "XXXXXXXXXX极端超长中文标题文本"
+      {{status}} = "devui-select-active"
+      {{placeholder}} = "XXXXXXXXXX极端超长的占位符或者选择文字模拟用户填入大量中英文字符"
+      {{dropdownState}} = "" (visible)
+      {{help}} = "XXXXXXXXXX底层提示文字也极度变态超长"
+    -->
+        <div class="devui-select-container">
+            <div class="devui-form-label">XXXXXXXXXX极端超长中文标题文本</div>
+
+            <!-- Active class should trigger blue border and shadow, AND arrow rotation -->
+            <div class="devui-select-input devui-select-active">
+                <div class="devui-select-placeholder">XXXXXXXXXX极端超长的占位符或者选择文字模拟用户填入大量中英文字符以验证纯CSS截断能力</div>
+                <div class="devui-select-arrow"></div>
+            </div>
+
+            <div class="devui-select-dropdown">
+                <!-- Normal Option long text -->
+                <div class="devui-select-option">
+                    <span class="devui-select-option-text">XXXXXXXXXX极端超长的单选下拉列表项目名称以测试Ellipsis</span>
+                </div>
+
+                <!-- Hovered Option -->
+                <div class="devui-select-option" style="background-color: var(--devui-list-item-hover-bg, #f2f5fc);">
+                    <span class="devui-select-option-text">Hover状态强制打桩测试</span>
+                </div>
+
+                <!-- Selected Option (Multi-select Checkbox type) with long text -->
+                <div class="devui-select-option devui-option-selected">
+                    <div class="devui-select-checkbox"></div>
+                    <span class="devui-select-option-text">已勾选的多选项目XXXXXXXXXX也具备极长的字符串验证排版挤压</span>
+                </div>
+                <div class="devui-select-option">
+                    <div class="devui-select-checkbox"></div>
+                    <span class="devui-select-option-text">未勾选的多选项目</span>
+                </div>
+            </div>
+
+            <div class="devui-form-help">XXXXXXXXXX底层提示文字也极度变态超长XXXXXXXXXX底层提示文字也极度变态超长</div>
+        </div>
+    </div>
+
+    <div>
+        <h3>TEST 3: Disabled State with 0 Data</h3>
+        <!-- 
+      Based on injection logic:
+      {{label}} = "0"
+      {{status}} = "devui-select-disabled"
+      {{placeholder}} = "0"
+      {{dropdownState}} = "devui-hidden"
+      {{help}} = "0"
+    -->
+        <div class="devui-select-container">
+            <div class="devui-form-label">0</div>
+
+            <!-- disabled class should trigger grey bg, grey border, not-allowed cursor -->
+            <div class="devui-select-input devui-select-disabled">
+                <div class="devui-select-placeholder">0</div>
+                <div class="devui-select-arrow"></div>
+            </div>
+
+            <div class="devui-select-dropdown devui-hidden"></div>
+
+            <div class="devui-form-help">0</div>
+        </div>
+    </div>
+
+</body>
+
+</html>

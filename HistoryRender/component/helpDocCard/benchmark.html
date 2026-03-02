@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpDocCard Benchmark - 1973-2837</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ============================================
+           Design Tokens — from Figma Node 1973-2837
+           ============================================ */
+        :root {
+            /* Color Tokens */
+            --devui-text: #252B3A;
+            --devui-placeholder: #8A8E99;
+            --devui-base-bg: #FFFFFF;
+
+            /* Shadow */
+            --devui-shadow-length-base: 0 1px 6px 0 rgba(0, 0, 0, 0.08);
+
+            /* Font Sizes */
+            --devui-font-size-sm: 12px;
+            --devui-font-size-lg: 16px;
+
+            /* Border Radius */
+            --devui-border-radius-xl: 16px;
+        }
+
+        /* ============================================
+           Page Canvas
+           ============================================ */
+        body {
+            margin: 0;
+            padding: 50px;
+            background-color: #F3F6F8;
+            font-family: 'Noto Sans SC', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-family: monospace;
+            color: #999;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 4px 12px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* ============================================
+           Component: devui-helpDocCard
+           ============================================ */
+        /* Figma: Auto-layout Vertical, no fixed height */
+        .devui-helpDocCard {
+            width: 384px;
+            /* Figma: 384px */
+            background-color: var(--devui-base-bg, #FFFFFF);
+            padding: 16px 20px 20px 20px;
+            /* Figma: pt:16 px:20 pb:20 */
+            border-radius: var(--devui-border-radius-xl, 16px);
+            box-shadow: var(--devui-shadow-length-base);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            /* Figma: itemSpacing 24px */
+            align-items: flex-start;
+        }
+
+        /* --------- Header Row --------- */
+        .devui-helpDoc-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* Figma: space-between */
+            flex-shrink: 0;
+        }
+
+        .devui-helpDoc-title {
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            /* Figma: Bold */
+            font-size: var(--devui-font-size-lg, 16px);
+            color: var(--devui-text, #252B3A);
+            line-height: 24px;
+            white-space: nowrap;
+        }
+
+        /* "所有文档 >" link area */
+        .devui-helpDoc-all-link {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            /* Figma: gap 4px */
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .devui-helpDoc-all-text {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 400;
+            /* Figma: Regular */
+            font-size: var(--devui-font-size-sm, 12px);
+            color: var(--devui-placeholder, #8A8E99);
+            line-height: 20px;
+        }
+
+        .devui-helpDoc-all-icon {
+            width: 16px;
+            height: 16px;
+            background-color: var(--devui-placeholder, #8A8E99);
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/next.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/next.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            flex-shrink: 0;
+        }
+
+        /* --------- Grid Container --------- */
+        /* Figma: flex-wrap, gap-x: 0, gap-y: 12; each cell 86x76 */
+        .devui-helpDoc-grid {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 0;
+            /* Figma: row-gap 12, col-gap 0 */
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        /* --------- Each Doc Item Cell --------- */
+        .devui-helpDoc-item {
+            width: 86px;
+            /* Figma: 384-20*2 / 4 = 86px */
+            height: 76px;
+            /* Figma: 76px */
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            /* Figma: gap 4px */
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .devui-helpDoc-item-icon {
+            width: 24px;
+            /* Figma: 24px */
+            height: 24px;
+            flex-shrink: 0;
+            background-color: var(--devui-text, #252B3A);
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+        }
+
+        .devui-helpDoc-item-label {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 400;
+            /* Figma: Regular */
+            font-size: var(--devui-font-size-sm, 12px);
+            color: var(--devui-text, #252B3A);
+            line-height: 20px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* ============================================
+           Icon Mask Mappings for 9 items
+           ============================================ 
+           Figma item names → best-match local icons:
+           产品介绍  → action/learn.svg (product introduction)
+           快速入门  → action/next.svg (quick start / arrow forward)
+           使用指南  → action/user-guide.svg
+           最佳实践  → action/star.svg
+           常见问题  → action/help.svg
+           理论实践  → action/description.svg (open book look-alike)
+           通用参考  → action/description-1.svg
+           API       → action/api.svg
+           API(2)    → action/api.svg
+        */
+        .devui-helpDoc-icon--product-intro {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/learn.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/learn.svg');
+        }
+
+        .devui-helpDoc-icon--quick-start {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/execute.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/execute.svg');
+        }
+
+        .devui-helpDoc-icon--user-guide {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/user-guide.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/user-guide.svg');
+        }
+
+        .devui-helpDoc-icon--best-practice {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/star.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/star.svg');
+        }
+
+        .devui-helpDoc-icon--faq {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/help.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/help.svg');
+        }
+
+        .devui-helpDoc-icon--theory {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/readme.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/readme.svg');
+        }
+
+        .devui-helpDoc-icon--reference {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/description-1.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/description-1.svg');
+        }
+
+        .devui-helpDoc-icon--api {
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/api.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/api.svg');
+        }
+
+        /* ============================================
+           Design Token Audit Table
+           ============================================ */
+        .audit-section {
+            width: 800px;
+            background: var(--devui-text);
+            border-radius: 8px;
+            padding: 24px 32px;
+            box-sizing: border-box;
+            color: #E0E0E0;
+        }
+
+        .audit-section h3 {
+            color: #FFFFFF;
+            font-size: 16px;
+            margin: 0 0 16px 0;
+        }
+
+        .audit-section table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            font-family: monospace;
+        }
+
+        .audit-section th {
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            color: #8A8E99;
+            font-weight: 500;
+        }
+
+        .audit-section td {
+            padding: 6px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .color-swatch {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-right: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="section-title">HelpDocCard / Default (状态: 默认)</div>
+
+    <!-- Component Starts Here -->
+    <div class="devui-helpDocCard">
+
+        <!-- Header -->
+        <div class="devui-helpDoc-header">
+            <div class="devui-helpDoc-title">帮助文档</div>
+            <a href="javascript:void(0)" class="devui-helpDoc-all-link">
+                <span class="devui-helpDoc-all-text">所有文档</span>
+                <span class="devui-helpDoc-all-icon"></span>
+            </a>
+        </div>
+
+        <!-- Icon Grid (9 items, 4 per row = row1:4, row2:4, row3:1) -->
+        <div class="devui-helpDoc-grid">
+            <!-- Row 1 -->
+            <a href="javascript:void(0)" class="devui-helpDoc-item">
+                <span class="devui-helpDoc-item-icon devui-helpDoc-icon--product-intro"></span>
+                <span class="devui-helpDoc-item-label">产品介绍</span>
+            </a>
+            <a href="javascript:void(0)" class="devui-helpDoc-item">
+                <span class="devui-helpDoc-item-icon devui-helpDoc-icon--quick-start"></span>
+                <span class="devui-helpDoc-item-label">快速入门</span>
+            </a>
+            <a href="javascript:void(0)" class="devui-helpDoc-item">
+                <span class="devui-helpDoc-item-icon devui-helpDoc-icon--user-guide"></span>
+                <span class="devui-helpDoc-item-label">使用指南</span>
+            </a>
+            <a href="javascript:void(0)" class="devui-helpDoc-item">
+                <span class="devui-helpDoc-item-icon devui-helpDoc-icon--best-practice"></span>
+                <span class="devui-helpDoc-item-label">最佳实践</span>
+            </a>
+            <!-- Row 2 -->
+            <a href="javascript:void(0)" class="devui-helpDoc-item">
+                <span class="devui-helpDoc-item-icon devui-helpDoc-icon--faq"></span>
+                <span class="devui-helpDoc-item-label">常见问题</span>
+            </a>
+            <a href="javascript:void(0)" class="devui-helpDoc-item">
+                <span class="devui-helpDoc-item-icon devui-helpDoc-icon--theory"></span>
+                <span class="devui-helpDoc-item-label">理论实践</span>
+            </a>
+            <a href="javascript:void(0)" class="devui-helpDoc-item">
+                <span class="devui-helpDoc-item-icon devui-helpDoc-icon--reference"></span>
+                <span class="devui-helpDoc-item-label">通用参考</span>
+            </a>
+            <a href="javascript:void(0)" class="devui-helpDoc-item">
+                <span class="devui-helpDoc-item-icon devui-helpDoc-icon--api"></span>
+                <span class="devui-helpDoc-item-label">产品介绍</span>
+            </a>
+            <!-- Row 3 – single item on the left -->
+            <a href="javascript:void(0)" class="devui-helpDoc-item">
+                <span class="devui-helpDoc-item-icon devui-helpDoc-icon--api"></span>
+                <span class="devui-helpDoc-item-label">产品介绍</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Design Token Audit -->
+    <div class="audit-section">
+        <h3>📋 Design Token Audit — Figma: 1973-2837 (帮助文档卡片)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Figma Value</th>
+                    <th>CSS Token / Style</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Card Width</td>
+                    <td>384px (height auto / hugs content)</td>
+                    <td>width: 384px;</td>
+                </tr>
+                <tr>
+                    <td>Card Padding</td>
+                    <td>Top:16, Right:20, Bottom:20, Left:20</td>
+                    <td>padding: 16px 20px 20px 20px</td>
+                </tr>
+                <tr>
+                    <td>Card Vertical Gap</td>
+                    <td>24px (Header to Grid)</td>
+                    <td>gap: 24px</td>
+                </tr>
+                <tr>
+                    <td>Card Background</td>
+                    <td><span class="color-swatch" style="background:#FFFFFF"></span>#FFFFFF</td>
+                    <td>var(--devui-base-bg)</td>
+                </tr>
+                <tr>
+                    <td>Card Radius</td>
+                    <td>16px</td>
+                    <td>var(--devui-border-radius-xl, 16px)</td>
+                </tr>
+                <tr>
+                    <td>Card Shadow</td>
+                    <td>0px 1px 6px 0px rgba(0,0,0,0.08)</td>
+                    <td>var(--devui-shadow-length-base)</td>
+                </tr>
+                <tr>
+                    <td>Header Title</td>
+                    <td><span class="color-swatch" style="background:#252B3A"></span>#252B3A, 16px, Bold 700</td>
+                    <td>var(--devui-text), var(--devui-font-size-lg)</td>
+                </tr>
+                <tr>
+                    <td>"所有文档" Text</td>
+                    <td><span class="color-swatch" style="background:#8A8E99"></span>#8A8E99, 12px, Regular 400</td>
+                    <td>var(--devui-placeholder)</td>
+                </tr>
+                <tr>
+                    <td>All-docs Arrow</td>
+                    <td>16px icon (下一步 / next direction)</td>
+                    <td>mask: action/next.svg; fill var(--devui-placeholder)</td>
+                </tr>
+                <tr>
+                    <td>Grid Cell Size</td>
+                    <td>w:86px × h:76px</td>
+                    <td>width: 86px; height: 76px;</td>
+                </tr>
+                <tr>
+                    <td>Grid Cell Gap</td>
+                    <td>row-gap: 12px, col-gap: 0</td>
+                    <td>gap: 12px 0</td>
+                </tr>
+                <tr>
+                    <td>Cell Icon Size</td>
+                    <td>24px × 24px</td>
+                    <td>width: 24px; height: 24px</td>
+                </tr>
+                <tr>
+                    <td>Cell Icon Color</td>
+                    <td><span class="color-swatch" style="background:#252B3A"></span>#252B3A (stroke-based SVG)</td>
+                    <td>background-color: var(--devui-text); mask-image: url(…)</td>
+                </tr>
+                <tr>
+                    <td>Cell Label</td>
+                    <td><span class="color-swatch" style="background:#252B3A"></span>#252B3A, 12px, Regular 400</td>
+                    <td>var(--devui-text), var(--devui-font-size-sm)</td>
+                </tr>
+                <tr>
+                    <td>Cell Icon ↔ Label Gap</td>
+                    <td>4px</td>
+                    <td>gap: 4px</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

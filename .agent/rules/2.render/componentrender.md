@@ -47,6 +47,8 @@ Skill 深度解析：
 v[n][t/s]?.html（独立组件测试页）
 
 2. History Log 记录格式 (严格执行)
+**🔴【HIGHEST PRIORITY CRITICAL RULE】🔴**: `componentlog.md` 仅允许 **追加 (Append)** 内容！绝对且严禁覆盖或删除该文件内的任何历史记录。在更新日志时，必须使用不破坏前文的方式（例如使用 `multi_replace_file_content` 附加在末尾）。
+
 每次生成后，按以下格式追加记录：
 
 [componentname]v[n][t/s]?
@@ -68,6 +70,9 @@ v[n][t/s]?.html（独立组件测试页）
 图标/头像：使用占位图 URL 或 DevUI 默认图标。
 
 漏洞反馈：如果在生成过程中发现 Skill 文档未定义某个必要的属性（如 status 的枚举值不全），必须在生成描述中明确指出。
+
+【🚨 隔离验证禁令 - 禁止直接复制标杆】：
+单组件渲染的本质是为了发现并修复 Spec (规范) 定义中的盲点。**严禁**直接通过“偷看”或复制已有的 `benchmark.html` 标杆文件来绕过 Spec 验证。必须仅从 [Component].md 与对应的 -tem.html 模板中提取信息。如果 Spec 文档无法支撑生成出高保真组件，说明 Spec 存在漏洞，应在生成描述中反馈。
 
 ## 输出示例
 [系统动作]：创建文件夹 /HistoryRender/component/tab/（假设页签测试文件夹不存在） [文件产出]：v1.html,[History Log]：

@@ -65,13 +65,13 @@
 
             <!-- Warning: Icon paths must be relative ../../../icon/... -->
             <button class="devui-pagination-item disabled">
-                <img src="../../../icon/miniDev-icon/action/arrow-left.svg" class="devui-icon-s">
+                <img src="../../icon/miniDev-icon/action/arrow-left.svg" class="devui-icon-s">
             </button>
             
             <button class="devui-pagination-item active">1</button>
             
             <button class="devui-pagination-item disabled">
-                <img src="../../../icon/miniDev-icon/action/arrow-left.svg" class="devui-icon-s" style="transform: rotate(180deg);">
+                <img src="../../icon/miniDev-icon/action/arrow-left.svg" class="devui-icon-s" style="transform: rotate(180deg);">
             </button>
 
             <!-- Jump -->

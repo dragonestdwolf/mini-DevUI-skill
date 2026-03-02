@@ -1,0 +1,16 @@
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80.000000" height="80.000000" fill="none" customFrame="#000000">
+	<rect id="项目首字母图标/A-48px*48px" width="80.000000" height="80.000000" x="0.000000" y="0.000000" />
+	<rect id="矩形" width="80.000000" height="80.000000" x="0.000000" y="0.000000" opacity="0" fill="rgb(216,216,216)" />
+	<rect id="矩形" width="77.000000" height="77.000000" x="1.500000" y="1.500000" opacity="0" stroke="rgb(151,151,151)" stroke-opacity="0" stroke-width="3" />
+	<g id="a">
+		<path id="形状结合" d="M33.3998 67.7778L38.6059 53.8889L58.056 53.8889L58.056 67.7778L33.3998 67.7778Z" fill="rgb(105,99,240)" fill-rule="evenodd" />
+		<path id="路径" d="M50.6502 22.1038L67.7779 67.7778L53.8891 67.7778L43.7085 40.6274L50.6502 22.1038Z" fill="rgb(231,131,89)" fill-rule="evenodd" />
+		<path id="路径" d="M50.7471 59.4431L51.7874 62.2223L41.0385 62.2223L42.0797 59.4441L50.7471 59.4431Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="Rectangle" d="M33.0559 12.2222L46.9448 12.2222L26.1114 67.7777L12.2225 67.7777L33.0559 12.2222Z" fill="rgb(108,163,244)" fill-rule="evenodd" />
+		<path id="Path" d="M33.0558 12.2222L27.8475 26.1111L23.6808 26.1111L28.8891 12.2222L33.0558 12.2222Z" fill="rgb(255,143,206)" fill-rule="evenodd" />
+		<path id="Path" d="M37.2225 12.2222L32.0142 26.1111L27.8475 26.1111L33.0559 12.2222L37.2225 12.2222Z" fill="rgb(84,59,186)" fill-rule="evenodd" />
+		<path id="Path" d="M39.6531 31.6667L26.1114 67.7779L12.2225 67.7779L25.7642 31.6667L39.6531 31.6667Z" fill="rgb(178,126,245)" fill-rule="evenodd" />
+		<path id="路径" d="M34.1909 31.6665L22.5942 62.2221L19.6289 62.2221L31.2243 31.6665L34.1909 31.6665Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+		<path id="路径" d="M20.7674 59.2221L20.0022 61.2383L19.6289 62.2221L22.5942 62.2221L33.0524 34.6665L33.8175 32.6506L34.1909 31.6665L31.2243 31.6665L20.7674 59.2221Z" fill="rgb(151,151,151)" fill-opacity="0" fill-rule="evenodd" />
+	</g>
+</svg>
