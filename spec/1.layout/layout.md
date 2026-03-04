@@ -86,6 +86,61 @@ HTML/CSS 结构建议采用 Flexbox 布局：
 1. **Main Content (`.main-content`)**: 
    - 包含主旨横幅区（`.welcome-banner-area`，内部如 `.recent-visits-row` 提供胶囊卡片）。
    - 包含核心功能网格区（`.projects-section`，内部包括多形态视图切换、筛选标签组以及 `.project-grid` 三列瀑布流卡片阵列）。
+   - ⚠️ **HTML 结构完整性强约束**: 顶部的工具条控制列（带有 Search、Filters 和 Tabs）通常采用 `display: flex; align-items: center;` 进行横向包裹。**必须绝对确保该横向排版容器标签得到完整闭合 `</div>`**。严禁发生遗漏导致下方的 `.project-grid`（多列瀑布流大模块）被意外吸入并吞并进此横向 Flex 容器内，否则将引发全局横向极致挤压、文字被迫竖排断裂等毁灭级错位失控！
 2. **Right Sidebar (`.right-sidebar`)**: 
    - 内部按垂直流（`flex-direction: column; gap: 16px;`）挂载多个业务面板卡片，如带有明确统一样式定义的 `.devui-announcementCard`, `.devui-activityCard`, `.devui-helpDocCard` 等。
 3. **视觉层面特征**: 卡片式页面通常采用较大的模块圆角（如 `8px`/`16px`），统一且层次分明的轻薄阴影（如 `0 1px 6px 0 rgba(0, 0, 0, 0.08)`），以及明显的模块间白底悬浮感。
+
+## 5. 表单页布局架构 (Form Page Layout, bench-form-v3)
+
+该布局用于“表单页”类页面，基于 `bench-form-v3.html` 提炼，采用 1920 基准画布 + 顶栏 + 左工具链导航 + 主工作区分栏结构。
+
+### 5.1 核心结构与关系
+
+- **Canvas (`.page`)**: `width: 1920px; height: 1080px; overflow: hidden;`
+- **Header (`.devui-header`)**: 顶部通栏，`height: 40px`，需保留 `devui-header-left / devui-header-nav / devui-header-right` 语义结构。
+- **Shell (`.shell`)**: `display: flex; height: calc(100% - 40px);`
+- **Toolchain Sidebar (`.toolchain-sidebar`)**: 左侧工具链导航，`width: 230px; height: 1040px;`
+- **Workspace (`.workspace`)**: 右侧主工作区，`width: 1690px; height: 1040px;`，再拆分为：
+  - **Top (`.workspace-top`)**: 仓库信息头 + 页签区，`height: 136px`
+  - **Bottom (`.workspace-bottom`)**: 设置区主体，`height: 905px`
+    - **Settings Sidebar (`.settings-sidebar`)**: `width: 288px`
+    - **Main Form (`.repo-settings-main`)**: `width: 1360px`
+
+```text
++------------------------------------------------------------------------------------------------+
+|                                Header (40px, full width)                                      |
++--------------+---------------------------------------------------------------------------------+
+| Toolchain    | Workspace Top (136px): breadcrumb + page header + tabs                         |
+| Sidebar      +--------------------------------------+------------------------------------------+
+| (230px)      | Settings Sidebar (288px)             | Repo Settings Main (1360px)             |
+|              | menu groups / sub-menu / active      | 3 cards: 154px / 108px / 448px          |
++--------------+--------------------------------------+------------------------------------------+
+```
+
+### 5.2 关键尺寸基线（必须对齐）
+
+| 区域 | 尺寸 |
+| :--- | :--- |
+| 画布 | `1920 x 1080` |
+| Header | 高 `40px` |
+| 左工具链导航 | 宽 `230px` |
+| Workspace | 宽 `1690px` |
+| Workspace Top | 高 `136px` |
+| Bottom 主体 | 高 `905px` |
+| 设置侧栏 | 宽 `288px`（内部内容列 `248px`） |
+| 表单主列 | 宽 `1360px` |
+| 三张表单卡片 | 高 `154px / 108px / 448px` |
+
+### 5.3 布局实现骨架（推荐）
+
+1. 外层使用固定画布容器，避免响应式拉伸破坏像素对齐。
+2. `header` 与 `shell` 采用纵向分层，`shell` 内采用横向双栏（`230 + 1690`）。
+3. `workspace` 内采用上下两段（`136 + 905`），底部再采用左右两栏（`288 + 20 gap + 1360`）。
+4. 表单区卡片按纵向流堆叠，卡片间距固定（`12px`），统一白底 + `8px` 圆角 + 轻阴影。
+
+### 5.4 强约束与依赖
+
+- Header 与 Sidebar 为高优先级框架组件，渲染时必须读取并遵循 `spec/3.component/header.md` 与 `spec/3.component/sidebar.md` 的语义结构，不可随意删减。
+- 当组件 spec 与设计稿尺寸冲突时，尺寸数值以页面设计真值为准，语义结构以 spec 为准。
+- 建议统一使用 `--devui-*` 变量管理颜色、边框、阴影与禁用态，避免硬编码样式扩散。

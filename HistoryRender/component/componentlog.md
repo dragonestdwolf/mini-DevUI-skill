@@ -654,3 +654,119 @@ no: componentrender-tabs/bench
 读取文件: Figma MCP 临时提取流
 生成描述: 生成页签(Tabs)图标与文本模式的标杆HTML，包含单项所有状态（默认、悬浮、激活、禁用）展示以及多项组合（2至6项等）横排展示。
 输出位置: /HistoryRender/component/componentrender-tabs/bench.html
+
+no: accordion/benchmark
+时间: 03-02 14:55
+框架与库: HTML / DevUI Component
+数据来源: Figma MCP (节点 DFcCn, 3bQzF)
+输入物来源: Figma直接导出结构与数据
+读取文件: Figma MCP 临时提取流
+生成描述: 综合Figma实际节点分析生成Accordion的Benchmark。完整复现了关闭（Closed）与展开（Open）两种状态的视觉样式，包含 JetBrains Mono 标题、Geist 内容描述以及基于 CSS Mask 的 Chevron 图标。
+输出位置: /HistoryRender/component/accordion/benchmark.html
+
+no: accordin/bench-component
+时间: 03-02 17:39
+框架与库: HTML / DevUI Component
+数据来源: Figma Link + 设计截图（MCP节点: 2920:9654）
+输入物来源: 用户提供 Figma 链接与截图参考
+读取文件: .agent/rules/1.make/benchmark_maker.md
+生成描述: 生成 Accordion 单组件 benchmark 页面，按设计稿还原“设置”列表层级；实现一级分组展开/收起、二级项独立缩进（96px）与选中态交互，以及右箭头叶子项样式。
+输出位置: /HistoryRender/component-render/accordin/bench-component.html
+
+headinfov1
+时间： 03-04 09:47 
+框架与库： Angular / DevUI 
+数据来源： Both
+输入物来源： 内部联动 (只读取 Spec & Template)
+读取文件： headinfo.md, headinfo-tem.html
+生成描述： 对HeadInfo组件进行占位符压力注入（极端长文本截断、特殊状态占位）。发现 Spec 定义中1.1的Shell Container预期的 `{{headInfoBar}}` 与 Template 中直接展开写的 `.head-info` 结构不一致；且Template 缺失 `{{dropdownPanel}}` 的注入位点，手动构建插入。
+输出位置： /HistoryRender/component/headinfo/v1.html
+
+no: headinfo/benchmark
+时间: 03-04 10:01
+框架与库: HTML / DevUI Component
+数据来源: Figma Link + 截图提取 (MCP节点: 2152-3082)
+输入物来源: 用户指定重做并附带目标截图
+读取文件: benchmark_maker.md (依照单真值策略重建)
+生成描述: 推翻错误结构重新生成 HeadInfo 组件的 Benchmark 标杆。根据图像比例高度还原了双行排版、内卷的粉红品牌Logo(Inline Base64 SVG)，20px/14px字号层级。同时精确拆解并还原了『代码健康度:未检查』的联体组合灰色Badge及『标签』浅色Badge。不使用任何绝对定位或外部框架。
+输出位置: /HistoryRender/component/headinfo/benchmark.html
+
+headinfov2
+时间： 03-04 10:11 
+框架与库： Angular / DevUI 
+数据来源： Both
+输入物来源： 内部联动 (只读取 Spec & Template)
+读取文件： headinfo.md, headinfo-tem.html
+生成描述： 完全遵守隔离、禁止偷看原则。基于刚抽象出的 Template 进行重新压力注入（极端长文本，多重超大Badge组装），放置于定宽（800px）外部测试容器内验证响应式截断。发现缺少 `overflow: hidden`, `text-overflow: ellipsis`, 以及各层级 Flex 容器的 `min-width: 0` 参数支持，这导致长文本并不会按照预期自动打点收缩，而是直接撑破布局向外溢出。
+输出位置： /HistoryRender/component/headinfo/v2.html
+
+headinfov2 (Fix Overflow)
+时间： 03-04 10:14
+调整内容: 
+1. 在父节点 `.devui-headinfo-main` 添加了 `min-width: 0; flex: 1;` 使得它有能力响应空间压缩
+2. 在 `.devui-headinfo-row1`, `.devui-headinfo-title-group`, `.devui-headinfo-row2` 各级 Flex 容器中一致支持了 `min-width: 0;` 
+3. 把所有的需防崩溃文字元素设置了 `overflow: hidden; text-overflow: ellipsis;`
+4. 对于绝对不能被挤压缩小的右侧修饰 `.devui-headinfo-caret`, `.devui-headinfo-badges`, `.devui-text-slash`，加入了强防御 `flex-shrink: 0;`。
+输出位置: /HistoryRender/component/headinfo/v2.html
+
+Tabs v5
+时间： 03-04 10:16 
+框架与库： Angular / DevUI 
+数据来源： Both
+输入物来源： 内部联动 (只读取 Spec & Template)
+读取文件： tabs.md, tabs-tem.html
+生成描述： 对Tabs组件进行囊括了所有类别的占位符渲染测试：同时汇聚了 `Pills`, `Tabs`, `Wrapped`, `Icon`, `Text` 五种页签样式。在生成时发现严重缺失漏洞：作为主要指导视觉真理池的 `tabs-tem.html` 模版中竟然漏填了 `Pills`，`Tabs` 和 `Wrapped` 样式的 CSS 配置，只有一个供局部区块使用的 Icon 和 Text 版阴影浮块。我在生成该 HTML时，人工依据 `tabs.md`（Spec）中详实的 “Visual Skill 样式映射表” 强行补齐了缺失代码并将底边覆盖 `margin-bottom: -1px` 等 CSS 还原组合。
+输出位置： /HistoryRender/component/tabs/v5/v5.html
+
+Tabs v6
+时间： 03-04 11:03 
+框架与库： AngularJS / HTML / DevUI Component
+数据来源： Spec & Template ONLY (Strict Mode)
+输入物来源： tabs.md, tabs-tem.html (无外部 Benchmark 查阅)
+读取文件： /spec/3.component/tabs.md, /spec/4.template/tabs-tem.html
+生成描述： 对比 v5，v6 主要是完全依循刚在基准文件中修正后的 spec 与 template，重点针对 \`.devui-tabs-wrapped\` 包裹型组件进行了无边框+纯背景融入+隐身透明数字签逻辑的一键注入测试。全流程隔离外部视觉源，测试规范化后自包含模板的能力。
+输出位置： /HistoryRender/component/tabs/v6/v6.html
+
+no: accordion/benchmark
+时间: 03-04 11:15
+框架与库: 原生 HTML/CSS
+数据来源: Figma MCP (节点 2920:9654)
+输入物来源: Figma直接导出结构与数据
+读取文件: Figma MCP 临时提取流
+生成描述: 从2920:9654提炼核心一级与二级菜单的所有五类状态(包含Default/Hover/Expand/Active等组合)，完全基于获取数据的实际padding和色彩建立参考。
+输出位置: /HistoryRender/component/accordion/benchmark.html
+
+no: aAccordion benchmark
+时间：03-04 10:42
+框架与库：原生 HTML/CSS
+数据来源：Figma Node 2920:9654
+读取文件：Figma MCP 视觉图层数据
+生成描述：作为首个侧边导航组件构建组件状态合集。完整包含了 .一级 和 .二级 手风琴菜单所有的 hover 和 active 下的交互形态，并且遵循最小尺寸原则和变量剥离要求。
+输出位置：/HistoryRender/component/accordion/benchmark.html
+
+Accordion v1
+时间：03-04 11:34
+框架与库：原生 HTML/CSS
+数据来源：Both
+输入物来源：Figma MCP / Spec / Template
+读取文件：accordion-tem.html, accordion.md
+生成描述：按 componentrender.md 规范对 Accordion 进行了独立的破坏性页面组装验证测试（超长文本填充无自然间断、空标题）。成功提取问题：在当前的 Spec 文档中，遗漏了“2. Dynamic Response 流体响应”，未对“Text Overflow”提供超长排期的视觉截断策略（如 white-space: nowrap; text-overflow: ellipsis;），当开发者注入非常规中文的长字母段或超出字数的二级描述时，将会导致 248px 固定容器被破坏或者折行丑化。这是一次针对 Spec 规则覆盖度的成功扫描。
+输出位置：/HistoryRender/component/accordion/v1.html
+
+Accordion v2
+时间：03-04 11:39
+框架与库：原生 HTML/CSS
+数据来源：Both
+输入物来源：内部联动 (读取 Spec & Template)
+读取文件：accordion-tem.html, accordion.md
+生成描述：在 Spec 的 `Dynamic Response` 章节内补加了完整的文本超长截断规则（定义 Flexbox 排版弹性 `flex: 1`, `min-width: 0`, 以及右侧图标防挤压的 `flex-shrink: 0`），并将其同步更新进入 HTML Template。重新运行极限数据填充渲染。目前，不管是被注入超长中英文混合序列还是挤满的占位 Header，全部依据框架内截断完美变成三点省略号，并自动给右置的操作图标或翻折符号预留了安全距离（`margin-right: 8px`）。组件鲁棒性修补完成。
+输出位置：/HistoryRender/component/accordion/v2.html
+
+Accordion v3
+时间：03-04 11:43
+框架与库：原生 HTML/CSS
+数据来源：Both
+输入物来源：人工截图 (Image Reference) + Spec + Template
+读取文件：accordion-tem.html, accordion.md
+生成描述：按照用户上传的手风琴侧边设计稿截图进行的严格组件树组装。使用 `v2` 提炼完善后的健壮模板，完整填充了 3 组展开组（包含分别数量等于 2, 5, 6 个子项）与 4 组收起折叠态的基础设置组。全篇共生成近 20 条 `.devui-accordion-subitem` 节点分支来彻底对齐用户的视觉。成功演示出利用原生 CSS 规则 (`.is-expanded` 样式隐藏非激活子节点) 及精准的 90° 的箭头掩码转动（`-90deg` 到 `0deg`）效果。
+输出位置：/HistoryRender/component/accordion/v3.html

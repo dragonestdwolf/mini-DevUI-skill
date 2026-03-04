@@ -38,7 +38,8 @@
 ### 1.2 Navigation Item (导航项)
 -   **Scenario**: Used for main navigation links like "首页", "工作台", "效能洞察", "服务", "华为开源镜像站".
 -   **Layout**: Flex container, `height: 32px`, `gap: 4px; padding: 4px 8px; border-radius: 2px;`
--   **Icon logic**: Nav items often use specific multi-color or branded icons, requiring `<img>` tags (`size: 24x24`) instead of CSS masks to retain color. Text logic expects `size: 14px, line-height: 22px`.
+-   **Icon logic**: Nav items MUST use `<img>` tags (`size: 24x24`) pointing to `icon/miniDev-icon/top-nav/` (e.g., `首页-1.svg`). DO NOT use CSS `-webkit-mask` icon classes from the sidebar for top navigation, as top navigation icons are multi-colored.
+-   **Text logic**: Text expects `size: 14px, line-height: 22px`.
 -   **Variations**:
     -   **Standard Item**:
     ```html
@@ -92,6 +93,18 @@
     -   Console and Location blocks: Prevent wrapping.
 -   **Responsive Layout**:
     -   Header container acts as absolute width parent: `flex`, `justify-content: space-between`, `padding: 0 8px`, `height: 48px`.
+
+## Anti-Patterns (负面示例)
+禁止在生成代码时出现以下模式：
+
+1.  **❌ 禁止顶部导航图标单色化**
+    ```html
+    <!-- Bad: 使用 Sidebar 的单色 SVG mask 类名用于 Header 主导航 -->
+    <span class="devui-icon-mask ic-dashboard" style="background-color:currentColor;"></span>
+    
+    <!-- Good: 使用 img 标签引入 multi-color 彩色 SVG 素材 -->
+    <img class="devui-header-nav-icon" src="../../../../icon/miniDev-icon/top-nav/首页-1.svg" />
+    ```
 
 ## 3. Template injection (模版注入)
 -   **{{logoSrc}}**: 标志图片路径

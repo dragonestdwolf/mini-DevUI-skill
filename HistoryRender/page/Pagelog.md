@@ -148,3 +148,99 @@ no: v20
 生成描述: 综合各类工作台卡片组件规范，严格遵循 layout 布局规范中的“卡片工作台布局架构”，在 1920x1080 的绝对定位画布上物理还原了“Hello, Jingwen”大盘页面。通过动态路径（="../../../"）准确调用了 SVG 静态资源，确保了顶导、浮动侧边栏、网格项目卡片及右侧业务面板的像素级还原与一致性。
 输出位置: /HistoryRender/page/v20/v20.html
 
+no: workbench-dashboard (bench-card.html)
+时间: 02-28 17:40
+框架与库: HTML / CSS
+读取: Figma v20 (node-id: 3665:10163 对应逻辑)
+生成描述: 综合各类工作台卡片组件规范，严格遵循 layout 布局规范中的“卡片工作台布局架构”，在 1920x1080 的绝对定位画布上物理还原了“Hello, Jingwen”大盘页面。确保了顶导、浮动侧边栏、网格项目卡片及右侧业务面板的像素级还原与一致性。
+输出位置: /HistoryRender/page/bench-card.html
+
+no: repo-config-form (bench-form.html)
+时间: 03-02 14:25
+框架与库: HTML / CSS
+读取: Figma MCP (node-id: 3665:10119) + 框架逻辑 (node-id: 8823:12019)
+生成描述: 严格基于 `benchmark_maker.md` 规范及“工作台布局架构”进行重定义。采用了 1920x1080 绝对定位物理基准方案，将页面拆分为 Header (48px)、极左工具栏 (48px)、二级侧边栏 (240px) 及流动主内容区。这种结构精确还原了华为云/DevUI 的真实页面骨架。
+输出位置: /HistoryRender/page/bench-form.html
+
+
+no: bench-form-v2
+时间: 03-02 16:57
+框架与库: HTML / CSS
+读取 Skill: /Users/renyuqing/.codex/skills/minidevui-benchmark-maker/SKILL.md, spec/3.component/header.md, spec/3.component/sidebar.md, .agent/rules/2.render/htmlrender.md
+生成描述: 基于截图与 Figma 链接(node-id: 3665:10162, MCP不可读)生成仓库设置页 benchmark v2；按 header/sidebar spec 重建顶栏与双层侧边结构，补全设置导航与多卡片表单区。
+输出位置: /HistoryRender/page/bench-form-v2.html
+
+no: bench-form-v3
+时间: 03-02 17:22
+框架与库: HTML / CSS
+读取 Skill: /Users/renyuqing/.codex/skills/minidevui-benchmark-maker/SKILL.md, spec/3.component/header.md, spec/3.component/sidebar.md, spec/3.component/select.md, spec/3.component/input.md, spec/3.component/checkbox.md, spec/3.component/button.md
+生成描述: 基于 Figma MCP 真值节点(8823:12019/12061/12020/12021/12059/12060/13023/13022/12024/12025/12029/12043)重建仓库设置页 v3；严格按 header/sidebar 语义结构生成，采用本地资源优先策略并完成关键尺寸/token/路径自动验收。
+输出位置: /HistoryRender/page/bench-form-v3.html
+
+no: v21
+时间: 03-03 17:16
+框架与库: HTML / CSS
+读取 Skill: /Users/renyuqing/.codex/skills/minidevui-workspace-global/SKILL.md, /Users/renyuqing/.codex/skills/minidevui-html-render/SKILL.md, .agent/rules/2.render/htmlrender.md, spec/1.layout/layout.md, spec/3.component/header.md, spec/3.component/sidebar.md, spec/3.component/headinfo.md, spec/3.component/tabs.md, spec/3.component/bread_crumbs.md, spec/3.component/form.md, spec/3.component/select.md, spec/3.component/checkbox.md, spec/3.component/input.md, spec/3.component/button.md, spec/0.role/icon_role.md
+生成描述: 严格以用户提供的仓库设置页截图为唯一视觉基准，基于 component spec/template 重建表单页框架（Header + 双侧栏 + HeadInfo + Tabs + 三段表单卡片），用于检测 spec 可用性；未复用 bench-form-v3 的布局与样式实现。
+输出位置: /HistoryRender/page/v21/v21.html
+
+no: v22
+时间: 03-04 12:00
+框架与库: HTML / CSS
+读取 Skill: .agent/rules/2.render/htmlrender.md, spec/1.layout/layout.md, header-tem.html, sidebar-tem.html, headinfo-tem.html, tabs-tem.html, accordion-tem.html, form-tem.html, button-tem.html, input-tem.html, checkbox-tem.html, select-tem.html
+生成描述: 综合遵循最新沉淀的所有独立组件 Spec 和 Template，进行宏版 `v22` 页面级拼合模拟渲染验证测试。采用了绝对的 `.page-canvas` 容器防抖动布局，并应用了最新的 accordion Spec防溢出限制修正机制与 headinfo 样式分离机制，复现了完整的顶层导航、左侧全系列树链工具栏，内侧左部设置树以及由三个独立 Form 设置快组成的白板阵列等全局宏大界面。
+输出位置: /HistoryRender/page/v22/v22.html
+
+### 📌 Record: Form Page v23
+
+no: v23
+state: ✅
+目标页面: 带有完善规范的宏板复合型页面 (Header TopNav, HeadInfo 首字母徽标, Tabs Wrapped图标占位 等严格遵守隔离资产约束后的复现)
+依赖组件: Header, Sidebar, HeadInfo, Tabs, Accordion, Form (遵循最新优化后的严谨 Spec 及 Template 约束结构)
+生成描述: 在已跑通宏版框架基础上，深度打磨 TopNav 的图标加载准确度、HeadInfo 主体图标从生造改用 MCP 标准素材 / 内置首字母备份的兜底加载能力，并补全 Wrapped 型页签规范的缺角图标结构注入渲染测试。整个界面呈现与原标准严格一致，并封堵所有自主创造行为。
+输出位置: /HistoryRender/page/v23/v23.html
+
+### 📌 Record: Card Workbench Page v24
+
+no: v24
+state: ✅
+目标页面: 工作台卡片仪表盘页面 (基于提供的截图与严谨隔离 Component Spec 生成)
+依赖组件: Header, MenuCard, Tabs, CategorySearch, Card, AnnouncementCard, ActivityCard, HelpDocCard
+生成描述: 综合遵循最新沉淀的卡片类独立组件 Spec 和 Template，进行宏版 `v24` 页面级拼合模拟渲染验证测试。采用了绝对的 `.workbench-layout` 容器固定画布定位布局。成功复原了 Header 横幅下的多栏卡片悬浮阵列排版，包括中央欢迎语、最新访问横向胶囊阵列，以及下方以 Tabs 为切换、Filter 栏及 `card` 构成的核心网格区。右侧完成了三种复杂异构悬浮卡（公告、活动、九宫格帮助）垂直流排布展示。整个界面呈现与截图高度匹配，封堵了自主创造，展现组件的强内聚可玩性。
+输出位置: /HistoryRender/page/v24/v24.html
+
+### 📌 Record: Card Workbench Page v25
+
+no: v25
+state: ✅
+目标页面: 工作台卡片仪表盘页面 (闭合节点与层级修复版)
+依赖组件: Header, MenuCard, Tabs, CategorySearch, Card, AnnouncementCard, ActivityCard, HelpDocCard
+生成描述: 针对 v24 中出现的结构断裂与 CSS Flex 横移挤压缺陷，修正了中间栏工具条（Tabs）的 DOM 闭合完整性。此举成功分离了横向排列的 Toolbar 与应当纵向换行、具备三列自然铺陈的瀑布流卡片区域（`.project-grid`）。同时，恢复了工具栏页签的完整项（项目群、IPD、Scrum、看板），使工作台主界面的结构与 Figma 对齐彻底正常化。
+输出位置: /HistoryRender/page/v25/v25.html
+
+### 📌 Record: Card Workbench Page v26
+
+no: v26
+state: ✅
+目标页面: 工作台卡片仪表盘页面 (全局图标层级路径规整修复版)
+依赖组件: Header, MenuCard, Tabs, CategorySearch, Card, AnnouncementCard, ActivityCard, HelpDocCard
+生成描述: 解决 v25 中存在的图标素材调用失败（白板）事故。原因系拼装模板过程中深度引用地址未作统一规整格式化（存在二至四级不等的回退层级混乱）。采用全局扫描重铸，将所有牵涉到物理图标文件目录 `icon/` 的请求（涵盖所有的 `mask-image`，`background`，`content` 和 `src`）的源前缀，一律清洗接管为适用于页面层级的正确寻址基底 `../../../icon/`。现所有页面彩色/单色 SVG 及图片资产已全部生机勃发正常展露生效，彻底根治路径错位之殇。
+输出位置: /HistoryRender/page/v26/v26.html
+
+### 📌 Record: Benchmark Card Workbench
+
+no: benchmark-card
+state: ✅
+目标页面: 标杆验证卡片页 (bench-card.html)
+依赖组件: 综合基础卡片组件
+生成描述: 依据 benchmark_maker 规范直接提取 Figma MCP 3665:10163 的真值极坐标和样式。使用原生 `absolute` 定位于 1920x1080 尺寸的容器中完整装配出零偏差的等比还原设计，规避常规 Flex / Grid 的挤压缩放隐患。彻底适配所有二级目录引用路径的 `../../icon` 标准，实现了视觉规范 1:1 Pixel-Perfect。
+输出位置: /HistoryRender/page/bench-card.html
+
+### 📌 Record: Benchmark Table View
+
+no: benchmark-table
+state: ✅
+目标页面: 标杆验证表格页 (bench-table.html)
+依赖组件: Header, Sidebar, Tabs, Table, Pagination
+生成描述: 依据 benchmark_maker 规范，结合目标设计稿截图（Figma MCP 3202:13881），组装并定制出一份高保真的 DevUI 表格工作台页面。完整复原了全功能左侧双栏 Sidebar、顶部的页签、带多级筛选过滤能力的复杂 Toolbar，以及完整数据承载的 8 行标记彩色优先级的实体列表 `table` 区块与 `pagination` 区域。
+输出位置: /HistoryRender/page/bench-table.html

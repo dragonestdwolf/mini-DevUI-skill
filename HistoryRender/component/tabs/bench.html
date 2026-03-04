@@ -135,17 +135,108 @@
         }
 
         /* ================== 文本页签组 (Text Tabs Group) ================== */
-        .devui-text-tabs-group {
-            display: inline-flex;
+        /* ================== Wrapped 页签组 (Wrapped Tabs Group) ================== */
+        .devui-tabs-wrapped {
+            display: flex;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--devui-global-bg, #f3f5f8);
+        }
+
+        .devui-tab-item {
+            display: flex;
             align-items: center;
-            /* Figma: itemSpacing 4px */
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 4px 4px 0 0;
+            background-color: transparent;
+            cursor: pointer;
+        }
+
+        .devui-tab-content {
+            display: flex;
+            align-items: center;
             gap: 4px;
-            /* Figma: padding 2px */
-            padding: 2px;
-            /* Figma: radius 4px */
-            border-radius: 4px;
-            /* Figma: fill #F2F5FC */
-            background-color: var(--devui-list-item-hover-bg);
+            height: 23px;
+        }
+
+        .devui-tab-body {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Normal State */
+        .devui-tab-text {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 22px;
+            color: var(--devui-text-weak, #575d6c);
+            white-space: nowrap;
+        }
+
+        .devui-tab-icon-list {
+            width: 14px;
+            height: 14px;
+            background-color: var(--devui-text-weak, #575d6c);
+            -webkit-mask-image: url('data:image/svg+xml;charset=utf-8,<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M5 4H14V5H5V4ZM5 7.5H14V8.5H5V7.5ZM5 11H14V12H5V11ZM2 4H3.5V5H2V4ZM2 7.5H3.5V8.5H2V7.5ZM2 11H3.5V12H2V11Z" fill="black"/></svg>');
+            mask-image: url('data:image/svg+xml;charset=utf-8,<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M5 4H14V5H5V4ZM5 7.5H14V8.5H5V7.5ZM5 11H14V12H5V11ZM2 4H3.5V5H2V4ZM2 7.5H3.5V8.5H2V7.5ZM2 11H3.5V12H2V11Z" fill="black"/></svg>');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+        }
+
+        /* Hover State */
+        .devui-tab-item.hover .devui-tab-text,
+        .devui-tab-item:not(.disabled):hover .devui-tab-text {
+            color: var(--devui-text);
+        }
+
+        .devui-tab-item.hover .devui-tab-icon-list,
+        .devui-tab-item:not(.disabled):hover .devui-tab-icon-list {
+            background-color: var(--devui-text);
+        }
+
+        /* Active State */
+        .devui-tab-item.active {
+            background-color: var(--devui-global-bg, #f3f5f8);
+        }
+
+        .devui-tab-item.active .devui-tab-text {
+            color: var(--devui-text);
+            font-weight: 400;
+            /* Figma 5:477 strict regular weight */
+        }
+
+        .devui-tab-item.active .devui-tab-icon-list {
+            background-color: var(--devui-text);
+        }
+
+        /* Badge - Normal */
+        .devui-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 16px;
+            padding: 0 4px;
+            border-radius: 16px;
+            background-color: var(--devui-global-bg, #f3f5f8);
+            box-sizing: border-box;
+        }
+
+        .devui-badge span {
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--devui-aide-text);
+            line-height: 20px;
+        }
+
+        /* Badge - Active */
+        .devui-tab-item.active .devui-badge span {
+            font-weight: 700;
+            color: var(--devui-text);
         }
     </style>
 </head>
@@ -324,7 +415,226 @@
                 <span>标签六</span>
             </div>
         </div>
-    </div>
+        <!-- Wrapped 型页签组展示 -->
+        <div>
+            <h2>Wrapped 包裹型页签组 / 从 2项到6项组合 (节点 5:477)</h2>
+        </div>
+        <!-- 附加 white 背景以便观察浅色 border 和 background -->
+        <div
+            style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start; background-color: #ffffff; padding: 24px; border-radius: 4px;">
+
+            <!-- 2项 -->
+            <div class="devui-tabs-wrapped">
+                <div class="devui-tab-item active">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签一</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签二</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3项 -->
+            <div class="devui-tabs-wrapped">
+                <div class="devui-tab-item active">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签一</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签二</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签三</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4项 -->
+            <div class="devui-tabs-wrapped">
+                <div class="devui-tab-item active">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签一</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签二</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签三</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签四</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5项 -->
+            <div class="devui-tabs-wrapped">
+                <div class="devui-tab-item active">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签一</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签二</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签三</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签四</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签五</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6项 -->
+            <div class="devui-tabs-wrapped">
+                <div class="devui-tab-item active">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签一</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签二</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签三</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签四</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签五</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+                <div class="devui-tab-item">
+                    <div class="devui-tab-content">
+                        <div class="devui-tab-body">
+                            <div class="devui-tab-icon-list"></div>
+                            <span class="devui-tab-text">页签六</span>
+                        </div>
+                        <div class="devui-badge"><span>0</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.querySelectorAll('.devui-tabs-wrapped').forEach(group => {
+                const items = group.querySelectorAll('.devui-tab-item:not(.disabled)');
+                items.forEach(item => {
+                    item.addEventListener('click', () => {
+                        items.forEach(el => el.classList.remove('active'));
+                        item.classList.add('active');
+                    });
+                });
+            });
+        </script>
 </body>
 
 </html>

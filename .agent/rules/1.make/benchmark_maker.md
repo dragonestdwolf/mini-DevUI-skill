@@ -203,7 +203,7 @@ HistoryRender/component/[componentName]/benchmark.html
 ```
 no: [componentName]/benchmark
 时间: [MM]-[DD] [HH]:[mm]
-框架与库: HTML / DevUI Component
+框架与库: 原生 HTML/CSS
 数据来源: Figma MCP (节点 [nodeId1], [nodeId2]...)
 输入物来源: Figma直接导出结构与数据
 读取文件: Figma MCP 临时提取流

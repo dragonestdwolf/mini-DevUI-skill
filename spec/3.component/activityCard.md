@@ -36,7 +36,7 @@
 
 ## 4. Template injection (模版注入)
 -   **{{cardTitle}}**: 外部卡片标题 (e.g. "活动").
--   **{{imageSrc}}**: 横幅右侧内部的 3D 悬空图片插图地址。
+-   **{{imageSrc}}**: 横幅右侧内部的 3D 悬空图片插图地址 (默认资源路径：`icon/activity-card.png`)。
 -   **{{badgeText}}**: 左侧副标题前半段常规文字部分.
 -   **{{highlightText}}**: 右侧紧接着的主副标题渐变色文字强调重点部分.
 -   **{{description}}**: 下方用于进阶操作指引的双行描述文本.

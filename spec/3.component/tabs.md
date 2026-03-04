@@ -32,6 +32,7 @@
     - `justify-content: center`
     - `padding`: 必须使用 Token `var(--devui-padding-base)` 或具体像素值 (e.g. `8px 16px`)。
     - `cursor: pointer`
+    - `gap: 4px` (如内部包含前缀图标或后缀 Badge，以此参数保障原生间距)
 
 ### 2. Styling Rules (样式映射)
 
@@ -41,10 +42,11 @@
 | Component Part | CSS Property | Token / Value | Fallback (Hex) |
 | :--- | :--- | :--- | :--- |
 | **Container** | `border-bottom` | `none` (Figma: 无底边线) | - |
-| **Item (Normal)** | `color` | `var(--devui-text-weak)` | `#575D6C` |
-| **Item (Active)** | `color` | `var(--devui-text)` | `#252B3A` |
+| **Container** | `gap` | `24px` | - |
+| **Item (Normal)** | `padding` | `8px 0` (消除横向padding, 使下划线与文字同宽) | - |
+| **Item (Normal)** | `color` / `font-weight` | `var(--devui-aide-text)`, `font-weight: 400` | `#8A8E99` |
+| **Item (Hover/Active)** | `color` / `font-weight` | `var(--devui-text)`, `font-weight: 500` | `#252B3A` |
 | **Item (Active)** | `border-bottom` | `2px solid var(--devui-text)` (高对比黑条) | `#252B3A` |
-| **Padding** | `padding` | `var(--devui-padding-base)` (e.g. 8px 0px) | - |
 
 #### Type: Tabs (标准型)
 *Note: 视觉上与 Pills 类似，但增加了容器底部的灰色分割线。*
@@ -52,22 +54,26 @@
 | Component Part | CSS Property | Token / Value | Fallback (Hex) |
 | :--- | :--- | :--- | :--- |
 | **Container** | `border-bottom` | `1px solid var(--devui-line)` (灰色底线) | `#DFE1E6` |
-| **Item (Normal)** | `color` | `var(--devui-text-weak)` | `#575D6C` |
-| **Item (Active)** | `color` | `var(--devui-text)` | `#252B3A` |
+| **Container** | `gap` | `24px` | - |
+| **Item (Normal)** | `padding` | `8px 0` (消除横向padding, 使下划线与文字同宽) | - |
+| **Item (Normal)** | `color` / `font-weight` | `var(--devui-aide-text)`, `font-weight: 400` | `#8A8E99` |
+| **Item (Hover/Active)** | `color` / `font-weight` | `var(--devui-text)`, `font-weight: 500` | `#252B3A` |
 | **Item (Active)** | `border-bottom` | `2px solid var(--devui-text)` (高对比黑条) | `#252B3A` |
-| **Padding** | `padding` | `var(--devui-padding-base)` | - |
 
 #### Type: Wrapped (包裹型 - Figma Definition)
 *Note: Figma 中名为 Wrapped，但视觉表现为灰色块状样式 (Solid/Gray Style).*
 
 | Component Part | CSS Property | Token / Value | Fallback (Hex) |
 | :--- | :--- | :--- | :--- |
-| **Container** | `background-color` | `transparent` | - |
-| **Item (Normal)** | `background-color` | `transparent` | - |
-| **Item (Normal)** | `color` | `var(--devui-text-weak)` | `#575D6C` |
-| **Item (Active)** | `background-color` | `var(--devui-global-bg)` (浅灰背景) | `#F5F5F5` |
-| **Item (Active)** | `color` | `var(--devui-text)` | `#252B3A` |
-| **Radius** | `border-radius` | `var(--devui-radius) var(--devui-radius) 0 0` (通常上方圆角) | `4px` |
+| **Container** | `border-bottom` | `1px solid var(--devui-global-bg)` / `gap: 0px` | `#F3F5F8` |
+| **Item (Normal/Hover)** | `background-color` | `transparent` (悬浮时背景仍保持透明) | - |
+| **Item (Normal)** | `color` / `font-weight` | `var(--devui-text-weak)`, `font-weight: 400` | `#575D6C` |
+| **Item (Hover)** | `color` | `var(--devui-text)` | `#252B3A` |
+| **Item (Active)** | `background-color` | `var(--devui-global-bg)` (扁平，无任何外边框) | `#F3F5F8` |
+| **Item (Active)** | `color` / `font-weight` | `var(--devui-text)`, `font-weight: 400` (依据Figma基准) | `#252B3A` |
+| **Radius** | `border-radius` | `var(--devui-radius) var(--devui-radius) 0 0` | `4px` |
+| **Badge (Normal)**| `background` / `color` | bg: `var(--devui-global-bg)`, text: `var(--devui-aide-text)`, `fw: 400` | - |
+| **Badge (Active)**| `background` / `color` | bg: `var(--devui-global-bg)` (视觉隐身), text: `var(--devui-text)`, `fw: 700` | - |
 
 > [!CAUTION]
 > **Naming vs Visual**: Figma 中的命名与 DevUI 标准组件库有差异。请严格遵循上述 **Preview 视觉特征** 而非仅看名字。
@@ -88,11 +94,11 @@
 | **Container (Group)** | `padding` / `border-radius` | `padding: 2px`, `border-radius: 4px` | - |
 | **Icon Item (Size)** | `width` / `height` | `28px` | - |
 | **Text Item (Padding)** | `padding` | `4px 8px` (外加 `gap: 4px`) | - |
-| **Item (Normal Text)** | `color` | Icon为 `var(--devui-text)`, Text为 `var(--devui-aide-text)` | Icon:`#25`, Text:`#8A` |
+| **Item (Normal Text)** | `color` / `font-weight` | Icon为 `var(--devui-text)`, Text为 `var(--devui-aide-text)`, `font-weight: 400` | Icon:`#25`, Text:`#8A` |
 | **Item (Hover)** | `background-color` | Icon项为 `var(--devui-list-item-hover-bg)` | `#F2F5FC` |
 | **Item (Active)** | `background-color` | `var(--devui-base-bg)` | `#FFFFFF` |
 | **Item (Active)** | `box-shadow` | `0px 4px 12px 0px rgba(0, 0, 0, 0.16)` | - |
-| **Item (Active)** | `color` | 均激活为 `var(--devui-text)` | `#252B3A` |
+| **Item (Active Text)** | `color` / `font-weight` | 均激活为 `var(--devui-text)`, `font-weight: 500` | `#252B3A` |
 | **Item (Disabled)** | `color` | `var(--devui-disabled-text)` | `#ADB0B8` |
 
 ## Anti-Patterns (负面示例)
