@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordion Test v2</title>
+    <style>
+        /* 
+   命名空间原则：所有 Class 必须以 devui-accordion 开头 
+   Token 原则：必须使用 var(--devui-token) 形式
+*/
+
+        /* --- 单个一级菜单项 --- */
+        .devui-accordion-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 12px;
+            width: 248px;
+            border-radius: 4px;
+            background-color: transparent;
+            cursor: pointer;
+            box-sizing: border-box;
+            color: var(--devui-text, #252b3a);
+        }
+
+        .devui-accordion-item-text {
+            font-size: 14px;
+            line-height: 22px;
+            font-weight: 400;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 8px;
+            /* Safe space before icon */
+        }
+
+        .devui-accordion-item-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            background-color: var(--devui-icon-text, #252b3a);
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/chevron-down.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/chevron-down.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            transform: rotate(-90deg);
+            /* 默认向右 */
+            transition: transform var(--devui-animation-duration-slow, 0.3s) ease;
+        }
+
+        .devui-accordion-item:hover,
+        .devui-accordion-item.hover {
+            background-color: var(--devui-list-item-hover-bg, #f5f5f6);
+        }
+
+        .devui-accordion-item.expand .devui-accordion-item-icon {
+            transform: rotate(0deg);
+            /* 展开向下 */
+        }
+
+        .devui-accordion-item.active .devui-accordion-item-text {
+            color: var(--devui-brand, #5e7ce0);
+            font-weight: 700;
+        }
+
+        .devui-accordion-item.active .devui-accordion-item-icon {
+            background-color: var(--devui-icon-fill-active, #5e7ce0);
+        }
+
+        /* --- 单个二级菜单项 --- */
+        .devui-accordion-subitem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 12px 9px 32px;
+            /* 32px 左缩进 */
+            width: 248px;
+            border-radius: 4px;
+            background-color: transparent;
+            cursor: pointer;
+            box-sizing: border-box;
+            color: var(--devui-text, #252b3a);
+        }
+
+        .devui-accordion-subitem-text {
+            font-size: 14px;
+            line-height: 22px;
+            font-weight: 400;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .devui-accordion-subitem:hover,
+        .devui-accordion-subitem.hover {
+            background-color: var(--devui-list-item-hover-bg, #f5f5f6);
+        }
+
+        .devui-accordion-subitem.active .devui-accordion-subitem-text {
+            color: var(--devui-brand, #5e7ce0);
+            font-weight: 700;
+        }
+
+        /* --- 手风琴整体侧栏容器 --- */
+        .devui-accordion-menu {
+            width: 288px;
+            height: 100%;
+            /* Figma设计为904px，生产中或自适应100% */
+            background-color: var(--devui-base-bg, #ffffff);
+            padding: 12px 0 12px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            box-sizing: border-box;
+            /* 为单组件测试增加边框视觉边界 */
+            border: 1px dashed #ccc;
+        }
+
+        .devui-accordion-menu-header {
+            padding: 0 16px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .devui-accordion-menu-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000000;
+            line-height: 26px;
+            margin: 0;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 8px;
+        }
+
+        .devui-accordion-menu-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            background-color: var(--devui-icon-text, #252b3a);
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/collapse-right.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/collapse-right.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            cursor: pointer;
+        }
+
+        .devui-accordion-menu-list {
+            padding: 0 24px 0 8px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .devui-accordion-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .devui-accordion-group:not(.is-expanded) .devui-accordion-subitem {
+            display: none;
+        }
+
+        /* --- 测试环境隔离样式 --- */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #ededed;
+            margin: 0;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 骨架呈现 -->
+    <div class="devui-accordion-menu">
+        <div class="devui-accordion-menu-header">
+            <!-- 测试极端边界：超头部常文本导致撑爆容器或图标丢失 (v2防溢出测试) -->
+            <h3 class="devui-accordion-menu-title">EXCEEDINGLY_LONG_TEXT_HEADER_TITLE_TEST_STRESS</h3>
+            <div class="devui-accordion-menu-icon" title="收起列表"></div>
+        </div>
+        <div class="devui-accordion-menu-list">
+
+            <!-- 测试 1：正常数据流装配 (带有 Active + Expand 态) -->
+            <div class="devui-accordion-group is-expanded">
+                <div class="devui-accordion-item expand">
+                    <span class="devui-accordion-item-text">Standard Normal Info</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+                <div class="devui-accordion-subitem active">
+                    <span class="devui-accordion-subitem-text">Selected Content</span>
+                </div>
+            </div>
+
+            <!-- 测试 2：空字符串占位 -->
+            <div class="devui-accordion-group is-expanded">
+                <div class="devui-accordion-item expand">
+                    <span class="devui-accordion-item-text"></span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+                <div class="devui-accordion-subitem">
+                    <span class="devui-accordion-subitem-text"></span>
+                </div>
+            </div>
+
+            <!-- 测试 3：极端暴力填充文本 (无空格) 与 Hover + Active 全家桶 (v2防溢出测试) -->
+            <div class="devui-accordion-group is-expanded">
+                <div class="devui-accordion-item hover active expand">
+                    <span class="devui-accordion-item-text">WWWWWTTTTTTTFFFFFFOOOOOOOLLLBBBBEEEEE</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+                <div class="devui-accordion-subitem hover">
+                    <span class="devui-accordion-subitem-text">We are testing if long textual inputs break the 248px
+                        limit box since there are no overflow truncate settings yet!</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

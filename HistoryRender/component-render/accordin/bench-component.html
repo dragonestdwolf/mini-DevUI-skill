@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accordion Bench Component</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --devui-page-bg: #f3f4f6;
+      --devui-text: #252b3a;
+      --devui-text-hover: #344899;
+      --devui-primary: #5e7ce0;
+      --devui-hover-bg: #eef2fb;
+      --devui-active-bg: #e8eeff;
+      --devui-line: #dfe1e6;
+      --devui-focus: rgba(94, 124, 224, 0.2);
+      --devui-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+      --devui-transition: 0.22s;
+      --devui-font-size-base: 14px;
+      --devui-line-height-base: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      background: var(--devui-page-bg);
+      font-family: "Noto Sans SC", sans-serif;
+      color: var(--devui-text);
+    }
+
+    .bench-frame {
+      width: 576px;
+      min-height: 1800px;
+      margin: 0;
+      padding: 24px 0 28px;
+      background: var(--devui-page-bg);
+    }
+
+    .accordion {
+      width: 100%;
+    }
+
+    .accordion-header {
+      height: 56px;
+      padding: 0 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .accordion-title {
+      margin: 0;
+      font-size: var(--devui-font-size-base);
+      line-height: var(--devui-line-height-base);
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .accordion-collapse-all {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--devui-text);
+      cursor: pointer;
+      transition: background var(--devui-transition), border-color var(--devui-transition);
+    }
+
+    .accordion-collapse-all:hover {
+      background: var(--devui-hover-bg);
+      border-color: var(--devui-line);
+    }
+
+    .accordion-collapse-all:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--devui-focus);
+    }
+
+    .group {
+      margin-top: 18px;
+    }
+
+    .group-trigger,
+    .leaf-trigger {
+      width: 100%;
+      height: 40px;
+      border: 0;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 56px;
+      color: var(--devui-text);
+      cursor: pointer;
+      transition: background var(--devui-transition), color var(--devui-transition);
+    }
+
+    .group-trigger:hover,
+    .leaf-trigger:hover {
+      background: var(--devui-hover-bg);
+      color: var(--devui-text-hover);
+    }
+
+    .group-trigger:focus-visible,
+    .leaf-trigger:focus-visible,
+    .sub-item:focus-visible {
+      outline: none;
+      box-shadow: inset 0 0 0 2px var(--devui-focus);
+    }
+
+    .group-label,
+    .leaf-label,
+    .sub-label {
+      font-size: var(--devui-font-size-base);
+      line-height: var(--devui-line-height-base);
+      font-weight: 500;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .icon {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
+      position: relative;
+    }
+
+    .icon::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform-origin: center;
+      transition: transform var(--devui-transition);
+    }
+
+    .group-trigger .icon {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
+    }
+
+    .icon-chevron-down::before {
+      transform: rotate(45deg) translate(-1px, -1px);
+    }
+
+    .group[aria-expanded="false"] .icon-chevron-down::before {
+      transform: rotate(-135deg) translate(-1px, -1px);
+    }
+
+    .icon-chevron-right::before {
+      transform: rotate(-45deg);
+    }
+
+    .group-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.28s ease;
+    }
+
+    .group[aria-expanded="true"] .group-panel {
+      max-height: 900px;
+    }
+
+    .sub-list {
+      margin: 2px 0 8px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .sub-item {
+      width: 100%;
+      min-height: 72px;
+      padding: 0 56px 0 96px;
+      border: 0;
+      background: transparent;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      color: var(--devui-text);
+      cursor: pointer;
+      transition: background var(--devui-transition), color var(--devui-transition);
+    }
+
+    .sub-item:hover {
+      background: var(--devui-hover-bg);
+      color: var(--devui-text-hover);
+    }
+
+    .sub-item.is-active {
+      background: var(--devui-active-bg);
+      color: var(--devui-primary);
+      box-shadow: inset 3px 0 0 var(--devui-primary);
+    }
+
+    .divider {
+      height: 1px;
+      margin: 10px 56px;
+      background: var(--devui-line);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 640px) {
+      .bench-frame {
+        width: 100%;
+        min-height: 100vh;
+      }
+
+      .accordion-header,
+      .group-trigger,
+      .leaf-trigger {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .sub-item {
+        padding-left: 56px;
+        padding-right: 24px;
+      }
+
+      .accordion-title,
+      .group-label,
+      .leaf-label,
+      .sub-label {
+        font-size: var(--devui-font-size-base);
+        line-height: var(--devui-line-height-base);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="bench-frame">
+    <section class="accordion" aria-label="Accordion Benchmark Component" data-figma-node="2920:9654">
+      <header class="accordion-header">
+        <h1 class="accordion-title">设置</h1>
+        <button class="accordion-collapse-all" type="button" aria-label="折叠全部" data-action="collapse-all">
+          <span class="icon icon-chevron-right" aria-hidden="true"></span>
+        </button>
+      </header>
+
+      <article class="group" aria-expanded="true">
+        <button class="group-trigger" type="button" aria-expanded="true">
+          <span class="group-label">基础设置</span>
+          <span class="icon icon-chevron-down" aria-hidden="true"></span>
+        </button>
+        <div class="group-panel">
+          <ul class="sub-list">
+            <li><button class="sub-item" type="button"><span class="sub-label">基础设置</span></button></li>
+            <li><button class="sub-item" type="button"><span class="sub-label">基础设置</span></button></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="group" aria-expanded="true">
+        <button class="group-trigger" type="button" aria-expanded="true">
+          <span class="group-label">基础设置</span>
+          <span class="icon icon-chevron-down" aria-hidden="true"></span>
+        </button>
+        <div class="group-panel">
+          <ul class="sub-list">
+            <li><button class="sub-item" type="button"><span class="sub-label">基础设置</span></button></li>
+            <li><button class="sub-item" type="button"><span class="sub-label">基础设置</span></button></li>
+            <li><button class="sub-item" type="button"><span class="sub-label">基础设置</span></button></li>
+            <li><button class="sub-item" type="button"><span class="sub-label">基础设置</span></button></li>
+            <li><button class="sub-item" type="button"><span class="sub-label">基础设置</span></button></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="group" aria-expanded="true">
+        <button class="group-trigger" type="button" aria-expanded="true">
+          <span class="group-label">基础设置</span>
+          <span class="icon icon-chevron-down" aria-hidden="true"></span>
+        </button>
+        <div class="group-panel">
+          <ul class="sub-list">
+            <li><button class="sub-item" type="button"><span class="sub-label">基础设置</span></button></li>
+            <li><button class="sub-item" type="button"><span class="sub-label">基础设置</span></button></li>
+            <li><button class="sub-item" type="button"><span class="sub-label">基础设置</span></button></li>
+            <li><button class="sub-item" type="button"><span class="sub-label">基础设置</span></button></li>
+            <li><button class="sub-item" type="button"><span class="sub-label">基础设置</span></button></li>
+            <li><button class="sub-item" type="button"><span class="sub-label">基础设置</span></button></li>
+          </ul>
+        </div>
+      </article>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <button class="leaf-trigger" type="button"><span class="leaf-label">基础设置</span><span class="icon icon-chevron-right" aria-hidden="true"></span></button>
+      <button class="leaf-trigger" type="button"><span class="leaf-label">基础设置</span><span class="icon icon-chevron-right" aria-hidden="true"></span></button>
+      <button class="leaf-trigger" type="button"><span class="leaf-label">基础设置</span><span class="icon icon-chevron-right" aria-hidden="true"></span></button>
+      <button class="leaf-trigger" type="button"><span class="leaf-label">基础设置</span><span class="icon icon-chevron-right" aria-hidden="true"></span></button>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var groups = Array.prototype.slice.call(document.querySelectorAll('.group'));
+      var collapseAllBtn = document.querySelector('[data-action="collapse-all"]');
+
+      function setExpanded(group, expanded) {
+        group.setAttribute('aria-expanded', String(expanded));
+        var trigger = group.querySelector('.group-trigger');
+        if (trigger) {
+          trigger.setAttribute('aria-expanded', String(expanded));
+        }
+      }
+
+      groups.forEach(function (group) {
+        var trigger = group.querySelector('.group-trigger');
+        if (!trigger) return;
+        trigger.addEventListener('click', function () {
+          var expanded = group.getAttribute('aria-expanded') !== 'true';
+          setExpanded(group, expanded);
+        });
+      });
+
+      if (collapseAllBtn) {
+        collapseAllBtn.addEventListener('click', function () {
+          var hasOpen = groups.some(function (g) {
+            return g.getAttribute('aria-expanded') === 'true';
+          });
+          groups.forEach(function (g) {
+            setExpanded(g, !hasOpen);
+          });
+        });
+      }
+
+      document.querySelectorAll('.sub-item').forEach(function (item) {
+        item.addEventListener('click', function () {
+          document.querySelectorAll('.sub-item.is-active').forEach(function (active) {
+            active.classList.remove('is-active');
+          });
+          item.classList.add('is-active');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

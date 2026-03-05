@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordion Benchmark</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 全局色彩 Token */
+            --devui-text: #252b3a;
+            --devui-brand: #5e7ce0;
+            --devui-list-item-hover-bg: #f5f5f6;
+            /* 来自 Figma: --new-group/devui-disabled-bg */
+            --devui-base-bg: #ffffff;
+            --devui-icon-text: #252b3a;
+            --devui-icon-fill-active: #5e7ce0;
+            /* 来自 Figma: --图标颜色/线性图标/devui-icon-fill-active */
+        }
+
+        body {
+            margin: 0;
+            padding: 50px;
+            background-color: #f3f5f8;
+            font-family: 'Noto Sans SC', sans-serif;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* ================== 一级菜单 .devui-accordion-item ================== */
+        .devui-accordion-item {
+            /* Figma: Auto-layout Horizontal */
+            display: flex;
+            /* Figma: primaryAxis SPACE-BETWEEN */
+            justify-content: space-between;
+            /* Figma: counterAxis CENTER */
+            align-items: center;
+            /* Figma: padding 9px 12px */
+            padding: 9px 12px;
+            /* Figma: width 248px */
+            width: 248px;
+            /* Figma: radius 4px */
+            border-radius: 4px;
+            /* Figma: background transparent */
+            background-color: transparent;
+            cursor: pointer;
+            box-sizing: border-box;
+            color: var(--devui-text);
+        }
+
+        .devui-accordion-item-text {
+            /* Figma: text 14px */
+            font-size: 14px;
+            /* Figma: lineHeight 22px */
+            line-height: 22px;
+            /* Figma: fontWeight 400 */
+            font-weight: 400;
+        }
+
+        .devui-accordion-item-icon {
+            /* Figma: chevron 16px */
+            width: 16px;
+            height: 16px;
+            background-color: var(--devui-icon-text);
+            /* 单色图标渲染策略 - 使用chevron-down实现旋转 */
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/chevron-down.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/chevron-down.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            /* 默认状态指向右侧，逆时针旋转90度 (来自 Figma: -rotate-90) */
+            transform: rotate(-90deg);
+        }
+
+        /* 状态: Hover (悬浮) & 真实鼠标伪类互动 */
+        .devui-accordion-item.hover,
+        .devui-accordion-item:hover {
+            background-color: var(--devui-list-item-hover-bg);
+        }
+
+        /* 状态: Expand (展开) */
+        .devui-accordion-item.expand .devui-accordion-item-icon {
+            /* 展开为向下箭头 */
+            transform: rotate(0deg);
+        }
+
+        /* 状态: Active (激活) */
+        .devui-accordion-item.active .devui-accordion-item-text {
+            color: var(--devui-brand);
+            /* Figma: fontWeight 700 (bold) */
+            font-weight: 700;
+        }
+
+        .devui-accordion-item.active .devui-accordion-item-icon {
+            background-color: var(--devui-icon-fill-active);
+        }
+
+
+        /* ================== 二级菜单 .devui-accordion-subitem ================== */
+        .devui-accordion-subitem {
+            /* Figma: Auto-layout Horizontal */
+            display: flex;
+            /* Figma: primaryAxis SPACE-BETWEEN */
+            justify-content: space-between;
+            /* Figma: counterAxis CENTER */
+            align-items: center;
+            /* Figma: padding 9px 12px 9px 32px （左侧缩进提供层级感） */
+            padding: 9px 12px 9px 32px;
+            /* Figma: width 248px */
+            width: 248px;
+            /* Figma: radius 4px */
+            border-radius: 4px;
+            /* Figma: background transparent */
+            background-color: transparent;
+            cursor: pointer;
+            box-sizing: border-box;
+            color: var(--devui-text);
+        }
+
+        .devui-accordion-subitem-text {
+            /* Figma: text 14px */
+            font-size: 14px;
+            /* Figma: lineHeight 22px */
+            line-height: 22px;
+            /* Figma: fontWeight 400 */
+            font-weight: 400;
+        }
+
+        /* 状态: Hover (悬浮) & 真实鼠标伪类互动 */
+        .devui-accordion-subitem.hover,
+        .devui-accordion-subitem:hover {
+            background-color: var(--devui-list-item-hover-bg);
+        }
+
+        /* 状态: Active (激活) */
+        .devui-accordion-subitem.active .devui-accordion-subitem-text {
+            color: var(--devui-brand);
+            /* Figma: fontWeight 700 (bold) */
+            font-weight: 700;
+        }
+
+        /* ================== 完整手风琴菜单 (侧边栏组装) ================== */
+        .devui-accordion-menu {
+            /* Figma: width 288px, height 904px */
+            width: 288px;
+            height: 904px;
+            /* Figma: background white */
+            background-color: var(--devui-base-bg);
+            /* Figma: padding 12px 0 12px 8px */
+            padding: 12px 0 12px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            box-sizing: border-box;
+            /* 非Figma必需，加点阴影好区分 */
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .devui-accordion-menu-header {
+            /* Figma: padding 0 16px 0 20px */
+            padding: 0 16px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .devui-accordion-menu-title {
+            /* Figma: fontSize 18px fontWeight 700 color black */
+            font-size: 18px;
+            font-weight: 700;
+            color: #000000;
+            line-height: 26px;
+            margin: 0;
+        }
+
+        .devui-accordion-menu-icon {
+            width: 16px;
+            height: 16px;
+            background-color: var(--devui-icon-text);
+            /* 手册图标：右收起 collapse-right */
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/collapse-right.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/collapse-right.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            cursor: pointer;
+        }
+
+        .devui-accordion-menu-list {
+            /* Figma: padding 0 24px 0 8px */
+            padding: 0 24px 0 8px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .devui-accordion-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* JS 控制的动态隐现 */
+        .devui-accordion-group:not(.is-expanded) .devui-accordion-subitem {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 状态: 一级菜单 / 默认态 -->
+    <div>
+        <h2>Accordion 一级菜单 / Default (状态: 默认)</h2>
+    </div>
+    <div class="devui-accordion-item">
+        <span class="devui-accordion-item-text">基础设置</span>
+        <div class="devui-accordion-item-icon"></div>
+    </div>
+
+    <!-- 状态: 一级菜单 / 悬浮态 -->
+    <div>
+        <h2>Accordion 一级菜单 / Hover (状态: 悬浮)</h2>
+    </div>
+    <div class="devui-accordion-item hover">
+        <span class="devui-accordion-item-text">基础设置</span>
+        <div class="devui-accordion-item-icon"></div>
+    </div>
+
+    <!-- 状态: 一级菜单 / 展开态 -->
+    <div>
+        <h2>Accordion 一级菜单 / Expand (状态: 展开)</h2>
+    </div>
+    <div class="devui-accordion-item expand">
+        <span class="devui-accordion-item-text">基础设置</span>
+        <div class="devui-accordion-item-icon"></div>
+    </div>
+
+    <!-- 状态: 一级菜单 / 展开悬浮态 -->
+    <div>
+        <h2>Accordion 一级菜单 / Expand+Hover (状态: 展开且悬浮)</h2>
+    </div>
+    <div class="devui-accordion-item expand hover">
+        <span class="devui-accordion-item-text">基础设置</span>
+        <div class="devui-accordion-item-icon"></div>
+    </div>
+
+    <!-- 状态: 一级菜单 / 激活态 -->
+    <div>
+        <h2>Accordion 一级菜单 / Active (状态: 选中)</h2>
+    </div>
+    <div class="devui-accordion-item active">
+        <span class="devui-accordion-item-text">基础设置</span>
+        <div class="devui-accordion-item-icon"></div>
+    </div>
+
+    <!-- 状态: 二级菜单 / 默认态 -->
+    <div>
+        <h2>Accordion 二级菜单 / Default (状态: 默认)</h2>
+    </div>
+    <div class="devui-accordion-subitem">
+        <span class="devui-accordion-subitem-text">基础设置</span>
+    </div>
+
+    <!-- 状态: 二级菜单 / 悬浮态 -->
+    <div>
+        <h2>Accordion 二级菜单 / Hover (状态: 悬浮)</h2>
+    </div>
+    <div class="devui-accordion-subitem hover">
+        <span class="devui-accordion-subitem-text">基础设置</span>
+    </div>
+
+    <!-- 状态: 二级菜单 / 激活态 -->
+    <div>
+        <h2>Accordion 二级菜单 / Active (状态: 选中)</h2>
+    </div>
+    <div class="devui-accordion-subitem active">
+        <span class="devui-accordion-subitem-text">基础设置</span>
+    </div>
+
+    <!-- 状态: 二级菜单 / 激活悬浮态 -->
+    <div>
+        <h2>Accordion 二级菜单 / Active+Hover (状态: 选中且悬浮)</h2>
+    </div>
+    <div class="devui-accordion-subitem active hover">
+        <span class="devui-accordion-subitem-text">基础设置</span>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 完整侧边栏形态装配展示 -->
+    <!-- ============================================== -->
+    <div style="margin-top: 40px;">
+        <h2>完整形态 / Sidebar Assembly (实机预览)</h2>
+    </div>
+    <div class="devui-accordion-menu">
+        <div class="devui-accordion-menu-header">
+            <h3 class="devui-accordion-menu-title">设置</h3>
+            <div class="devui-accordion-menu-icon" title="收起列表"></div>
+        </div>
+        <div class="devui-accordion-menu-list">
+            <!-- 组 1: 展开状态，内含 2 个二级菜单 -->
+            <div class="devui-accordion-group">
+                <div class="devui-accordion-item expand">
+                    <span class="devui-accordion-item-text">基础设置</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+                <div class="devui-accordion-subitem">
+                    <span class="devui-accordion-subitem-text">基础设置</span>
+                </div>
+                <div class="devui-accordion-subitem">
+                    <span class="devui-accordion-subitem-text">基础设置</span>
+                </div>
+            </div>
+
+            <!-- 组 2: 展开状态，内含 5 个二级菜单 -->
+            <div class="devui-accordion-group">
+                <div class="devui-accordion-item expand">
+                    <span class="devui-accordion-item-text">基础设置</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+                <div class="devui-accordion-subitem">
+                    <span class="devui-accordion-subitem-text">基础设置</span>
+                </div>
+                <div class="devui-accordion-subitem">
+                    <span class="devui-accordion-subitem-text">基础设置</span>
+                </div>
+                <div class="devui-accordion-subitem">
+                    <span class="devui-accordion-subitem-text">基础设置</span>
+                </div>
+                <div class="devui-accordion-subitem">
+                    <span class="devui-accordion-subitem-text">基础设置</span>
+                </div>
+                <div class="devui-accordion-subitem">
+                    <span class="devui-accordion-subitem-text">基础设置</span>
+                </div>
+            </div>
+
+            <!-- 组 3: 默认状态，未展开 -->
+            <div class="devui-accordion-group">
+                <div class="devui-accordion-item">
+                    <span class="devui-accordion-item-text">基础设置</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+            </div>
+
+            <!-- 组 4: 默认状态，未展开 -->
+            <div class="devui-accordion-group">
+                <div class="devui-accordion-item">
+                    <span class="devui-accordion-item-text">基础设置</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+            </div>
+
+            <!-- 组 5: 默认状态，未展开 -->
+            <div class="devui-accordion-group">
+                <div class="devui-accordion-item">
+                    <span class="devui-accordion-item-text">基础设置</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+            </div>
+
+            <!-- 组 6: 默认状态，未展开 -->
+            <div class="devui-accordion-group">
+                <div class="devui-accordion-item">
+                    <span class="devui-accordion-item-text">基础设置</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+            // ==============================================
+            // 赋予侧边栏实机预览原生的鼠标交互与开合能力
+            // ==============================================
+            document.addEventListener('DOMContentLoaded', () => {
+                const groups = document.querySelectorAll('.devui-accordion-menu .devui-accordion-group');
+                const allSubitems = document.querySelectorAll('.devui-accordion-menu .devui-accordion-subitem');
+                const allItems = document.querySelectorAll('.devui-accordion-menu .devui-accordion-item');
+
+                // 1. 实现一级菜单的展开/折叠互斥逻辑
+                groups.forEach(group => {
+                    const header = group.querySelector('.devui-accordion-item');
+                    // 初始化状态
+                    if (header.classList.contains('expand')) {
+                        group.classList.add('is-expanded');
+                    }
+
+                    header.addEventListener('click', () => {
+                        const isExpanded = group.classList.contains('is-expanded');
+
+                        // 单选式折叠: 关闭其它已展开的一级组 (如果想支持多点展开则注销此段)
+                        groups.forEach(g => {
+                            g.classList.remove('is-expanded');
+                            g.querySelector('.devui-accordion-item').classList.remove('expand');
+                        });
+
+                        // 切换当前组
+                        if (!isExpanded) {
+                            group.classList.add('is-expanded');
+                            header.classList.add('expand');
+                        }
+                    });
+                });
+
+                // 2. 实现菜单项的点击高亮排他（Active状态切换）
+                // 如果要同时支持一级或二级点击被选中为路径
+                const selectableItems = [...allItems, ...allSubitems];
+                selectableItems.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        // 阻止冒泡防止外层触发多次
+                        e.stopPropagation();
+                        // 移除全部 Active
+                        selectableItems.forEach(i => i.classList.remove('active'));
+                        // 将自己设为 Active
+                        item.classList.add('active');
+
+                        // 若点击的本身是包含子项的1级菜单，它还会顺带触发上面的展开/收缩器，不会受影响
+                    });
+                });
+            });
+        </script>
+</body>
+
+</html>

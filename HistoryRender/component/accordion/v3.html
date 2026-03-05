@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordion Test v3 - Image Reproduction</title>
+    <style>
+        /* 
+           命名空间原则：所有 Class 必须以 devui-accordion 开头 
+           Token 原则：必须使用 var(--devui-token) 形式
+        */
+
+        /* --- 单个一级菜单项 --- */
+        .devui-accordion-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 12px;
+            width: 248px;
+            border-radius: 4px;
+            background-color: transparent;
+            cursor: pointer;
+            box-sizing: border-box;
+            color: var(--devui-text, #252b3a);
+        }
+
+        .devui-accordion-item-text {
+            font-size: 14px;
+            line-height: 22px;
+            font-weight: 400;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 8px;
+            /* Safe space before icon */
+        }
+
+        .devui-accordion-item-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            background-color: var(--devui-icon-text, #252b3a);
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/chevron-down.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/chevron-down.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            transform: rotate(-90deg);
+            /* 默认向右 */
+            transition: transform var(--devui-animation-duration-slow, 0.3s) ease;
+        }
+
+        .devui-accordion-item:hover,
+        .devui-accordion-item.hover {
+            background-color: var(--devui-list-item-hover-bg, #f5f5f6);
+        }
+
+        .devui-accordion-item.expand .devui-accordion-item-icon {
+            transform: rotate(0deg);
+            /* 展开向下 */
+        }
+
+        .devui-accordion-item.active .devui-accordion-item-text {
+            color: var(--devui-brand, #5e7ce0);
+            font-weight: 700;
+        }
+
+        .devui-accordion-item.active .devui-accordion-item-icon {
+            background-color: var(--devui-icon-fill-active, #5e7ce0);
+        }
+
+        /* --- 单个二级菜单项 --- */
+        .devui-accordion-subitem {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 12px 9px 32px;
+            /* 32px 左缩进 */
+            width: 248px;
+            border-radius: 4px;
+            background-color: transparent;
+            cursor: pointer;
+            box-sizing: border-box;
+            color: var(--devui-text, #252b3a);
+        }
+
+        .devui-accordion-subitem-text {
+            font-size: 14px;
+            line-height: 22px;
+            font-weight: 400;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .devui-accordion-subitem:hover,
+        .devui-accordion-subitem.hover {
+            background-color: var(--devui-list-item-hover-bg, #f5f5f6);
+        }
+
+        .devui-accordion-subitem.active .devui-accordion-subitem-text {
+            color: var(--devui-brand, #5e7ce0);
+            font-weight: 700;
+        }
+
+        /* --- 手风琴整体侧栏容器 --- */
+        .devui-accordion-menu {
+            width: 288px;
+            height: 100%;
+            background-color: var(--devui-base-bg, #ffffff);
+            padding: 12px 0 12px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            box-sizing: border-box;
+            border: 1px dashed #DFE1E6;
+            /* 外借虚线验证组件边缘 */
+        }
+
+        .devui-accordion-menu-header {
+            padding: 0 16px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .devui-accordion-menu-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000000;
+            line-height: 26px;
+            margin: 0;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 8px;
+        }
+
+        .devui-accordion-menu-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            background-color: var(--devui-icon-text, #252b3a);
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/collapse-right.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/collapse-right.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            cursor: pointer;
+        }
+
+        .devui-accordion-menu-list {
+            padding: 0 24px 0 8px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .devui-accordion-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .devui-accordion-group:not(.is-expanded) .devui-accordion-subitem {
+            display: none;
+        }
+
+        /* --- 验证隔离层背景 --- */
+        body {
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            margin: 0;
+            background-color: #f3f3f3;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 骨架呈现 -->
+    <div class="devui-accordion-menu">
+        <div class="devui-accordion-menu-header">
+            <h3 class="devui-accordion-menu-title">设置</h3>
+            <div class="devui-accordion-menu-icon" title="收起列表"></div>
+        </div>
+        <div class="devui-accordion-menu-list">
+
+            <!-- 组1: 展开包含2个子项 -->
+            <div class="devui-accordion-group is-expanded">
+                <div class="devui-accordion-item expand">
+                    <span class="devui-accordion-item-text">基础设置</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+                <div class="devui-accordion-subitem">
+                    <span class="devui-accordion-subitem-text">基础设置</span>
+                </div>
+                <div class="devui-accordion-subitem">
+                    <span class="devui-accordion-subitem-text">基础设置</span>
+                </div>
+            </div>
+
+            <!-- 组2: 展开包含5个子项 -->
+            <div class="devui-accordion-group is-expanded">
+                <div class="devui-accordion-item expand">
+                    <span class="devui-accordion-item-text">基础设置</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+                <div class="devui-accordion-subitem"><span class="devui-accordion-subitem-text">基础设置</span></div>
+                <div class="devui-accordion-subitem"><span class="devui-accordion-subitem-text">基础设置</span></div>
+                <div class="devui-accordion-subitem"><span class="devui-accordion-subitem-text">基础设置</span></div>
+                <div class="devui-accordion-subitem"><span class="devui-accordion-subitem-text">基础设置</span></div>
+                <div class="devui-accordion-subitem"><span class="devui-accordion-subitem-text">基础设置</span></div>
+            </div>
+
+            <!-- 组3: 展开包含6个子项 -->
+            <div class="devui-accordion-group is-expanded">
+                <div class="devui-accordion-item expand">
+                    <span class="devui-accordion-item-text">基础设置</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+                <div class="devui-accordion-subitem"><span class="devui-accordion-subitem-text">基础设置</span></div>
+                <div class="devui-accordion-subitem"><span class="devui-accordion-subitem-text">基础设置</span></div>
+                <div class="devui-accordion-subitem"><span class="devui-accordion-subitem-text">基础设置</span></div>
+                <div class="devui-accordion-subitem"><span class="devui-accordion-subitem-text">基础设置</span></div>
+                <div class="devui-accordion-subitem"><span class="devui-accordion-subitem-text">基础设置</span></div>
+                <div class="devui-accordion-subitem"><span class="devui-accordion-subitem-text">基础设置</span></div>
+            </div>
+
+            <!-- 组4-7: 收起均无子项 -->
+            <div class="devui-accordion-group">
+                <div class="devui-accordion-item">
+                    <span class="devui-accordion-item-text">基础设置</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+            </div>
+            <div class="devui-accordion-group">
+                <div class="devui-accordion-item">
+                    <span class="devui-accordion-item-text">基础设置</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+            </div>
+            <div class="devui-accordion-group">
+                <div class="devui-accordion-item">
+                    <span class="devui-accordion-item-text">基础设置</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+            </div>
+            <div class="devui-accordion-group">
+                <div class="devui-accordion-item">
+                    <span class="devui-accordion-item-text">基础设置</span>
+                    <div class="devui-accordion-item-icon"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

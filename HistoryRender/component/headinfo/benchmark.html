@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeadInfo Benchmark</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 全局 DevUI Token 定义 */
+            --devui-base-bg: #ffffff;
+            --devui-global-bg: #f3f5f8;
+            --devui-text: #252b3a;
+            --devui-text-weak: #5a6272;
+            --devui-placeholder: #7a808c;
+            --devui-border: #adb0b8;
+            --devui-list-item-hover-bg: #f3f5f8;
+            --devui-waiting: #5a5a5a;
+        }
+
+        body {
+            margin: 0;
+            padding: 50px;
+            background-color: var(--devui-base-bg);
+            font-family: 'Noto Sans SC', 'PingFang SC', sans-serif;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* ================== 组件样式 ================== */
+        .devui-headinfo-container {
+            display: flex;
+            align-items: center;
+            height: 48px;
+        }
+
+        /* 后退按钮外层容器 */
+        .devui-headinfo-back {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            margin-right: 16px;
+        }
+
+        /* 后退图标: 单色线性图标 (CSS Mask) */
+        .devui-icon-back {
+            width: 20px;
+            height: 20px;
+            background-color: var(--devui-text);
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/back.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/back.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+        }
+
+        /* Logo 区域 */
+        .devui-headinfo-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-right: 12px;
+            box-shadow: inset 0 0 0 1px #FEE1E7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background-color: #ffffff;
+        }
+
+        .devui-logo-img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* 主内容区域: 垂直排列两行文本 */
+        .devui-headinfo-main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 48px;
+            gap: 2px;
+        }
+
+        /* 第一行: 标题和徽标 */
+        .devui-headinfo-row1 {
+            display: flex;
+            align-items: center;
+            height: 28px;
+        }
+
+        .devui-headinfo-title-group {
+            display: flex;
+            align-items: center;
+            line-height: 28px;
+        }
+
+        /* 品牌/拥有者 前缀 */
+        .devui-text-brand {
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--devui-text-weak);
+            white-space: nowrap;
+        }
+
+        /* 分隔符 */
+        .devui-text-slash {
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--devui-border);
+            margin: 0 4px;
+            white-space: nowrap;
+        }
+
+        /* 仓库名称 */
+        .devui-text-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--devui-text);
+            white-space: nowrap;
+        }
+
+        /* 下拉箭头 */
+        .devui-headinfo-caret {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 6px;
+            width: 16px;
+            height: 16px;
+        }
+
+        .devui-icon-dropdown {
+            width: 14px;
+            height: 14px;
+            background-color: var(--devui-text);
+            -webkit-mask-image: url('../../../icon/miniDev-icon/action/chevron-down.svg');
+            mask-image: url('../../../icon/miniDev-icon/action/chevron-down.svg');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+        }
+
+        /* 徽标组装区域 */
+        .devui-headinfo-badges {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 14px;
+        }
+
+        /* 组合健康度 Badge */
+        .devui-badge-health {
+            display: inline-flex;
+            height: 22px;
+            border-radius: 4px;
+            overflow: hidden;
+            align-items: center;
+        }
+
+        .devui-badge-health-label {
+            background-color: #5A6272;
+            color: #ffffff;
+            padding: 0 8px;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 22px;
+            white-space: nowrap;
+        }
+
+        .devui-badge-health-value {
+            background-color: #9FA4B0;
+            color: #ffffff;
+            padding: 0 8px;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 22px;
+            white-space: nowrap;
+        }
+
+        /* 独立普通 Badge */
+        .devui-badge-tag {
+            display: inline-flex;
+            height: 22px;
+            background-color: var(--devui-list-item-hover-bg);
+            color: var(--devui-text);
+            border-radius: 4px;
+            padding: 0 8px;
+            font-size: 12px;
+            font-weight: 400;
+            align-items: center;
+            line-height: 22px;
+            white-space: nowrap;
+        }
+
+        /* 第二行: Metadata */
+        .devui-headinfo-row2 {
+            display: flex;
+            align-items: center;
+            height: 20px;
+        }
+
+        .devui-text-meta {
+            font-size: 14px;
+            color: var(--devui-placeholder);
+            line-height: 20px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 状态: 默认态 -->
+    <div>
+        <h2>HeadInfo / 默认态 (Figma设计稿提取基准)</h2>
+    </div>
+    <div class="devui-headinfo-container">
+        <!-- 页面后退操作 -->
+        <div class="devui-headinfo-back" title="返回">
+            <i class="devui-icon-back"></i>
+        </div>
+
+        <!-- 仓库自定义彩色Logo (内联模拟了设计稿的内嵌渐变SVG效果) -->
+        <div class="devui-headinfo-logo">
+            <img class="devui-logo-img"
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='48' height='48'><rect width='48' height='48' fill='%23fff'/><defs><linearGradient id='g1' x1='0%25' y1='100%25' x2='0%25' y2='0%25'><stop offset='0%25' stop-color='%23FF5A79'/><stop offset='100%25' stop-color='%23FF008A'/></linearGradient><linearGradient id='g2' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%23E8005A'/><stop offset='100%25' stop-color='%23EC008C'/></linearGradient><path id='curve' d='M2 16 Q8 6 18 2 T36 2' stroke='%23FFF0F3' fill='none'/></defs><use href='%23curve'/><use href='%23curve' y='8'/><use href='%23curve' y='16'/><use href='%23curve' y='24'/><use href='%23curve' y='32'/><polygon points='12,38 18,10 24,10 18,38' fill='url(%23g1)'/><path d='M21,10 L30,10 C38,10 40,14 40,19 C40,24 38,28 30,28 L17,28 L21,10 Z' fill='url(%23g2)'/><path d='M22,17 L29,17 C32,17 33,18 33,19 C33,20 32,21 29,21 L21,21 Z' fill='%23fff'/></svg>"
+                alt="Sample Logo">
+        </div>
+
+        <!-- 右侧文本与Tag流 -->
+        <div class="devui-headinfo-main">
+            <!-- 骨架上层 (行1) -->
+            <div class="devui-headinfo-row1">
+                <div class="devui-headinfo-title-group">
+                    <!-- Owner/Brand -->
+                    <span class="devui-text-brand">huawei</span>
+                    <span class="devui-text-slash">/</span>
+                    <!-- Reponame -->
+                    <span class="devui-text-name">Sample</span>
+
+                    <div class="devui-headinfo-caret">
+                        <i class="devui-icon-dropdown"></i>
+                    </div>
+                </div>
+
+                <div class="devui-headinfo-badges">
+                    <!-- 组合式 Badge -->
+                    <div class="devui-badge-health">
+                        <span class="devui-badge-health-label">代码健康度</span>
+                        <span class="devui-badge-health-value">未检查</span>
+                    </div>
+                    <!-- 单个短 Badge -->
+                    <div class="devui-badge-tag">标签</div>
+                </div>
+            </div>
+
+            <!-- 骨架下层 (行2) -->
+            <div class="devui-headinfo-row2">
+                <span class="devui-text-meta">Repository ID: 123456</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
