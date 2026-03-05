@@ -1,4 +1,4 @@
-# Skill: Input (输入框)
+# Spec: Input (输入框)
 
 [Metadata]
 - **Component Name**: Input
@@ -7,7 +7,7 @@
 - **Version**: v1.1
 - **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
-## Property Skill
+## 1. Property Spec (属性规范)
 定义组件的 API 接口，确保与 DevUI 标准对齐。
 
 | Prop Name | Type | Description | Default |
@@ -23,10 +23,10 @@
 | `min` | `number` | 最小值 (仅 Number 类型) | - |
 | `onChange` | `(val: string \| number) => void` | 输入回调 | - |
 
-## Visual Skill
+## 3. Visual Spec (视觉规范)
 定义视觉还原的严格规范，强制使用 Token 和 Flex 布局。
 
-### 1. Layout Logic (布局逻辑)
+### 3.1 Layout Logic (布局逻辑)
 - **Wrapper (`.devui-input-wrapper`)**:
     - `display: flex`
     - `align-items: center`
@@ -60,7 +60,7 @@
         - `cursor`: `pointer`
         - `hover`: `bg-color: var(--devui-list-item-hover-bg)`
 
-### 2. Styling Rules (样式映射)
+### 3.2 Styling Rules (样式映射)
 
 #### Base Style (Default)
 | Component Part | CSS Property | Token / Value | Fallback (Hex) |
@@ -88,7 +88,7 @@
 - **Stepper Border**: `1px solid var(--devui-dividing-line)` (#E3E5E9).
 - **Icon**: Up/Down arrows (`chevron-up`, `chevron-down` from Icon Role).
 
-## Anti-Patterns (负面示例)
+## 7. Anti-Patterns (负面示例)
 1.  **❌ 禁止 Input 原生边框**
     - Input 标签必须无边框，所有视觉边框由父级 Wrapper 承担。
 2.  **❌ 禁止 Focus 轮廓**
@@ -96,7 +96,7 @@
 3.  **❌ 禁止使用 `type="number"` 的原生箭头**
     - 必须隐藏浏览器的默认 Spin Button (`::-webkit-inner-spin-button`)，使用自定义 DOM 模拟 Stepper 以保证跨浏览器一致性和样式还原。
 
-## Audit Checklist (自检清单)
+## 8. Audit Checklist (自检清单)
 - [ ] Hover/Focus 状态是否有 `4px` 的淡蓝色 Ripple 阴影 (Box-Shadow)？
 - [ ] Number Input 是否隐藏了原生 Spin Button？
 - [ ] Number Input 右侧是否有自定义的加减按钮？

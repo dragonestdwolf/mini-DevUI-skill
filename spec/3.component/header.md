@@ -5,10 +5,10 @@
 - **Template Source**: `spec/4.template/header-tem.html`
 - **Benchmark Source**: `HistoryRender/component/header/benchmark.html` (Figma Node 3090:13855)
 
-## 1. Content Presentation (内容呈现格式)
+## 2. Content Presentation (内容呈现)
 描述不同类型的数据应如何组装 HTML：
 
-### 1.1 Left Section (左侧应用信息与主导航)
+### 2.1 Left Section (左侧应用信息与主导航)
 - **Container**: `height: 32px`, `align-items: center`
 -   Structure:
     ```html
@@ -35,7 +35,7 @@
     </div>
     ```
 
-### 1.2 Navigation Item (导航项)
+### 2.2 Navigation Item (导航项)
 -   **Scenario**: Used for main navigation links like "首页", "工作台", "效能洞察", "服务", "华为开源镜像站".
 -   **Layout**: Flex container, `height: 32px`, `gap: 4px; padding: 4px 8px; border-radius: 2px;`
 -   **Icon logic**: Nav items MUST use `<img>` tags (`size: 24x24`) pointing to `icon/miniDev-icon/top-nav/` (e.g., `首页-1.svg`). DO NOT use CSS `-webkit-mask` icon classes from the sidebar for top navigation, as top navigation icons are multi-colored.
@@ -61,7 +61,7 @@
     </div>
     ```
 
-### 1.3 Right Section (右侧全局操作与个人中心)
+### 2.3 Right Section (右侧全局操作与个人中心)
 -   **Structure**: Flex with `gap: 12px; padding: 4px 11px 4px 20px;`
 -   Structure:
     ```html
@@ -80,21 +80,21 @@
     </div>
     ```
 
-### 1.4 Avatar (头像)
+### 2.4 Avatar (头像)
 -   Structure: 
     ```html
     <div class="devui-header-avatar">HZ</div>
     ```
 -   Style: Circular shape, `size: 28px`, `var(--devui-brand)` background, white bold text (`size: 12px`, `weight: 500`).
 
-## 2. Dynamic Response (动态响应)
+## 5. Dynamic Response (动态响应)
 -   **Text Overflow**:
     -   Navigation Items: Prevent wrapping (`white-space: nowrap`).
     -   Console and Location blocks: Prevent wrapping.
 -   **Responsive Layout**:
     -   Header container acts as absolute width parent: `flex`, `justify-content: space-between`, `padding: 0 8px`, `height: 48px`.
 
-## Anti-Patterns (负面示例)
+## 7. Anti-Patterns (负面示例)
 禁止在生成代码时出现以下模式：
 
 1.  **❌ 禁止顶部导航图标单色化**
@@ -106,7 +106,7 @@
     <img class="devui-header-nav-icon" src="../../../../icon/miniDev-icon/top-nav/首页-1.svg" />
     ```
 
-## 3. Template injection (模版注入)
+## 6. Template Injection (模版注入)
 -   **{{logoSrc}}**: 标志图片路径
 -   **{{logoText}}**: 品牌名称(可选)
 -   **{{navItems}}**: 根据 "Navigation Item" 规则拼接的 HTML 字符串

@@ -1,4 +1,4 @@
-# Skill: Checkbox (复选框)
+# Spec: Checkbox (复选框)
 
 [Metadata]
 - **Component Name**: Checkbox
@@ -6,7 +6,7 @@
 - **DevUI Component**: `d-checkbox`
 - **Version**: v1.0
 
-## Property Skill
+## 1. Property Spec (属性规范)
 定义组件的 API 接口，确保与 DevUI 标准对齐。
 
 | Prop Name | Type | Description | Default |
@@ -17,10 +17,10 @@
 | `label` | `ReactNode` | 显示标签 | - |
 | `onChange` | `(checked: boolean) => void` | 状态改变回调 | - |
 
-## Visual Skill
+## 3. Visual Spec (视觉规范)
 定义视觉还原的严格规范，强制使用 Token 和 Flex 布局。
 
-### 1. Layout Logic (布局逻辑)
+### 3.1 Layout Logic (布局逻辑)
 - **Container (`.devui-checkbox-wrapper`)**:
     - `display: inline-flex`
     - `align-items: center`
@@ -37,7 +37,7 @@
     - `transition`: `all .2s`
     - `position`: `relative`
 
-### 2. Styling Rules (样式映射)
+### 3.2 Styling Rules (样式映射)
 
 #### Base Style (Unchecked - Default)
 | Component Part | CSS Property | Token / Value | Fallback (Hex) |
@@ -75,7 +75,7 @@
 | **Text** | `color` | `var(--devui-text)` | `#252B3A` |
 | **Text (Disabled)**| `color` | `var(--devui-disabled-text)` | `#ADB0B8` |
 
-## Anti-Patterns (负面示例)
+## 7. Anti-Patterns (负面示例)
 1.  **❌ 禁止 Input[type="checkbox"] 裸用**
     - 必须隐藏原生 Input，使用 `div/span` 模拟样式的 Checkbox，以支持自定义样式和动画。
 2.  **❌ 禁止硬编码 Gap**
@@ -83,7 +83,7 @@
 3.  **❌ 禁止 HalfChecked 与 Checked 混淆**
     - HalfChecked 为实心方块 (`rect`)，Checked 为对勾。
 
-## Audit Checklist (自检清单)
+## 8. Audit Checklist (自检清单)
 - [ ] Checkbox 尺寸是否为 16px？
 - [ ] 圆角是否为 2px？
 - [ ] Disabled 状态下的选中色是否正确 (`#BECCFA`)？

@@ -1,4 +1,4 @@
-# Skill: Pagination (分页器)
+# Spec: Pagination (分页器)
 
 [Metadata]
 - **Component Name**: Pagination
@@ -7,7 +7,7 @@
 - **Version**: v1.0
 - **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
-## Property Skill
+## 1. Property Spec (属性规范)
 定义组件的 API 接口，确保与 DevUI 标准对齐。
 
 | Prop Name | Type | Description | Default |
@@ -20,10 +20,10 @@
 | `canViewTotal` | `boolean` | 是否显示总条数 | `false` |
 | `onChange` | `(pageIndex: number, pageSize: number) => void` | 页码或每页条数改变回调 | - |
 
-## Visual Skill
+## 3. Visual Spec (视觉规范)
 定义视觉还原的严格规范，强制使用 Token 和 Flex 布局。
 
-### 1. Layout Logic (布局逻辑)
+### 3.1 Layout Logic (布局逻辑)
 - **Container (`.devui-pagination`)**:
     - `display: flex`
     - `align-items: center`
@@ -48,7 +48,7 @@
     - `cursor`: `pointer`
     - `transition`: `all .2s`
 
-### 2. Styling Rules (样式映射)
+### 3.2 Styling Rules (样式映射)
 
 #### Page Number (页码按钮)
 
@@ -78,7 +78,7 @@
 - **Input**: 使用 `d-input` (`size="sm"`, width `48px` approx).
 - **Unit**: "页" / "Page".
 
-## Anti-Patterns (负面示例)
+## 7. Anti-Patterns (负面示例)
 1.  **❌ 禁止页码使用 Circle 圆角**
     - 必须遵循 `border-radius: 4px`。
 2.  **❌ 禁止自定义 Select 样式**
@@ -86,7 +86,7 @@
 3.  **❌ 禁止硬编码文本颜色**
     - 使用 `var(--devui-text)` 和 `var(--devui-brand)` 响应主题。
 
-## Audit Checklist (自检清单)
+## 8. Audit Checklist (自检清单)
 - [ ] 页码尺寸是否为 28x28px？
 - [ ] 选中状态是否为淡蓝背景+品牌色文字？
 - [ ] 切换条数部分是否使用了 Select 组件？

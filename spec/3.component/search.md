@@ -6,9 +6,9 @@
 - **Template Source**: `spec/4.template/search-tem.html`
 - **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
-## 1. Content Presentation (内容呈现格式)
+## 2. Content Presentation (内容呈现)
 
-### 1.1 Layout Structure
+### 2.1 Layout Structure
 -   **Container**: Flexbox, `align-items: center`.
 -   **Width**: 296px (Default), can be 100%.
 -   **Height**: 32px (MD).
@@ -16,7 +16,7 @@
 -   **Border Radius**: 6px.
 -   **Gap**: 4px (Icon to Text).
 
-### 1.2 Icon & Text
+### 2.2 Icon & Text
 -   **Icon**: `../../../icon/miniDev-icon/action/search.svg` (Relative Path).
 -   **Placeholder**: 14px Regular, Color `var(--devui-placeholder)`.
 -   **Text**: 14px Regular, Color `var(--devui-text)`.
@@ -28,9 +28,9 @@
     </div>
     ```
 
-## 2. Visual Variants (视觉变体)
+## 3. Visual Spec (视觉规范)
 
-### 2.1 States
+### 3.1 States
 -   **Normal**: 
     -   Border: 1px solid `var(--devui-form-control-line, #ADB0B8)`.
     -   Bg: `var(--devui-base-bg, #FFFFFF)`.
@@ -46,7 +46,7 @@
     -   Text: `var(--devui-disabled-text, #ADB0B8)`.
     -   Cursor: `not-allowed`.
 
-## 3. Dynamic Response (动态响应)
+## 5. Dynamic Response (动态响应)
 -   **Interactive**:
     -   Input background is transparent.
     -   Container handles the visual border and background.

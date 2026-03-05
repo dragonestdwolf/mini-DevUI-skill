@@ -6,15 +6,15 @@
 - **Template Source**: `spec/4.template/filter-tem.html`
 - **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
-## 1. Content Presentation (内容呈现格式)
+## 2. Content Presentation (内容呈现)
 
-### 1.1 Trigger Structure
+### 2.1 Trigger Structure
 -   **Container**: Flexbox, `align-items: center`.
 -   **Content**: Text + Icon.
 -   **Gap**: 4px.
 -   **Cursor**: Pointer.
 
-### 1.2 Elements
+### 2.2 Elements
 -   **Text**: 
     -   Font: 14px Regular.
     -   Color: `var(--devui-text, #252b3a)`.
@@ -24,9 +24,9 @@
     -   Color: `currentColor` (Inherits from text).
     -   Transition: Rotate 180deg when active.
 
-## 2. Visual Variants (视觉变体)
+## 3. Visual Spec (视觉规范)
 
-### 2.1 States
+### 3.1 States
 -   **Normal**:
     -   Text Color: `var(--devui-text, #252b3a)`.
     -   Icon Color: `var(--devui-text, #252b3a)`.
@@ -42,6 +42,6 @@
     -   Icon Color: `var(--devui-disabled-text, #adb0b8)`.
     -   Cursor: `not-allowed`.
 
-## 3. Dynamic Response (动态响应)
+## 5. Dynamic Response (动态响应)
 -   **Click**: Toggles Active state (Rotates icon).
 -   **Dropdown**: (Out of scope for this spec, usually absolute positioned panel).

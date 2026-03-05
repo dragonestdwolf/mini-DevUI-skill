@@ -1,4 +1,4 @@
-# Skill: BreadCrumbs (面包屑)
+# Spec: BreadCrumbs (面包屑)
 
 [Metadata]
 - **Component Name**: BreadCrumbs
@@ -7,7 +7,7 @@
 - **Version**: v1.1
 - **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
-## Property Skill
+## 1. Property Spec (属性规范)
 定义组件的 API 接口，确保与 DevUI 标准对齐。
 
 | Prop Name | Type | Description | Default |
@@ -26,10 +26,10 @@ interface SourceType {
 }
 ```
 
-## Visual Skill
+## 3. Visual Spec (视觉规范)
 定义视觉还原的严格规范，强制使用 Token 和 Flex 布局。
 
-### 1. Layout Logic (布局逻辑)
+### 3.1 Layout Logic (布局逻辑)
 组件采用三层嵌套 Flex 结构，严格遵循以下间距逻辑：
 
 1.  **Root Container (`.devui-breadcrumb`)**
@@ -53,7 +53,7 @@ interface SourceType {
     -   `display: flex; justify-content: center; align-items: center`
     -   利用固定宽度形成自然的左右视觉间距，禁止使用 margin。
 
-### 2. Responsiveness (响应式策略)
+### 5. Dynamic Response (动态响应)
 **Collapse Logic (折叠逻辑)**:
 当面包屑总宽度超过父容器宽度时，触发折叠机制：
 1.  **保留项**：
@@ -72,7 +72,7 @@ graph LR
     Fold1 -->|Content: Home / ... / Current| Final[最终形态]
 ```
 
-### 3. Styling Rules (样式映射)
+### 3.2 Styling Rules (样式映射)
 
 | Component Part | CSS Property | Token / Value | Fallback (Hex) |
 | :--- | :--- | :--- | :--- |
@@ -89,7 +89,7 @@ graph LR
 > - Hover 上一级面包屑链接时，文本颜色建议变为 `var(--devui-primary)` 或增加下划线。
 > - Active (当前页) 状态通常不可点击。
 
-## Anti-Patterns (负面示例)
+## 7. Anti-Patterns (负面示例)
 禁止在生成代码时出现以下模式：
 
 1.  **❌ 禁止禁止错误的容器 Gap**
@@ -109,7 +109,7 @@ graph LR
 3.  **❌ 禁止混淆 Text Gap 与 Item Gap**
     - `gap: 4px` 仅用于 Text 与 Icon 之间，**不是** Item 之间的间距。
 
-## Audit Checklist (自检清单)
+## 8. Audit Checklist (自检清单)
 - [ ] Root Container 设置为 `gap: 0`？
 - [ ] 分隔符是否使用 `width: 16px` 固定宽度？
 - [ ] 文本与图标（如有）之间是否有 `gap: 4px`？

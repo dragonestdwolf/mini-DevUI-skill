@@ -6,9 +6,9 @@
 - **Template Source**: `spec/4.template/categorySearch-tem.html`
 - **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
-## 1. Content Presentation (内容呈现格式)
+## 2. Content Presentation (内容呈现)
 
-### 1.1 Layout Structure
+### 2.1 Layout Structure
 -   **Container**: Flexbox, `align-items: center`.
 -   **Width**: 852px (Expanded/Demonstrated), typically 100% of parent.
 -   **Height**: 32px.
@@ -16,7 +16,7 @@
 -   **Border Radius**: 6px.
 -   **Gap**: 8px.
 
-### 1.2 Internal Elements
+### 2.2 Internal Elements
 1.  **Search Icon**: Leftmost, `16x16px`.
 2.  **Tags Group**: 
     -   Flex item.
@@ -31,9 +31,9 @@
     -   **Save Icon**: `save.svg` (Relative Path: `../../../icon/miniDev-icon/action/save.svg`).
     -   **Directory Icon**: `folder.svg` (Relative Path: `../../../icon/miniDev-icon/action/folder.svg`).
 
-## 2. Visual Variants (视觉变体)
+## 3. Visual Spec (视觉规范)
 
-### 2.1 States
+### 3.1 States
 -   **Normal**: 
     -   Border: 1px solid `var(--devui-form-control-line, #ADB0B8)`.
     -   Bg: `var(--devui-base-bg, #FFFFFF)`.
@@ -47,7 +47,7 @@
     -   Border: 1px solid `var(--devui-disabled-line, #DFE1E6)`.
     -   Cursor: `not-allowed`.
 
-### 2.2 Tags
+### 3.2 Tags
 -   **Tag Style**:
     -   Height: `20px`.
     -   Bg: `var(--devui-list-item-hover-bg, #F2F5FC)`.
@@ -57,7 +57,7 @@
     -   Gap: `4px` (Text to Close Icon).
     -   **Close Icon**: `12x12px`, 0.6 opacity -> 1.0 hover.
 
-### 2.3 Dropdown Panel
+### 3.3 Dropdown Panel
 -   **Trigger**: Focus on Input.
 -   **Position**: Absolute, Top 100% + 4px, Left 0.
 -   **Style**:
@@ -70,7 +70,7 @@
     -   Padding: `0 8px`.
     -   Hover Bg: `var(--devui-list-item-hover-bg, #F2F5FC)`.
 
-## 3. Dynamic Response
+## 5. Dynamic Response (动态响应)
 -   **Input Behavior**: 
     -   Clicking anywhere in container focuses input.
     -   Focus activates Dropdown.

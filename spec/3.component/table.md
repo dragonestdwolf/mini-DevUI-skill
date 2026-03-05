@@ -6,10 +6,10 @@
 - **Figma Node**: 259:426
 - **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths (e.g., `../../../icon/...`)**.
 
-## 1. Content Presentation (内容呈现格式)
+## 2. Content Presentation (内容呈现)
 定义表格内部不同类型数据的 HTML 组装方式。
 
-### 1.1 Header Cell (表头)
+### 2.1 Header Cell (表头)
 -   **Standard**: `<span>{{label}}</span>` (Bold, 12px)
 -   **Sortable** (Default when no description):
     ```html
@@ -44,7 +44,7 @@
     -   Icon Color: #191919.
 -   **Checkbox**: `<span class="devui-checkbox-box"></span>` (Size: 16x16px, Border: 1px solid #ADB0B8, Radius: 2px)
 
-### 1.2 Body Cell Types (单元格类型)
+### 2.2 Body Cell Types (单元格类型)
 
 #### A. Simple Text (文本)
 -   **HTML**: `<span>{{text}}</span>`
@@ -139,15 +139,15 @@
     </div>
     ```
 
-## 2. Dynamic Response (动态响应策略)
+## 5. Dynamic Response (动态响应)
 
-### 2.1 Text Overflow (文本溢出)
+### 5.1 Text Overflow (文本溢出)
 -   **Strategy**: Ellipsis ( `text-overflow: ellipsis` )
 -   **Constraint**: Container must have fixed width or `max-width`.
 -   **Tooltip**: REQUIRED if text is truncated.
     -   *Spec*: On hover, show native `title` attribute or custom Tooltip component.
 
-### 2.2 Empty State (空状态)
+### 5.2 Empty State (空状态)
 -   **Trigger**: No data in `tbody`.
 -   **Visual**:
     ```html
@@ -162,7 +162,7 @@
     ```
 -   **Height**: Minimum 200px container.
 
-## 3. Visual Variants (视觉变体)
+## 3. Visual Spec (视觉规范)
 
 ### 3.1 Striped Rows (斑马纹)
 -   **Class**: Add `.devui-table-striped` to `<table>`.
@@ -177,7 +177,7 @@
 -   **Trigger**: Checkbox checked or row selected.
 -   **Effect**: Background color `#f2f5fc` (Same as hover) + Optional Left Border Highlight.
 
-## 4. Space Strategy (空间策略)
+### 3.4 Space Strategy (空间策略)
 
 -   **Checkbox Column**: Fixed Width **48px**.
 -   **Action Column**: Hug Content (Min-width 100px).

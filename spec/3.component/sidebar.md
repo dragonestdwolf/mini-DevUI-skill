@@ -1,4 +1,4 @@
-# Component: Sidebar Navigation (侧边导航)
+# Spec: Sidebar Navigation (侧边导航)
 
 [Metadata]
 - **Component Name**: Sidebar Navigation
@@ -7,10 +7,10 @@
 - **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths (e.g., `../../../icon/...`)**.
 - **Related Files**: `Sidebar-tem.html`
 
-## 1. Overview (概述)
+## 2. Content Presentation (内容呈现)
 Attributes: Fixed width, Vertical layout, Collapsible (optional logic).
 
-## 2. Layout & Style (布局与样式)
+## 3. Visual Spec (视觉规范)
 
 -   **Container**:
     -   `width`: `240px` (Fixed)
@@ -85,16 +85,16 @@ Attributes: Fixed width, Vertical layout, Collapsible (optional logic).
         -   `font-weight`: `700`
         -   `box-shadow`: `inset 3px 0 0 0 #5E7CE0` (Left Blue Bar)
 
-## 3. States (状态)
+### 3.5 States (状态)
 
-### 3.1 Default
+#### 3.5.1 Default
 -   `background-color`: `transparent`
 -   `color`: `#252B3A`
 
-### 3.2 Hover
+#### 3.5.2 Hover
 -   `background-color`: `#F2F5FC`
 
-### 3.3 Active (选中)
+#### 3.5.3 Active (选中)
 -   `background-color`: `#EBF1FF` (Light Blue background)
 -   `color`: `#252B3A`
 -   `font-weight`: `700`
@@ -103,7 +103,7 @@ Attributes: Fixed width, Vertical layout, Collapsible (optional logic).
     -   `top`: `0`, `bottom`: `0`
     -   `background-color`: `#5E7CE0` (DevUI Primary Blue)
 
-## 4. Icons (图标)
+## 4. Icon Spec (图标规范)
 -   **Source**: `icon/miniDev-icon/侧边导航图标/`
 -   **Items**:
     -   `仪表盘.svg`
@@ -115,10 +115,10 @@ Attributes: Fixed width, Vertical layout, Collapsible (optional logic).
     -   `知识库.svg`
     -   `持续交付.svg`
 
-## 5. Interaction (交互)
+## 5. Dynamic Response (动态响应)
 -   **Hover Effect**: Background changes immediately.
 -   **Click**: Sets active state.
 -   **Collapse**: Bottom icon triggers collapse mode (Width reduces to ~64px, text hides).
 
-## 6. Template Structure
+## 6. Template Injection (模版注入)
 Ref: `spec/4.template/sidebar-tem.html`

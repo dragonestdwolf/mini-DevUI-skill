@@ -1,4 +1,4 @@
-# Skill: Tabs (页签)
+# Spec: Tabs (页签)
 
 [Metadata]
 - **Component Name**: Tabs
@@ -6,7 +6,7 @@
 - **DevUI Component**: `d-tabs`
 - **Version**: v1.0
 
-## Property Skill
+## 1. Property Spec (属性规范)
 定义组件的 API 接口，确保与 DevUI 标准对齐。
 
 | Prop Name | Type | Description | Default |
@@ -16,10 +16,10 @@
 | `type` | `'pills' \| 'tabs' \| 'wrapped' \| 'icon' \| 'text'` | 页签样式类型：胶囊(Pills)/标准(Tabs)/包裹(Wrapped)/纯图标(Icon)/文本带图标(Text) | `'pills'` |
 | `onChange` | `(id: string \| number) => void` | 切换页签时的回调 | - |
 
-## Visual Skill
+## 3. Visual Spec (视觉规范)
 定义视觉还原的严格规范，强制使用 Token 和 Flex 布局。
 
-### 1. Layout Logic (布局逻辑)
+### 3.1 Layout Logic (布局逻辑)
 - **Container (`.devui-tabs`)**:
     - `display: flex`
     - `align-items: center`
@@ -34,7 +34,7 @@
     - `cursor: pointer`
     - `gap: 4px` (如内部包含前缀图标或后缀 Badge，以此参数保障原生间距)
 
-### 2. Styling Rules (样式映射)
+### 3.2 Styling Rules (样式映射)
 
 #### Type: Pills (胶囊型 - Figma Definition)
 *Note: Figma 中名为 Pills，但视觉表现为文字下划线样式 (Line Style).*
@@ -81,7 +81,7 @@
 > - `type="wrapped"` -> Output **Solid Gray Block** style.
 > - `type="icon" / "text"` -> Output **Segmented Block** style with shadows on active.
 
-### 3. Icon Usage Rules (图标使用规范)
+## 4. Icon Spec (图标规范)
 - ⚠️ **强制约束**: 对于图标页签和文本页签中的图标调用，**必须且只能使用 `action` 目录下的底层图标素材** (即路径类似 `../../../icon/miniDev-icon/action/[name].svg`)。
 - 图标渲染方式: 必须采用 `-webkit-mask-image` 配合 `background-color: currentColor`，以确保 Hover/Active 等交互状态下色值的自然继承。
 
@@ -101,7 +101,7 @@
 | **Item (Active Text)** | `color` / `font-weight` | 均激活为 `var(--devui-text)`, `font-weight: 500` | `#252B3A` |
 | **Item (Disabled)** | `color` | `var(--devui-disabled-text)` | `#ADB0B8` |
 
-## Anti-Patterns (负面示例)
+## 7. Anti-Patterns (负面示例)
 禁止在生成代码时出现以下模式：
 
 1.  **❌ 禁止硬编码颜色**
@@ -118,7 +118,7 @@
 3.  **❌ 禁止混用 Type 样式**
     - Pills 类型不应有边框，Wrapped 类型不应全是圆角。
 
-## Audit Checklist (自检清单)
+## 8. Audit Checklist (自检清单)
 - [ ] 属性名是否包含 `activeTab`, `type`？
 - [ ] 颜色引用是否全部为 `var(--devui-*)`？
 - [ ] Pills 类型激活态是否为 Brand 背景？

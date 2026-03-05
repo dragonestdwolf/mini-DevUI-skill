@@ -1,4 +1,4 @@
-# Skill: Button (按钮)
+# Spec: Button (按钮)
 
 [Metadata]
 - **Component Name**: Button
@@ -6,7 +6,7 @@
 - **DevUI Component**: `d-button`
 - **Version**: v1.0
 
-## Property Skill
+## 1. Property Spec (属性规范)
 定义组件的 API 接口，确保与 DevUI 标准对齐。
 
 | Prop Name | Type | Description | Default |
@@ -18,19 +18,19 @@
 | `onClick` | `() => void` | 点击事件回调 | - |
 | `children` | `ReactNode` | 按钮内容 | - |
 
-## Icon Skill (图标规范)
+## 4. Icon Spec (图标规范)
 **图标资源必须严格遵循以下规则，确保视觉一致性。**
 
-### 1. Source Control (来源控制)
+### 4.1 Source Control (来源控制)
 -   **Directory**: 必须且只能使用 `icon/miniDev-icon/action/` 目录下的线性图标 (Linear Icons)。
 -   **Examples**: `settings.svg`, `search.svg`, `delete.svg`, `edit.svg`, `plus.svg` 等。
 
-### 2. Dimension & Spacing (尺寸与间距)
+### 4.2 Dimension & Spacing (尺寸与间距)
 -   **Icon Size**: 严格限制为 `16px x 16px`。
     -   ❌ 禁止使用 `width: auto` 或其他尺寸。
 -   **Gap**: 图标与文本之间的间距为 `4px`。
 
-### 3. Color Synchronization (颜色同步)
+### 4.3 Color Synchronization (颜色同步)
 **核心规则：图标颜色必须始终与按钮文本颜色保持一致。**
 
 -   **Implementation**: 必须使用 **CSS Mask** 技术实现，禁止直接使用 `<img>` 标签。
@@ -41,10 +41,10 @@
     -   Secondary Button: Text works as Dark Grey -> Icon becomes Dark Grey.
     -   Hover/Active: Text color changes -> Icon color automatically changes.
 
-## Visual Skill
+## 3. Visual Spec (视觉规范)
 定义视觉还原的严格规范，强制使用 Token 和 Flex 布局。
 
-### 1. Layout Logic (布局逻辑)
+### 3.1 Layout Logic (布局逻辑)
 - **Container (`.devui-btn`)**:
     - `display: flex`
     - `align-items: center`
@@ -58,7 +58,7 @@
         - **md**: Height 32px, Padding `0 16px` (Design: Primary py=5px, Secondary py=4px+1px border).
         - **lg**: Height 40px, Padding `0 20px`.
 
-### 2. Styling Rules (样式映射)
+### 3.2 Styling Rules (样式映射)
 
 #### Variant: Primary (主要按钮)
 高频操作或强调操作。
@@ -105,7 +105,7 @@
 > [!NOTE]
 > Text 按钮在 Figma 中有 `Icon` 变体 (`chevronDown`)，这应通过 `children` 或 `icon` 属性灵活实现，不强制绑定在样式中。
 
-## Anti-Patterns (负面示例)
+## 7. Anti-Patterns (负面示例)
 禁止在生成代码时出现以下模式：
 
 1.  **❌ 禁止硬编码颜色**
@@ -122,7 +122,7 @@
 3.  **❌ 禁止混淆 Secondary 与 Text**
     - Secondary 必须有边框 (`1px solid`)，Text 必须无边框。
 
-## Audit Checklist (自检清单)
+## 8. Audit Checklist (自检清单)
 - [ ] 是否支持 `variant` (primary, secondary, text)？
 - [ ] Secondary 按钮是否有边框 (`devui-form-control-line`)？
 - [ ] Primary 按钮文字是否为白色 (`devui-light-text`)？

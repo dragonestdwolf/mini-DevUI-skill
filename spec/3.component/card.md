@@ -7,7 +7,7 @@
 - **Template Source**: `spec/4.template/card-tem.html`
 - **Version**: v1.0
 
-## Property Spec
+## 1. Property Spec (属性规范)
 
 | Prop Name | Type | Description | Default |
 | :--- | :--- | :--- | :--- |
@@ -18,9 +18,9 @@
 | `projectId` | `string` | 项目ID（显示截断+复制按钮） | `'-'` |
 | `starred` | `boolean` | 是否已收藏 | `false` |
 
-## 1. Content Presentation (内容呈现格式)
+## 2. Content Presentation (内容呈现)
 
-### 1.1 Header (头部区域)
+### 2.1 Header (头部区域)
 - **Layout**: `display: flex; align-items: center; gap: 12px;`
 - **Structure**:
     ```html
@@ -58,7 +58,7 @@
 - **Hover**: `background: var(--devui-pjcard-tag-general-bg, #F2F5FC); color: var(--devui-brand, #5E7CE0)`
 - **Starred Active**: `color: #FAC20A` (金色填充), class `.is-starred`
 
-### 1.2 Tags Section (标签区域)
+### 2.2 Tags Section (标签区域)
 - **Layout**: `display: flex; gap: 8px; flex-wrap: wrap;`
 - **Min Height**: `22px` (即使无标签也保持占位)
 - **Structure**:
@@ -82,7 +82,7 @@
 - **Border Radius**: `var(--devui-border-radius-sm, 4px)`
 - **Font Size**: `var(--devui-font-size-sm, 12px)`, Weight `400`
 
-### 1.3 Meta Section (底部信息区)
+### 2.3 Meta Section (底部信息区)
 - **Layout**: `display: flex; align-items: center;`
 - **Structure**:
     ```html
@@ -108,7 +108,7 @@
 - **Value Overflow**: `max-width: 160px; text-overflow: ellipsis`
 - **ProjectId Truncated**: `max-width: 80px`
 
-## 2. Visual Spec (视觉规范)
+## 3. Visual Spec (视觉规范)
 
 ### Card Container (卡片容器)
 
@@ -134,7 +134,7 @@ Tags (标签区域)
 Meta (创建者 + 项目ID)
 ```
 
-## 3. Dynamic Response (动态响应)
+## 5. Dynamic Response (动态响应)
 
 ### Text Overflow
 - **Title**: 单行 ellipsis，`flex: 1` 自适应宽度
@@ -162,7 +162,7 @@ Meta (创建者 + 项目ID)
 - **Size**: 14×14 inline SVG
 - **Color**: `currentColor` (inherit from `--devui-text-weak`)
 
-## Audit Checklist (自检清单)
+## 8. Audit Checklist (自检清单)
 - [ ] 是否使用了 `--devui-` Token 变量？
 - [ ] App Icon 是否通过 `<img>` 引用 engineering-initial 图标？
 - [ ] 标签是否支持 `success` / `general` 两种 variant？
