@@ -61,7 +61,9 @@ HTML/CSS 结构建议采用 Flexbox 布局：
 
 布局由五个主要绝对定位部分组成：
 
-- **Outer Wrapper (`.workbench-layout`)**: `width: 1920px; min-height: 1080px; position: relative; overflow: hidden;`，并通常承载 3D 渲染背景装饰图（`.bg-decoration`，如 `left: 939px; top: 20px;`）。
+- **Outer Wrapper (`.workbench-layout`)**: `width: 1920px; min-height: 1080px; position: relative; overflow: hidden;`，通常内部承载绝对定位的缩略背景图以增强视觉层次（`z-index: 0`, `pointer-events: none`），包含：
+  - 顶部右侧渐变光晕/3D装饰 (`.bg-layer-top-right`): 引用 `icon/card-bg-1.png`，样式设置为 `top: 48px; left: 0; right: 0; height: 400px; background: url('...') no-repeat center top / cover;`。
+  - 左下角光晕/装饰元素 (`.bg-layer-left-bottom`): 引用 `icon/card-bg-2.png`，样式设置为 `bottom: 0; left: 0; width: 256px; height: 364px; background: url('...') no-repeat left bottom / contain;`。
 - **Header (`.devui-header`)**: 宽 `100%`，高 `48px`，顶部对齐 `top: 0; left: 0; z-index: 1000;`。
 - **Left Sidebar (`.left-sidebar`)**: 宽 `248px`，距离左侧与顶部有明确悬浮间距：`left: 15px; top: 80px;`。
 - **Main Content (`.main-content`)**: 宽 `1175px`，占据主要视觉中心：`left: 287px; top: 40px;`。

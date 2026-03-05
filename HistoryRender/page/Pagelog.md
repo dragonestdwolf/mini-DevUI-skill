@@ -244,3 +244,24 @@ state: ✅
 依赖组件: Header, Sidebar, Tabs, Table, Pagination
 生成描述: 依据 benchmark_maker 规范，结合目标设计稿截图（Figma MCP 3202:13881），组装并定制出一份高保真的 DevUI 表格工作台页面。完整复原了全功能左侧双栏 Sidebar、顶部的页签、带多级筛选过滤能力的复杂 Toolbar，以及完整数据承载的 8 行标记彩色优先级的实体列表 `table` 区块与 `pagination` 区域。
 输出位置: /HistoryRender/page/bench-table.html
+
+no：v28
+时间：03-05 13:45
+框架与库：原生 HTML/CSS
+读取 Spec：header.md, sidebar.md, menuCard-tem.html, activityCard-tem.html, announcementCard-tem.html, helpDocCard-tem.html, card-tem.html, tabs-tem.html, button-tem.html
+生成描述：一句话生成仪表盘大盘页面测试。基于设计稿缩略图还原，综合应用顶部导航、侧边栏、最近访问卡片、项目列表卡片及右侧通知/活动/文档卡片结构。修复布局与间距，独立完成卡片架构页面。
+输出位置：/HistoryRender/page/v28-dashboard/v28.html
+
+no：v29
+时间：03-05 13:53
+框架与库：原生 HTML/CSS
+读取 Spec：layout.md, menuCard.md, header.md, activityCard.md, announcementCard.md, helpDocCard.md, card.md, tabs.md, search.md, filter.md, button.md
+生成描述：要求follow layout.md文件中对于卡片工作台布局架构的描述。并且左侧用menuCard而不是sidebar.框架型组件（比如Header）完全符合定义。生成了一份尽可能还原该设定稿的html。
+输出位置：/HistoryRender/page/v29/v29.html
+
+no：v30
+时间：03-05 14:02
+框架与库：原生 HTML/CSS
+读取 Spec：layout.md, menuCard.md, header.md, activityCard.md, announcementCard.md, helpDocCard.md, card.md, tabs.md, input.md, button.md
+生成描述：基于提供的卡片工作台截图，并根据用户指令使用 menuCard 取代常规 Sidebar。全面应用了 layout.md 的绝对定位架构还原整个仪表盘视图。复现了 Header、MenuCards 左侧链、主工作区最近访问及四列卡片流，以及右侧三大业务板块（公告、活动悬浮窗、九宫格帮助文档）。确保全部引入资源遵循相对层级规范并且像素级对齐了各 Component Spec 基准线。
+输出位置：/HistoryRender/page/v30/v30.html
