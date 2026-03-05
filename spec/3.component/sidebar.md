@@ -15,7 +15,7 @@ Attributes: Fixed width, Vertical layout, Collapsible (optional logic).
 -   **Container**:
     -   `width`: `240px` (Fixed)
     -   `height`: `100%` (Matches sidebar container)
-    -   `background-color`: `#FFFFFF`
+    -   `background-color`: `var(--devui-base-bg)` (#FFFFFF)
     -   `border-right`: `1px solid #DFE1E6`
     -   `display`: `flex`
     -   `flex-direction`: `column`
@@ -29,7 +29,7 @@ Attributes: Fixed width, Vertical layout, Collapsible (optional logic).
     -   `justify-content`: `space-between`
     -   `cursor`: `pointer`
     -   `font-weight`: `700`
-    -   `color`: `#252B3A`
+    -   `color`: `var(--devui-text)` (#252B3A)
     -   **Icon**: Project Avatar (32x32 or 24x24).
 
 -   **Menu List**:
@@ -47,7 +47,7 @@ Attributes: Fixed width, Vertical layout, Collapsible (optional logic).
     -   `align-items`: `center`
     -   `gap`: `12px`
     -   `cursor`: `pointer`
-    -   `color`: `#252B3A`
+    -   `color`: `var(--devui-text)` (#252B3A)
     -   `font-size`: `14px`
     -   `position`: `relative`
     -   `transition`: `background-color 0.2s`
@@ -60,7 +60,7 @@ Attributes: Fixed width, Vertical layout, Collapsible (optional logic).
     -   **Expanded State (`.is-expanded`)**:
         -   `margin`: `-2px -4px` (Visual Overflow)
         -   `padding-bottom`: `2px` (Optional adjustment)
-        -   `background-color`: `#FBFBFC`
+        -   `background-color`: `var(--devui-list-item-hover-bg)` (#FBFBFC)
         -   `border`: `1px solid #DFE1E6`
         -   `border-radius`: `4px`
         -   `position`: `relative`
@@ -80,8 +80,8 @@ Attributes: Fixed width, Vertical layout, Collapsible (optional logic).
     -   `height`: `40px`
     -   `padding-left`: `44px` (Align icon with Parent Text. Parent Text starts at 8px Padding + 20px Icon + 12px Gap = 40px? Need to check exact math.)
     -   **Active State**:
-        -   `background-color`: `#EBF1FF`
-        -   `color`: `#5E7CE0`
+        -   `background-color`: `var(--devui-list-item-active-bg)` (#EBF1FF)
+        -   `color`: `var(--devui-brand)` (#5E7CE0)
         -   `font-weight`: `700`
         -   `box-shadow`: `inset 3px 0 0 0 #5E7CE0` (Left Blue Bar)
 
@@ -89,19 +89,19 @@ Attributes: Fixed width, Vertical layout, Collapsible (optional logic).
 
 #### 3.5.1 Default
 -   `background-color`: `transparent`
--   `color`: `#252B3A`
+-   `color`: `var(--devui-text)` (#252B3A)
 
 #### 3.5.2 Hover
--   `background-color`: `#F2F5FC`
+-   `background-color`: `var(--devui-list-item-hover-bg)` (#F2F5FC)
 
 #### 3.5.3 Active (选中)
--   `background-color`: `#EBF1FF` (Light Blue background)
--   `color`: `#252B3A`
+-   `background-color`: `var(--devui-list-item-active-bg)` (#EBF1FF)
+-   `color`: `var(--devui-text)` (#252B3A)
 -   `font-weight`: `700`
 -   **Visual Indicator**: Blue vertical bar (`width: 3px`) on the left.
     -   `position`: `absolute`, `left`: `0`
     -   `top`: `0`, `bottom`: `0`
-    -   `background-color`: `#5E7CE0` (DevUI Primary Blue)
+    -   `background-color`: `var(--devui-brand)` (#5E7CE0)
 
 ## 4. Icon Spec (图标规范)
 -   **Source**: `icon/miniDev-icon/侧边导航图标/`

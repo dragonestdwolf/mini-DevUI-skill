@@ -3,7 +3,7 @@
 [Metadata]
 - **Component Name**: Tabs
 - **Figma Node**: 98-263
-- **DevUI Component**: `d-tabs`
+- **CSS Class Prefix**: `devui-tabs`
 - **Version**: v1.0
 
 ## 1. Property Spec (属性规范)
@@ -14,7 +14,6 @@
 | `activeTab` | `string \| number` | 当前激活的 Tab ID | - |
 | `data` | `Array<{ id: string\|number, title: string, disabled?: boolean }>` | 页签数据源 | `[]` |
 | `type` | `'pills' \| 'tabs' \| 'wrapped' \| 'icon' \| 'text'` | 页签样式类型：胶囊(Pills)/标准(Tabs)/包裹(Wrapped)/纯图标(Icon)/文本带图标(Text) | `'pills'` |
-| `onChange` | `(id: string \| number) => void` | 切换页签时的回调 | - |
 
 ## 3. Visual Spec (视觉规范)
 定义视觉还原的严格规范，强制使用 Token 和 Flex 布局。

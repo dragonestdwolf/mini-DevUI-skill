@@ -3,7 +3,7 @@
 [Metadata]
 - **Component Name**: Card (pj-card)
 - **Figma Node**: 3501-10161
-- **DevUI Component**: `d-card` / `pj-card`
+- **CSS Class Prefix**: `devui-card`, `devui-pjcard`
 - **Template Source**: `spec/4.template/card-tem.html`
 - **Version**: v1.0
 

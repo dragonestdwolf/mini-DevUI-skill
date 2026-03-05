@@ -3,7 +3,7 @@
 [Metadata]
 - **Component Name**: Button
 - **Figma Node**: 23:100
-- **DevUI Component**: `d-button`
+- **CSS Class Prefix**: `devui-btn`
 - **Version**: v1.0
 
 ## 1. Property Spec (属性规范)
@@ -13,10 +13,9 @@
 | :--- | :--- | :--- | :--- |
 | `variant` | `'primary' \| 'secondary' \| 'text'` | 按钮样式变体：主要/次要(通用)/文本 | `'secondary'` |
 | `size` | `'sm' \| 'md' \| 'lg'` | 尺寸大小 | `'md'` |
-| `icon` | `ReactNode` | 按钮图标（左侧） | - |
+| `icon` | `string (SVG class)` | 按钮图标（左侧） | - |
 | `disabled` | `boolean` | 是否禁用 | `false` |
-| `onClick` | `() => void` | 点击事件回调 | - |
-| `children` | `ReactNode` | 按钮内容 | - |
+| `children` | `string (HTML content)` | 按钮内容 | - |
 
 ## 4. Icon Spec (图标规范)
 **图标资源必须严格遵循以下规则，确保视觉一致性。**

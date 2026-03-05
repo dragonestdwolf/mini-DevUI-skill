@@ -3,7 +3,7 @@
 [Metadata]
 - **Component Name**: Pagination
 - **Figma Node**: 233:431
-- **DevUI Component**: `d-pagination`
+- **CSS Class Prefix**: `devui-pagination`
 - **Version**: v1.0
 - **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
@@ -18,7 +18,6 @@
 | `showSizeChanger` | `boolean` | 是否显示页码切换器 (Select) | `false` |
 | `showJump` | `boolean` | 是否显示跳转输入框 | `false` |
 | `canViewTotal` | `boolean` | 是否显示总条数 | `false` |
-| `onChange` | `(pageIndex: number, pageSize: number) => void` | 页码或每页条数改变回调 | - |
 
 ## 3. Visual Spec (视觉规范)
 定义视觉还原的严格规范，强制使用 Token 和 Flex 布局。

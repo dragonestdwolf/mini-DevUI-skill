@@ -3,7 +3,7 @@
 [Metadata]
 - **Component Name**: BreadCrumbs
 - **Figma Node**: 23:101
-- **DevUI Component**: `d-breadcrumb`
+- **CSS Class Prefix**: `devui-breadcrumb`
 - **Version**: v1.1
 - **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
@@ -13,18 +13,14 @@
 | Prop Name | Type | Description | Default |
 | :--- | :--- | :--- | :--- |
 | `source` | `Array<SourceType>` | 面包屑数据源，包含标题、链接等信息 | `[]` |
-| `separatorIcon` | `ReactNode \| TemplateRef` | 自定义分隔符图标 | `'/'` |
+| `separatorIcon` | `string (HTML content)` | 自定义分隔符图标 | `'/'` |
 | `size` | `'sm' \| 'md' \| 'lg'` | 尺寸大小（预留） | `'md'` |
 
-**SourceType Definition**:
-```typescript
-interface SourceType {
-  title: string;
-  link?: string;
-  target?: '_blank' | '_self' | '_parent' | '_top';
-  noNavigation?: boolean; // Whether to disable navigation (mapped to Active state)
-}
-```
+**SourceType 数据结构**：
+- `title`: `string` — 面包屑显示文本
+- `link`: `string` (可选) — 跳转链接
+- `target`: `'_blank' | '_self' | '_parent' | '_top'` (可选) — 链接打开方式
+- `noNavigation`: `boolean` (可选) — 是否禁用导航（对应 Active 状态）
 
 ## 3. Visual Spec (视觉规范)
 定义视觉还原的严格规范，强制使用 Token 和 Flex 布局。

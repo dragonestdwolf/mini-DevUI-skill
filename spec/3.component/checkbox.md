@@ -3,7 +3,7 @@
 [Metadata]
 - **Component Name**: Checkbox
 - **Figma Node**: 180:337
-- **DevUI Component**: `d-checkbox`
+- **CSS Class Prefix**: `devui-checkbox`
 - **Version**: v1.0
 
 ## 1. Property Spec (属性规范)
@@ -14,8 +14,7 @@
 | `checked` | `boolean` | 是否选中 | `false` |
 | `halfChecked` | `boolean` | 是否半选（不确定状态） | `false` |
 | `disabled` | `boolean` | 是否禁用 | `false` |
-| `label` | `ReactNode` | 显示标签 | - |
-| `onChange` | `(checked: boolean) => void` | 状态改变回调 | - |
+| `label` | `string` | 显示标签 | - |
 
 ## 3. Visual Spec (视觉规范)
 定义视觉还原的严格规范，强制使用 Token 和 Flex 布局。

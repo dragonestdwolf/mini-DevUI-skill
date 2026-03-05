@@ -3,7 +3,7 @@
 [Metadata]
 - **Component Name**: Input
 - **Figma Node**: 250:436 (Text), 379:671 (Number)
-- **DevUI Component**: `d-input`, `d-input-number`
+- **CSS Class Prefix**: `devui-input`, `devui-input-number`
 - **Version**: v1.1
 - **Icon Strategy**: Ref `spec/0.role/icon_role.md`. **MUST use relative paths**.
 
@@ -21,7 +21,6 @@
 | `step` | `number` | 步长 (仅 Number 类型) | `1` |
 | `max` | `number` | 最大值 (仅 Number 类型) | - |
 | `min` | `number` | 最小值 (仅 Number 类型) | - |
-| `onChange` | `(val: string \| number) => void` | 输入回调 | - |
 
 ## 3. Visual Spec (视觉规范)
 定义视觉还原的严格规范，强制使用 Token 和 Flex 布局。

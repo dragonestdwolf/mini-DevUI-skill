@@ -3,7 +3,7 @@
 [Metadata]
 - **Component Name**: Form
 - **Figma Node**: 379:1093, 345:1340
-- **DevUI Component**: `d-form`, `d-form-item`, `d-form-label`, `d-form-control`
+- **CSS Class Prefix**: `devui-form`, `devui-form-item`, `devui-form-label`, `devui-form-control`
 - **Version**: v1.0
 
 ## 2. Content Presentation (内容呈现)
