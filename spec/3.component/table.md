@@ -139,6 +139,43 @@
     </div>
     ```
 
+## 4. Icon Spec (图标规范)
+
+### 4.1 图标来源
+- **目录**: `icon/miniDev-icon/action/`
+- **引用规则**: 相对路径 `../../../icon/miniDev-icon/action/...`（根据 HTML 文件深度调整层级）
+
+### 4.2 渲染方式
+所有表格内图标均为**单色线性图标**，必须使用 **CSS Mask** 渲染：
+```css
+.devui-icon-[name] {
+  background-color: currentColor;
+  -webkit-mask: url('相对路径') no-repeat center/contain;
+  mask: url('相对路径') no-repeat center/contain;
+}
+```
+
+### 4.3 图标映射表
+
+| 用途 | 图标文件 | 尺寸 | 渲染方式 |
+|:---|:---|:---|:---|
+| 排序（升序） | `sort-asc.svg` | 16×16 | mask |
+| 排序（降序） | `sort-desc.svg` | 16×16 | mask |
+| 筛选漏斗 | `filter.svg` | 16×16 | mask |
+| 下拉箭头 | `chevron-down.svg` | 16×16 | mask |
+| 表头复选框 | 内联 CSS 方块（非 SVG） | 16×16 | border |
+| 操作列-编辑 | `edit.svg` | 16×16 | mask |
+| 操作列-删除 | `delete.svg` | 16×16 | mask |
+| 操作列-更多 | `more-horizontal.svg` | 16×16 | mask |
+| 搜索（筛选面板） | `search.svg` | 16×16 | mask |
+
+### 4.4 Anti-Pattern
+- ❌ 禁止使用 `<img>` 加载操作类图标（无法跟随文本色变化）
+- ❌ 禁止在 HTML `style=""` 内联属性中写 `mask-image` 长路径
+- ❌ 禁止猜测图标文件名，必须先确认文件存在
+
+---
+
 ## 5. Dynamic Response (动态响应)
 
 ### 5.1 Text Overflow (文本溢出)

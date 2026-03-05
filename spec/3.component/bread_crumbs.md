@@ -89,6 +89,28 @@ graph LR
 > - Hover 上一级面包屑链接时，文本颜色建议变为 `var(--devui-primary)` 或增加下划线。
 > - Active (当前页) 状态通常不可点击。
 
+## 4. Icon Spec (图标规范)
+
+### 4.1 图标来源
+- **目录**: `icon/miniDev-icon/action/`
+
+### 4.2 渲染方式
+面包屑图标为**单色线性图标**，必须使用 **CSS Mask** + `currentColor`。
+
+### 4.3 图标映射表
+
+| 用途 | 图标文件 | 尺寸 | 渲染方式 | 备注 |
+|:---|:---|:---|:---|:---|
+| 分隔符 "/" | 纯文本或 CSS 生成 | — | text | 默认为 "/" 字符 |
+| 折叠展开下拉 | `chevron-down.svg` | 14×14 | mask | 仅在折叠态时出现 |
+| 折叠省略 | `more.svg` 或 "..." 文本 | 14×14 | mask/text | 可选 |
+
+### 4.4 Anti-Pattern
+- ❌ 禁止用 margin 模拟分隔符间距（应使用 `width: 16px` 固定宽度）
+- ❌ 禁止图标颜色与 `var(--devui-placeholder)` 脱钩
+
+---
+
 ## 7. Anti-Patterns (负面示例)
 禁止在生成代码时出现以下模式：
 

@@ -23,6 +23,31 @@
     </div>
     ```
 
+## 4. Icon Spec (图标规范)
+
+### 4.1 图标来源
+- **操作图标**: `icon/miniDev-icon/action/`
+- **Banner 插图**: `icon/activity-card.png`（项目根目录）
+
+### 4.2 渲染方式
+| 类型 | 渲染方式 | 说明 |
+|:---|:---|:---|
+| 指向箭头 | CSS Mask + `currentColor` | 需跟随字体色变化 |
+| Banner 3D 插图 | `<img>` 标签 | 保留原生色彩 |
+
+### 4.3 图标映射表
+
+| 用途 | 图标文件 | 尺寸 | 渲染方式 | 备注 |
+|:---|:---|:---|:---|:---|
+| 右下角交互箭头 | `action/arrow-left.svg` | 16×16 | mask | `rotate(180deg)` 指向右侧 |
+| Banner 右侧 3D 插图 | `icon/activity-card.png` | 220px wide | `<img>` | `object-fit: cover; pointer-events: none` |
+
+### 4.4 Anti-Pattern
+- ❌ 禁止用 `<img>` 加载箭头图标（需 mask 跟色）
+- ❌ 禁止用 CSS Mask 加载 Banner 插图（会丢失色彩）
+
+---
+
 ## 5. Dynamic Response (动态响应)
 -   **Text Overflow Constraints within the Banner**:
     -   `Badge Text` ("频繁"): 由于处在绝对定位中，内容不支持换行 (`white-space: nowrap`)。

@@ -29,6 +29,38 @@
     </div>
     ```
 
+## 4. Icon Spec (图标规范)
+
+### 4.1 图标来源
+- **目录**: `icon/miniDev-icon/action/`（**强制**使用单色线性镂空图标）
+- **引用规则**: 相对路径，根据 HTML 文件深度计算。
+
+### 4.2 渲染方式
+帮助文档图标必须使用 **CSS Mask** + `var(--devui-text)` 渲染：
+```css
+.devui-helpDoc-icon {
+  width: 20px; height: 20px;
+  background-color: var(--devui-text);
+  -webkit-mask: url('相对路径/[icon].svg') no-repeat center/contain;
+  mask: url('相对路径/[icon].svg') no-repeat center/contain;
+}
+```
+
+### 4.3 图标映射表
+
+| 用途 | 图标文件 | 尺寸 | 渲染方式 | 备注 |
+|:---|:---|:---|:---|:---|
+| 文档类目图标 | `action/` 下单色 SVG | 20×20 | mask | 由 `{{docIcon}}` 注入 |
+| 右上角箭头 | `arrow-left.svg` | 14×14 | mask | `rotate(180deg)` 指向右侧；"所有文档" 跳转指示 |
+
+### 4.4 Anti-Pattern (🔴 高频出错项)
+- ❌ **严禁** 使用含 `<rect fill="...">` 的实底色块图标（会导致 mask 后全黑）
+- ❌ **严禁** 使用 `service-2d/` 目录下的复杂多色图标
+- ❌ **严禁** 使用 `background-image` 加载（无法跟色）
+- ❌ **严禁** 使用 `<img>` 标签加载图标
+
+---
+
 ## 5. Dynamic Response (动态响应)
 -   **Grid Layout**:
     -   Container (`.devui-helpDocCard`) 高度为自适应 (`hugs content`)，无需固定 `height`，依靠内部栅格内容自然撑开。

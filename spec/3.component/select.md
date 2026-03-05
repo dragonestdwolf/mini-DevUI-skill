@@ -60,6 +60,26 @@
 -   **Selected**: 单选状态下文本可突显为主题色；多选状态下复选框点亮。
 -   **Disabled**: 选项本身可独立置灰，文本呈现为 `var(--devui-placeholder)`，复选框填充失效底色。
 
+## 4. Icon Spec (图标规范)
+
+### 4.1 图标来源
+- **目录**: `icon/miniDev-icon/action/`
+
+### 4.2 渲染方式
+下拉箭头为**单色图标**，必须使用 **CSS Mask** + `currentColor`。
+
+### 4.3 图标映射表
+
+| 用途 | 图标文件 | 尺寸 | 渲染方式 | 备注 |
+|:---|:---|:---|:---|:---|
+| 下拉箭头 | `chevron-down.svg` | 16×16 | mask | Focus 态旋转 180°（`transform: rotate(180deg)`） |
+
+### 4.4 Anti-Pattern
+- ❌ 禁止用 Unicode 字符 "▾" 或文本模拟箭头
+- ❌ 禁止 `<img>` 加载 chevron（需跟随主题色变化）
+
+---
+
 ## 5. Dynamic Response (动态响应)
 -   **Text Overflow (选值溢出)**: 当用户选择的文本过长时，必须在 `.devui-select-placeholder`（或 `.devui-select-value`）及 `.devui-select-option-text` 中执行 `overflow: hidden; text-overflow: ellipsis; white-space: nowrap;` 防抖截断截断。
 -   **Panel Positioning**: 下拉面板应默认附着于输入框底部并预留 4px 的 `margin-top`。

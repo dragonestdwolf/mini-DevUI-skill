@@ -70,6 +70,31 @@
     -   Padding: `0 8px`.
     -   Hover Bg: `var(--devui-list-item-hover-bg, #F2F5FC)`.
 
+## 4. Icon Spec (图标规范)
+
+### 4.1 图标来源
+- **目录**: `icon/miniDev-icon/action/`
+- **引用规则**: 相对路径，根据 HTML 文件深度计算。
+
+### 4.2 渲染方式
+所有图标均为**单色线性图标**，必须使用 **CSS Mask** + `currentColor`。
+
+### 4.3 图标映射表
+
+| 用途 | 图标文件 | 尺寸 | 渲染方式 | 备注 |
+|:---|:---|:---|:---|:---|
+| 搜索图标（左侧） | `search.svg` | 16×16 | mask | 固定在输入框左侧 |
+| Tag 关闭按钮 | `close.svg` | 12×12 | mask | opacity 0.6→1.0 hover |
+| 保存按钮 | `save.svg` | 16×16 | mask | 右侧操作区 |
+| 目录按钮 | `folder.svg` | 16×16 | mask | 右侧操作区 |
+
+### 4.4 Anti-Pattern
+- ❌ 禁止使用 `<img>` 加载操作图标
+- ❌ 禁止 Tag 关闭图标使用文本 "×" 替代 SVG 图标
+- ❌ 禁止图标路径使用中文文件名
+
+---
+
 ## 5. Dynamic Response (动态响应)
 -   **Input Behavior**: 
     -   Clicking anywhere in container focuses input.

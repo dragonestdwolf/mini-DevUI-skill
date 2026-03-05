@@ -87,6 +87,56 @@
     ```
 -   Style: Circular shape, `size: 28px`, `var(--devui-brand)` background, white bold text (`size: 12px`, `weight: 500`).
 
+## 4. Icon Spec (图标规范)
+
+### 4.1 图标来源
+Header 组件**同时使用两个图标目录**，渲染方式截然不同：
+
+| 区域 | 图标目录 | 渲染方式 |
+|:---|:---|:---|
+| 顶部导航项图标 | `icon/miniDev-icon/top-nav/` | `<img>` 标签（多色） |
+| 右侧操作图标 | `icon/miniDev-icon/action/` | CSS Mask（单色） |
+
+### 4.2 渲染方式详解
+
+**导航项图标（多色，`<img>`）**：
+```html
+<img class="devui-header-nav-icon" src="相对路径/top-nav/首页-1.svg" />
+```
+- 尺寸：24×24px
+- 严禁使用 CSS Mask（会丢失多色信息）
+
+**右侧操作图标（单色，CSS Mask）**：
+```css
+.devui-icon-[name] {
+  width: 16px; height: 16px;
+  background-color: currentColor;
+  -webkit-mask: url('相对路径/action/[name].svg') no-repeat center/contain;
+  mask: url('相对路径/action/[name].svg') no-repeat center/contain;
+}
+```
+
+### 4.3 图标映射表
+
+| 用途 | 图标文件 | 尺寸 | 渲染方式 | 备注 |
+|:---|:---|:---|:---|:---|
+| 首页导航 | `top-nav/首页-1.svg` | 24×24 | `<img>` | 多色原生 |
+| 工作台导航 | `top-nav/工作台-1.svg` | 24×24 | `<img>` | 多色原生 |
+| 项目导航 | `top-nav/项目-1.svg` | 24×24 | `<img>` | 多色原生 |
+| 看板导航 | `top-nav/看板-1.svg` | 24×24 | `<img>` | 多色原生 |
+| 服务导航 | `top-nav/服务-1.svg` | 24×24 | `<img>` | 多色原生 |
+| 搜索操作 | `action/search.svg` | 16×16 | mask | 右侧操作区 |
+| 帮助操作 | `action/help.svg` | 16×16 | mask | 右侧操作区 |
+| 更多操作 | `action/more-horizontal.svg` | 16×16 | mask | 右侧操作区 |
+
+### 4.4 Anti-Pattern (🔴 高频出错项)
+- ❌ **严禁** 对顶部导航图标使用 CSS Mask（top-nav 是多色图标，mask 后变成纯色方块）
+- ❌ **严禁** 对右侧操作图标使用 `<img>`（无法跟随主题色变化）
+- ❌ 禁止混淆 `top-nav/` 和 `sidebar/` 目录（两者是不同的图标集）
+- ❌ 禁止使用中文路径前缀时遗漏 `-1` 后缀（如 `首页.svg` ≠ `首页-1.svg`）
+
+---
+
 ## 5. Dynamic Response (动态响应)
 -   **Text Overflow**:
     -   Navigation Items: Prevent wrapping (`white-space: nowrap`).

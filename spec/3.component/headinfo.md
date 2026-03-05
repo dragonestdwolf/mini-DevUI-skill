@@ -44,6 +44,33 @@
   - 行高限制为 `20px`，一般用于放置 Repository ID 等次要元数据。
   - `MetaText` 元数据说明：字号 `14px`，颜色 `var(--devui-placeholder)`。
 
+## 4. Icon Spec (图标规范)
+
+### 4.1 图标来源
+- **操作图标**: `icon/miniDev-icon/action/`
+- **项目头像**: `icon/miniDev-icon/project-initial/`
+
+### 4.2 渲染方式
+| 类型 | 渲染方式 | 说明 |
+|:---|:---|:---|
+| 操作图标（back、chevron） | CSS Mask + `currentColor` | 需跟随文本色变化 |
+| 项目 Logo | `<img>` 标签 | 保留原生多色 |
+
+### 4.3 图标映射表
+
+| 用途 | 图标文件 | 尺寸 | 渲染方式 | 备注 |
+|:---|:---|:---|:---|:---|
+| 返回按钮 | `action/back.svg` | 20×20 | mask | 容器 24×24 居中 |
+| 下拉 Caret | `action/chevron-down.svg` | 14×14 | mask | 位于名称右侧 |
+| 项目 Logo | `project-initial/[X]-48x48.svg` | 48×48 | `<img>` | 带 8px 圆角、`inset 0 0 0 1px #FEE1E7` 阴影 |
+
+### 4.4 Anti-Pattern
+- ❌ **严禁** 自行编写 `<text>` 标签组成的假 SVG Logo
+- ❌ 禁止用 CSS Mask 加载项目 Logo（会丢失多色信息）
+- ❌ 禁止用 `<img>` 加载 back/chevron 操作图标
+
+---
+
 ## 5. Dynamic Response (动态响应)
 - **Text Overflow (文本防崩塌打点截断)**:
   - 为了应对极端的长文本溢出场景，`.devui-headinfo-main` 及其子级的 Flex 容器（`.devui-headinfo-row1`, `.devui-headinfo-row2`, `.devui-headinfo-title-group`）必须设置 `min-width: 0;`。

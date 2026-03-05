@@ -78,6 +78,27 @@
 - **Input**: 使用 `d-input` (`size="sm"`, width `48px` approx).
 - **Unit**: "页" / "Page".
 
+## 4. Icon Spec (图标规范)
+
+### 4.1 图标来源
+- **目录**: `icon/miniDev-icon/action/`
+
+### 4.2 渲染方式
+翻页箭头为**单色线性图标**，必须使用 **CSS Mask** + `currentColor`。
+
+### 4.3 图标映射表
+
+| 用途 | 图标文件 | 尺寸 | 渲染方式 | 备注 |
+|:---|:---|:---|:---|:---|
+| 上一页箭头 | `chevron-down.svg` | 16×16 | mask | `rotate(90deg)` 朝左；Disabled 时 opacity 降低 |
+| 下一页箭头 | `chevron-down.svg` | 16×16 | mask | `rotate(-90deg)` 朝右；Disabled 时 opacity 降低 |
+
+### 4.4 Anti-Pattern
+- ❌ 禁止用 "<" ">" 文本替代 SVG 图标
+- ❌ 禁止 `<img>` 加载翻页箭头
+
+---
+
 ## 7. Anti-Patterns (负面示例)
 1.  **❌ 禁止页码使用 Circle 圆角**
     - 必须遵循 `border-radius: 4px`。

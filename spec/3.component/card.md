@@ -147,20 +147,29 @@ Meta (创建者 + 项目ID)
 
 ## 4. Icon Spec (图标规范)
 
-### App Icon
-- **Source**: `icon/miniDev-icon/engineering-initial/`
-- **Naming**: `[A-Z0-9]-32x33.svg`（首字母/首数字 + 尺寸后缀）
-- **Implementation**: `<img>` 标签 + `object-fit: cover`
-- **禁止 CSS Mask**: 工程首字母图标包含多色渐变，CSS Mask 会破坏颜色
+### 4.1 图标来源
+- **工程头像**: `icon/miniDev-icon/engineering-initial/`
+- **操作图标**: 内联 SVG（收藏星标、更多菜单、复制）
 
-### Action Icons (收藏/更多)
-- **Star**: 16×16 inline SVG，stroke `currentColor`
-- **Star Active**: `fill: currentColor`, class `.is-starred` -> color `#FAC20A`
-- **More (•••)**: 16×16 inline SVG, 3个圆点
+### 4.2 渲染方式
+| 类型 | 渲染方式 | 说明 |
+|:---|:---|:---|
+| 工程首字母头像 | `<img>` + `object-fit: cover` | 多色渐变，严禁 CSS Mask |
+| 操作图标（Star/More/Copy） | 内联 SVG + `currentColor` | 需跟随文本/状态色变化 |
 
-### Copy Icon
-- **Size**: 14×14 inline SVG
-- **Color**: `currentColor` (inherit from `--devui-text-weak`)
+### 4.3 图标映射表
+
+| 用途 | 图标文件 | 尺寸 | 渲染方式 | 备注 |
+|:---|:---|:---|:---|:---|
+| App 头像 | `engineering-initial/[A-Z0-9]-32x33.svg` | 32×33 | `<img>` | 首字母/首数字 + 尺寸后缀 |
+| 收藏星标 | 内联 SVG (stroke) | 16×16 | inline SVG | `currentColor`；Active: `fill: #FAC20A` |
+| 更多操作 | 内联 SVG (3圆点) | 16×16 | inline SVG | `currentColor` |
+| 复制按钮 | 内联 SVG | 14×14 | inline SVG | `currentColor`，继承 `--devui-text-weak` |
+
+### 4.4 Anti-Pattern
+- ❌ **严禁** CSS Mask 渲染工程首字母头像（会破坏多色渐变）
+- ❌ 禁止使用 `<img>` 加载操作类图标（无法跟随状态色变化）
+- ❌ 禁止硬编码星标颜色（Active 态必须使用 `#FAC20A`）
 
 ## 8. Audit Checklist (自检清单)
 - [ ] 是否使用了 `--devui-` Token 变量？

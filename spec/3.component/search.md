@@ -46,6 +46,34 @@
     -   Text: `var(--devui-disabled-text, #ADB0B8)`.
     -   Cursor: `not-allowed`.
 
+## 4. Icon Spec (图标规范)
+
+### 4.1 图标来源
+- **目录**: `icon/miniDev-icon/action/`
+- **引用规则**: 相对路径，根据 HTML 文件深度计算。
+
+### 4.2 渲染方式
+搜索图标为**单色线性图标**，必须使用 **CSS Mask**：
+```css
+.devui-search-icon {
+  background-color: currentColor;
+  -webkit-mask: url('相对路径/search.svg') no-repeat center/contain;
+  mask: url('相对路径/search.svg') no-repeat center/contain;
+}
+```
+
+### 4.3 图标映射表
+
+| 用途 | 图标文件 | 尺寸 | 渲染方式 |
+|:---|:---|:---|:---|
+| 搜索图标 | `search.svg` | 16×16 | mask |
+
+### 4.4 Anti-Pattern
+- ❌ 禁止使用 `<img>` 加载搜索图标
+- ❌ 禁止在 `style=""` 内联写 mask-image 长路径
+
+---
+
 ## 5. Dynamic Response (动态响应)
 -   **Interactive**:
     -   Input background is transparent.

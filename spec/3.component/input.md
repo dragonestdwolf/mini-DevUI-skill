@@ -88,6 +88,27 @@
 - **Stepper Border**: `1px solid var(--devui-dividing-line)` (#E3E5E9).
 - **Icon**: Up/Down arrows (`chevron-up`, `chevron-down` from Icon Role).
 
+## 4. Icon Spec (图标规范)
+
+### 4.1 图标来源
+- **目录**: `icon/miniDev-icon/action/`
+
+### 4.2 渲染方式
+Number Input 操作图标为**单色线性图标**，必须使用 **CSS Mask** + `currentColor`。
+
+### 4.3 图标映射表
+
+| 用途 | 图标文件 | 尺寸 | 渲染方式 | 备注 |
+|:---|:---|:---|:---|:---|
+| 数值增加箭头 | `chevron-down.svg` | 16×16 | mask | `rotate(180deg)` 朝上，位于 Stepper 上半区 |
+| 数值减少箭头 | `chevron-down.svg` | 16×16 | mask | 位于 Stepper 下半区 |
+
+### 4.4 Anti-Pattern
+- ❌ 禁止使用浏览器原生 `::-webkit-inner-spin-button`
+- ❌ 禁止用 "+" "-" 文本替代 SVG 图标
+
+---
+
 ## 7. Anti-Patterns (负面示例)
 1.  **❌ 禁止 Input 原生边框**
     - Input 标签必须无边框，所有视觉边框由父级 Wrapper 承担。

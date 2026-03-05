@@ -49,6 +49,26 @@
   </div>
   ```
 
+## 4. Icon Spec (图标规范)
+
+### 4.1 图标来源
+- **目录**: `icon/miniDev-icon/action/`
+
+### 4.2 渲染方式
+展开/收起箭头为**单色线性图标**，必须使用 **CSS Mask** + `currentColor`。
+
+### 4.3 图标映射表
+
+| 用途 | 图标文件 | 尺寸 | 渲染方式 | 备注 |
+|:---|:---|:---|:---|:---|
+| 展开/收起指示箭头 | `chevron-down.svg` | 16×16 | mask | 收起态 `rotate(-90deg)`；展开态 `rotate(0deg)` |
+
+### 4.4 Anti-Pattern
+- ❌ 禁止用 ">" 或 "▶" 文本替代 SVG 箭头图标
+- ❌ 禁止 `<img>` 加载箭头（需跟随文本色变化：Active 态为品牌蓝）
+
+---
+
 ## 5. Dynamic Response (动态响应)
 
 ### 5.1 Text Overflow (文本溢出截断)
