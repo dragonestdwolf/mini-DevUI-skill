@@ -1,0 +1,60 @@
+/* 
+  mini-DevUI Base Reset CSS
+  Optimized for Fixed Canvas (1920x1080) and pixel-perfect layouts.
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    color: var(--devui-text, #252B3A);
+    background-color: var(--devui-global-bg, #F3F3F3);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    /* Standard layout uses container overflow */
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--devui-link, #526ECC);
+}
+
+button {
+    outline: none;
+    border: none;
+    background: none;
+    font-family: inherit;
+}
+
+input {
+    outline: none;
+    font-family: inherit;
+}
+
+/* Scrollbar Style */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}

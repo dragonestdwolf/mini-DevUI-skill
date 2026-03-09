@@ -1,0 +1,15 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48.000000" height="48.000000" fill="none" customFrame="#000000">
+	<rect id="项目首字母图标/缺省-48px*48px" width="48.000000" height="48.000000" x="0.000000" y="0.000000" />
+	<rect id="矩形" width="48.000000" height="48.000000" x="0.000000" y="0.000000" opacity="0" fill="rgb(216,216,216)" />
+	<rect id="矩形" width="47.000000" height="47.000000" x="0.500000" y="0.500000" opacity="0" stroke="rgb(151,151,151)" stroke-opacity="0" stroke-width="1" />
+	<g id="默认符号">
+		<g id="默认符号">
+			<path id="形状结合" d="M19.6565 40.8294L40.5421 40.8294L40.5421 32.4961L27.9898 32.4961L19.6565 40.8294Z" fill="rgb(108,163,244)" fill-rule="evenodd" />
+			<path id="形状结合" d="M40.5388 32.4967L40.5388 36.6632L23.8247 36.6632L27.9912 32.4967L40.5388 32.4967Z" fill="rgb(85,203,170)" fill-rule="evenodd" />
+			<rect id="矩形" width="26.666664" height="8.333332" x="0.000000" y="0.000000" rx="4.166666" fill="rgb(218,95,95)" transform="matrix(0.707107,0.707107,-0.707107,0.707107,13.2261,4.83337)" />
+			<path id="路径" d="M0 0L18.3332 0" stroke="rgb(255,255,255)" stroke-linecap="round" stroke-width="1.66666663" transform="matrix(0.7071,0.707113,-0.707113,0.7071,13.1458,10.7258)" />
+			<rect id="矩形" width="26.666664" height="8.333332" x="0.000000" y="0.000000" rx="4.166666" fill="rgb(105,99,240)" transform="matrix(0.707107,-0.707107,-0.707107,-0.707107,13.2261,42.5457)" />
+			<path id="路径" d="M0 0L18.3332 0" stroke="rgb(255,255,255)" stroke-linecap="round" stroke-width="1.66666663" transform="matrix(0.7071,-0.707114,0.707114,0.7071,13.301,36.4861)" />
+		</g>
+	</g>
+</svg>

@@ -1,0 +1,162 @@
+<!-- 
+  Input Template
+  Source: skill/3.component/input.md
+  Version: v1.1
+  
+  Variables:
+  - {{type}}: 'text' | 'number' | 'password'
+  - {{value}}: Initial value
+  - {{placeholder}}: Placeholder text
+  - {{disabled}}: Add 'disabled' class if true
+  - {{status}}: 'error' | 'success' | ''
+  - {{size}}: 'sm' | 'md' | 'lg'
+-->
+
+<style>
+    /* Wrapper */
+    .devui-input-wrapper {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 32px;
+        /* Default md size */
+        border-radius: 4px;
+        padding: 0 12px;
+        transition: all 0.2s;
+        position: relative;
+        background-color: var(--devui-base-bg, #FFFFFF);
+        border: 1px solid var(--devui-form-control-line, #C9C9C9);
+        box-sizing: border-box;
+    }
+
+    /* Size Variants */
+    .devui-input-wrapper.sm {
+        height: 28px;
+    }
+
+    .devui-input-wrapper.lg {
+        height: 40px;
+    }
+
+    /* Input Element */
+    .devui-input {
+        flex: 1;
+        width: 100%;
+        border: none;
+        outline: none;
+        background: transparent;
+        padding: 0;
+        font-family: 'Noto Sans SC', sans-serif;
+        font-size: 14px;
+        color: var(--devui-text, #252B3A);
+        line-height: 22px;
+    }
+
+    .devui-input::placeholder {
+        color: var(--devui-placeholder, #8A8E99);
+    }
+
+    /* Hover State */
+    .devui-input-wrapper:not(.disabled):hover {
+        border-color: var(--devui-form-control-line-hover, #575D6C);
+        box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling, rgba(94, 124, 224, 0.08));
+    }
+
+    /* Active/Focus State (Simulated via class 'active' or focus-within) */
+    .devui-input-wrapper:not(.disabled):focus-within,
+    .devui-input-wrapper.active {
+        border-color: var(--devui-form-control-line-active, #5E7CE0);
+        box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling, rgba(94, 124, 224, 0.08));
+    }
+
+    /* Status: Error */
+    .devui-input-wrapper.error {
+        border-color: var(--devui-danger, #F66F6A);
+        background-color: var(--devui-danger-bg, #FFEEDD);
+        /* Typo fix in skill: #FFEEDD or similar lightness */
+    }
+
+    /* Status: Success */
+    .devui-input-wrapper.success {
+        border-color: var(--devui-success, #50D4AB);
+    }
+
+    /* Disabled State */
+    .devui-input-wrapper.disabled {
+        background-color: var(--devui-disabled-bg, #F3F3F3);
+        border-color: var(--devui-disabled-line, #DFE1E6);
+        cursor: not-allowed;
+    }
+
+    .devui-input-wrapper.disabled .devui-input {
+        color: var(--devui-disabled-text, #ADB0B8);
+        cursor: not-allowed;
+    }
+
+    /* Number Input Specifics */
+    /* Hide native spinner */
+    .devui-input[type="number"]::-webkit-inner-spin-button,
+    .devui-input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Custom Stepper Container */
+    .devui-input-number-stepper {
+        display: flex;
+        flex-direction: column;
+        width: 22px;
+        height: 100%;
+        border-left: 1px solid var(--devui-dividing-line, #E3E5E9);
+        margin-right: -12px;
+        /* Offset padding */
+    }
+
+    /* Stepper Buttons */
+    .devui-input-stepper-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .devui-input-stepper-btn:hover {
+        background-color: var(--devui-list-item-hover-bg, #F2F5FC);
+    }
+
+    .devui-input-stepper-btn.up {
+        border-bottom: 1px solid var(--devui-dividing-line, #E3E5E9);
+    }
+
+    /* Stepper Icon */
+    .devui-stepper-icon {
+        width: 10px;
+        height: 10px;
+        fill: var(--devui-text, #252B3A);
+        /* Icon color */
+    }
+</style>
+
+<div class="devui-input-wrapper {{size}} {{status}} {{disabled ? 'disabled' : ''}}">
+    <input type="{{type}}" class="devui-input" value="{{value}}" placeholder="{{placeholder}}" {{disabled ? 'disabled'
+        : '' }} />
+
+    <!-- Number Input Stepper (Conditional) -->
+    <!-- Agent logic: Only render if type === 'number' -->
+    <div class="devui-input-number-stepper" style="display: {{type == 'number' ? 'flex' : 'none'}}">
+        <div class="devui-input-stepper-btn up">
+            <!-- Icon: Chevron Up -->
+            <svg class="devui-stepper-icon" viewBox="0 0 1024 1024">
+                <path d="M512 320.4l-426.6 426.6-60.4-60.4L512 200l487 486.6-60.4 60.4z" />
+            </svg>
+        </div>
+        <div class="devui-input-stepper-btn down">
+            <!-- Icon: Chevron Down -->
+            <svg class="devui-stepper-icon" viewBox="0 0 1024 1024">
+                <path d="M512 703.6l426.6-426.6 60.4 60.4L512 824 25 337.4l60.4-60.4z" />
+            </svg>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,273 @@
+<style>
+    /* ================== 常规宏观页签项 (Tab Item Base) ================== */
+    .devui-tabs {
+        display: flex;
+        align-items: center;
+    }
+
+    .devui-tab-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--devui-padding-base, 8px 16px);
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 400;
+        gap: 4px;
+    }
+
+    /* ------------------ Type: Pills 胶囊型 (实为线条) ------------------ */
+    .devui-tabs-pills {
+        border-bottom: none;
+        gap: 24px;
+    }
+
+    .devui-tabs-pills .devui-tab-item {
+        color: var(--devui-aide-text, #8a8e99);
+        border-bottom: 2px solid transparent;
+        padding: 8px 0;
+        /* 消除水平padding，使得下划线和文字等宽 */
+        font-weight: 400;
+    }
+
+    .devui-tabs-pills .devui-tab-item:not(.disabled):hover {
+        color: var(--devui-text, #252b3a);
+        font-weight: 500;
+    }
+
+    .devui-tabs-pills .devui-tab-item.active {
+        color: var(--devui-text, #252b3a);
+        border-bottom: 2px solid var(--devui-text, #252b3a);
+        font-weight: 500;
+    }
+
+    .devui-tabs-pills .devui-tab-item.disabled {
+        color: var(--devui-disabled-text, #adb0b8);
+        cursor: not-allowed;
+    }
+
+    /* ------------------ Type: Tabs 标准型 ------------------ */
+    .devui-tabs-standard {
+        border-bottom: 1px solid var(--devui-line, #dfe1e6);
+        gap: 24px;
+    }
+
+    .devui-tabs-standard .devui-tab-item {
+        color: var(--devui-aide-text, #8a8e99);
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        padding: 8px 0;
+        /* 消除水平padding，使得下划线和文字等宽 */
+        font-weight: 400;
+    }
+
+    .devui-tabs-standard .devui-tab-item:not(.disabled):hover {
+        color: var(--devui-text, #252b3a);
+        font-weight: 500;
+    }
+
+    .devui-tabs-standard .devui-tab-item.active {
+        color: var(--devui-text, #252b3a);
+        border-bottom: 2px solid var(--devui-text, #252b3a);
+        font-weight: 500;
+        margin-bottom: -1px;
+    }
+
+    .devui-tabs-standard .devui-tab-item.disabled {
+        color: var(--devui-disabled-text, #adb0b8);
+        cursor: not-allowed;
+    }
+
+    /* ------------------ Type: Wrapped 包裹型 ------------------ */
+    .devui-tabs-wrapped {
+        background-color: transparent;
+        gap: 0px;
+        border-bottom: 1px solid var(--devui-global-bg, #f3f5f8);
+    }
+
+    .devui-tabs-wrapped .devui-tab-item {
+        background-color: transparent;
+        color: var(--devui-text-weak, #575d6c);
+        border: none;
+    }
+
+    .devui-tabs-wrapped .devui-tab-item:not(.disabled):hover {
+        color: var(--devui-text, #252b3a);
+    }
+
+    .devui-tabs-wrapped .devui-tab-item.active {
+        background-color: var(--devui-global-bg, #f3f5f8);
+        color: var(--devui-text, #252b3a);
+        border-radius: var(--devui-radius, 4px) var(--devui-radius, 4px) 0 0;
+        border: none;
+        /* 移除任何拼凑的外边框，完全依靠背景色融入 */
+        font-weight: 400;
+        /* 回归正确的字体设定 */
+    }
+
+    .devui-tabs-wrapped .devui-tab-item.disabled {
+        color: var(--devui-disabled-text, #adb0b8);
+        cursor: not-allowed;
+    }
+
+    /* ------------------ 公用机制: 页签数字徽章 (Badge) ------------------ */
+    .devui-tab-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 16px;
+        padding: 0 4px;
+        margin-left: 4px;
+        /* 与文字间距 */
+        border-radius: 16px;
+        background-color: var(--devui-global-bg, #f3f5f8);
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--devui-aide-text, #8a8e99);
+        line-height: 20px;
+        box-sizing: border-box;
+    }
+
+    .devui-tab-item.active .devui-tab-badge {
+        font-weight: 700;
+        color: var(--devui-text, #252b3a);
+    }
+
+    /* ================== 图标页签项 (Icon Tab) ================== */
+    .devui-icon-tab {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 4px;
+        cursor: pointer;
+        color: var(--devui-text);
+    }
+
+    .devui-icon-tab.active {
+        background-color: var(--devui-base-bg);
+        box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+    }
+
+    .devui-icon-tab.hover,
+    .devui-icon-tab:hover:not(.disabled):not(.active) {
+        background-color: var(--devui-list-item-hover-bg);
+    }
+
+    .devui-icon-tab.disabled {
+        color: var(--devui-disabled-text);
+        cursor: not-allowed;
+    }
+
+    /* ================== 图标页签组 (Icon Tabs Group) ================== */
+    .devui-icon-tabs-group {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px;
+        border-radius: 4px;
+        background-color: var(--devui-list-item-hover-bg);
+    }
+
+    /* ================== 文本页签项 (Text Tab) ================== */
+    .devui-text-tab {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 20px;
+        color: var(--devui-aide-text);
+    }
+
+    .devui-text-tab.active {
+        background-color: var(--devui-base-bg);
+        box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+        color: var(--devui-text);
+        font-weight: 500;
+    }
+
+    .devui-text-tab.hover,
+    .devui-text-tab:hover:not(.disabled):not(.active) {
+        color: var(--devui-text);
+    }
+
+    .devui-text-tab.disabled {
+        color: var(--devui-disabled-text);
+        cursor: not-allowed;
+    }
+
+    /* ================== 文本页签组 (Text Tabs Group) ================== */
+    .devui-text-tabs-group {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 2px;
+        border-radius: 4px;
+        background-color: var(--devui-list-item-hover-bg);
+    }
+</style>
+
+<!-- Type: Pills 胶囊下划线型模板 -->
+<div class="devui-tabs devui-tabs-pills">
+    <div class="devui-tab-item active">{{title}}</div>
+    <div class="devui-tab-item">{{title}}</div>
+    <div class="devui-tab-item disabled">{{title}}</div>
+</div>
+
+<!-- Type: Tabs 标准下划线型模板 -->
+<div class="devui-tabs devui-tabs-standard">
+    <div class="devui-tab-item active">{{title}}</div>
+    <div class="devui-tab-item">{{title}}</div>
+    <div class="devui-tab-item disabled">{{title}}</div>
+</div>
+
+<!-- Type: Wrapped 包裹融合块型模板 -->
+<div class="devui-tabs devui-tabs-wrapped">
+    <!-- Active State With Badge & Icon (Figma 5:477) -->
+    <div class="devui-tab-item active">
+        <i
+            style="width:16px; height:16px; background-color:currentColor; -webkit-mask: url('{{iconSrc}}') no-repeat center/contain; mask: url('{{iconSrc}}') no-repeat center/contain;"></i>
+        <span>{{title}}</span>
+        <div class="devui-tab-badge">0</div>
+    </div>
+    <div class="devui-tab-item">
+        <i
+            style="width:16px; height:16px; background-color:currentColor; -webkit-mask: url('{{iconSrc}}') no-repeat center/contain; mask: url('{{iconSrc}}') no-repeat center/contain;"></i>
+        <span>{{title}}</span>
+        <div class="devui-tab-badge">0</div>
+    </div>
+    <div class="devui-tab-item disabled">
+        <span>{{title}}</span>
+    </div>
+</div>
+
+<!-- 图标页签组模板 (2项或多项组合，必须使用 action 下的图标) -->
+<div class="devui-icon-tabs-group">
+    <!-- Active State -->
+    <div class="devui-icon-tab active">
+        <div class="devui-icon icon-[name]"></div>
+    </div>
+    <!-- Default State -->
+    <div class="devui-icon-tab">
+        <div class="devui-icon icon-[name]"></div>
+    </div>
+</div>
+
+<!-- 文本页签组模板 (2项至6项组合，必须使用 action 下的图标) -->
+<div class="devui-text-tabs-group">
+    <!-- Active State -->
+    <div class="devui-text-tab active">
+        <div class="devui-icon icon-[name]"></div>
+        <span>标签一</span>
+    </div>
+    <!-- Default State -->
+    <div class="devui-text-tab">
+        <div class="devui-icon icon-[name]"></div>
+        <span>标签二</span>
+    </div>
+</div>

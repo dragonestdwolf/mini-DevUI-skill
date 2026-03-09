@@ -1,0 +1,13 @@
+<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16.000000" height="16.000000" fill="none" customFrame="#000000">
+	<defs>
+		<clipPath id="clipPath_20">
+			<rect width="16.000000" height="16.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" />
+		</clipPath>
+	</defs>
+	<rect id="雪碧图/16px/优先级-高" width="16.000000" height="16.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+	<g id="优先级-高" customFrame="url(#clipPath_20)">
+		<rect id="优先级-高" width="16.000000" height="16.000000" x="0.000000" y="0.000000" fill="rgb(255,255,255)" fill-opacity="0" />
+		<rect id="矩形 80" width="16.000000" height="16.000000" x="0.000000" y="0.000000" opacity="0" fill="rgb(255,255,255)" />
+		<path id="合并" d="M4.5 14L4 14L4 8L13.2417 8C13.6007 8 13.8427 7.63297 13.7013 7.30304L12.5 4.5L13.6382 2.22361C13.8044 1.89116 13.5627 1.5 13.191 1.5L4 1.5C4 1.22386 3.77614 1 3.5 1C3.22386 1 3 1.22386 3 1.5L3 14L2.5 14C2.22386 14 2 14.2239 2 14.5C2 14.7761 2.22386 15 2.5 15L4.5 15C4.77614 15 5 14.7761 5 14.5C5 14.2239 4.77614 14 4.5 14Z" fill="rgb(242,48,48)" fill-rule="evenodd" />
+	</g>
+</svg>

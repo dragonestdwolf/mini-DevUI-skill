@@ -1,0 +1,165 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48.000000" height="48.000000" fill="none">
+	<rect id="语言图标/Rust" width="48.000000" height="48.000000" x="0.000000" y="0.000000" />
+	<g id="模型/Rust">
+		<g id="Rust">
+			<g id="Rust_programming_language_black_logo">
+				<path id="r" d="M20.7499 18.4559L25.7205 18.4559C28.7793 18.4559 28.7793 21.5147 25.7205 21.5147L20.7499 21.5147L20.7499 18.4559ZM8.89697 32.6029L24.1911 32.6029L24.1911 28.3971L20.7499 28.3971L20.7499 25.3382L24.5734 25.3382C28.7793 25.3382 26.4852 32.6029 29.9264 32.6029L39.4852 32.6029L39.4852 25.3382L37.1911 25.3382L37.1911 26.1029C37.1911 29.1618 33.7499 28.7794 33.3676 26.8676C32.9852 24.9559 31.4558 23.4265 31.0734 23.4265C36.8087 20.3676 33.3676 14.25 28.7793 14.25L10.8087 14.25L10.8087 18.4559L14.6323 18.4559L14.6323 28.3971L8.89697 28.3971L8.89697 32.6029Z" fill="rgb(0,0,0)" fill-rule="nonzero" />
+				<path id="r" d="M25.7205 18.4559C28.7793 18.4559 28.7793 21.5147 25.7205 21.5147L20.7499 21.5147L20.7499 18.4559L25.7205 18.4559ZM24.1911 32.6029L24.1911 28.3971L20.7499 28.3971L20.7499 25.3382L24.5734 25.3382C28.7793 25.3382 26.4852 32.6029 29.9264 32.6029L39.4852 32.6029L39.4852 25.3382L37.1911 25.3382L37.1911 26.1029C37.1911 29.1618 33.7499 28.7794 33.3676 26.8676C32.9852 24.9559 31.4558 23.4265 31.0734 23.4265C36.8087 20.3676 33.3676 14.25 28.7793 14.25L10.8087 14.25L10.8087 18.4559L14.6323 18.4559L14.6323 28.3971L8.89697 28.3971L8.89697 32.6029L24.1911 32.6029Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="0.5" />
+				<g id="gear">
+					<circle id="椭圆形" cx="24.0000153" cy="24.0000153" r="16.4411774" fill="rgb(0,0,0)" fill-opacity="0" />
+					<circle id="椭圆形" cx="24.0000153" cy="24.0000153" r="16.4411774" stroke="rgb(0,0,0)" stroke-width="3.44117641" />
+					<g id="cogs">
+						<path id="cog" d="M41.5884 25.1471L43.5001 24.0001L41.5884 22.853L41.5884 25.1471Z" fill="rgb(0,0,0)" fill-rule="nonzero" />
+						<path id="cog" d="M43.5001 24.0001L41.5884 22.853L41.5884 25.1471L43.5001 24.0001Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" />
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.980785,0.19509,-0.19509,0.980785,41.4741,26.3064)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705873" transform="matrix(0.980785,0.19509,-0.19509,0.980785,41.4741,26.3064)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.92388,0.382683,-0.382683,0.92388,40.6885,29.6709)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(0.92388,0.382683,-0.382683,0.92388,40.6885,29.6709)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.83147,0.55557,-0.55557,0.83147,39.262,32.8179)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(0.83147,0.55557,-0.55557,0.83147,39.262,32.8179)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.707107,0.707107,-0.707107,0.707107,37.248,35.6255)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705873" transform="matrix(0.707107,0.707107,-0.707107,0.707107,37.248,35.6255)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.555571,0.831469,-0.831469,0.555571,34.728,37.9868)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(0.555571,0.831469,-0.831469,0.555571,34.728,37.9868)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.382683,0.92388,-0.92388,0.382683,31.7905,39.8105)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705873" transform="matrix(0.382683,0.92388,-0.92388,0.382683,31.7905,39.8105)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.195091,0.980785,-0.980785,0.195091,28.5562,41.0266)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705873" transform="matrix(0.195091,0.980785,-0.980785,0.195091,28.5562,41.0266)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0,1,-1,0,25.147,41.5881)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(0,1,-1,0,25.147,41.5881)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.195089,0.980785,-0.980785,-0.195089,21.6938,41.4741)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705873" transform="matrix(-0.195089,0.980785,-0.980785,-0.195089,21.6938,41.4741)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.382682,0.92388,-0.92388,-0.382682,18.3293,40.6885)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(-0.382682,0.92388,-0.92388,-0.382682,18.3293,40.6885)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.55557,0.83147,-0.83147,-0.55557,15.1821,39.2615)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(-0.55557,0.83147,-0.83147,-0.55557,15.1821,39.2615)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,12.3752,37.2478)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705873" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,12.3752,37.2478)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.83147,0.55557,-0.55557,-0.83147,10.0132,34.7253)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(-0.83147,0.55557,-0.55557,-0.83147,10.0132,34.7253)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.923879,0.382684,-0.382684,-0.923879,8.18921,31.7905)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(-0.923879,0.382684,-0.382684,-0.923879,8.18921,31.7905)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.980785,0.195091,-0.195091,-0.980785,6.97363,28.5564)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(-0.980785,0.195091,-0.195091,-0.980785,6.97363,28.5564)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-1,0,0,-1,6.41162,25.147)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(-1,0,0,-1,6.41162,25.147)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.980785,-0.195091,0.195091,-0.980785,6.52588,21.6936)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(-0.980785,-0.195091,0.195091,-0.980785,6.52588,21.6936)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.923879,-0.382684,0.382684,-0.923879,7.31152,18.3291)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(-0.923879,-0.382684,0.382684,-0.923879,7.31152,18.3291)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.83147,-0.55557,0.55557,-0.83147,8.73804,15.1821)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(-0.83147,-0.55557,0.55557,-0.83147,8.73804,15.1821)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,10.752,12.3745)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705873" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,10.752,12.3745)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.55557,-0.83147,0.83147,-0.55557,13.272,10.0132)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(-0.55557,-0.83147,0.83147,-0.55557,13.272,10.0132)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.382682,-0.92388,0.92388,-0.382682,16.2095,8.18945)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(-0.382682,-0.92388,0.92388,-0.382682,16.2095,8.18945)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.195089,-0.980785,0.980785,-0.195089,19.4438,6.97339)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705873" transform="matrix(-0.195089,-0.980785,0.980785,-0.195089,19.4438,6.97339)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0,-1,1,0,22.853,6.41187)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(0,-1,1,0,22.853,6.41187)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.195091,-0.980785,0.980785,0.195091,26.3062,6.52588)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705873" transform="matrix(0.195091,-0.980785,0.980785,0.195091,26.3062,6.52588)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.382683,-0.92388,0.92388,0.382683,29.6707,7.31152)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705873" transform="matrix(0.382683,-0.92388,0.92388,0.382683,29.6707,7.31152)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.555571,-0.831469,0.831469,0.555571,32.8179,8.73853)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(0.555571,-0.831469,0.831469,0.555571,32.8179,8.73853)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.707107,-0.707107,0.707107,0.707107,35.6257,10.7522)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705873" transform="matrix(0.707107,-0.707107,0.707107,0.707107,35.6257,10.7522)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.83147,-0.55557,0.55557,0.83147,37.9868,13.2747)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(0.83147,-0.55557,0.55557,0.83147,37.9868,13.2747)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.92388,-0.382683,0.382683,0.92388,39.8108,16.2095)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705884" transform="matrix(0.92388,-0.382683,0.382683,0.92388,39.8108,16.2095)" />
+						</g>
+						<g id="cog-link">
+							<path id="cog" d="M0 2.29412L1.91176 1.14706L0 0L0 2.29412Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.980785,-0.19509,0.19509,0.980785,41.0264,19.4436)" />
+							<path id="cog" d="M1.91176 1.14706L0 0L0 2.29412L1.91176 1.14706Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="1.14705873" transform="matrix(0.980785,-0.19509,0.19509,0.980785,41.0264,19.4436)" />
+						</g>
+					</g>
+					<g id="mounts">
+						<path id="mount" d="M21.323 7.94116L23.9995 10.6176L26.6759 7.94116L21.323 7.94116Z" fill="rgb(0,0,0)" fill-rule="nonzero" />
+						<path id="mount" d="M23.9995 10.6176L26.6759 7.94116L21.323 7.94116L23.9995 10.6176Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="2.29411769" />
+						<g id="mount-link">
+							<path id="mount" d="M0 0L2.67647 2.67647L5.35294 0L0 0Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.309017,0.951057,-0.951057,0.309017,38.4453,16.4927)" />
+							<path id="mount" d="M2.67647 2.67647L5.35294 0L0 0L2.67647 2.67647Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="2.29411769" transform="matrix(0.309017,0.951057,-0.951057,0.309017,38.4453,16.4927)" />
+						</g>
+						<g id="mount-link">
+							<path id="mount" d="M0 0L2.67647 2.67647L5.35294 0L0 0Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.809017,0.587785,-0.587785,-0.809017,35.6033,35.4187)" />
+							<path id="mount" d="M2.67647 2.67647L5.35294 0L0 0L2.67647 2.67647Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="2.29411769" transform="matrix(-0.809017,0.587785,-0.587785,-0.809017,35.6033,35.4187)" />
+						</g>
+						<g id="mount-link">
+							<path id="mount" d="M0 0L2.67647 2.67647L5.35294 0L0 0Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(-0.809017,-0.587785,0.587785,-0.809017,16.7244,38.5649)" />
+							<path id="mount" d="M2.67647 2.67647L5.35294 0L0 0L2.67647 2.67647Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="2.29411769" transform="matrix(-0.809017,-0.587785,0.587785,-0.809017,16.7244,38.5649)" />
+						</g>
+						<g id="mount-link">
+							<path id="mount" d="M0 0L2.67647 2.67647L5.35294 0L0 0Z" fill="rgb(0,0,0)" fill-rule="nonzero" transform="matrix(0.309017,-0.951057,0.951057,0.309017,7.90112,21.583)" />
+							<path id="mount" d="M2.67647 2.67647L5.35294 0L0 0L2.67647 2.67647Z" fill-rule="nonzero" stroke="rgb(0,0,0)" stroke-linejoin="round" stroke-width="2.29411769" transform="matrix(0.309017,-0.951057,0.951057,0.309017,7.90112,21.583)" />
+						</g>
+					</g>
+				</g>
+			</g>
+			<rect id="矩形" width="60.000000" height="60.000000" x="-6.000000" y="-6.000000" fill="rgb(0,0,0)" fill-opacity="0" />
+			<rect id="矩形" width="60.000000" height="60.000000" x="-6.000000" y="-6.000000" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+		</g>
+	</g>
+</svg>

@@ -1,0 +1,129 @@
+# Spec: Button (按钮)
+
+[Metadata]
+- **Component Name**: Button
+- **Figma Node**: 23:100
+- **CSS Class Prefix**: `devui-btn`
+- **Version**: v1.0
+
+## 1. Property Spec (属性规范)
+定义组件的 API 接口，确保与 DevUI 标准对齐。
+
+| Prop Name | Type | Description | Default |
+| :--- | :--- | :--- | :--- |
+| `variant` | `'primary' \| 'secondary' \| 'text'` | 按钮样式变体：主要/次要(通用)/文本 | `'secondary'` |
+| `size` | `'sm' \| 'md' \| 'lg'` | 尺寸大小 | `'md'` |
+| `icon` | `string (SVG class)` | 按钮图标（左侧） | - |
+| `disabled` | `boolean` | 是否禁用 | `false` |
+| `children` | `string (HTML content)` | 按钮内容 | - |
+
+## 4. Icon Spec (图标规范)
+**图标资源必须严格遵循以下规则，确保视觉一致性。**
+
+### 4.1 Source Control (来源控制)
+-   **Directory**: 必须且只能使用 `icon/miniDev-icon/action/` 目录下的线性图标 (Linear Icons)。
+-   **Examples**: `settings.svg`, `search.svg`, `delete.svg`, `edit.svg`, `plus.svg` 等。
+
+### 4.2 Dimension & Spacing (尺寸与间距)
+-   **Icon Size**: 严格限制为 `16px x 16px`。
+    -   ❌ 禁止使用 `width: auto` 或其他尺寸。
+-   **Gap**: 图标与文本之间的间距为 `4px`。
+
+### 4.3 Color Synchronization (颜色同步)
+**核心规则：图标颜色必须始终与按钮文本颜色保持一致。**
+
+-   **Implementation**: 必须使用 **CSS Mask** 技术实现，禁止直接使用 `<img>` 标签。
+    -   Reason: `<img>` 标签无法通过 CSS 修改 SVG 内部颜色 (fill/stroke)。
+    -   Solution: 使用 `background-color: currentColor` + `mask-image: url(...)`。
+-   **Behavior**:
+    -   Primary Button: Text works explicitly as White -> Icon becomes White.
+    -   Secondary Button: Text works as Dark Grey -> Icon becomes Dark Grey.
+    -   Hover/Active: Text color changes -> Icon color automatically changes.
+
+## 3. Visual Spec (视觉规范)
+定义视觉还原的严格规范，强制使用 Token 和 Flex 布局。
+
+### 3.1 Layout Logic (布局逻辑)
+- **Container (`.devui-btn`)**:
+    - `display: flex`
+    - `align-items: center`
+    - `justify-content: center`
+    - `white-space: nowrap`
+    - `gap: 4px` (Content 与 Icon 间距)
+    - `border-radius`: `var(--devui-radius)` (通常 4px)
+    - `cursor`: `pointer` (Disabled: `not-allowed`)
+    - **Height/Padding Rules**:
+        - **sm**: Height 28px, Padding `0 12px` (Primary: py=3px+border=0? / Secondary: py=2px+border=1?) -> 保持总高一致。
+        - **md**: Height 32px, Padding `0 16px` (Design: Primary py=5px, Secondary py=4px+1px border).
+        - **lg**: Height 40px, Padding `0 20px`.
+
+### 3.2 Styling Rules (样式映射)
+
+#### Variant: Primary (主要按钮)
+高频操作或强调操作。
+
+| Component Part | CSS Property | Token / Value | Fallback (Hex) |
+| :--- | :--- | :--- | :--- |
+| **Container** | `background-color` | `var(--devui-primary)` | `#5E7CE0` |
+| **Container** | `border` | `none` (或 1px solid transparent) | - |
+| **Text** | `color` | `var(--devui-light-text)` | `#FFFFFF` |
+| **Hover** | `background-color` | `var(--devui-primary-hover)` (需推断或使用 Light/Dark 变体) | `#7693F5` |
+| **Active** | `background-color` | `var(--devui-primary-active)` (Figma: #344899) | `#344899` |
+| **Disabled** | `background-color` | `var(--devui-primary-disabled)` (Figma: #BECCFA) | `#BECCFA` |
+| **Disabled** | `color` | `var(--devui-light-text)` (保持白色) | `#FFFFFF` |
+| **Disabled** | `cursor` | `not-allowed` | - |
+
+#### Variant: Secondary (次要/通用按钮)
+常用于取消、重置或次要操作。
+
+| Component Part | CSS Property | Token / Value | Fallback (Hex) |
+| :--- | :--- | :--- | :--- |
+| **Container** | `background-color` | `var(--devui-base-bg)` | `#FFFFFF` |
+| **Container** | `border` | `1px solid var(--devui-form-control-line)` (或 `devui-line`) | `#ADB0B8` |
+| **Text** | `color` | `var(--devui-text)` | `#252B3A` |
+| **Hover** | `border-color` | `var(--devui-from-control-line-hover)` | `#575D6C` |
+| **Active** | `border-color` | `var(--devui-form-control-line-active)` (Figma: #5E7CE0) | `#5E7CE0` |
+| **Disabled** | `background-color` | `var(--devui-btn-common-bg-disabled)` (Figma: #F5F5F5) | `#F5F5F5` |
+| **Disabled** | `border-color` | `var(--devui-disabled-line)` (Figma: #DFE1E6) | `#DFE1E6` |
+| **Disabled** | `color` | `var(--devui-disabled-text)` (Figma: #ADB0B8) | `#ADB0B8` |
+
+#### Variant: Text (文本按钮)
+常用于无需强调的操作，或表格行内操作。
+
+| Component Part | CSS Property | Token / Value | Fallback (Hex) |
+| :--- | :--- | :--- | :--- |
+| **Container** | `background-color` | `transparent` | - |
+| **Container** | `border` | `none` | - |
+| **Text** | `color` | `var(--devui-text)` | `#252B3A` |
+| **Padding** | `padding` | `0 8px` (比实体按钮小) | - |
+| **Hover** | `color` | `var(--devui-primary)` | `#5E7CE0` |
+| **Active** | `color` | `var(--devui-primary-active)` (Figma: #5E7CE0) | `#344899` |
+| **Disabled** | `color` | `var(--devui-disabled-text)` (Figma: #BABBC0/ADB0B8) | `#ADB0B8` |
+| **Disabled** | `background-color` | `transparent` | - |
+
+> [!NOTE]
+> Text 按钮在 Figma 中有 `Icon` 变体 (`chevronDown`)，这应通过 `children` 或 `icon` 属性灵活实现，不强制绑定在样式中。
+
+## 7. Anti-Patterns (负面示例)
+禁止在生成代码时出现以下模式：
+
+1.  **❌ 禁止硬编码颜色**
+    ```css
+    /* Bad */
+    background: #5E7CE0;
+    /* Good */
+    background: var(--devui-primary);
+    ```
+
+2.  **❌ 禁止使用 Fixed Width**
+    - 按钮宽度应由内容 (`padding`) 撑开，除非有特殊全宽需求。
+
+3.  **❌ 禁止混淆 Secondary 与 Text**
+    - Secondary 必须有边框 (`1px solid`)，Text 必须无边框。
+
+## 8. Audit Checklist (自检清单)
+- [ ] 是否支持 `variant` (primary, secondary, text)？
+- [ ] Secondary 按钮是否有边框 (`devui-form-control-line`)？
+- [ ] Primary 按钮文字是否为白色 (`devui-light-text`)？
+- [ ] Padding 是否符合 Size=md (`0 16px`)？
+- [ ] 布局是否使用了 Flex + Gap？

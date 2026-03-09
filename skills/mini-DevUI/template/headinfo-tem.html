@@ -1,0 +1,256 @@
+<!-- 
+  HeadInfo Template
+  Source: HistoryRender/component/headinfo/benchmark.html
+  
+  Variables (Template Contract):
+  - {{logoSrc}}: The image source or base64 data for the logo
+  - {{brand}}: The brand or owner text
+  - {{name}}: The main repository or project name
+  - {{badges}}: A string of HTML representing the badges (e.g., <div class="devui-badge-tag">标签</div>)
+  - {{meta}}: Metadata text for the second row
+-->
+
+<style>
+    /* 
+   命名空间原则：所有 Class 必须以 devui-headinfo 开头或具有唯一标识
+   Token 原则：必须使用 var(--devui-token) 形式
+*/
+    .devui-headinfo-container {
+        display: flex;
+        align-items: center;
+        height: 48px;
+    }
+
+    /* 后退按钮 */
+    .devui-headinfo-back {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        margin-right: 16px;
+    }
+
+    .devui-icon-back {
+        width: 20px;
+        height: 20px;
+        background-color: var(--devui-text, #252b3a);
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/back.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/back.svg');
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+    }
+
+    /* Logo */
+    .devui-headinfo-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-right: 12px;
+        box-shadow: inset 0 0 0 1px #FEE1E7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        background-color: var(--devui-base-bg, #ffffff);
+    }
+
+    .devui-headinfo-logo img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    /* 主内容 */
+    .devui-headinfo-main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 48px;
+        gap: 2px;
+        min-width: 0;
+        flex: 1;
+    }
+
+    .devui-headinfo-row1 {
+        display: flex;
+        align-items: center;
+        height: 28px;
+        min-width: 0;
+    }
+
+    .devui-headinfo-title-group {
+        display: flex;
+        align-items: center;
+        line-height: 28px;
+        min-width: 0;
+    }
+
+    /* 文本与格式 */
+    .devui-text-brand {
+        font-size: 20px;
+        font-weight: 400;
+        color: var(--devui-text-weak, #5a6272);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .devui-text-slash {
+        font-size: 20px;
+        font-weight: 300;
+        color: var(--devui-border, #adb0b8);
+        margin: 0 4px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .devui-text-name {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--devui-text, #252b3a);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .devui-headinfo-caret {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 6px;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+    }
+
+    .devui-icon-dropdown {
+        width: 14px;
+        height: 14px;
+        background-color: var(--devui-text, #252b3a);
+        -webkit-mask-image: url('../../../icon/miniDev-icon/action/chevron-down.svg');
+        mask-image: url('../../../icon/miniDev-icon/action/chevron-down.svg');
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+    }
+
+    /* Badges 区域 */
+    .devui-headinfo-badges {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: 14px;
+        flex-shrink: 0;
+    }
+
+    /* Metadata 行 */
+    .devui-headinfo-row2 {
+        display: flex;
+        align-items: center;
+        height: 20px;
+        min-width: 0;
+    }
+
+    .devui-text-meta {
+        font-size: 14px;
+        color: var(--devui-placeholder, #7a808c);
+        line-height: 20px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* 
+  内置 Badge 组件支援：
+  通常情况下该组装类样式会被封装在 badge 组件中，但为满足 benchmark 的单一隔离性，我们将样式收敛至当前模板底部
+*/
+    .devui-badge-health {
+        display: inline-flex;
+        height: 22px;
+        border-radius: 4px;
+        overflow: hidden;
+        align-items: center;
+    }
+
+    .devui-badge-health-label {
+        background-color: #5A6272;
+        color: var(--devui-base-bg, #ffffff);
+        padding: 0 8px;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 22px;
+        white-space: nowrap;
+    }
+
+    .devui-badge-health-value {
+        background-color: #9FA4B0;
+        color: var(--devui-base-bg, #ffffff);
+        padding: 0 8px;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 22px;
+        white-space: nowrap;
+    }
+
+    .devui-badge-tag {
+        display: inline-flex;
+        height: 22px;
+        background-color: var(--devui-list-item-hover-bg, #f3f5f8);
+        color: var(--devui-text, #252b3a);
+        border-radius: 4px;
+        padding: 0 8px;
+        font-size: 12px;
+        font-weight: 400;
+        align-items: center;
+        line-height: 22px;
+        white-space: nowrap;
+    }
+</style>
+
+<div class="devui-headinfo-container">
+    <!-- 后退块 -->
+    <div class="devui-headinfo-back" title="返回">
+        <i class="devui-icon-back"></i>
+    </div>
+
+    <!-- 标头 Logo -->
+    <div class="devui-headinfo-logo">
+        <img src="{{logoSrc}}" alt="Logo">
+    </div>
+
+    <!-- 文字与状态主干区 -->
+    <div class="devui-headinfo-main">
+        <!-- 第 1 行：品牌分类 / 名称 / 下拉操作及标签群合辑 -->
+        <div class="devui-headinfo-row1">
+            <div class="devui-headinfo-title-group">
+                <span class="devui-text-brand">{{brand}}</span>
+                <span class="devui-text-slash">/</span>
+                <span class="devui-text-name">{{name}}</span>
+
+                <div class="devui-headinfo-caret">
+                    <i class="devui-icon-dropdown"></i>
+                </div>
+            </div>
+
+            <div class="devui-headinfo-badges">
+                {{badges}}
+            </div>
+        </div>
+
+        <!-- 第 2 行：附属描述与 ID -->
+        <div class="devui-headinfo-row2">
+            <span class="devui-text-meta">{{meta}}</span>
+        </div>
+    </div>
+</div>

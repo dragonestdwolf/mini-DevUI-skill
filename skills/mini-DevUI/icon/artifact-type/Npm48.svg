@@ -1,0 +1,11 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48.000000" height="48.000000" fill="none">
+	<rect id="制品类型图标/Npm48" width="48.000000" height="48.000000" x="0.000000" y="0.000000" />
+	<g id="模型/Npm48">
+		<g id="Npm-60x60-red">
+			<path id="矩形" d="M7 7L40.1875 7L40.1875 40.1875L7 40.1875L7 7Z" fill="rgb(203,0,0)" fill-rule="evenodd" />
+			<path id="矩形" d="M40.1875 7L40.1875 40.1875L7 40.1875L7 7L40.1875 7Z" fill-rule="evenodd" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+			<path id="路径-5" d="M23.5938 32.9277L23.5938 18.4082L28.7793 18.4082L28.7793 32.9277L32.9277 32.9277L32.9277 14.2598L14.2598 14.2598L14.2598 32.9277L23.5938 32.9277Z" fill="rgb(255,255,255)" fill-rule="evenodd" />
+			<path id="路径-5" d="M23.5938 18.4082L28.7793 18.4082L28.7793 32.9277L32.9277 32.9277L32.9277 14.2598L14.2598 14.2598L14.2598 32.9277L23.5938 32.9277L23.5938 18.4082Z" fill-rule="evenodd" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+		</g>
+	</g>
+</svg>

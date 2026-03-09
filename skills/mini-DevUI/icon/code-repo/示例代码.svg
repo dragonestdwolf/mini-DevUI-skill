@@ -1,0 +1,39 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48.000000" height="48.000000" fill="none">
+	<rect id="代码仓库/示例代码" width="48.000000" height="48.000000" x="0.000000" y="0.000000" />
+	<g id="模型/示例代码-48x48">
+		<g id="示例代码-60x60">
+			<g id="编组-10">
+				<rect id="矩形" width="35.000000" height="27.363636" x="6.500000" y="11.136230" rx="2.000000" fill="rgb(32,45,64)" />
+				<rect id="矩形" width="35.000000" height="27.363636" x="6.500000" y="11.136230" rx="2.000000" stroke="rgb(37,43,58)" stroke-width="1" />
+				<path id="矩形" d="M8 10.6362L11.4 10.6362L11.4 38.9999L8 38.9999C6.89543 38.9999 6 38.1044 6 36.9999L6 12.6362C6 11.5317 6.89543 10.6362 8 10.6362Z" opacity="0.300000012" fill="rgb(178,216,255)" fill-rule="evenodd" />
+				<path id="矩形" d="M11.4 10.6362L11.4 38.9999L8 38.9999C6.89543 38.9999 6 38.1044 6 36.9999L6 12.6362C6 11.5317 6.89543 10.6362 8 10.6362L11.4 10.6362Z" opacity="0.300000012" fill-rule="evenodd" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<path id="矩形" d="M8 10.6362L40 10.6362C41.1046 10.6362 42 11.5317 42 12.6362L42 16.1706L6 16.1706L6 12.6362C6 11.5317 6.89543 10.6362 8 10.6362Z" fill="rgb(0,103,255)" fill-rule="evenodd" />
+				<path id="矩形" d="M40 10.6362C41.1046 10.6362 42 11.5317 42 12.6362L42 16.1706L6 16.1706L6 12.6362C6 11.5317 6.89543 10.6362 8 10.6362L40 10.6362Z" fill-rule="evenodd" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<path id="矩形" d="M32.1001 9.75L38.4001 9.75L38.4001 18.6136L35.2501 15.9545L32.1001 18.6136L32.1001 9.75Z" fill="rgb(252,164,76)" fill-rule="evenodd" />
+				<path id="矩形" d="M38.4001 9.75L38.4001 18.6136L35.2501 15.9545L32.1001 18.6136L32.1001 9.75L38.4001 9.75Z" fill-rule="evenodd" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<rect id="矩形" width="4.500000" height="1.772728" x="27.600098" y="32.795410" rx="0.886364" fill="rgb(152,195,121)" />
+				<rect id="矩形" width="4.500000" height="1.772728" x="27.600098" y="32.795410" rx="0.886364" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<rect id="矩形" width="2.700001" height="1.772728" x="23.100098" y="32.795410" rx="0.886364" opacity="0.800000012" fill="rgb(178,216,255)" />
+				<rect id="矩形" width="2.700001" height="1.772728" x="23.100098" y="32.795410" rx="0.886364" opacity="0.800000012" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<rect id="矩形备份-8" width="2.700001" height="1.772728" x="33.899902" y="28.363525" rx="0.886364" opacity="0.800000012" fill="rgb(178,216,255)" />
+				<rect id="矩形备份-8" width="2.700001" height="1.772728" x="33.899902" y="28.363525" rx="0.886364" opacity="0.800000012" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<rect id="矩形备份-9" width="2.700000" height="1.772727" x="14.100098" y="19.500000" rx="0.886364" opacity="0.800000012" fill="rgb(178,216,255)" />
+				<rect id="矩形备份-9" width="2.700000" height="1.772727" x="14.100098" y="19.500000" rx="0.886364" opacity="0.800000012" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<rect id="矩形" width="7.200000" height="1.772728" x="14.100098" y="32.795410" rx="0.886364" opacity="0.300000012" fill="rgb(178,216,255)" />
+				<rect id="矩形" width="7.200000" height="1.772728" x="14.100098" y="32.795410" rx="0.886364" opacity="0.300000012" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<rect id="矩形备份" width="7.200001" height="1.772728" x="29.250000" y="24.000000" rx="0.886364" opacity="0.300000012" fill="rgb(178,216,255)" />
+				<rect id="矩形备份" width="7.200001" height="1.772728" x="29.250000" y="24.000000" rx="0.886364" opacity="0.300000012" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<rect id="矩形" width="9.000000" height="1.772728" x="14.100098" y="28.363525" rx="0.886364" opacity="0.5" fill="rgb(178,216,255)" />
+				<rect id="矩形" width="9.000000" height="1.772728" x="14.100098" y="28.363525" rx="0.886364" opacity="0.5" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<rect id="矩形" width="7.199999" height="1.772728" x="24.899902" y="28.363525" rx="0.886364" opacity="0.699999988" fill="rgb(150,192,119)" />
+				<rect id="矩形" width="7.199999" height="1.772728" x="24.899902" y="28.363525" rx="0.886364" opacity="0.699999988" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<rect id="矩形备份-12" width="7.199999" height="1.772727" x="20.399902" y="23.931885" rx="0.886364" fill="rgb(152,195,120)" />
+				<rect id="矩形备份-12" width="7.199999" height="1.772727" x="20.399902" y="23.931885" rx="0.886364" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<rect id="矩形备份-11" width="10.500000" height="1.772727" x="18.600098" y="19.500000" rx="0.886364" opacity="0.400000006" fill="rgb(152,195,121)" />
+				<rect id="矩形备份-11" width="10.500000" height="1.772727" x="18.600098" y="19.500000" rx="0.886364" opacity="0.400000006" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<rect id="矩形备份-10" width="4.500000" height="1.772727" x="14.100098" y="23.931885" rx="0.886364" opacity="0.5" fill="rgb(178,216,255)" />
+				<rect id="矩形备份-10" width="4.500000" height="1.772727" x="14.100098" y="23.931885" rx="0.886364" opacity="0.5" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+			</g>
+		</g>
+	</g>
+</svg>

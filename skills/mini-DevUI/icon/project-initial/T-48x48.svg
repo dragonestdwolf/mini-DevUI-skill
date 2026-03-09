@@ -1,0 +1,23 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48.000000" height="48.000000" fill="none" customFrame="#000000">
+	<rect id="项目首字母图标/T-48px*48px" width="48.000000" height="48.000000" x="0.000000" y="0.000000" />
+	<rect id="矩形" width="48.000000" height="48.000000" x="0.000000" y="0.000000" opacity="0" fill="rgb(216,216,216)" />
+	<rect id="矩形" width="47.000000" height="47.000000" x="0.500000" y="0.500000" opacity="0" stroke="rgb(151,151,151)" stroke-opacity="0" stroke-width="1" />
+	<g id="t">
+		<rect id="Rectangle" width="33.333332" height="1.666667" x="7.333496" y="10.666626" fill="rgb(255,255,255)" />
+		<rect id="Rectangle" width="32.333332" height="0.666667" x="7.833496" y="11.166626" stroke="rgb(151,151,151)" stroke-opacity="0" stroke-width="1" />
+		<rect id="Rectangle" width="8.333333" height="33.333332" x="19.833496" y="7.333374" fill="rgb(178,126,245)" />
+		<path id="Rectangle" d="M19.8335 10.6666L28.1668 10.6666L28.1668 12.3333L24.8335 12.3333L24.8335 15.6666L23.1668 15.6666L23.1668 12.3333L19.8335 12.3333L19.8335 10.6666Z" fill="rgb(174,234,131)" fill-rule="evenodd" />
+		<rect id="Rectangle" width="1.666667" height="5.000000" x="23.166504" y="15.666626" fill="rgb(255,255,255)" />
+		<rect id="Rectangle" width="0.666667" height="4.000000" x="23.666504" y="16.166626" stroke="rgb(151,151,151)" stroke-opacity="0" stroke-width="1" />
+		<path id="Path" d="M40.6668 7.33337L40.6668 10.6667L7.3335 10.6667L7.3335 7.33337L40.6668 7.33337Z" fill="rgb(178,126,245)" fill-rule="evenodd" />
+		<rect id="Rectangle" width="8.333333" height="3.333333" x="19.833496" y="7.333374" fill="rgb(84,59,186)" />
+		<path id="Path" d="M7.3335 12.3334L19.8335 12.3334L19.8335 15.6667L7.3335 15.6667L7.3335 12.3334Z" fill="rgb(108,163,244)" fill-rule="evenodd" />
+		<path id="Path" d="M40.6665 12.3334L40.6665 15.6667L28.1665 15.6667L28.1665 12.3334L40.6665 12.3334Z" fill="rgb(108,163,244)" fill-rule="evenodd" />
+		<rect id="Rectangle" width="3.333333" height="3.333333" x="19.833496" y="12.333374" fill="rgb(36,95,155)" />
+		<rect id="Rectangle Copy" width="3.333333" height="3.333333" x="24.833496" y="12.333374" fill="rgb(36,95,155)" />
+		<rect id="Rectangle" width="8.333333" height="8.333333" x="19.833496" y="20.666626" fill="rgb(85,203,170)" />
+		<rect id="Rectangle" width="2.500000" height="11.666667" x="28.166504" y="29.000000" fill="rgb(218,95,95)" />
+		<rect id="Path" width="2.500000" height="11.666667" x="25.666504" y="29.000000" fill="rgb(36,95,155)" />
+		<path id="Path" d="M32.3327 24L32.3327 25.6692L19.8335 25.6671L19.8335 24L32.3327 24Z" fill="rgb(238,186,91)" fill-rule="evenodd" />
+	</g>
+</svg>

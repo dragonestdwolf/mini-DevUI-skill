@@ -1,0 +1,303 @@
+<!-- 
+  Card (pj-card) Component Template
+  Source: Figma Node 3501-10161 (现网卡片样式)
+  Benchmark: HistoryRender/component/card/benchmark.html
+  
+  Variables (Template Contract):
+  - {{appIcon}}: App icon path, e.g. '../../../icon/miniDev-icon/engineering-initial/M-32x33.svg'
+  - {{title}}: Card title text
+  - {{tags}}: Tag elements (use devui-pjcard-tag--success / devui-pjcard-tag--general)
+  - {{creator}}: Creator name text
+  - {{projectId}}: Project ID text (truncated display)
+  - {{starredClass}}: '' (default) | 'is-starred' (active)
+-->
+
+<style>
+    /* ============================================
+       Design Tokens
+       ============================================ */
+    :root {
+        /* Text */
+        --devui-text: #252B3A;
+        --devui-text-weak: #5E6678;
+        /* Background */
+        --devui-base-bg: #FFFFFF;
+        /* Border */
+        --devui-line: #DFE1E6;
+        /* Brand */
+        --devui-brand: #5E7CE0;
+        /* Card Tag Tokens */
+        --devui-pjcard-tag-success-bg: #E6F6F0;
+        --devui-pjcard-tag-success-text: #00A870;
+        --devui-pjcard-tag-general-bg: #F2F5FC;
+        --devui-pjcard-tag-general-text: #252B3A;
+        /* Shadow */
+        --devui-shadow-length-hover: 0 4px 16px 0 rgba(37, 43, 58, 0.16);
+        /* Typography */
+        --devui-font-size-sm: 12px;
+        --devui-font-size-md: 14px;
+        --devui-font-size-lg: 16px;
+        /* Radius */
+        --devui-border-radius-sm: 4px;
+        --devui-border-radius-md: 8px;
+        --devui-border-radius-lg: 12px;
+    }
+
+    /* ============================================
+       Component: devui-pjcard
+       Fixed Width: 380px, Height: Hug Contents
+       ============================================ */
+    .devui-pjcard {
+        width: 380px;
+        background-color: var(--devui-base-bg, #FFFFFF);
+        border: 1px solid var(--devui-line, #DFE1E6);
+        border-radius: var(--devui-border-radius-lg, 12px);
+        padding: 20px 24px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        cursor: pointer;
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .devui-pjcard:hover {
+        box-shadow: var(--devui-shadow-length-hover, 0 4px 16px 0 rgba(37, 43, 58, 0.16));
+        border-color: #C8CADE;
+    }
+
+    /* ============================================
+       Header: Icon + Title + Actions
+       ============================================ */
+    .devui-pjcard-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    /* App Icon: 40x40, r=8px */
+    .devui-pjcard-app-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--devui-border-radius-md, 8px);
+        flex-shrink: 0;
+        overflow: hidden;
+    }
+
+    .devui-pjcard-app-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Title: 16px, Bold, Ellipsis */
+    .devui-pjcard-title {
+        flex: 1;
+        font-size: var(--devui-font-size-lg, 16px);
+        font-weight: 700;
+        color: var(--devui-text, #252B3A);
+        line-height: 24px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Action Buttons Container */
+    .devui-pjcard-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    /* Action Button: 24x24, Icon 16x16 */
+    .devui-pjcard-action-btn {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: none;
+        cursor: pointer;
+        border-radius: var(--devui-border-radius-sm, 4px);
+        color: var(--devui-text-weak, #5E6678);
+        transition: background-color 0.2s, color 0.2s;
+        padding: 0;
+    }
+
+    .devui-pjcard-action-btn:hover {
+        background-color: var(--devui-pjcard-tag-general-bg, #F2F5FC);
+        color: var(--devui-brand, #5E7CE0);
+    }
+
+    .devui-pjcard-action-btn.is-starred {
+        color: #FAC20A;
+    }
+
+    /* ============================================
+       Tags: Flex Row, Gap 8px
+       ============================================ */
+    .devui-pjcard-tags {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        min-height: 22px;
+    }
+
+    /* Tag Base: 22px height, 4px radius, 12px font */
+    .devui-pjcard-tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 22px;
+        padding: 0 8px;
+        border-radius: var(--devui-border-radius-sm, 4px);
+        font-size: var(--devui-font-size-sm, 12px);
+        font-weight: 400;
+        line-height: 22px;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+
+    /* Tag Variant: Success (Green) */
+    .devui-pjcard-tag--success {
+        background-color: var(--devui-pjcard-tag-success-bg, #E6F6F0);
+        color: var(--devui-pjcard-tag-success-text, #00A870);
+    }
+
+    /* Tag Variant: General (Grey) */
+    .devui-pjcard-tag--general {
+        background-color: var(--devui-pjcard-tag-general-bg, #F2F5FC);
+        color: var(--devui-pjcard-tag-general-text, #252B3A);
+    }
+
+    /* ============================================
+       Meta: Creator + Divider + ProjectId
+       ============================================ */
+    .devui-pjcard-meta {
+        display: flex;
+        align-items: center;
+        font-size: var(--devui-font-size-sm, 12px);
+        color: var(--devui-text-weak, #5E6678);
+        line-height: 20px;
+    }
+
+    .devui-pjcard-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex-shrink: 0;
+    }
+
+    /* Divider: 1px × 12px vertical line */
+    .devui-pjcard-meta-divider {
+        width: 1px;
+        height: 12px;
+        background-color: var(--devui-line, #DFE1E6);
+        margin: 0 12px;
+        flex-shrink: 0;
+    }
+
+    .devui-pjcard-meta-label {
+        color: var(--devui-text-weak, #5E6678);
+        white-space: nowrap;
+    }
+
+    .devui-pjcard-meta-value {
+        color: var(--devui-text, #252B3A);
+        font-weight: 400;
+        max-width: 160px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .devui-pjcard-meta-value--truncated {
+        max-width: 80px;
+    }
+
+    /* Copy Button: 16x16 */
+    .devui-pjcard-copy-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        padding: 0;
+        color: var(--devui-text-weak, #5E6678);
+        transition: color 0.2s;
+        flex-shrink: 0;
+    }
+
+    .devui-pjcard-copy-btn:hover {
+        color: var(--devui-brand, #5E7CE0);
+    }
+</style>
+
+<!-- Root Element -->
+<div class="devui-pjcard">
+    <!-- Header: App Icon + Title + Actions -->
+    <div class="devui-pjcard-header">
+        <!-- App Icon: engineering-initial SVG via <img> -->
+        <div class="devui-pjcard-app-icon">
+            <img src="{{appIcon}}" alt="{{title}}">
+        </div>
+        <!-- Title -->
+        <span class="devui-pjcard-title">{{title}}</span>
+        <!-- Action Buttons -->
+        <div class="devui-pjcard-actions">
+            <!-- Star (Favorite) -->
+            <button class="devui-pjcard-action-btn {{starredClass}}" aria-label="收藏">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M8 1.5L9.854 5.256L14 5.866L11 8.793L11.708 12.923L8 10.977L4.292 12.923L5 8.793L2 5.866L6.146 5.256L8 1.5Z"
+                        stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none" />
+                    <!-- When starred: add fill="currentColor" -->
+                </svg>
+            </button>
+            <!-- More (•••) -->
+            <button class="devui-pjcard-action-btn" aria-label="更多操作">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="3" cy="8" r="1.2" fill="currentColor" />
+                    <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+                    <circle cx="13" cy="8" r="1.2" fill="currentColor" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Tags Slot -->
+    <div class="devui-pjcard-tags">
+        {{tags}}
+        <!-- Example:
+        <span class="devui-pjcard-tag devui-pjcard-tag--success">标签</span>
+        <span class="devui-pjcard-tag devui-pjcard-tag--general">标签</span>
+        -->
+    </div>
+
+    <!-- Meta: Creator + ProjectId -->
+    <div class="devui-pjcard-meta">
+        <div class="devui-pjcard-meta-item">
+            <span class="devui-pjcard-meta-label">创建者：</span>
+            <span class="devui-pjcard-meta-value">{{creator}}</span>
+        </div>
+        <div class="devui-pjcard-meta-divider"></div>
+        <div class="devui-pjcard-meta-item">
+            <span class="devui-pjcard-meta-label">项目ID：</span>
+            <span class="devui-pjcard-meta-value devui-pjcard-meta-value--truncated">{{projectId}}</span>
+            <!-- Copy Icon (14x14 inline SVG) -->
+            <button class="devui-pjcard-copy-btn" aria-label="复制项目ID">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" />
+                    <path d="M10 4V3C10 2.448 9.552 2 9 2H3C2.448 2 2 2.448 2 3V9C2 9.552 2.448 10 3 10H4"
+                        stroke="currentColor" stroke-width="1.2" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16.000000" height="16.000000" fill="none">
+	<rect id="2D 服务图标/架构建模 CloudModeling" width="16.000000" height="16.000000" x="0.000000" y="0.000000" />
+	<g id="资源库">
+		<g id="服务图标">
+			<g id="icon-icon-cloud-modeling-2d">
+				<rect id="矩形" width="16.000000" height="16.000000" x="0.000000" y="0.000000" opacity="0" fill="rgb(216,216,216)" />
+				<rect id="矩形" width="16.000000" height="16.000000" x="0.000000" y="0.000000" opacity="0" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<g id="编组">
+					<rect id="矩形" width="6.000000" height="10.000000" x="1.000000" y="3.000000" rx="0.400000" fill="rgb(171,229,251)" />
+					<rect id="矩形" width="6.000000" height="10.000000" x="1.000000" y="3.000000" rx="0.400000" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+					<rect id="矩形" width="4.000000" height="1.000000" x="2.000000" y="4.876953" rx="0.500000" fill="rgb(55,167,227)" />
+					<rect id="矩形" width="4.000000" height="1.000000" x="2.000000" y="4.876953" rx="0.500000" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+					<rect id="矩形备份" width="4.000000" height="1.000000" x="2.000000" y="7.476562" rx="0.500000" fill="rgb(55,167,227)" />
+					<rect id="矩形备份" width="4.000000" height="1.000000" x="2.000000" y="7.476562" rx="0.500000" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+					<rect id="矩形备份-5" width="4.000000" height="1.000000" x="2.000000" y="10.076660" rx="0.500000" fill="rgb(55,167,227)" />
+					<rect id="矩形备份-5" width="4.000000" height="1.000000" x="2.000000" y="10.076660" rx="0.500000" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				</g>
+				<path id="路径-76" d="M7 8C8.5 8 8.5 3 10 3" stroke="rgb(104,209,255)" stroke-width="1" />
+				<path id="路径-76备份" d="M0 5C1.5 5 1.5 0 3 0" stroke="rgb(104,209,255)" stroke-width="1" transform="matrix(1,0,0,-1,7,13)" />
+				<rect id="矩形" width="3.000000" height="1.000000" x="7.000000" y="7.500000" fill="rgb(104,209,255)" />
+				<rect id="矩形" width="3.000000" height="1.000000" x="7.000000" y="7.500000" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				<g id="编组-2">
+					<rect id="矩形备份-2" width="5.000000" height="3.000000" x="10.000000" y="1.500000" rx="0.400000" fill="rgb(171,229,251)" />
+					<rect id="矩形备份-2" width="5.000000" height="3.000000" x="10.000000" y="1.500000" rx="0.400000" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+					<rect id="矩形备份-3" width="5.000000" height="3.000000" x="10.000000" y="6.500000" rx="0.400000" fill="rgb(171,229,251)" />
+					<rect id="矩形备份-3" width="5.000000" height="3.000000" x="10.000000" y="6.500000" rx="0.400000" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+					<rect id="矩形备份-4" width="5.000000" height="3.000000" x="10.000000" y="11.500000" rx="0.400000" fill="rgb(171,229,251)" />
+					<rect id="矩形备份-4" width="5.000000" height="3.000000" x="10.000000" y="11.500000" rx="0.400000" stroke="rgb(0,0,0)" stroke-opacity="0" stroke-width="1" />
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

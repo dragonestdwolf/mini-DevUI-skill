@@ -1,0 +1,112 @@
+<!-- 
+  AnnouncementCard Template
+  Source: Figma Node 1819-2753
+  
+  Variables (Template Contract):
+  - {{title}}: The announcement title
+  - {{description}}: The description text (max 3 lines)
+  - {{time}}: Meta information (e.g. "2天前")
+  - {{indicators}}: Carousel indicators nodes
+-->
+
+<style>
+    /* 
+   命名空间原则：所有 Class 必须以 devui-announcement 开头 
+   Token 原则：必须使用 var(--devui-token) 形式
+*/
+    .devui-announcementCard {
+        width: 384px;
+        background-color: var(--devui-base-bg, #FFFFFF);
+        padding: 16px 20px 20px 20px;
+        border-radius: var(--devui-border-radius-xl, 16px);
+        box-shadow: var(--devui-shadow-length-base, 0 1px 6px 0 rgba(0, 0, 0, 0.08));
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+    }
+
+    .devui-announcement-content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .devui-announcement-title {
+        width: 100%;
+        font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+        font-weight: 700;
+        font-size: var(--devui-font-size-lg, 16px);
+        color: var(--devui-text, #252B3A);
+        line-height: 24px;
+    }
+
+    .devui-announcement-info {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .devui-announcement-desc {
+        width: 100%;
+        font-size: var(--devui-font-size-md, 14px);
+        font-weight: 400;
+        color: var(--devui-text, #252B3A);
+        line-height: 22px;
+        height: 66px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        text-overflow: ellipsis;
+    }
+
+    .devui-announcement-meta {
+        width: 100%;
+        font-size: var(--devui-font-size-sm, 12px);
+        font-weight: 400;
+        color: var(--devui-placeholder, #8A8E99);
+        line-height: 20px;
+    }
+
+    .devui-announcement-indicators {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .devui-indicator {
+        width: 4px;
+        height: 4px;
+        background-color: var(--devui-shape-icon-fill, #D7D8DA);
+        border-radius: 100px;
+    }
+
+    .devui-indicator.active {
+        width: 32px;
+        background-color: var(--devui-icon-text, #252B3A);
+    }
+</style>
+
+<!-- 根元素必须包含所有必要的类名组合 -->
+<div class="devui-announcementCard">
+    <div class="devui-announcement-content">
+        <div class="devui-announcement-title">{{title}}</div>
+        <div class="devui-announcement-info">
+            <div class="devui-announcement-desc">{{description}}</div>
+            <div class="devui-announcement-meta">{{time}}</div>
+        </div>
+    </div>
+    <div class="devui-announcement-indicators">
+        {{indicators}}
+    </div>
+</div>

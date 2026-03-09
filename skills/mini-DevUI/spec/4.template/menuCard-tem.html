@@ -1,0 +1,67 @@
+<!-- 
+  MenuCard Template
+  Source: Figma Node 1009-2572
+  
+  Variables (Template Contract):
+  - {{active}}: 'active' class if selected
+  - {{iconClass}}: Extra classes for specific icon masks
+  - {{label}}: Text content of the menu card
+-->
+
+<style>
+    /* 
+   命名空间原则：所有 Class 必须以 devui-menuCard 开头 
+   Token 原则：必须使用 var(--devui-token) 形式
+*/
+    .devui-menuCard {
+        width: 240px;
+        height: 36px;
+        padding: 0 8px;
+        box-sizing: border-box;
+        background-color: transparent;
+        border-radius: var(--devui-border-radius-md, 8px);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Hover & Active / Selected */
+    .devui-menuCard:hover,
+    .devui-menuCard.active {
+        background-color: var(--devui-base-bg, #FFFFFF);
+        box-shadow: var(--devui-shadow-length-base, 0 1px 6px 0 rgba(0, 0, 0, 0.08));
+    }
+
+    .devui-menuCard-icon {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        background-color: var(--devui-icon-text, #252B3A);
+        /* Set actual mask in implementation via {{iconClass}} or an inline style */
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+    }
+
+    .devui-menuCard-text {
+        font-size: var(--devui-font-size-md, 14px);
+        font-weight: 400;
+        color: var(--devui-text, #252B3A);
+        line-height: 1.5;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>
+
+<!-- 根元素必须包含所有必要的类名组合 -->
+<a class="devui-menuCard {{active}}" href="javascript:void(0)">
+    <span class="devui-menuCard-icon {{iconClass}}"></span>
+    <span class="devui-menuCard-text">{{label}}</span>
+</a>

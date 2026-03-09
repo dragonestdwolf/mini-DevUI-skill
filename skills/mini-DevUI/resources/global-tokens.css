@@ -1,0 +1,56 @@
+/* 
+  mini-DevUI Global Tokens
+  Derived from spec/2.theme/theme.md
+*/
+
+:root {
+    /* Brand Colors */
+    --devui-brand: #5E7CE0;
+    --devui-brand-foil: #859BFF;
+    --devui-brand-hover: #7693F5;
+    --devui-brand-active: #526ECC;
+    --devui-brand-active-focus: #344899;
+    --devui-primary: #5E7CE0;
+    --devui-primary-hover: #7693F5;
+    --devui-primary-active: #344899;
+    --devui-primary-disabled: #BECCFA;
+
+    /* Background Colors */
+    --devui-global-bg: #F3F3F3;
+    --devui-global-bg-normal: #FFFFFF;
+    --devui-base-bg: #FFFFFF;
+    --devui-base-bg-dark: #333854;
+    --devui-block: #FFFFFF;
+    --devui-area: #F8F8F8;
+    --devui-list-item-hover-bg: rgba(25, 25, 25, 0.05);
+    --devui-list-item-active-bg: #E1E8FD;
+    --devui-disabled-bg: #F5F5F6;
+
+    /* Text Colors */
+    --devui-text: #252B3A;
+    --devui-text-weak: #575D6C;
+    --devui-aide-text: #8A8E99;
+    --devui-placeholder: #AEAEAE;
+    --devui-light-text: #FFFFFF;
+    --devui-link: #526ECC;
+    --devui-link-active: #344899;
+
+    /* Border/Line Colors */
+    --devui-line: #ADB0B8;
+    --devui-dividing-line: #F3F3F3;
+    --devui-form-control-line: #C9C9C9;
+    --devui-form-control-line-hover: #191919;
+    --devui-form-control-line-active: #5E7CE0;
+    --devui-disabled-line: #C9C9C9;
+
+    /* Status Colors */
+    --devui-danger: #F66F6A;
+    --devui-warning: #FAC20A;
+    --devui-success: #2EB78A;
+    --devui-info: #5E7CE0;
+
+    /* Others */
+    --devui-radius: 4px;
+    --devui-radius-card: 8px;
+    --devui-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.08);
+}

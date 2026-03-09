@@ -1,0 +1,136 @@
+<!-- 
+  Checkbox Template
+  Source: skill/3.component/checkbox.md
+  Version: v1.0
+  
+  Variables:
+  - {{label}}: The label text.
+  - {{checked}}: Add class 'checked' if true.
+  - {{halfChecked}}: Add class 'half-checked' if true (indeterminate).
+  - {{disabled}}: Add class 'disabled' if true.
+  - {{id}}: Unique ID for input/label association.
+-->
+
+<style>
+    /* Wrapper */
+    .devui-checkbox-wrapper {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        /* Strict Gap */
+        cursor: pointer;
+        user-select: none;
+        vertical-align: middle;
+    }
+
+    .devui-checkbox-wrapper.disabled {
+        cursor: not-allowed;
+    }
+
+    /* Hidden Native Input */
+    .devui-checkbox-input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        margin: 0;
+    }
+
+    /* Visual Box */
+    .devui-checkbox {
+        width: 16px;
+        height: 16px;
+        border-radius: 2px;
+        /* Fixed Radius */
+        border: 1px solid var(--devui-form-control-line, #ADB0B8);
+        background-color: var(--devui-base-bg, #FFFFFF);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.2s;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    /* Hover State */
+    .devui-checkbox-wrapper:not(.disabled):hover .devui-checkbox {
+        border-color: var(--devui-brand, #5E7CE0);
+        box-shadow: 0 0 0 8px var(--devui-form-control-line-rippling, rgba(94, 124, 224, 0.08));
+    }
+
+    /* Checked & Half-Checked State */
+    .devui-checkbox-wrapper.checked .devui-checkbox,
+    .devui-checkbox-wrapper.half-checked .devui-checkbox {
+        background-color: var(--devui-brand, #5E7CE0);
+        border-color: var(--devui-brand, #5E7CE0);
+    }
+
+    /* Disabled State (Unchecked) */
+    .devui-checkbox-wrapper.disabled .devui-checkbox {
+        background-color: var(--devui-disabled-bg, #F3F3F3);
+        border-color: var(--devui-disabled-line, #DFE1E6);
+    }
+
+    /* Disabled State (Checked) */
+    .devui-checkbox-wrapper.disabled.checked .devui-checkbox,
+    .devui-checkbox-wrapper.disabled.half-checked .devui-checkbox {
+        background-color: var(--devui-disabled-bg-active, #BECCFA);
+        /* Figma: #BECCFA */
+        border-color: var(--devui-disabled-bg-active, #BECCFA);
+    }
+
+    /* Label Style */
+    .devui-checkbox-label {
+        font-family: 'Noto Sans SC', sans-serif;
+        font-size: 14px;
+        line-height: 22px;
+        color: var(--devui-text, #252B3A);
+    }
+
+    .devui-checkbox-wrapper.disabled .devui-checkbox-label {
+        color: var(--devui-disabled-text, #ADB0B8);
+    }
+
+    /* Icons */
+    .devui-checkbox-icon {
+        width: 10px;
+        /* Adjust size to fit 16px box */
+        height: auto;
+        fill: none;
+        stroke: var(--devui-light-text, #FFFFFF);
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        display: none;
+    }
+
+    .devui-checkbox-marker {
+        width: 8px;
+        height: 2px;
+        background-color: var(--devui-light-text, #FFFFFF);
+        border-radius: 1px;
+        display: none;
+    }
+
+    /* Show Icons based on state */
+    .devui-checkbox-wrapper.checked .devui-checkbox-icon {
+        display: block;
+    }
+
+    .devui-checkbox-wrapper.half-checked .devui-checkbox-marker {
+        display: block;
+    }
+</style>
+
+<label class="devui-checkbox-wrapper {{checked}} {{halfChecked}} {{disabled}}" for="{{id}}">
+    <input type="checkbox" id="{{id}}" class="devui-checkbox-input" {{disabled ? 'disabled' : '' }} />
+    <span class="devui-checkbox">
+        <!-- Checked Icon (Checkmark) -->
+        <svg class="devui-checkbox-icon" viewBox="0 0 12 10">
+            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+        </svg>
+        <!-- HalfChecked Marker (Line) -->
+        <span class="devui-checkbox-marker"></span>
+    </span>
+    <span class="devui-checkbox-label">{{label}}</span>
+</label>

@@ -1,0 +1,225 @@
+<!-- 
+  Select Component Template
+  Source: Figma Node 431:4454 (Select), 578:4417 (Dropdown)
+  
+  Variables (Template Contract):
+  - {{status}}: 'active' | 'focus' | 'disabled' | '' (Default empty forms base state)
+  - {{placeholder}}: default text like '请选择'
+  - {{dropdownState}}: 'hidden' | '' (controls dropdown visibility)
+  - {{options}}: Slot for looping .devui-select-option
+  - {{label}}: Option label string
+  - {{help}}: Optional form help text
+-->
+
+<style>
+    /* Namespaced CSS based strictly on Figma MCP benchmark extraction */
+
+    .devui-select-container {
+        font-family: "Noto Sans SC", sans-serif;
+        font-style: normal;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 22px;
+        position: relative;
+        width: 296px;
+    }
+
+    /* Form Label & Help wrappers built-in for integrated usage */
+    .devui-form-label {
+        display: flex;
+        align-items: center;
+        color: var(--devui-text, #252b3a);
+        margin-bottom: 8px;
+    }
+
+    .devui-form-help {
+        font-size: 12px;
+        line-height: 20px;
+        color: var(--devui-aide-text, #8a8e99);
+        margin-top: 8px;
+    }
+
+    /* Selection Input Block */
+    .devui-select-input {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 32px;
+        padding: 5px 12px;
+        background-color: var(--devui-base-bg, #ffffff);
+        border: 1px solid var(--devui-form-control-line, #adb0b8);
+        border-radius: 4px;
+        box-sizing: border-box;
+        cursor: pointer;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .devui-select-input:hover:not(.devui-select-disabled) {
+        border-color: var(--devui-form-control-line-hover, #575d6c);
+    }
+
+    /* Active / Focus interaction ringing */
+    .devui-select-input.devui-select-active,
+    .devui-select-input.devui-select-focus {
+        border-color: var(--devui-constant-blue, #5e7ce0);
+        box-shadow: 0 0 0 4px var(--devui-form-control-line-rippling, rgba(94, 124, 224, 0.08));
+    }
+
+    /* Disabled State overrides */
+    .devui-select-input.devui-select-disabled {
+        background-color: var(--devui-disabled-fill-bg, #f3f3f3);
+        border-color: var(--devui-disabled-line, #dfe1e6);
+        cursor: not-allowed;
+    }
+
+    .devui-select-placeholder {
+        color: var(--devui-placeholder, #8a8e99);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1;
+    }
+
+    .devui-select-input.devui-select-disabled .devui-select-placeholder {
+        color: var(--devui-placeholder, #8a8e99);
+    }
+
+    /* Chevron */
+    .devui-select-arrow {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        margin-left: 8px;
+        background-color: var(--devui-placeholder, #8a8e99);
+        -webkit-mask-image: url('../../../icon/select-arrow.svg');
+        mask-image: url('../../../icon/select-arrow.svg');
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+
+    .devui-select-input.devui-select-active .devui-select-arrow,
+    .devui-select-input.devui-select-focus .devui-select-arrow {
+        transform: rotate(180deg);
+    }
+
+    /* Dropdown Panel */
+    .devui-select-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        margin-top: 4px;
+        padding: 4px;
+        background-color: var(--devui-base-bg, #ffffff);
+        border-radius: 6px;
+        box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        z-index: 1050;
+    }
+
+    .devui-select-dropdown.devui-hidden {
+        display: none;
+    }
+
+    /* Dropdown Single Option */
+    .devui-select-option {
+        display: flex;
+        align-items: flex-start;
+        /* Matches Figma text alignment inside 36px bound */
+        padding: 7px 8px;
+        height: 36px;
+        border-radius: 4px;
+        background-color: var(--devui-base-bg, #ffffff);
+        cursor: pointer;
+        transition: background-color 0.3s;
+        box-sizing: border-box;
+    }
+
+    .devui-select-option:hover {
+        background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+    }
+
+    .devui-select-option.devui-option-selected {
+        color: var(--devui-constant-blue, #5e7ce0);
+    }
+
+    .devui-select-option-text {
+        flex: 1;
+        color: inherit;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Multi-select Checkbox implementation */
+    .devui-select-checkbox {
+        width: 16px;
+        height: 16px;
+        border-radius: 2px;
+        border: 1px solid var(--devui-form-control-line, #adb0b8);
+        background-color: var(--devui-base-bg, #ffffff);
+        margin-right: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: all 0.3s;
+        margin-top: 3px;
+    }
+
+    .devui-select-option.devui-option-selected .devui-select-checkbox {
+        background-color: var(--devui-constant-blue, #5e7ce0);
+        border-color: var(--devui-constant-blue, #5e7ce0);
+    }
+
+    /* Checkmark Mask fallback using general SVG tick */
+    .devui-select-option.devui-option-selected .devui-select-checkbox::after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 8px;
+        background-color: #ffffff;
+        -webkit-mask-image: url('../../../icon/select-arrow.svg');
+        mask-image: url('../../../icon/select-arrow.svg');
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+    }
+</style>
+
+<!-- Boilerplate Injection Output Start (Example Form Group wrapper) -->
+<div class="devui-select-container">
+    {{#if label}}
+    <div class="devui-form-label">{{label}}</div>
+    {{/if}}
+
+    <div class="devui-select-input devui-select-{{status}}">
+        <div class="devui-select-placeholder">{{placeholder}}</div>
+        <div class="devui-select-arrow"></div>
+    </div>
+
+    <div class="devui-select-dropdown devui-{{dropdownState}}">
+        <!-- Inject .devui-select-option items here mapping {{options}} -->
+        <div class="devui-select-option">
+            <!-- <div class="devui-select-checkbox"></div> (If multi-select) -->
+            <span class="devui-select-option-text">示例选项文本</span>
+        </div>
+    </div>
+
+    {{#if help}}
+    <div class="devui-form-help">{{help}}</div>
+    {{/if}}
+</div>
+<!-- Boilerplate Injection Output End -->
